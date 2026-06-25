@@ -1,0 +1,108 @@
+import type { ChoiceDrillItem } from "@/components/simulators/SimulatorRegistry";
+
+export const VLSM_POOL: ChoiceDrillItem[] = [
+  {
+    id: "vlsm-1",
+    prompt: "You have 192.168.1.0/24. Which subnet meets 50 hosts, 25 hosts, and 10 hosts with minimal waste?",
+    choices: [
+      { id: "a", text: "/26 (62), /27 (30), /28 (14)" },
+      { id: "b", text: "/25 (126), /26 (62), /28 (14)" },
+      { id: "c", text: "/24, /25, /26 unchanged" },
+      { id: "d", text: "/27 (30), /28 (14), /29 (6)" },
+    ],
+    correctChoiceId: "a",
+    weakConcept: "VLSM subnet sizing",
+    explanation: "/26 gives 62 hosts (enough for 50), /27 gives 30 (enough for 25), /28 gives 14 (enough for 10).",
+  },
+  {
+    id: "vlsm-2",
+    prompt: "A /30 subnet provides how many usable host addresses?",
+    choices: [
+      { id: "a", text: "2" },
+      { id: "b", text: "4" },
+      { id: "c", text: "6" },
+      { id: "d", text: "14" },
+    ],
+    correctChoiceId: "a",
+    weakConcept: "Point-to-point subnet sizing",
+    explanation: "/30 has 2^2 - 2 = 2 usable hosts — common for WAN links.",
+  },
+  {
+    id: "vlsm-3",
+    prompt: "When applying VLSM, subnets should be allocated in what order?",
+    choices: [
+      { id: "a", text: "Largest requirement first" },
+      { id: "b", text: "Smallest requirement first" },
+      { id: "c", text: "Random order" },
+      { id: "d", text: "Alphabetical by site name" },
+    ],
+    correctChoiceId: "a",
+    weakConcept: "VLSM allocation order",
+    explanation: "Allocate largest subnets first to avoid fragmentation and wasted address space.",
+  },
+  {
+    id: "vlsm-4",
+    prompt: "10.0.0.0/16 must support a subnet needing 500 hosts. What prefix is required?",
+    choices: [
+      { id: "a", text: "/22 (1022 hosts)" },
+      { id: "b", text: "/24 (254 hosts)" },
+      { id: "c", text: "/25 (126 hosts)" },
+      { id: "d", text: "/23 (510 hosts)" },
+    ],
+    correctChoiceId: "d",
+    weakConcept: "Choosing prefix for host count",
+    explanation: "/23 provides 510 usable hosts — the smallest prefix that fits 500 hosts.",
+  },
+  {
+    id: "vlsm-5",
+    prompt: "After assigning 10.0.0.0/23, what is the next available network if continuing VLSM?",
+    choices: [
+      { id: "a", text: "10.0.2.0" },
+      { id: "b", text: "10.0.1.0" },
+      { id: "c", text: "10.0.0.128" },
+      { id: "d", text: "10.0.3.0" },
+    ],
+    correctChoiceId: "a",
+    weakConcept: "Next subnet boundary",
+    explanation: "/23 spans 10.0.0.0–10.0.1.255; the next block starts at 10.0.2.0.",
+  },
+  {
+    id: "vlsm-6",
+    prompt: "Which prefix wastes the least space for exactly 14 hosts?",
+    choices: [
+      { id: "a", text: "/28" },
+      { id: "b", text: "/27" },
+      { id: "c", text: "/29" },
+      { id: "d", text: "/26" },
+    ],
+    correctChoiceId: "a",
+    weakConcept: "Right-sizing subnets",
+    explanation: "/28 provides 14 usable hosts — exact fit. /29 only gives 6; /27 gives 30 (wasteful).",
+  },
+  {
+    id: "vlsm-7",
+    prompt: "172.16.0.0/22 is subdivided. Which child block is valid?",
+    choices: [
+      { id: "a", text: "172.16.1.0/24" },
+      { id: "b", text: "172.16.4.0/24" },
+      { id: "c", text: "172.16.0.128/25" },
+      { id: "d", text: "172.16.2.0/23" },
+    ],
+    correctChoiceId: "c",
+    weakConcept: "Subnet within parent block",
+    explanation: "172.16.0.0/22 covers 172.16.0.0–172.16.3.255. 172.16.0.128/25 fits inside.",
+  },
+  {
+    id: "vlsm-8",
+    prompt: "A site needs 1000 hosts from 10.10.0.0/16. Best single prefix?",
+    choices: [
+      { id: "a", text: "/21" },
+      { id: "b", text: "/22" },
+      { id: "c", text: "/23" },
+      { id: "d", text: "/20" },
+    ],
+    correctChoiceId: "b",
+    weakConcept: "Large subnet sizing",
+    explanation: "/22 provides 1022 usable hosts — smallest prefix that accommodates 1000.",
+  },
+];

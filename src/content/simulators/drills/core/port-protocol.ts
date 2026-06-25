@@ -1,0 +1,125 @@
+import type { ChoiceDrillItem } from "@/components/simulators/SimulatorRegistry";
+
+export const PORT_PROTOCOL_POOL: ChoiceDrillItem[] = [
+  {
+    id: "port-22",
+    prompt: "Which service typically uses TCP port 22?",
+    choices: [
+      { id: "a", text: "SSH" },
+      { id: "b", text: "Telnet" },
+      { id: "c", text: "FTP" },
+      { id: "d", text: "SMTP" },
+    ],
+    correctChoiceId: "a",
+    weakConcept: "SSH port",
+  },
+  {
+    id: "port-443",
+    prompt: "HTTPS commonly runs on which port?",
+    choices: [
+      { id: "a", text: "443" },
+      { id: "b", text: "80" },
+      { id: "c", text: "8080" },
+      { id: "d", text: "8443 only" },
+    ],
+    correctChoiceId: "a",
+    weakConcept: "HTTPS port",
+  },
+  {
+    id: "port-53",
+    prompt: "DNS queries primarily use which port?",
+    choices: [
+      { id: "a", text: "53" },
+      { id: "b", text: "67" },
+      { id: "c", text: "123" },
+      { id: "d", text: "161" },
+    ],
+    correctChoiceId: "a",
+    weakConcept: "DNS port",
+  },
+  {
+    id: "port-25",
+    prompt: "SMTP email delivery uses which port?",
+    choices: [
+      { id: "a", text: "25" },
+      { id: "b", text: "110" },
+      { id: "c", text: "143" },
+      { id: "d", text: "465 only" },
+    ],
+    correctChoiceId: "a",
+    weakConcept: "SMTP port",
+  },
+  {
+    id: "port-67",
+    prompt: "DHCP server listens on which port?",
+    choices: [
+      { id: "a", text: "67" },
+      { id: "b", text: "68" },
+      { id: "c", text: "69" },
+      { id: "d", text: "53" },
+    ],
+    correctChoiceId: "a",
+    weakConcept: "DHCP server port",
+    explanation: "DHCP server uses UDP 67; clients use UDP 68.",
+  },
+  {
+    id: "port-161",
+    prompt: "SNMP uses which port by default?",
+    choices: [
+      { id: "a", text: "161" },
+      { id: "b", text: "162" },
+      { id: "c", text: "443" },
+      { id: "d", text: "514" },
+    ],
+    correctChoiceId: "a",
+    weakConcept: "SNMP port",
+  },
+  {
+    id: "port-3389",
+    prompt: "Remote Desktop Protocol (RDP) uses which port?",
+    choices: [
+      { id: "a", text: "3389" },
+      { id: "b", text: "5900" },
+      { id: "c", text: "22" },
+      { id: "d", text: "445" },
+    ],
+    correctChoiceId: "a",
+    weakConcept: "RDP port",
+  },
+  {
+    id: "port-80",
+    prompt: "Unencrypted web traffic (HTTP) uses which port?",
+    choices: [
+      { id: "a", text: "80" },
+      { id: "b", text: "443" },
+      { id: "c", text: "8080" },
+      { id: "d", text: "21" },
+    ],
+    correctChoiceId: "a",
+    weakConcept: "HTTP port",
+  },
+  {
+    id: "proto-tcp",
+    prompt: "Which protocol is connection-oriented and reliable?",
+    choices: [
+      { id: "a", text: "TCP" },
+      { id: "b", text: "UDP" },
+      { id: "c", text: "ICMP" },
+      { id: "d", text: "ARP" },
+    ],
+    correctChoiceId: "a",
+    weakConcept: "TCP characteristics",
+  },
+  {
+    id: "proto-udp",
+    prompt: "VoIP and live streaming often prefer which transport protocol?",
+    choices: [
+      { id: "a", text: "UDP" },
+      { id: "b", text: "TCP" },
+      { id: "c", text: "SCTP" },
+      { id: "d", text: "IGMP" },
+    ],
+    correctChoiceId: "a",
+    weakConcept: "UDP use cases",
+  },
+];
