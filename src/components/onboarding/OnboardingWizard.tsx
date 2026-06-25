@@ -38,70 +38,100 @@ export function OnboardingWizard() {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/70 p-4 sm:items-center">
-      <Card className="w-full max-w-lg p-5">
-        <div className="mb-4 flex items-center gap-2 text-sky-400">
-          <GraduationCap className="h-5 w-5" />
-          <span className="text-sm font-semibold">Welcome to Bridge Study Companion</span>
+    <div className="fixed inset-0 z-[60] flex flex-col bg-black/70 px-4 pt-4 pb-[calc(4.5rem+env(safe-area-inset-bottom))]">
+      <Card className="mx-auto flex min-h-0 w-full max-w-lg flex-1 flex-col overflow-hidden p-0">
+        <div className="shrink-0 border-b border-zinc-800 px-5 pb-4 pt-5">
+          <div className="mb-4 flex items-center gap-2 text-sky-400">
+            <GraduationCap className="h-5 w-5" />
+            <span className="text-sm font-semibold">Welcome to Bridge Study Companion</span>
+          </div>
+
+          <div className="flex gap-1">
+            {STEPS.map((s, i) => (
+              <div
+                key={s}
+                className={`h-1 flex-1 rounded-full ${i <= stepIndex ? "bg-sky-500" : "bg-zinc-800"}`}
+              />
+            ))}
+          </div>
         </div>
 
-        <div className="mb-4 flex gap-1">
-          {STEPS.map((s, i) => (
-            <div
-              key={s}
-              className={`h-1 flex-1 rounded-full ${i <= stepIndex ? "bg-sky-500" : "bg-zinc-800"}`}
-            />
-          ))}
+        <div className="min-h-0 flex-1 overflow-y-auto px-5 py-4">
+          {step === "cert" && (
+            <>
+              <h2 className="text-lg font-semibold text-zinc-50">Which certification are you studying?</h2>
+              <p className="mt-1 text-sm text-zinc-400">
+                We&apos;ll focus your study plan and recommendations on this track.
+              </p>
+              <div className="mt-4 flex flex-col gap-2">
+                {certs.map((cert) => (
+                  <button
+                    key={cert.id}
+                    type="button"
+                    onClick={() => setSelectedCertId(cert.id)}
+                    className={`rounded-lg border p-3 text-left transition-colors ${
+                      selectedCertId === cert.id
+                        ? "border-sky-500/50 bg-sky-500/10"
+                        : "border-zinc-800 hover:border-zinc-700"
+                    }`}
+                  >
+                    <p className="font-medium text-zinc-100">{cert.shortName}</p>
+                    <p className="text-xs text-zinc-500">{coachingLevelLabel(cert.id)}</p>
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
+
+          {step === "schedule" && (
+            <>
+              <h2 className="text-lg font-semibold text-zinc-50">How much time per week?</h2>
+              <p className="mt-1 text-sm text-zinc-400">
+                About <span className="text-zinc-200">{dailyMinutes} min/day</span> at this pace.
+              </p>
+              <label className="mt-4 block text-xs text-zinc-400">
+                Weekly study minutes ({weeklyMinutes})
+                <input
+                  type="range"
+                  min={60}
+                  max={600}
+                  step={30}
+                  value={weeklyMinutes}
+                  onChange={(e) => setWeeklyMinutes(Number(e.target.value))}
+                  className="mt-2 w-full"
+                />
+              </label>
+            </>
+          )}
+
+          {step === "exam" && (
+            <>
+              <h2 className="text-lg font-semibold text-zinc-50">When is your exam?</h2>
+              <p className="mt-1 text-sm text-zinc-400">
+                Optional — we&apos;ll show a countdown and pace guidance if you add a date.
+              </p>
+              <label className="mt-4 block text-xs text-zinc-400">
+                Exam date (optional)
+                <input
+                  type="date"
+                  value={examDate}
+                  onChange={(e) => setExamDate(e.target.value)}
+                  className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-zinc-100"
+                />
+              </label>
+            </>
+          )}
         </div>
 
-        {step === "cert" && (
-          <>
-            <h2 className="text-lg font-semibold text-zinc-50">Which certification are you studying?</h2>
-            <p className="mt-1 text-sm text-zinc-400">
-              We&apos;ll focus your study plan and recommendations on this track.
-            </p>
-            <div className="mt-4 flex flex-col gap-2">
-              {certs.map((cert) => (
-                <button
-                  key={cert.id}
-                  type="button"
-                  onClick={() => setSelectedCertId(cert.id)}
-                  className={`rounded-lg border p-3 text-left transition-colors ${
-                    selectedCertId === cert.id
-                      ? "border-sky-500/50 bg-sky-500/10"
-                      : "border-zinc-800 hover:border-zinc-700"
-                  }`}
-                >
-                  <p className="font-medium text-zinc-100">{cert.shortName}</p>
-                  <p className="text-xs text-zinc-500">{coachingLevelLabel(cert.id)}</p>
-                </button>
-              ))}
-            </div>
-            <Button className="mt-4 w-full" onClick={() => setStep("schedule")} disabled={!selectedCertId}>
+        <div className="shrink-0 border-t border-zinc-800 px-5 py-4">
+          {step === "cert" && (
+            <Button className="w-full" onClick={() => setStep("schedule")} disabled={!selectedCertId}>
               Continue
             </Button>
-          </>
-        )}
+          )}
 
-        {step === "schedule" && (
-          <>
-            <h2 className="text-lg font-semibold text-zinc-50">How much time per week?</h2>
-            <p className="mt-1 text-sm text-zinc-400">
-              About <span className="text-zinc-200">{dailyMinutes} min/day</span> at this pace.
-            </p>
-            <label className="mt-4 block text-xs text-zinc-400">
-              Weekly study minutes ({weeklyMinutes})
-              <input
-                type="range"
-                min={60}
-                max={600}
-                step={30}
-                value={weeklyMinutes}
-                onChange={(e) => setWeeklyMinutes(Number(e.target.value))}
-                className="mt-2 w-full"
-              />
-            </label>
-            <div className="mt-4 flex gap-2">
+          {step === "schedule" && (
+            <div className="flex gap-2">
               <Button className="flex-1" variant="secondary" onClick={() => setStep("cert")}>
                 Back
               </Button>
@@ -109,25 +139,10 @@ export function OnboardingWizard() {
                 Continue
               </Button>
             </div>
-          </>
-        )}
+          )}
 
-        {step === "exam" && (
-          <>
-            <h2 className="text-lg font-semibold text-zinc-50">When is your exam?</h2>
-            <p className="mt-1 text-sm text-zinc-400">
-              Optional — we&apos;ll show a countdown and pace guidance if you add a date.
-            </p>
-            <label className="mt-4 block text-xs text-zinc-400">
-              Exam date (optional)
-              <input
-                type="date"
-                value={examDate}
-                onChange={(e) => setExamDate(e.target.value)}
-                className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-zinc-100"
-              />
-            </label>
-            <div className="mt-4 flex gap-2">
+          {step === "exam" && (
+            <div className="flex gap-2">
               <Button className="flex-1" variant="secondary" onClick={() => setStep("schedule")}>
                 Back
               </Button>
@@ -135,8 +150,8 @@ export function OnboardingWizard() {
                 Start studying
               </Button>
             </div>
-          </>
-        )}
+          )}
+        </div>
       </Card>
     </div>
   );
