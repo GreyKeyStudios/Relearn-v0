@@ -38,8 +38,8 @@ export function OnboardingWizard() {
   }
 
   return (
-    <div className="fixed inset-0 z-[60] flex justify-center bg-black/70 p-4 pt-4 pb-[calc(4.5rem+env(safe-area-inset-bottom))] sm:items-center sm:pb-4">
-      <Card className="flex max-h-full w-full max-w-lg flex-col overflow-hidden p-0">
+    <div className="fixed inset-0 z-[60] flex flex-col bg-black/70 px-4 pt-4 pb-[calc(4.5rem+env(safe-area-inset-bottom))]">
+      <Card className="mx-auto flex min-h-0 w-full max-w-lg flex-1 flex-col overflow-hidden p-0">
         <div className="shrink-0 border-b border-zinc-800 px-5 pb-4 pt-5">
           <div className="mb-4 flex items-center gap-2 text-sky-400">
             <GraduationCap className="h-5 w-5" />
