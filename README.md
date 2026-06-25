@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ReLearn v0 — Bridge Study Companion
 
-## Getting Started
+Mobile-first CCNA cert study app and the first implementation of the **ReLearn** learning engine: structured curriculum, quizzes, drills, simulators, weakness tracking, mastery, and adaptive review.
 
-First, run the development server:
+**GitHub:** [GreyKeyStudios/Relearn-v0](https://github.com/GreyKeyStudios/Relearn-v0) (private)
+
+**Source of truth:** [`BRIDGE_MASTER.md`](BRIDGE_MASTER.md)
+
+**Contributing / branch workflow:** [`CONTRIBUTING.md`](CONTRIBUTING.md)
+
+---
+
+## Quick start
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Verify (required before PR)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm run verify:curriculum -- --strict-ccna --strict-ccna-objectives
+npx tsc --noEmit
+```
 
-## Learn More
+## Branch model
 
-To learn more about Next.js, take a look at the following resources:
+```text
+main     → stable
+dev      → integration
+feature/* → Cursor / v0 / Codex work
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the full multi-tool workflow.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Stack
 
-## Deploy on Vercel
+Next.js 16 · React 19 · TypeScript · Tailwind v4 · Zustand (localStorage progress)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Status
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Phases 1–4.75 complete (engine, CES, CCNA pilot hooks)
+- **CCNA Network Fundamentals** — exam-ready content (domain 1 pilot)
+- Phase 5 (AI), Phase 6 (native app), Phase 7 (Python) — not started / blocked per BRIDGE_MASTER
