@@ -16,7 +16,7 @@ export default function CertificationsPage() {
 
   return (
     <div>
-      <PageHeader title="Certifications" subtitle="Browse all study tracks" />
+      <PageHeader title="Certifications" subtitle="Cert prep and job skill tracks" />
       <input
         type="search"
         placeholder="Search certifications..."

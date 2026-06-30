@@ -159,7 +159,7 @@ export function StructuredLessonStepper({
           )}
           <LessonCheckpoint
             key={`${current.id}-${stepIndex}`}
-            question={checkpoint}
+            questions={[checkpoint]}
             stepNumber={stepIndex + 1}
             onContinue={advanceStep}
           />

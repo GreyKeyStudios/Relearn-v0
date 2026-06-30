@@ -82,6 +82,8 @@ export function smokeTestPaths(): { path: string; ok: boolean; detail: string }[
   const secCrypto = getAssignment("security-plus", "crypto-matcher-drill");
   const secCert = getAssignment("security-plus", "cert-chain-drill");
 
+  const gitLab = getAssignment("git-github", "git-lab-spot-vc-problem");
+
   return [
     {
       path: "/cert/ccna/lesson/subnetting",
@@ -122,6 +124,16 @@ export function smokeTestPaths(): { path: string; ok: boolean; detail: string }[
       path: "/cert/security-plus/assignment/cert-chain-drill",
       ok: !!secCert && secCert.assignment.simulatorId === "cert-chain-order",
       detail: "Security+ cert chain assignment",
+    },
+    {
+      path: "/cert/git-github/lesson/git-why-version-control",
+      ok: !!getAssignment("git-github", "git-lab-spot-vc-problem"),
+      detail: "Git/GitHub Module 1 lesson and lab resolve",
+    },
+    {
+      path: "/cert/git-github/assignment/git-lab-spot-vc-problem",
+      ok: !!gitLab && gitLab.assignment.type === "external-lab",
+      detail: "Git/GitHub spot-the-problem lab",
     },
   ];
 }

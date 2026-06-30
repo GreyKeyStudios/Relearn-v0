@@ -91,6 +91,14 @@ export function AssignmentView({
       {!caseStudy && externalResource && (
         <Card className="p-4">
           <p className="mb-2 text-sm font-medium text-zinc-200">{externalResource.name}</p>
+          {externalResource.id === "packet-tracer" && (
+            <Link
+              href={`/cert/${certId}/tool/packet-tracer`}
+              className="mb-3 block rounded-lg border border-emerald-500/20 bg-emerald-500/5 px-3 py-2 text-sm text-emerald-400 hover:bg-emerald-500/10"
+            >
+              First time? Read the Packet Tracer getting-started guide →
+            </Link>
+          )}
           {externalResource.installNotes && (
             <p className="mb-3 text-sm text-zinc-400">{externalResource.installNotes}</p>
           )}

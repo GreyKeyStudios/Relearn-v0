@@ -159,7 +159,7 @@ export const IPV4_ADDRESSING_EXPERIENCE: TopicExperience = {
           label: "Valid format",
           tier: "basics",
           shortDefinition:
-            "Four octets, each 0–255. Format rules are separate from whether an address is private, public, or reserved.",
+            "Four octets, each 0–255.",
         },
       ],
     },
@@ -296,7 +296,7 @@ export const IPV4_ADDRESSING_EXPERIENCE: TopicExperience = {
       type: "teach",
       tcpLayer: 2,
       headline: "Public vs private networks.",
-      body: "Public IP addresses are globally unique and routable on the Internet. Private addresses (like 10.0.5.8 or 192.168.x.x) are valid addresses used only inside local networks — private is not the same as invalid.",
+      body: "Public IP addresses are globally unique and routable on the Internet. Private addresses (like 10.x.x.x or 192.168.x.x) are used only inside local networks and are not routed on the public Internet.",
       terms: [
         {
           id: "public",
@@ -387,6 +387,10 @@ export const IPV4_ADDRESSING_EXPERIENCE: TopicExperience = {
       tcpLayer: 2,
       headline: "What is a default gateway?",
       body: "The default gateway is the router's IPv4 address on your subnet. When your PC needs to reach a remote network, it sends the packet to the gateway — the router takes it from there.",
+      studyTip: {
+        title: "Common convention",
+        body: "On many LANs the gateway is the .1 address in the subnet — e.g. 192.168.1.1 on a /24. It can be another host address, but .1 is what you will see most often.",
+      },
       terms: [
         {
           id: "gateway",
@@ -475,13 +479,6 @@ export const IPV4_ADDRESSING_EXPERIENCE: TopicExperience = {
       ],
     },
     {
-      id: "loopback-check",
-      type: "checkpoint",
-      tcpLayer: 2,
-      headline: "Quick check — loopback",
-      checkpointQuestionId: "ipv4-addressing-q3",
-    },
-    {
       id: "apipa",
       type: "teach",
       tcpLayer: 2,
@@ -509,11 +506,11 @@ export const IPV4_ADDRESSING_EXPERIENCE: TopicExperience = {
       laterLearn: ["DHCP troubleshooting", "Static IP configuration"],
     },
     {
-      id: "apipa-check",
+      id: "loopback-apipa-check",
       type: "checkpoint",
       tcpLayer: 2,
-      headline: "Quick check — APIPA",
-      checkpointQuestionId: "ipv4-addressing-q5",
+      headline: "Quick check — loopback and APIPA",
+      checkpointQuestionIds: ["ipv4-addressing-q3", "ipv4-addressing-q5"],
     },
     {
       id: "host-needs",

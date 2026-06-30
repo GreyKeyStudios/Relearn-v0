@@ -135,7 +135,7 @@ export function LessonStepper({
       {phase === "checkpoint" && current.checkpoint && (
         <LessonCheckpoint
           key={`${current.id}-${stepIndex}`}
-          question={current.checkpoint}
+          questions={[current.checkpoint]}
           stepNumber={stepIndex + 1}
           onContinue={advanceStep}
         />

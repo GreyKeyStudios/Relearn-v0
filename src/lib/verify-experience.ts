@@ -102,8 +102,11 @@ function verifyTopicExperience(
 
     if (screen.type === "memory") hasMemory = true;
 
-    const checkpointId = screen.checkpointQuestionId;
-    if (checkpointId) {
+    const checkpointIds =
+      screen.checkpointQuestionIds ??
+      (screen.checkpointQuestionId ? [screen.checkpointQuestionId] : []);
+
+    for (const checkpointId of checkpointIds) {
       if (!quizIds.has(checkpointId)) {
         warnings.push({
           certId,
@@ -111,7 +114,9 @@ function verifyTopicExperience(
           message: `screen ${screen.id} checkpoint not in quiz[]: ${checkpointId}`,
         });
       }
+    }
 
+    if (checkpointIds.length > 0) {
       if (screen.osiLayer != null && !hasPriorTeachForLayer(screens, i, screen.osiLayer, "osiLayer")) {
         warnings.push({
           certId,

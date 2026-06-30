@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { ExperienceAnchorType, ExperienceScreen, ExperienceTerm, QuizQuestion } from "@/content/types";
 import { lessonProgressStorageKey } from "@/lib/lesson-steps";
 import { LessonCheckpoint } from "@/components/lesson/LessonCheckpoint";
+import { GitWorkflowDiagram } from "@/components/lesson/GitWorkflowDiagram";
 import { OsiStackDiagram } from "@/components/lesson/OsiStackDiagram";
 import { TcpIpStackDiagram } from "@/components/lesson/TcpIpStackDiagram";
 import { StudyTipCard } from "@/components/lesson/StudyTipCard";
@@ -70,19 +71,31 @@ export function ExperiencePlayer({
 
   const current = screens[screenIndex];
   const progress = ((screenIndex + 1) / screens.length) * 100;
+
+  const checkpointQuestions = useMemo(() => {
+    if (!current) return [];
+    const ids =
+      current.checkpointQuestionIds ??
+      (current.checkpointQuestionId ? [current.checkpointQuestionId] : []);
+    return ids
+      .map((id) => questionsById.get(id))
+      .filter((q): q is QuizQuestion => q != null);
+  }, [current, questionsById]);
+
   const isCheckpoint =
-    current?.type === "checkpoint" || current?.checkpointQuestionId != null;
-  const checkpointQuestion =
-    current?.checkpointQuestionId != null
-      ? questionsById.get(current.checkpointQuestionId) ?? null
-      : null;
+    current?.type === "checkpoint" || checkpointQuestions.length > 0;
 
   const highlightLayer =
     current?.showFullStack === true
       ? undefined
       : anchorType === "tcp-ip-stack"
         ? current?.tcpLayer ?? undefined
-        : current?.osiLayer ?? undefined;
+        : anchorType === "osi-stack"
+          ? current?.osiLayer ?? undefined
+          : undefined;
+
+  const gitWorkflowStep =
+    anchorType === "git-workflow" ? current?.gitWorkflowStep : undefined;
 
   const advance = useCallback(() => {
     if (screenIndex < screens.length - 1) {
@@ -109,7 +122,7 @@ export function ExperiencePlayer({
     if (touchStartX.current === null) return;
     const delta = e.changedTouches[0].clientX - touchStartX.current;
     if (delta < -SWIPE_THRESHOLD) {
-      if (!isCheckpoint || checkpointQuestion) advance();
+      if (!isCheckpoint || checkpointQuestions.length > 0) advance();
     } else if (delta > SWIPE_THRESHOLD) {
       goBack();
     }
@@ -145,16 +158,21 @@ export function ExperiencePlayer({
           <TcpIpStackDiagram highlightLayer={highlightLayer} compact />
         </div>
       )}
+      {anchorType === "git-workflow" && (
+        <div className="shrink-0">
+          <GitWorkflowDiagram highlightStep={gitWorkflowStep} compact />
+        </div>
+      )}
 
       <div
         className="flex min-h-0 flex-1 flex-col touch-pan-y"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
-        {isCheckpoint && checkpointQuestion ? (
+        {isCheckpoint && checkpointQuestions.length > 0 ? (
           <LessonCheckpoint
             key={`${current.id}-${screenIndex}`}
-            question={checkpointQuestion}
+            questions={checkpointQuestions}
             stepNumber={screenIndex + 1}
             onContinue={advance}
           />

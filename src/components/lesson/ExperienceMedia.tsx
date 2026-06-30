@@ -4,6 +4,7 @@ import type { ExperienceMediaDef } from "@/content/types";
 import {
   ArrowDown,
   Cable,
+  Folder,
   Globe,
   Layers,
   Monitor,
@@ -26,6 +27,7 @@ const ICON_MAP: Record<string, LucideIcon> = {
   wifi: Wifi,
   radio: Radio,
   globe: Globe,
+  folder: Folder,
   layers: Layers,
 };
 

@@ -97,7 +97,7 @@ export default function DashboardPage() {
         title="Bridge Study Companion"
         subtitle={
           primaryCert
-            ? `Studying ${primaryCert.shortName} · ${coachingLevelLabel(primaryCert.id)}`
+            ? `Studying ${primaryCert.shortName} · ${coachingLevelLabel(primaryCert.id, primaryCert)}`
             : "Your certification study hub"
         }
       />

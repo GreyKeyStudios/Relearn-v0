@@ -8,24 +8,40 @@ import { Card } from "@/components/ui/Card";
 import { ClipboardCheck } from "lucide-react";
 
 interface LessonCheckpointProps {
-  question: QuizQuestion;
+  questions: QuizQuestion[];
   stepNumber: number;
   onContinue: () => void;
 }
 
 export function LessonCheckpoint({
-  question,
+  questions,
   stepNumber,
   onContinue,
 }: LessonCheckpointProps) {
+  const [questionIndex, setQuestionIndex] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
 
+  const question = questions[questionIndex];
+  if (!question) return null;
+
   const isCorrect = selected === question.correctChoiceId;
+  const isMulti = questions.length > 1;
+  const isLastQuestion = questionIndex >= questions.length - 1;
 
   function handleCheck() {
     if (!selected) return;
     setShowResult(true);
+  }
+
+  function handleContinue() {
+    if (!isLastQuestion) {
+      setQuestionIndex((i) => i + 1);
+      setSelected(null);
+      setShowResult(false);
+      return;
+    }
+    onContinue();
   }
 
   return (
@@ -34,12 +50,13 @@ export function LessonCheckpoint({
         <ClipboardCheck className="h-4 w-4" />
         <span className="text-xs font-semibold uppercase tracking-wide">
           Checkpoint {stepNumber}
+          {isMulti ? ` · Question ${questionIndex + 1} of ${questions.length}` : ""}
         </span>
       </div>
       <QuestionCard
         question={question}
-        questionNumber={stepNumber}
-        totalQuestions={stepNumber}
+        questionNumber={questionIndex + 1}
+        totalQuestions={questions.length}
         selectedChoiceId={selected}
         onSelect={setSelected}
         showResult={showResult}
@@ -59,8 +76,8 @@ export function LessonCheckpoint({
           >
             {isCorrect ? "Nice — keep going." : "Review the explanation, then continue."}
           </p>
-          <Button className="w-full" onClick={onContinue}>
-            Continue
+          <Button className="w-full" onClick={handleContinue}>
+            {isLastQuestion ? "Continue" : "Next question"}
           </Button>
         </div>
       )}

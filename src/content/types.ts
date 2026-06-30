@@ -97,9 +97,13 @@ export interface ExperienceScreen {
   /** Breadcrumb list — anxiety reducers for deferred depth */
   laterLearn?: string[];
   checkpointQuestionId?: string;
+  /** Multiple quiz questions on one checkpoint screen (in order) */
+  checkpointQuestionIds?: string[];
+  /** Git workflow anchor highlight (skills track) */
+  gitWorkflowStep?: 1 | 2 | 3 | 4;
 }
 
-export type ExperienceAnchorType = "osi-stack" | "tcp-ip-stack";
+export type ExperienceAnchorType = "osi-stack" | "tcp-ip-stack" | "git-workflow";
 
 export interface TopicExperience {
   anchor: { type: ExperienceAnchorType };

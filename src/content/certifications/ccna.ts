@@ -142,6 +142,21 @@ Encapsulation wraps upper-layer data with headers (and sometimes trailers) as it
               objectiveId: "CCNA-1.2",
               difficulty: "medium",
             },
+            {
+              id: "osi-q6",
+              prompt: "What is the correct PDU order from Layer 4 down to Layer 1?",
+              choices: [
+                { id: "a", text: "Packet, Segment, Frame, Bits" },
+                { id: "b", text: "Segment, Packet, Frame, Bits" },
+                { id: "c", text: "Frame, Packet, Segment, Bits" },
+                { id: "d", text: "Segment, Frame, Packet, Bits" },
+              ],
+              correctChoiceId: "b",
+              explanation:
+                "Going down the stack: Transport = segment (or datagram), Network = packet, Data Link = frame, Physical = bits.",
+              objectiveId: "CCNA-1.2",
+              difficulty: "medium",
+            },
           ],
           flashcards: [
             {
@@ -1549,7 +1564,7 @@ Every host needs a unique address in its subnet, a matching mask, and a default 
                 { id: "d", text: "192.168.1" },
               ],
               correctChoiceId: "b",
-              explanation: "10.0.5.8 is valid — four octets, each 0–255. It is also a private RFC 1918 address, but private does not mean invalid.",
+              explanation: "10.0.5.8 is valid — four octets, each 0–255.",
               objectiveId: "CCNA-1.7",
               difficulty: "medium",
             },
@@ -1588,7 +1603,7 @@ Every host needs a unique address in its subnet, a matching mask, and a default 
             {
               id: "ipv4-addressing-f6",
               front: "Is 10.0.5.8 a valid IPv4 address?",
-              back: "Yes — four octets 0–255; also a private RFC 1918 address (private ≠ invalid)",
+              back: "Yes — four octets, each 0–255",
             },
           ],
           objectives: [
@@ -2637,6 +2652,30 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
             }
           ],
           assignments: [
+            {
+              id: "packet-tracer-intro",
+              title: "Get Started with Packet Tracer",
+              type: "external-lab",
+              instructions: `Install Packet Tracer before hands-on subnet and routing labs.
+
+1. Open the Bridge Packet Tracer guide (link on this page) — download, UI tour, troubleshooting.
+2. Create a free Cisco Networking Academy account and install Packet Tracer.
+3. Build a simple topology: one PC + one switch, copper straight-through cable.
+4. Set the PC to 192.168.1.10 / 255.255.255.0.
+5. PC Desktop → Command Prompt → ping 127.0.0.1.
+
+You will reuse Packet Tracer for subnetting, VLANs, static routes, and OSPF.`,
+              estimatedMinutes: 30,
+              externalResourceId: "packet-tracer",
+              completionCriteria: [
+                "Read the Bridge Packet Tracer getting-started guide",
+                "Installed and launched Packet Tracer",
+                "Built a PC + switch topology with a cable",
+                "Ran ping 127.0.0.1 from the PC command prompt",
+              ],
+              relatedTopicIds: ["subnetting"],
+              order: 0,
+            },
             {
               id: "subnet-cidr-sim",
               title: "Subnet & CIDR Drill",
