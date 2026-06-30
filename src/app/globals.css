@@ -8,3 +8,56 @@
 body {
   font-family: var(--font-sans), system-ui, sans-serif;
 }
+
+@keyframes experience-enter {
+  from {
+    opacity: 0;
+    transform: translateX(0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes experience-enter-back {
+  from {
+    opacity: 0;
+    transform: translateX(-0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes experience-media-enter {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.experience-enter {
+  animation: experience-enter 300ms ease-out both;
+}
+
+.experience-enter-back {
+  animation: experience-enter-back 300ms ease-out both;
+}
+
+.experience-media-enter {
+  animation: experience-media-enter 300ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .experience-enter,
+  .experience-enter-back,
+  .experience-media-enter {
+    animation: none;
+  }
+}

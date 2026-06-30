@@ -1,4 +1,9 @@
 import type { Certification } from "../types";
+import { OSI_MODEL_EXPERIENCE } from "@/content/lessons/osi-model-experience";
+import { TCP_IP_MODEL_EXPERIENCE } from "@/content/lessons/tcp-ip-model-experience";
+import { ETHERNET_MODEL_EXPERIENCE } from "@/content/lessons/ethernet-model-experience";
+import { IPV4_ADDRESSING_EXPERIENCE } from "@/content/lessons/ipv4-addressing-experience";
+import { SUBNETTING_EXPERIENCE } from "@/content/lessons/subnetting-experience";
 
 export const ccna: Certification = {
   id: "ccna",
@@ -36,6 +41,8 @@ On the CCNA exam, expect drag-and-drop questions that map protocols to layers. H
 When troubleshooting, work top-down or bottom-up systematically. A successful ping proves Layers 1–3 (and ICMP) are likely functional between two hosts. If ping works but a web page fails, suspect application-layer issues, proxy settings, or firewalls filtering TCP port 443.
 
 Encapsulation wraps upper-layer data with headers (and sometimes trailers) as it descends the stack. De-encapsulation strips those headers at each layer on the receiving host. Each layer adds its own Protocol Data Unit (PDU): segments at Transport, packets at Network, frames at Data Link, and bits at Physical.`,
+            visual: "osi-stack",
+            experience: OSI_MODEL_EXPERIENCE,
           },
           keyFacts: [
             "The OSI model has 7 layers: Application, Presentation, Session, Transport, Network, Data Link, Physical",
@@ -477,6 +484,7 @@ Encapsulation wraps upper-layer data with headers (and sometimes trailers) as it
         {
           id: "tcp-ip-model",
           name: "TCP/IP Model",
+          prerequisites: ["osi-model"],
           lesson: {
             title: "The TCP/IP Model",
             content: `The TCP/IP model is the practical networking model used on the modern Internet. Unlike the 7-layer OSI model, TCP/IP has four layers that map loosely to OSI layers but reflect how protocols are actually implemented.
@@ -492,6 +500,7 @@ Protocol suites in the Application layer include HTTP/HTTPS for web traffic, DNS
 ICMP lives at the Internet layer alongside IP and provides diagnostics like ping (echo request/reply) and unreachable messages. ARP resolves IP to MAC and sits at the boundary between Internet and Network Access layers—often described as Layer 2.5.
 
 Dual-stack hosts run IPv4 and IPv6 simultaneously. When studying for CCNA, practice mapping exam questions between OSI seven layers and TCP/IP four layers quickly.`,
+            experience: TCP_IP_MODEL_EXPERIENCE,
           },
           keyFacts: [
             "TCP/IP has 4 layers: Application, Transport, Internet, Network Access",
@@ -932,6 +941,7 @@ Dual-stack hosts run IPv4 and IPv6 simultaneously. When studying for CCNA, pract
         {
           id: "ethernet",
           name: "Ethernet",
+          prerequisites: ["osi-model", "tcp-ip-model"],
           lesson: {
             title: "Ethernet Fundamentals",
             content: `Ethernet is the dominant Layer 2 technology for wired local area networks. Defined originally by IEEE 802.3, it uses MAC addresses to deliver frames between devices on the same broadcast domain. Common speeds include 10 Mbps, 100 Mbps (Fast Ethernet), 1 Gbps, and 10 Gbps.
@@ -947,14 +957,15 @@ Ethernet variants include 10BASE-T (10 Mbps over copper), 100BASE-TX (Fast Ether
 The Ethernet header includes a 6-byte destination MAC, 6-byte source MAC, optional 802.1Q VLAN tag (4 bytes when present), EtherType/Length field, payload (46–1500 bytes typical), and 4-byte FCS. Broadcast MAC is FF:FF:FF:FF:FF:FF; unicast addresses have an even first octet in the I/G bit convention.
 
 Jumbo frames exceed 1500-byte MTU and may not traverse all paths. Understanding collision vs broadcast domains remains essential even in full-duplex switched networks.`,
+            experience: ETHERNET_MODEL_EXPERIENCE,
           },
           keyFacts: [
-            "Ethernet operates at OSI Layer 2 using 48-bit MAC addresses",
+            "Ethernet is the IEEE 802.3 standard — not just a cable type",
+            "Ethernet spans OSI Layers 1 (Physical) and 2 (Data Link) using 48-bit MAC addresses",
             "Switches learn MAC addresses and forward frames based on destination MAC",
+            "For remote destinations, the frame destination MAC is the default gateway (router)",
             "Full-duplex on switched ports eliminates collisions",
-            "Auto-negotiation selects speed and duplex between connected devices",
             "The FCS field provides error detection for Ethernet frames",
-            "IEEE 802.3 defines the Ethernet standard",
           ],
           commonMistakes: [
             "Confusing collision domains (hubs) with broadcast domains (switches/VLANs)",
@@ -1041,6 +1052,20 @@ Jumbo frames exceed 1500-byte MTU and may not traverse all paths. Understanding 
               objectiveId: "CCNA-1.5",
               difficulty: "medium",
             },
+            {
+              id: "ethernet-q9",
+              prompt: "When a host sends traffic to a remote server (not on the local LAN), what MAC address is in the Ethernet frame destination field?",
+              choices: [
+                { id: "a", text: "The remote server's MAC address" },
+                { id: "b", text: "The default gateway's MAC address" },
+                { id: "c", text: "FF:FF:FF:FF:FF:FF" },
+                { id: "d", text: "The host's own MAC address" },
+              ],
+              correctChoiceId: "b",
+              explanation: "The remote server's MAC is unknown on your LAN. The frame goes to the default gateway (router), which routes the IP packet onward.",
+              objectiveId: "CCNA-1.5",
+              difficulty: "medium",
+            },
           ],
           flashcards: [
             {
@@ -1072,7 +1097,12 @@ Jumbo frames exceed 1500-byte MTU and may not traverse all paths. Understanding 
               id: "ethernet-f4c",
               front: "CSMA/CD used in?",
               back: "Legacy half-duplex shared Ethernet",
-            }
+            },
+            {
+              id: "ethernet-f5",
+              front: "Destination MAC for remote traffic?",
+              back: "Default gateway (router) MAC — the remote server MAC is not on your LAN",
+            },
           ],
           objectives: [
             "CCNA-1.3",
@@ -1384,6 +1414,7 @@ Jumbo frames exceed 1500-byte MTU and may not traverse all paths. Understanding 
         {
           id: "ipv4-addressing",
           name: "IPv4 Addressing",
+          prerequisites: ["osi-model", "tcp-ip-model", "ethernet"],
           lesson: {
             title: "IPv4 Address Structure and Classes",
             content: `IPv4 addresses are 32-bit logical identifiers written as four decimal octets separated by dots, such as 192.168.1.10. Each octet ranges from 0 to 255. IPv4 addresses identify hosts and interfaces on IP networks and are used by routers to forward packets between subnets.
@@ -1399,14 +1430,15 @@ IPv4 addresses are 32-bit dotted-decimal values. The subnet mask (or prefix leng
 Private RFC 1918 ranges: 10.0.0.0/8, 172.16.0.0/12, 172.31.255.255, and 192.168.0.0/16. APIPA 169.254.0.0/16 indicates DHCP failure. Loopback 127.0.0.0/8 tests the local stack.
 
 Every host needs a unique address in its subnet, a matching mask, and a default gateway on the same subnet to reach remote networks. Practice converting between dotted-decimal masks and prefix lengths—CCNA exams test this heavily.`,
+            experience: IPV4_ADDRESSING_EXPERIENCE,
           },
           keyFacts: [
-            "IPv4 addresses are 32 bits written as four dotted decimal octets",
-            "Private ranges: 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16",
+            "IPv4 addresses are 32 bits written as four dotted decimal octets (0–255 each)",
+            "Dotted decimal groups 32 binary bits into four octets for human readability",
+            "Private RFC 1918 ranges are valid — they are not routable on the public Internet",
             "Subnet mask or CIDR prefix defines network vs host bits",
-            "Default gateway is the router used to reach other networks",
+            "Default gateway must be on the same subnet as the host",
             "127.0.0.1 is the IPv4 loopback address",
-            "169.254.x.x is APIPA/link-local when DHCP is unavailable",
           ],
           commonMistakes: [
             "Confusing network address, host address, and broadcast in the same subnet",
@@ -1475,7 +1507,7 @@ Every host needs a unique address in its subnet, a matching mask, and a default 
                 { id: "d", text: "255.255.255.252" },
               ],
               correctChoiceId: "b",
-              explanation: "/24 means 24 network bits: 255.255.255.0.",
+              explanation: "/24 means 24 network bits: 255.255.255.0 — three octets locked as network (255), one octet for hosts (0).",
               objectiveId: "CCNA-1.8",
               difficulty: "easy",
             },
@@ -1490,6 +1522,34 @@ Every host needs a unique address in its subnet, a matching mask, and a default 
               ],
               correctChoiceId: "b",
               explanation: "APIPA assigns addresses from 169.254.0.0/16 automatically.",
+              objectiveId: "CCNA-1.7",
+              difficulty: "medium",
+            },
+            {
+              id: "ipv4-addressing-q6",
+              prompt: "A host has IP 192.168.1.50/24. Which default gateway can it use?",
+              choices: [
+                { id: "a", text: "192.168.1.1" },
+                { id: "b", text: "10.0.0.1" },
+                { id: "c", text: "192.168.2.1" },
+                { id: "d", text: "172.16.5.1" },
+              ],
+              correctChoiceId: "a",
+              explanation: "The default gateway must be on the same subnet. 192.168.1.1 shares the /24 network with 192.168.1.50.",
+              objectiveId: "CCNA-1.7",
+              difficulty: "medium",
+            },
+            {
+              id: "ipv4-addressing-q7",
+              prompt: "Which is a valid IPv4 address?",
+              choices: [
+                { id: "a", text: "192.168.1.256" },
+                { id: "b", text: "10.0.5.8" },
+                { id: "c", text: "300.1.1.1" },
+                { id: "d", text: "192.168.1" },
+              ],
+              correctChoiceId: "b",
+              explanation: "10.0.5.8 is valid — four octets, each 0–255. It is also a private RFC 1918 address, but private does not mean invalid.",
               objectiveId: "CCNA-1.7",
               difficulty: "medium",
             },
@@ -1524,7 +1584,12 @@ Every host needs a unique address in its subnet, a matching mask, and a default 
               id: "ipv4-addressing-f4c",
               front: "Purpose of default gateway?",
               back: "Router interface for off-subnet traffic",
-            }
+            },
+            {
+              id: "ipv4-addressing-f6",
+              front: "Is 10.0.5.8 a valid IPv4 address?",
+              back: "Yes — four octets 0–255; also a private RFC 1918 address (private ≠ invalid)",
+            },
           ],
           objectives: [
             "CCNA-1.6",
@@ -1851,6 +1916,7 @@ Subnetting divides a network into smaller broadcast domains. Given a requirement
 VLSM allows different mask lengths within the same major network to minimize wasted addresses—critical for point-to-point links using /30 or /31. Always allocate largest subnets first when using VLSM to avoid overlap.
 
 Exam strategy: write out the block size (256 − last octet of mask for /24-style problems), list subnet boundaries, and verify host ranges. Double-check that network and broadcast addresses are excluded from assignable hosts.`,
+            experience: SUBNETTING_EXPERIENCE,
           },
           keyFacts: [
             "Usable hosts = 2^host_bits - 2 (exclude network and broadcast)",

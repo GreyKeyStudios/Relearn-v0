@@ -48,6 +48,7 @@ export default async function QuizPage({ params, searchParams }: QuizPageProps) 
     <QuizPageClient
       certId={certId}
       topicId={topicId}
+      cert={cert}
       topic={topic}
       questions={questions}
       isBank={isBank}

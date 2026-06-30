@@ -51,6 +51,8 @@ Plan → Architecture → Standards → Completion criteria → Delegate → Int
 | **Phase 4** | Complete | Mastery, adaptive review, study planner — see `.cursor/plans/phase_4_learning_intelligence.plan.md` |
 | **Phase 4.5** | Complete | Objective/domain mastery, difficulty tags, interactive case studies (CCNA pilot) |
 | **Phase 4.75** | Complete | Coach UX polish — Study Now card, weak objectives UX, planner tuning |
+| **Phase 4.8** | Complete | Bridge Learning Standard, CCNA pedagogy sprint — see `docs/bridge-learning-standard.md` |
+| **Phase 4.9** | In progress | Learning Experience Standard (B+), ExperiencePlayer, OSI reference experience — see `docs/learning-experience-standard.md` |
 | **Phase 5** | Planned | AI-assisted learning — Explain This Mistake first (never chat-first) |
 | **Phase 6** | Planned | Native app (Capacitor/Expo after Phase 4 gates) |
 | **Phase 7** | Planned (blocked) | Python Foundations — Code Lab engine + curriculum informed by learner research |
@@ -248,6 +250,44 @@ M0 → P3-Platform → P3-UI + P3-CCNA (parallel) → P3-Verify
 
 Legacy Phase 1/2 agents (A0–A9, B0–B9) are complete. New work uses M0 / P3-* naming.
 
+### Phase 4.9 learning experience roster (CCNA pilot)
+
+```text
+M0 → P4.9-LXA (storyboard) + P4.8-Cognitive + P4.8-SME (audit) → P3-CCNA → P3-Verify → Michael walkthrough + reflection
+```
+
+| Agent | Owns |
+|---|---|
+| **P4.9-LXA** | `docs/learning-experience-standard.md`, `docs/reference-experiences.md`, experience storyboards |
+| **P4.8-Path** | `docs/ccna-learning-path.md`, audit path/prerequisite columns |
+| **P4.8-Cognitive** | Cognitive load audits per experience storyboard |
+| **P4.8-SME** | Accuracy / exam realism audits |
+| **P4.9-Platform** | `ExperiencePlayer`, `verify-experience.ts`, `experience` schema in `types.ts` |
+| **P3-CCNA** | `ccna.ts` experience content after audits |
+
+**Skills:** `.cursor/skills/p49-learning-experience-architect/` — LXA storyboard design. Legacy `.cursor/skills/p48-lesson-designer/` for BLS-only audits.
+
+**Standard:** [`docs/learning-experience-standard.md`](docs/learning-experience-standard.md) (LES-0–10). **Verify:** `npm run verify:curriculum -- --strict-experience`
+
+### Phase 4.8 pedagogy roster (CCNA pilot)
+
+```text
+M0 → P4.8-Path + P4.8-Lesson + P4.8-Cognitive + P4.8-SME (audit) → P3-CCNA → P3-Verify → Michael walkthrough + reflection
+```
+
+| Agent | Owns |
+|---|---|
+| **P4.8-Path** | `docs/ccna-learning-path.md`, audit path/prerequisite columns |
+| **P4.8-Lesson** | Teach-before-test audits, `docs/reference-lessons.md` |
+| **P4.8-Cognitive** | Cognitive load audits per topic |
+| **P4.8-SME** | Accuracy / exam realism audits |
+| **P4.8-Platform** | `lessonCheckpoints` in `types.ts`, `verify-pedagogy.ts`, `lesson-steps.ts` |
+| **P3-CCNA** | `ccna.ts` content fixes after audits |
+
+**Skills:** `.cursor/skills/p48-*` — one Cursor chat per reviewer role.
+
+**Standard:** [`docs/bridge-learning-standard.md`](docs/bridge-learning-standard.md) (10 rules). **Verify:** `npm run verify:curriculum -- --strict-pedagogy`
+
 ---
 
 ## 9. File ownership (content agents)
@@ -432,6 +472,14 @@ Type stub: `LearnerConfidenceScore` in [`src/types/readiness.ts`](src/types/read
 - [ ] Subnetting lesson renders CES + metadata bar
 - [ ] Study loop intact (lesson → quiz → sim auto-complete)
 
+### After Phase 4.8 (per CCNA domain wave)
+- [ ] Domain audit sheet complete (4 reviewers)
+- [ ] P3-CCNA fixes applied
+- [ ] `npm run verify:curriculum -- --strict-ccna --strict-ccna-objectives --strict-pedagogy`
+- [ ] Michael learner walkthrough PASS
+- [ ] Reflection notes in `.cursor/plans/ccna-pedagogy-audits/reflections/`
+- [ ] Reference lesson `ccna:osi-model` approved before other topics compared to it
+
 ---
 
 ## 17. Future track: Python Foundations (Phase 7)
@@ -481,4 +529,4 @@ Every new ReLearn subject (Python, French, music theory, algebra, etc.) must com
 
 ---
 
-*Phase 1–4.75 complete. Measurement layer live on CCNA pilot; coach UX unified. Phase 5: AI-assisted learning (Explain This Mistake first). Phase 7: Python Foundations — planning complete, implementation blocked until learner research.*
+*Phase 1–4.75 complete. Phase 4.8 complete. Phase 4.9 in progress: Learning Experience Standard + OSI reference experience. Phase 5: AI-assisted learning. Phase 7: Python — blocked until learner research.*

@@ -2,8 +2,30 @@ import type { TopicMastery } from "@/types/mastery";
 import { DEFAULT_STUDY_PLAN } from "@/types/mastery";
 import type { ProgressState } from "@/types/progress";
 
-const V1_KEY = "bridge-study-progress-v1";
-const V2_KEY = "bridge-study-progress-v2";
+export const PROGRESS_STORAGE_V1_KEY = "bridge-study-progress-v1";
+export const PROGRESS_STORAGE_V2_KEY = "bridge-study-progress-v2";
+
+const SESSION_STORAGE_PREFIXES = ["lesson-step:", "bridge-quiz-retry:"] as const;
+
+/** Wipe all persisted learner data (progress, lesson steps, quiz retries). */
+export function clearAllLearnerStorage(): void {
+  if (typeof window === "undefined") return;
+
+  localStorage.removeItem(PROGRESS_STORAGE_V1_KEY);
+  localStorage.removeItem(PROGRESS_STORAGE_V2_KEY);
+
+  const keysToRemove: string[] = [];
+  for (let i = 0; i < sessionStorage.length; i++) {
+    const key = sessionStorage.key(i);
+    if (!key) continue;
+    if (SESSION_STORAGE_PREFIXES.some((prefix) => key.startsWith(prefix))) {
+      keysToRemove.push(key);
+    }
+  }
+  for (const key of keysToRemove) {
+    sessionStorage.removeItem(key);
+  }
+}
 
 /** Bump when persisted shape changes; must match persist `version` in progress-store */
 export const PROGRESS_STORAGE_VERSION = 3;
@@ -63,10 +85,10 @@ export function migrateProgressState(
 export function migrateV1ToV2IfNeeded(): void {
   if (typeof window === "undefined") return;
 
-  const v2Raw = localStorage.getItem(V2_KEY);
+  const v2Raw = localStorage.getItem(PROGRESS_STORAGE_V2_KEY);
   if (v2Raw) return;
 
-  const v1Raw = localStorage.getItem(V1_KEY);
+  const v1Raw = localStorage.getItem(PROGRESS_STORAGE_V1_KEY);
   if (!v1Raw) return;
 
   try {
@@ -77,7 +99,7 @@ export function migrateV1ToV2IfNeeded(): void {
       "state" in parsed && parsed.state ? parsed.state : (parsed as Partial<ProgressState>);
     const migrated = migrateProgressState(v1State, 0);
     localStorage.setItem(
-      V2_KEY,
+      PROGRESS_STORAGE_V2_KEY,
       JSON.stringify({ state: migrated, version: PROGRESS_STORAGE_VERSION })
     );
   } catch {

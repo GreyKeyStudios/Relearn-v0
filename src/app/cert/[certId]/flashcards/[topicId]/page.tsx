@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { FlashcardDeck } from "@/components/flashcards/FlashcardDeck";
 import { getTopic } from "@/lib/content-selectors";
+import { getNextTopicInPath } from "@/lib/curriculum";
 
 interface FlashcardsPageProps {
   params: Promise<{ certId: string; topicId: string }>;
@@ -13,6 +14,7 @@ export default async function FlashcardsPage({ params }: FlashcardsPageProps) {
   if (!resolved) notFound();
 
   const { cert, topic } = resolved;
+  const nextTopic = getNextTopicInPath(cert, topicId);
 
   return (
     <div>
@@ -21,7 +23,7 @@ export default async function FlashcardsPage({ params }: FlashcardsPageProps) {
         subtitle={`${topic.name} · ${cert.shortName}`}
         backHref={`/cert/${certId}/lesson/${topicId}`}
       />
-      <FlashcardDeck certId={certId} topic={topic} cards={topic.flashcards} />
+      <FlashcardDeck certId={certId} topic={topic} cards={topic.flashcards} nextTopic={nextTopic} />
     </div>
   );
 }

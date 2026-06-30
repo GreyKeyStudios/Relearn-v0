@@ -3,14 +3,16 @@
 import { useMemo } from "react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { QuizEngine } from "@/components/quiz/QuizEngine";
-import type { QuizQuestion, Topic } from "@/content/types";
+import type { QuizQuestion, Topic, Certification } from "@/content/types";
 import { consumeQuizRetryIds } from "@/lib/quiz-retry";
+import { getNextTopicInPath } from "@/lib/curriculum";
 import { topicBankKey } from "@/lib/ids";
 import { useProgressStore } from "@/stores/progress-store";
 
 interface QuizPageClientProps {
   certId: string;
   topicId: string;
+  cert: Certification;
   topic: Topic;
   questions: QuizQuestion[];
   isBank: boolean;
@@ -24,6 +26,7 @@ interface QuizPageClientProps {
 export function QuizPageClient({
   certId,
   topicId,
+  cert,
   topic,
   questions: serverQuestions,
   isBank,
@@ -47,6 +50,11 @@ export function QuizPageClient({
     return serverQuestions;
   }, [certId, topicId, isRetryMissed, serverQuestions]);
 
+  const nextTopic = useMemo(
+    () => getNextTopicInPath(cert, topicId),
+    [cert, topicId]
+  );
+
   return (
     <div>
       <PageHeader
@@ -67,6 +75,7 @@ export function QuizPageClient({
         activityLabel={isBank ? `${topic.name} question bank` : undefined}
         isRetryMissed={isRetryMissed}
         sessionCapMinutes={sessionMinutes}
+        nextTopic={nextTopic}
       />
     </div>
   );

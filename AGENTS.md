@@ -21,6 +21,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 ```bash
 npm run build
 npm run verify:curriculum -- --strict-ccna --strict-ccna-objectives
+npm run verify:curriculum -- --strict-pedagogy   # Phase 4.8 BLS warnings
 npx tsc --noEmit
 ```
 

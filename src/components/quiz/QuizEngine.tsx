@@ -11,6 +11,7 @@ import { useProgressStore } from "@/stores/progress-store";
 import { useStoreHydration } from "@/hooks/use-store-hydration";
 import { QuestionCard } from "./QuestionCard";
 import { QuizResults } from "./QuizResults";
+import type { NextTopicInfo } from "@/components/topic/TopicWhatsNext";
 import { Button } from "@/components/ui/Button";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 
@@ -25,6 +26,7 @@ interface QuizEngineProps {
   recordAttempt?: boolean;
   isRetryMissed?: boolean;
   sessionCapMinutes?: number | null;
+  nextTopic?: NextTopicInfo | null;
 }
 
 function questionIdsFor(questions: QuizQuestion[]): string[] {
@@ -62,6 +64,7 @@ export function QuizEngine({
   recordAttempt = true,
   isRetryMissed = false,
   sessionCapMinutes = null,
+  nextTopic = null,
 }: QuizEngineProps) {
   const router = useRouter();
   const hydrated = useStoreHydration();
@@ -239,6 +242,8 @@ export function QuizEngine({
               }
             : undefined
         }
+        topicName={topic.name}
+        nextTopic={nextTopic}
       />
     );
   }
