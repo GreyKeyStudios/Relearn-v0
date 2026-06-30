@@ -101,9 +101,15 @@ export interface ExperienceScreen {
   checkpointQuestionIds?: string[];
   /** Git workflow anchor highlight (skills track) */
   gitWorkflowStep?: 1 | 2 | 3 | 4;
+  /** PowerShell shell workflow anchor highlight (skills track) */
+  powershellShellStep?: 1 | 2 | 3 | 4;
 }
 
-export type ExperienceAnchorType = "osi-stack" | "tcp-ip-stack" | "git-workflow";
+export type ExperienceAnchorType =
+  | "osi-stack"
+  | "tcp-ip-stack"
+  | "git-workflow"
+  | "powershell-shell";
 
 export interface TopicExperience {
   anchor: { type: ExperienceAnchorType };

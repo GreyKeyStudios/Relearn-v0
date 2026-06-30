@@ -83,6 +83,7 @@ export function smokeTestPaths(): { path: string; ok: boolean; detail: string }[
   const secCert = getAssignment("security-plus", "cert-chain-drill");
 
   const gitLab = getAssignment("git-github", "git-lab-spot-vc-problem");
+  const psLab = getAssignment("powershell", "ps-lab-first-commands");
 
   return [
     {
@@ -134,6 +135,16 @@ export function smokeTestPaths(): { path: string; ok: boolean; detail: string }[
       path: "/cert/git-github/assignment/git-lab-spot-vc-problem",
       ok: !!gitLab && gitLab.assignment.type === "external-lab",
       detail: "Git/GitHub spot-the-problem lab",
+    },
+    {
+      path: "/cert/powershell/lesson/ps-why-the-shell",
+      ok: !!getAssignment("powershell", "ps-lab-first-commands"),
+      detail: "PowerShell Module 1 lesson and lab resolve",
+    },
+    {
+      path: "/cert/powershell/assignment/ps-lab-first-commands",
+      ok: !!psLab && psLab.assignment.type === "external-lab",
+      detail: "PowerShell first commands lab",
     },
   ];
 }

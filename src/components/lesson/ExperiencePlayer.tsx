@@ -5,6 +5,7 @@ import type { ExperienceAnchorType, ExperienceScreen, ExperienceTerm, QuizQuesti
 import { lessonProgressStorageKey } from "@/lib/lesson-steps";
 import { LessonCheckpoint } from "@/components/lesson/LessonCheckpoint";
 import { GitWorkflowDiagram } from "@/components/lesson/GitWorkflowDiagram";
+import { PowerShellShellDiagram } from "@/components/lesson/PowerShellShellDiagram";
 import { OsiStackDiagram } from "@/components/lesson/OsiStackDiagram";
 import { TcpIpStackDiagram } from "@/components/lesson/TcpIpStackDiagram";
 import { StudyTipCard } from "@/components/lesson/StudyTipCard";
@@ -97,6 +98,9 @@ export function ExperiencePlayer({
   const gitWorkflowStep =
     anchorType === "git-workflow" ? current?.gitWorkflowStep : undefined;
 
+  const powershellShellStep =
+    anchorType === "powershell-shell" ? current?.powershellShellStep : undefined;
+
   const advance = useCallback(() => {
     if (screenIndex < screens.length - 1) {
       setSlideDir("left");
@@ -161,6 +165,11 @@ export function ExperiencePlayer({
       {anchorType === "git-workflow" && (
         <div className="shrink-0">
           <GitWorkflowDiagram highlightStep={gitWorkflowStep} compact />
+        </div>
+      )}
+      {anchorType === "powershell-shell" && (
+        <div className="shrink-0">
+          <PowerShellShellDiagram highlightStep={powershellShellStep} compact />
         </div>
       )}
 

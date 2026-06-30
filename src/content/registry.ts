@@ -4,6 +4,7 @@ import { azureFundamentals } from "./certifications/azure-fundamentals";
 import { ccna } from "./certifications/ccna";
 import { cysaPlus } from "./certifications/cysa-plus";
 import { gitGithub } from "./certifications/git-github";
+import { powershell } from "./certifications/powershell";
 import { itilFoundation } from "./certifications/itil-foundation";
 import { linuxPlus } from "./certifications/linux-plus";
 import { networkPlus } from "./certifications/network-plus";
@@ -12,6 +13,7 @@ import { securityPlus } from "./certifications/security-plus";
 export const CERTIFICATIONS: Certification[] = [
   ccna,
   gitGithub,
+  powershell,
   securityPlus,
   networkPlus,
   cysaPlus,
