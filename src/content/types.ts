@@ -19,10 +19,146 @@ export interface Domain {
   topics: Topic[];
 }
 
+export interface StudyTip {
+  title: string;
+  body: string;
+}
+
+/** Authored lesson step — one screen, optional visual + checkpoint (Phase 4.8). */
+export interface LessonStepDef {
+  id: string;
+  title: string;
+  body: string;
+  /** Highlight layer 1–7 on OSI diagram */
+  osiLayer?: 1 | 2 | 3 | 4 | 5 | 6 | 7;
+  /** Show full stack with no layer highlighted */
+  showFullStack?: boolean;
+  studyTip?: StudyTip;
+  checkpointQuestionId?: string;
+}
+
+export type ExperienceScreenType =
+  | "hero"
+  | "teach"
+  | "flow"
+  | "analogy"
+  | "memory"
+  | "misconception"
+  | "checkpoint"
+  | "summary";
+
+export interface ExperienceMediaItem {
+  /** Lucide icon name, e.g. "cable", "monitor" */
+  icon: string;
+  label: string;
+}
+
+export interface ExperienceIconsMediaDef {
+  kind: "icons";
+  items: ExperienceMediaItem[];
+}
+
+export interface ExperienceFlowMediaDef {
+  kind: "flow";
+  items: ExperienceMediaItem[];
+}
+
+/** Interactive pie-slice visual for subnetting lessons. */
+export interface SubnetPieMediaDef {
+  kind: "subnet-pie";
+  prefix?: 24 | 25 | 26 | 27 | 28 | 29 | 30;
+  interactive?: boolean;
+  maxPrefix?: 24 | 25 | 26 | 27 | 28 | 29 | 30;
+}
+
+/** Gray-out IP + pick-the-block drill for subnetting lessons. */
+export interface BlockFinderMediaDef {
+  kind: "block-finder";
+  ip: string;
+  prefix: number;
+  mode?: "gray" | "interactive" | "revealed";
+}
+
+export type ExperienceMediaDef =
+  | ExperienceIconsMediaDef
+  | ExperienceFlowMediaDef
+  | SubnetPieMediaDef
+  | BlockFinderMediaDef;
+
+export interface DeferredTerm {
+  term: string;
+  teachInStepId: string;
+}
+
+/** Term tier for Permission To Defer (LES-11). */
+export type TermTier = "now" | "basics" | "later";
+
+export interface ExperienceTerm {
+  id: string;
+  label: string;
+  tier: TermTier;
+  /** Popover copy — max ~2 sentences */
+  shortDefinition: string;
+  /** Recognition example — e.g. MAC or IP address format */
+  example?: string;
+  laterTopicId?: string;
+  laterTopicLabel?: string;
+  laterItems?: string[];
+}
+
+/** One swipe card in a LES experience (Phase 4.9). */
+export interface ExperienceScreen {
+  id: string;
+  type: ExperienceScreenType;
+  headline: string;
+  body?: string;
+  /** TCP/IP layer 4=Application (top) through 1=Network Access (bottom) */
+  tcpLayer?: 1 | 2 | 3 | 4;
+  osiLayer?: 1 | 2 | 3 | 4 | 5 | 6 | 7;
+  showFullStack?: boolean;
+  studyTip?: StudyTip;
+  media?: ExperienceMediaDef;
+  /** @deprecated use terms with tier "later" */
+  deferredTerms?: DeferredTerm[];
+  terms?: ExperienceTerm[];
+  /** Breadcrumb list — anxiety reducers for deferred depth */
+  laterLearn?: string[];
+  checkpointQuestionId?: string;
+  /** Multiple quiz questions on one checkpoint screen (in order) */
+  checkpointQuestionIds?: string[];
+  /** Git workflow anchor highlight (skills track) */
+  gitWorkflowStep?: 1 | 2 | 3 | 4;
+  /** PowerShell shell workflow anchor highlight (skills track) */
+  powershellShellStep?: 1 | 2 | 3 | 4;
+}
+
+export type ExperienceAnchorType =
+  | "osi-stack"
+  | "tcp-ip-stack"
+  | "git-workflow"
+  | "powershell-shell";
+
+export interface TopicExperience {
+  anchor: { type: ExperienceAnchorType };
+  screens: ExperienceScreen[];
+}
+
+export interface TopicLesson {
+  title: string;
+  /** Reference prose after lesson complete */
+  content: string;
+  /** LES experience — preferred when set (Phase 4.9) */
+  experience?: TopicExperience;
+  /** When set, stepped lesson uses authored screens instead of auto-chunking */
+  steps?: LessonStepDef[];
+  /** Lesson-specific visual aid */
+  visual?: "osi-stack";
+}
+
 export interface Topic {
   id: string;
   name: string;
-  lesson: { title: string; content: string };
+  lesson: TopicLesson;
   keyFacts: string[];
   quiz: QuizQuestion[];
   flashcards: Flashcard[];
@@ -40,6 +176,8 @@ export interface Topic {
   estimatedStudyMinutes?: number;
   difficulty?: TopicDifficulty;
   prerequisites?: string[];
+  /** Phase 4.8 — quiz question IDs per lesson step index for inline checkpoints */
+  lessonCheckpoints?: string[];
 }
 
 export type TopicDifficulty = "easy" | "medium" | "hard";

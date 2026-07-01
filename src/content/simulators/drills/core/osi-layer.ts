@@ -5,16 +5,32 @@ export const OSI_LAYER_POOL: OrderDrillItem[] = [
     id: "osi-layers",
     prompt: "Order the OSI layers from Layer 7 (top) to Layer 1 (bottom).",
     items: [
-      "Application (Layer 7)",
-      "Presentation (Layer 6)",
-      "Session (Layer 5)",
-      "Transport (Layer 4)",
-      "Network (Layer 3)",
-      "Data Link (Layer 2)",
-      "Physical (Layer 1)",
+      "Application",
+      "Presentation",
+      "Session",
+      "Transport",
+      "Network",
+      "Data Link",
+      "Physical",
     ],
     weakConcept: "OSI layer order",
     explanation: "Mnemonic: All People Seem To Need Data Processing (top to bottom).",
+  },
+  {
+    id: "osi-layers-up",
+    prompt: "Order the OSI layers from the wire up (Layer 1 to Layer 7).",
+    items: [
+      "Physical",
+      "Data Link",
+      "Network",
+      "Transport",
+      "Session",
+      "Presentation",
+      "Application",
+    ],
+    weakConcept: "OSI layer order (bottom up)",
+    explanation:
+      "Mnemonic: Please Do Not Throw Sausage Pizza Away — Physical at the wire, Application at the top.",
   },
   {
     id: "osi-pdu",
@@ -22,13 +38,6 @@ export const OSI_LAYER_POOL: OrderDrillItem[] = [
     items: ["Data", "Segment", "Packet", "Frame", "Bits"],
     weakConcept: "OSI PDU names",
     explanation: "Application data becomes segments (L4), packets (L3), frames (L2), bits (L1).",
-  },
-  {
-    id: "osi-devices",
-    prompt: "Order these by typical OSI layer operation (highest to lowest).",
-    items: ["Gateway / Application proxy", "Router", "Switch", "Hub / Repeater"],
-    weakConcept: "OSI device layers",
-    explanation: "Gateways operate at L7; routers at L3; switches at L2; hubs at L1.",
   },
   {
     id: "osi-protocols",
@@ -47,5 +56,7 @@ export const OSI_LAYER_POOL: OrderDrillItem[] = [
       "Convert to bits on wire",
     ],
     weakConcept: "Encapsulation order",
+    explanation:
+      "Going down: Transport wraps first (segment), then Network (packet), then Data Link (frame), then Physical (bits).",
   },
 ];

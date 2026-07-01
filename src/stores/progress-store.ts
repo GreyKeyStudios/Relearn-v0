@@ -16,6 +16,7 @@ import { activityId, assignmentKey, parseMasteryTopicKey, topicKey } from "@/lib
 import { getTopic } from "@/lib/content-selectors";
 import { recordAnswerBatch } from "@/lib/question-stats";
 import {
+  clearAllLearnerStorage,
   migrateProgressState,
   PROGRESS_STORAGE_VERSION,
 } from "@/lib/progress-migrate";
@@ -415,7 +416,10 @@ export const useProgressStore = create<ProgressStore>()(
         return Object.values(get().weakTopics).sort((a, b) => b.severity - a.severity);
       },
 
-      resetProgress: () => set(initialState),
+      resetProgress: () => {
+        clearAllLearnerStorage();
+        set(initialState);
+      },
     }),
     {
       name: "bridge-study-progress-v2",

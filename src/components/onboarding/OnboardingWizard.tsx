@@ -76,7 +76,7 @@ export function OnboardingWizard() {
                     }`}
                   >
                     <p className="font-medium text-zinc-100">{cert.shortName}</p>
-                    <p className="text-xs text-zinc-500">{coachingLevelLabel(cert.id)}</p>
+                    <p className="text-xs text-zinc-500">{coachingLevelLabel(cert.id, cert)}</p>
                   </button>
                 ))}
               </div>
@@ -108,7 +108,10 @@ export function OnboardingWizard() {
             <>
               <h2 className="text-lg font-semibold text-zinc-50">When is your exam?</h2>
               <p className="mt-1 text-sm text-zinc-400">
-                Optional — we&apos;ll show a countdown and pace guidance if you add a date.
+                {selectedCertId &&
+                certs.find((c) => c.id === selectedCertId)?.vendor === "ReLearn"
+                  ? "Optional for skills tracks — skip if you are not preparing for a vendor exam."
+                  : "Optional — we'll show a countdown and pace guidance if you add a date."}
               </p>
               <label className="mt-4 block text-xs text-zinc-400">
                 Exam date (optional)

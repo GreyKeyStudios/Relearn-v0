@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { RotateCcw, BookOpen, Target } from "lucide-react";
+import { TopicWhatsNext, type NextTopicInfo } from "@/components/topic/TopicWhatsNext";
 
 export interface QuizRemediationProps {
   certId: string;
@@ -32,6 +33,8 @@ interface QuizResultsProps {
   answers: QuizAnswer[];
   onDone: () => void;
   remediation?: QuizRemediationProps;
+  topicName?: string;
+  nextTopic?: NextTopicInfo | null;
 }
 
 export function QuizResults({
@@ -41,6 +44,8 @@ export function QuizResults({
   answers,
   onDone,
   remediation,
+  topicName,
+  nextTopic = null,
 }: QuizResultsProps) {
   const percent = Math.round((score / total) * 100);
   const passed = percent >= QUIZ_PASS_PERCENT;
@@ -122,6 +127,17 @@ export function QuizResults({
         </p>
       )}
 
+      {remediation && topicName && (
+        <TopicWhatsNext
+          certId={remediation.certId}
+          topicId={remediation.topicId}
+          topicName={topicName}
+          nextTopic={nextTopic}
+          variant="quiz"
+          onBackToTopic={onDone}
+        />
+      )}
+
       <div className="flex flex-col gap-4">
         <h3 className="text-sm font-semibold text-zinc-300">Review</h3>
         {questions.map((q, i) => {
@@ -142,9 +158,11 @@ export function QuizResults({
         })}
       </div>
 
-      <Button onClick={onDone} className="w-full" variant={hasMissed ? "secondary" : "primary"}>
-        Done
-      </Button>
+      {!remediation && (
+        <Button onClick={onDone} className="w-full" variant={hasMissed ? "secondary" : "primary"}>
+          Back to topic
+        </Button>
+      )}
     </div>
   );
 }

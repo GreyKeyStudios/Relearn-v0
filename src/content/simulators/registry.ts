@@ -22,6 +22,7 @@ import {
   PortProtocolDrill,
   SubnetCidrDrill,
   TcpipLayerMap,
+  EthernetDeviceDrill,
   VlsmDrill,
 } from "@/components/simulators/core";
 import {
@@ -79,6 +80,12 @@ export const coreRegistry: SimulatorRegistryEntry[] = [
     name: "TCP/IP Model Map",
     component: TcpipLayerMap,
     topicIds: ["tcp-ip-model", "network-models"],
+  },
+  {
+    id: "ethernet-device-drill",
+    name: "Ethernet Device Layers",
+    component: EthernetDeviceDrill,
+    topicIds: ["ethernet"],
   },
   {
     id: "log-line-triage",

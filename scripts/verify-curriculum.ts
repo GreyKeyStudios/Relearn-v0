@@ -7,10 +7,14 @@ import {
   verifyCcnaCesWarnings,
 } from "../src/lib/content-expansion";
 import { verifyCcnaObjectiveTags } from "../src/lib/verify-objectives";
+import { verifyCcnaPedagogyWarnings } from "../src/lib/verify-pedagogy";
+import { verifyCcnaExperienceWarnings } from "../src/lib/verify-experience";
 
 const strictCcna = process.argv.includes("--strict-ccna");
 const strictAll = process.argv.includes("--strict-all");
 const strictCcnaObjectives = process.argv.includes("--strict-ccna-objectives");
+const strictPedagogy = process.argv.includes("--strict-pedagogy");
+const strictExperience = process.argv.includes("--strict-experience");
 
 const issues = verifyCurriculumLinks();
 const smoke = smokeTestPaths();
@@ -63,6 +67,35 @@ if (strictCcnaObjectives) {
     }
   }
   if (objWarnings.length > 0) {
+    process.exit(1);
+  }
+}
+
+if (strictPedagogy) {
+  const pedWarnings = verifyCcnaPedagogyWarnings();
+  console.log("\n=== CCNA pedagogy warnings (--strict-pedagogy) ===");
+  if (pedWarnings.length === 0) {
+    console.log("No pedagogy warnings");
+  } else {
+    console.log(`Found ${pedWarnings.length} warning(s):`);
+    for (const w of pedWarnings) {
+      console.log(`  [${w.topicId}]: ${w.message}`);
+    }
+  }
+}
+
+if (strictExperience) {
+  const expWarnings = verifyCcnaExperienceWarnings();
+  console.log("\n=== CCNA experience warnings (--strict-experience) ===");
+  if (expWarnings.length === 0) {
+    console.log("No experience warnings");
+  } else {
+    console.log(`Found ${expWarnings.length} warning(s):`);
+    for (const w of expWarnings) {
+      console.log(`  [${w.topicId}]: ${w.message}`);
+    }
+  }
+  if (expWarnings.length > 0) {
     process.exit(1);
   }
 }

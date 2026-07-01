@@ -4,6 +4,8 @@ import Link from "next/link";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { LessonContent } from "@/components/lesson/LessonContent";
 import { LessonStepper } from "@/components/lesson/LessonStepper";
+import { StructuredLessonStepper } from "@/components/lesson/StructuredLessonStepper";
+import { ExperiencePlayer } from "@/components/lesson/ExperiencePlayer";
 import { KeyFactsList } from "@/components/lesson/KeyFactsList";
 import { TopicDeepDive } from "@/components/lesson/TopicDeepDive";
 import { TopicMetadataBar } from "@/components/lesson/TopicMetadataBar";
@@ -19,8 +21,14 @@ import { getObjectiveMasteryForTopic } from "@/lib/objective-mastery";
 import { topicKey } from "@/lib/ids";
 import { useProgressStore } from "@/stores/progress-store";
 import { useStoreHydration } from "@/hooks/use-store-hydration";
-import { Brain, Layers, CheckCircle2, Library } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { Brain, Layers, CheckCircle2, Library, RotateCcw } from "lucide-react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { getNextTopicInPath } from "@/lib/curriculum";
+import {
+  clearLessonProgress,
+  hasSavedLessonProgress,
+} from "@/lib/lesson-steps";
+import { TopicWhatsNext } from "@/components/topic/TopicWhatsNext";
 
 interface LessonPageClientProps {
   certId: string;
@@ -46,6 +54,17 @@ export function LessonPageClient({
   const completeLesson = useProgressStore((s) => s.completeLesson);
   const storedMastery = useProgressStore((s) => s.topicMastery[key]);
 
+  const usesStructuredDelivery =
+    (topic.lesson.experience?.screens?.length ?? 0) > 0 ||
+    (topic.lesson.steps?.length ?? 0) > 0;
+
+  const handleLessonComplete = () => {
+    setLessonUnlocked(true);
+    if (!isComplete) {
+      completeLesson(certId, topicId, topic.name);
+    }
+  };
+
   const mastery = useMemo(() => {
     if (storedMastery) return storedMastery;
     return getTopicMastery(useProgressStore.getState(), certId, topicId);
@@ -63,16 +82,31 @@ export function LessonPageClient({
   );
 
   const [lessonUnlocked, setLessonUnlocked] = useState(false);
+  const [lessonRunKey, setLessonRunKey] = useState(0);
 
   useEffect(() => {
-    if (hydrated && isComplete) setLessonUnlocked(true);
-  }, [hydrated, isComplete]);
-  const checkpointPool = useMemo(
-    () => topic.questionBank?.slice(0, 8) ?? [],
-    [topic.questionBank]
-  );
+    if (!hydrated || !isComplete) return;
+    if (hasSavedLessonProgress(certId, topicId)) return;
+    setLessonUnlocked(true);
+  }, [hydrated, isComplete, certId, topicId]);
 
-  const showReferenceLesson = isComplete && lessonUnlocked;
+  const handleRedoLesson = useCallback(() => {
+    clearLessonProgress(certId, topicId);
+    setLessonRunKey((k) => k + 1);
+    setLessonUnlocked(false);
+  }, [certId, topicId]);
+  const checkpointPool = useMemo(() => {
+    // Quiz questions follow lesson progression; bank stays for graded drill.
+    if (topic.quiz.length > 0) return topic.quiz;
+    return topic.questionBank ?? [];
+  }, [topic.quiz, topic.questionBank]);
+
+  const showReferenceLesson = isComplete && lessonUnlocked && !usesStructuredDelivery;
+
+  const nextTopic = useMemo(
+    () => getNextTopicInPath(cert, topicId),
+    [cert, topicId]
+  );
 
   return (
     <div>
@@ -101,22 +135,65 @@ export function LessonPageClient({
 
       <div className="mb-6">
         {!lessonUnlocked ? (
-          <LessonStepper
-            certId={certId}
-            topicId={topicId}
-            title={topic.lesson.title}
-            content={topic.lesson.content}
-            checkpointPool={checkpointPool}
-            onComplete={() => setLessonUnlocked(true)}
-          />
+          topic.lesson.experience?.screens &&
+          topic.lesson.experience.screens.length > 0 ? (
+            <ExperiencePlayer
+              key={lessonRunKey}
+              certId={certId}
+              topicId={topicId}
+              title={topic.lesson.title}
+              screens={topic.lesson.experience.screens}
+              anchorType={topic.lesson.experience.anchor.type}
+              checkpointPool={checkpointPool}
+              onComplete={handleLessonComplete}
+            />
+          ) : topic.lesson.steps && topic.lesson.steps.length > 0 ? (
+            <StructuredLessonStepper
+              key={lessonRunKey}
+              certId={certId}
+              topicId={topicId}
+              title={topic.lesson.title}
+              steps={topic.lesson.steps}
+              checkpointPool={checkpointPool}
+              lessonVisual={topic.lesson.visual}
+              onComplete={handleLessonComplete}
+            />
+          ) : (
+            <LessonStepper
+              key={lessonRunKey}
+              certId={certId}
+              topicId={topicId}
+              title={topic.lesson.title}
+              content={topic.lesson.content}
+              checkpointPool={checkpointPool}
+              lessonCheckpointIds={topic.lessonCheckpoints}
+              onComplete={handleLessonComplete}
+            />
+          )
         ) : showReferenceLesson ? (
-          <LessonContent title={topic.lesson.title} content={topic.lesson.content} />
+          <div>
+            <div className="mb-3 flex justify-end">
+              <Button variant="secondary" onClick={handleRedoLesson}>
+                <RotateCcw className="mr-2 inline h-4 w-4" />
+                Redo lesson
+              </Button>
+            </div>
+            <LessonContent title={topic.lesson.title} content={topic.lesson.content} />
+          </div>
         ) : (
           <Card className="mb-4 border-emerald-900/40 bg-emerald-950/20 p-4">
-            <p className="text-sm font-medium text-emerald-400">Lesson complete</p>
-            <p className="mt-1 text-sm text-zinc-400">
-              Key facts, exam traps, and practice links are below.
-            </p>
+            <div className="flex flex-wrap items-start justify-between gap-3">
+              <div>
+                <p className="text-sm font-medium text-emerald-400">Lesson complete</p>
+                <p className="mt-1 text-sm text-zinc-400">
+                  Key facts, exam traps, and practice links are below.
+                </p>
+              </div>
+              <Button variant="secondary" onClick={handleRedoLesson}>
+                <RotateCcw className="mr-2 inline h-4 w-4" />
+                Redo lesson
+              </Button>
+            </div>
           </Card>
         )}
       </div>
@@ -160,7 +237,25 @@ export function LessonPageClient({
             )}
           </div>
 
-          {!isComplete && (
+          {usesStructuredDelivery && isComplete && (
+            <p className="mb-4 text-center text-xs text-zinc-500">
+              Lesson marked complete — quiz and flashcards stay available below.
+            </p>
+          )}
+
+          {lessonUnlocked && (
+            <div className="mb-6">
+              <TopicWhatsNext
+                certId={certId}
+                topicId={topicId}
+                topicName={topic.name}
+                nextTopic={nextTopic}
+                variant="hub"
+              />
+            </div>
+          )}
+
+          {!usesStructuredDelivery && !isComplete && (
             <div>
               <Button
                 className="w-full"
