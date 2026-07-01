@@ -10,6 +10,7 @@ import { OsiStackDiagram } from "@/components/lesson/OsiStackDiagram";
 import { TcpIpStackDiagram } from "@/components/lesson/TcpIpStackDiagram";
 import { StudyTipCard } from "@/components/lesson/StudyTipCard";
 import { ExperienceMedia } from "@/components/lesson/ExperienceMedia";
+import { SubnetBlockTableStrip } from "@/components/lesson/SubnetBlockTableStrip";
 import { LaterLearnBlock } from "@/components/lesson/LaterLearnBlock";
 import { TermChipList, TermPopover } from "@/components/lesson/TermPopover";
 import { Button } from "@/components/ui/Button";
@@ -101,6 +102,15 @@ export function ExperiencePlayer({
   const powershellShellStep =
     anchorType === "powershell-shell" ? current?.powershellShellStep : undefined;
 
+  const subnetHighlightPrefix = useMemo(() => {
+    if (topicId !== "subnetting") return undefined;
+    const media = current?.media;
+    if (!media) return undefined;
+    if (media.kind === "subnet-pie") return media.prefix ?? 24;
+    if (media.kind === "block-finder") return media.prefix;
+    return undefined;
+  }, [topicId, current?.media]);
+
   const advance = useCallback(() => {
     if (screenIndex < screens.length - 1) {
       setSlideDir("left");
@@ -170,6 +180,19 @@ export function ExperiencePlayer({
       {anchorType === "powershell-shell" && (
         <div className="shrink-0">
           <PowerShellShellDiagram highlightStep={powershellShellStep} compact />
+        </div>
+      )}
+
+      {topicId === "subnetting" && (
+        <div
+          className={
+            isCheckpoint
+              ? "pointer-events-none select-none opacity-25 blur-[2px] transition-opacity"
+              : undefined
+          }
+          aria-hidden={isCheckpoint}
+        >
+          <SubnetBlockTableStrip highlightPrefix={subnetHighlightPrefix} />
         </div>
       )}
 

@@ -1,6 +1,8 @@
 "use client";
 
 import type { ExperienceMediaDef } from "@/content/types";
+import { BlockFinderDiagram } from "@/components/lesson/BlockFinderDiagram";
+import { SubnetPieDiagram } from "@/components/lesson/SubnetPieDiagram";
 import {
   ArrowDown,
   Cable,
@@ -50,6 +52,28 @@ interface ExperienceMediaProps {
 
 export function ExperienceMedia({ media, animate = true }: ExperienceMediaProps) {
   const enterClass = animate ? "experience-media-enter" : "";
+
+  if (media.kind === "subnet-pie") {
+    return (
+      <SubnetPieDiagram
+        prefix={media.prefix ?? 24}
+        interactive={media.interactive ?? false}
+        maxPrefix={media.maxPrefix ?? 27}
+        animate={animate}
+      />
+    );
+  }
+
+  if (media.kind === "block-finder") {
+    return (
+      <BlockFinderDiagram
+        ip={media.ip}
+        prefix={media.prefix}
+        mode={media.mode ?? "interactive"}
+        animate={animate}
+      />
+    );
+  }
 
   if (media.kind === "flow") {
     return (

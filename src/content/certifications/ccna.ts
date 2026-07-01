@@ -2041,6 +2041,48 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
               objectiveId: "CCNA-1.9",
               difficulty: "easy",
             },
+            {
+              id: "subnetting-q6",
+              prompt: "192.168.1.90/26 — which range in the last octet contains .90?",
+              choices: [
+                { id: "a", text: "0–63" },
+                { id: "b", text: "64–127" },
+                { id: "c", text: "128–191" },
+                { id: "d", text: "192–255" },
+              ],
+              correctChoiceId: "b",
+              explanation: "/26 block size 64. Ninety falls in the 64–127 slice.",
+              objectiveId: "CCNA-1.10",
+              difficulty: "easy",
+            },
+            {
+              id: "subnetting-q7",
+              prompt: "192.168.1.45/27 — which range in the last octet contains .45?",
+              choices: [
+                { id: "a", text: "0–31" },
+                { id: "b", text: "32–63" },
+                { id: "c", text: "64–95" },
+                { id: "d", text: "96–127" },
+              ],
+              correctChoiceId: "b",
+              explanation: "/27 block size 32. Forty-five falls in the 32–63 slice.",
+              objectiveId: "CCNA-1.10",
+              difficulty: "easy",
+            },
+            {
+              id: "subnetting-q8",
+              prompt: "192.168.1.200/28 — which range in the last octet contains .200?",
+              choices: [
+                { id: "a", text: "176–191" },
+                { id: "b", text: "192–207" },
+                { id: "c", text: "208–223" },
+                { id: "d", text: "224–239" },
+              ],
+              correctChoiceId: "b",
+              explanation: "/28 block size 16. Two hundred falls in the 192–207 slice.",
+              objectiveId: "CCNA-1.10",
+              difficulty: "easy",
+            },
           ],
           flashcards: [
             {

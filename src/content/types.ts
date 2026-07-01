@@ -53,10 +53,37 @@ export interface ExperienceMediaItem {
   label: string;
 }
 
-export interface ExperienceMediaDef {
-  kind: "icons" | "flow";
+export interface ExperienceIconsMediaDef {
+  kind: "icons";
   items: ExperienceMediaItem[];
 }
+
+export interface ExperienceFlowMediaDef {
+  kind: "flow";
+  items: ExperienceMediaItem[];
+}
+
+/** Interactive pie-slice visual for subnetting lessons. */
+export interface SubnetPieMediaDef {
+  kind: "subnet-pie";
+  prefix?: 24 | 25 | 26 | 27 | 28 | 29 | 30;
+  interactive?: boolean;
+  maxPrefix?: 24 | 25 | 26 | 27 | 28 | 29 | 30;
+}
+
+/** Gray-out IP + pick-the-block drill for subnetting lessons. */
+export interface BlockFinderMediaDef {
+  kind: "block-finder";
+  ip: string;
+  prefix: number;
+  mode?: "gray" | "interactive" | "revealed";
+}
+
+export type ExperienceMediaDef =
+  | ExperienceIconsMediaDef
+  | ExperienceFlowMediaDef
+  | SubnetPieMediaDef
+  | BlockFinderMediaDef;
 
 export interface DeferredTerm {
   term: string;
