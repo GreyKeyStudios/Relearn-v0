@@ -1,12 +1,15 @@
 "use client";
 
 import { useMemo } from "react";
+import { useSearchParams } from "next/navigation";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { QuizEngine } from "@/components/quiz/QuizEngine";
-import type { QuizQuestion, Topic, Certification } from "@/content/types";
-import { consumeQuizRetryIds } from "@/lib/quiz-retry";
+import type { Certification, Topic } from "@/content/types";
 import { getNextTopicInPath } from "@/lib/curriculum";
+import { getObjectiveLabel } from "@/lib/content-selectors";
 import { topicBankKey } from "@/lib/ids";
+import { filterQuestionsByObjective } from "@/lib/objective-mastery";
+import { consumeQuizRetryIds } from "@/lib/quiz-retry";
 import { useProgressStore } from "@/stores/progress-store";
 
 interface QuizPageClientProps {
@@ -14,13 +17,6 @@ interface QuizPageClientProps {
   topicId: string;
   cert: Certification;
   topic: Topic;
-  questions: QuizQuestion[];
-  isBank: boolean;
-  isRetryMissed: boolean;
-  objective?: string;
-  objectiveUnavailable?: boolean;
-  subtitle: string;
-  title: string;
 }
 
 export function QuizPageClient({
@@ -28,32 +24,80 @@ export function QuizPageClient({
   topicId,
   cert,
   topic,
-  questions: serverQuestions,
-  isBank,
-  isRetryMissed,
-  objective,
-  objectiveUnavailable,
-  subtitle,
-  title,
 }: QuizPageClientProps) {
+  const searchParams = useSearchParams();
   const sessionMinutes = useProgressStore((s) => s.studyPlan.sessionMinutes);
 
-  const questions = useMemo(() => {
+  const bank = searchParams.get("bank");
+  const objective = searchParams.get("objective") ?? undefined;
+  const retry = searchParams.get("retry");
+
+  const isBank = bank === "1";
+  const isRetryMissed = retry === "missed";
+
+  const { questions, objectiveUnavailable, subtitle, title } = useMemo(() => {
+    const baseQuestions = isBank ? (topic.questionBank ?? []) : topic.quiz;
+    let resolved = baseQuestions;
+    let unavailable = false;
+
+    if (objective) {
+      const filtered = filterQuestionsByObjective(baseQuestions, objective);
+      if (filtered.length > 0) {
+        resolved = filtered;
+      } else {
+        unavailable = true;
+      }
+    }
+
+    const resolvedSubtitle = objective
+      ? `${getObjectiveLabel(certId, objective)} · ${cert.shortName}`
+      : `${topic.name} · ${cert.shortName}`;
+
+    const resolvedTitle = isRetryMissed
+      ? "Retry Missed"
+      : isBank
+        ? "Question Bank Drill"
+        : objective
+          ? "Objective Practice"
+          : "Quiz";
+
+    return {
+      questions: resolved,
+      objectiveUnavailable: unavailable,
+      subtitle: resolvedSubtitle,
+      title: resolvedTitle,
+    };
+  }, [cert, certId, isBank, isRetryMissed, objective, topic]);
+
+  const displayQuestions = useMemo(() => {
     if (isRetryMissed) {
       const retryIds = consumeQuizRetryIds(certId, topicId);
       if (retryIds) {
         const idSet = new Set(retryIds);
-        const filtered = serverQuestions.filter((q) => idSet.has(q.id));
+        const filtered = questions.filter((q) => idSet.has(q.id));
         if (filtered.length > 0) return filtered;
       }
     }
-    return serverQuestions;
-  }, [certId, topicId, isRetryMissed, serverQuestions]);
+    return questions;
+  }, [certId, topicId, isRetryMissed, questions]);
 
   const nextTopic = useMemo(
     () => getNextTopicInPath(cert, topicId),
     [cert, topicId]
   );
+
+  if (displayQuestions.length === 0) {
+    return (
+      <div>
+        <PageHeader
+          title="Quiz"
+          subtitle={`${topic.name} · ${cert.shortName}`}
+          backHref={`/cert/${certId}/lesson/${topicId}`}
+        />
+        <p className="text-sm text-zinc-400">No quiz questions available for this topic.</p>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -70,7 +114,7 @@ export function QuizPageClient({
       <QuizEngine
         certId={certId}
         topic={topic}
-        questions={questions}
+        questions={displayQuestions}
         progressKey={isBank ? topicBankKey(certId, topicId) : undefined}
         activityLabel={isBank ? `${topic.name} question bank` : undefined}
         isRetryMissed={isRetryMissed}

@@ -1,9 +1,14 @@
 import { notFound } from "next/navigation";
-import { getTopic, flattenTopics } from "@/lib/content-selectors";
+import { flattenTopics, getTopic } from "@/lib/content-selectors";
+import { allTopicParams } from "@/lib/static-params";
 import { LessonPageClient } from "./LessonPageClient";
 
 interface LessonPageProps {
   params: Promise<{ certId: string; topicId: string }>;
+}
+
+export function generateStaticParams() {
+  return allTopicParams();
 }
 
 export default async function LessonPage({ params }: LessonPageProps) {

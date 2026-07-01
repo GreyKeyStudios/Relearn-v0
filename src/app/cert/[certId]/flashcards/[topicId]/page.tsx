@@ -3,9 +3,14 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { FlashcardDeck } from "@/components/flashcards/FlashcardDeck";
 import { getTopic } from "@/lib/content-selectors";
 import { getNextTopicInPath } from "@/lib/curriculum";
+import { allTopicParams } from "@/lib/static-params";
 
 interface FlashcardsPageProps {
   params: Promise<{ certId: string; topicId: string }>;
+}
+
+export function generateStaticParams() {
+  return allTopicParams();
 }
 
 export default async function FlashcardsPage({ params }: FlashcardsPageProps) {
