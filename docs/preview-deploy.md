@@ -83,6 +83,7 @@ Open the URL `serve` prints (usually http://localhost:3000).
 
 ## Troubleshooting
 
+- **Cloudflare keeps building old commit `3de0e37`** — you clicked **Retry deployment** on a failed build; Retry reuses that commit forever. Use **Create deployment → branch `dev` → latest commit**, or push to `dev` and wait for the new auto-deploy (do not Retry the old one).
 - **404 on Cloudflare root (`relearn-v0.pages.dev`)** — build output is wrong. In Pages → Settings → Builds: **Framework preset = None**, **Build command = `npm run build:pages`**, **Output directory = `out`**. Redeploy. Check the build log for `Generating static pages` and an `out/` artifact upload.
 - **404 on refresh** — use Cloudflare or GitHub Pages with the workflow above; do not open `out/index.html` directly from disk.
 - **Blank styles** — on GitHub Pages, confirm `NEXT_PUBLIC_BASE_PATH` matches the repo name (`/Relearn-v0`).
