@@ -188,6 +188,63 @@ export const TCP_IP_MODEL_EXPERIENCE: TopicExperience = {
       ],
     },
     {
+      id: "port-ranges",
+      type: "memory",
+      tcpLayer: 3,
+      headline: "Three port ranges.",
+      body: "Well-known 0–1023 · Registered 1024–49151 · Dynamic/ephemeral 49152–65535. CCNA usually tests well-known first.",
+      studyTip: {
+        title: "Why ranges matter",
+        body: "Servers listen on well-known ports (80, 443, 53). Your browser picks a high ephemeral port for the return traffic.",
+      },
+    },
+    {
+      id: "common-ports",
+      type: "memory",
+      tcpLayer: 3,
+      headline: "Ports to recognize now.",
+      body: "TCP 80 HTTP · TCP 443 HTTPS · UDP 53 DNS (mostly) · TCP 22 SSH · TCP 23 Telnet (plain text, avoid in production).",
+      studyTip: {
+        title: "Transport + port",
+        body: "The protocol (TCP or UDP) and port number together identify the service — both live at the Transport layer.",
+      },
+    },
+    {
+      id: "app-remote",
+      type: "teach",
+      tcpLayer: 4,
+      headline: "Remote access at Application.",
+      body: "SSH and Telnet are Application-layer terminal protocols — not Transport or Internet. SSH encrypts; Telnet does not. You manage routers and switches with SSH today.",
+      terms: [
+        {
+          id: "ssh",
+          label: "SSH",
+          tier: "basics",
+          shortDefinition: "Secure Shell — encrypted remote terminal access, TCP port 22.",
+        },
+        {
+          id: "telnet",
+          label: "Telnet",
+          tier: "basics",
+          shortDefinition: "Legacy remote terminal — no encryption, TCP port 23. Do not use on production networks.",
+        },
+      ],
+    },
+    {
+      id: "defer-service-ports",
+      type: "memory",
+      tcpLayer: 4,
+      headline: "More ports in later topics.",
+      body: "FTP, DHCP, SNMP, TFTP, and NTP have dedicated lessons in IP Services. For this topic: know the model, TCP vs UDP, handshake, and the common ports above.",
+      laterLearn: [
+        "FTP control/data ports (20/21)",
+        "DHCP UDP 67/68",
+        "SNMP UDP 161",
+        "NTP UDP 123",
+        "TCP window size and flags (deep dive)",
+      ],
+    },
+    {
       id: "transport-check",
       type: "checkpoint",
       tcpLayer: 3,

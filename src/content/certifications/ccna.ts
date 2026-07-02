@@ -533,11 +533,11 @@ Dual-stack hosts run IPv4 and IPv6 simultaneously. When studying for CCNA, pract
           },
           keyFacts: [
             "TCP/IP has 4 layers: Application, Transport, Internet, Network Access",
-            "Application collapses OSI Layers 5–7 (HTTP, DNS, SMTP live here)",
-            "Internet layer = IP addressing and routing (maps to OSI Layer 3); ICMP lives here too",
-            "TCP provides reliable delivery; UDP provides fast, connectionless delivery",
-            "Network Access combines OSI Physical and Data Link (Ethernet, MAC, frames)",
-            "ARP sits at the boundary between Internet and Network Access — often called Layer 2.5",
+            "Application collapses OSI Layers 5–7 (HTTP, DNS, SMTP, SSH live here)",
+            "TCP = reliable + connection-oriented; UDP = fast + connectionless (DNS, streaming)",
+            "Port ranges: well-known 0–1023 · registered 1024–49151 · ephemeral 49152+",
+            "CCNA ports now: TCP 80/443/22/23 · UDP 53 (DNS, mostly)",
+            "Internet layer = IP + ICMP; Network Access = Ethernet/Wi-Fi (PPP on WAN links — later)",
           ],
           lightbulbMoment: "TCP/IP is the Internet's practical version of OSI.",
           guidedExample: {
@@ -563,6 +563,7 @@ Dual-stack hosts run IPv4 and IPv6 simultaneously. When studying for CCNA, pract
             "ICMP ping success implying all upper layers work—only proves through Network",
             "TCP three-way handshake attributed to Internet layer",
             "Distractors listing five TCP/IP layers instead of four",
+            "Question bank drills on FTP/DHCP/SNMP ports before those IP Services topics — learn common ports here, defer the rest",
           ],
           realWorldScenario: "Your laptop loads a webpage: HTTP at Application, TCP ports at Transport, IP routing at Internet, and an Ethernet frame to the default gateway at Network Access — four layers, one trip.",
           quiz: [
@@ -670,7 +671,17 @@ Dual-stack hosts run IPv4 and IPv6 simultaneously. When studying for CCNA, pract
             {
               id: "tcp-f4c",
               front: "Network Access layer examples?",
-              back: "Ethernet, Wi-Fi (802.11), PPP",
+              back: "Ethernet and Wi-Fi (802.11) on LANs — PPP on WAN serial links comes later",
+            },
+            {
+              id: "tcp-f5",
+              front: "SSH vs Telnet — layer and ports?",
+              back: "Both Application layer · SSH TCP 22 (encrypted) · Telnet TCP 23 (plain text)",
+            },
+            {
+              id: "tcp-f6",
+              front: "Common CCNA ports (TCP unless noted)?",
+              back: "80 HTTP · 443 HTTPS · 22 SSH · 23 Telnet · 53 DNS (UDP mostly)",
             }
           ],
           objectives: [
@@ -690,7 +701,7 @@ Dual-stack hosts run IPv4 and IPv6 simultaneously. When studying for CCNA, pract
                 { id: "d", text: "53" }
               ],
               correctChoiceId: "b",
-              explanation: "HTTPS uses TCP port 443.",
+              explanation: "HTTPS uses TCP port 443 (taught in the Transport ports card).",
               objectiveId: "CCNA-1.4",
               difficulty: "medium",
             },
@@ -704,23 +715,9 @@ Dual-stack hosts run IPv4 and IPv6 simultaneously. When studying for CCNA, pract
                 { id: "d", text: "ARP" }
               ],
               correctChoiceId: "b",
-              explanation: "Most DNS queries use UDP 53.",
+              explanation: "Most DNS queries use UDP port 53 — covered in the lesson's common ports card.",
               objectiveId: "CCNA-1.1",
-              difficulty: "hard",
-            },
-            {
-              id: "tcp-b3",
-              prompt: "ARP maps:",
-              choices: [
-                { id: "a", text: "IP to MAC" },
-                { id: "b", text: "MAC to IP" },
-                { id: "c", text: "Port to service" },
-                { id: "d", text: "SSID to VLAN" }
-              ],
-              correctChoiceId: "a",
-              explanation: "ARP resolves known IP to MAC on local segments.",
-              objectiveId: "CCNA-1.4",
-              difficulty: "hard",
+              difficulty: "medium",
             },
             {
               id: "tcp-b4",
@@ -732,9 +729,9 @@ Dual-stack hosts run IPv4 and IPv6 simultaneously. When studying for CCNA, pract
                 { id: "d", text: "Bit" }
               ],
               correctChoiceId: "b",
-              explanation: "IP packets are Network/Internet layer PDUs.",
+              explanation: "IP packets are Internet layer PDUs (also covered in the OSI lesson prerequisite).",
               objectiveId: "CCNA-1.1",
-              difficulty: "hard",
+              difficulty: "medium",
             },
             {
               id: "tcp-b5",
@@ -748,7 +745,7 @@ Dual-stack hosts run IPv4 and IPv6 simultaneously. When studying for CCNA, pract
               correctChoiceId: "d",
               explanation: "Network Access combines OSI Layers 1 and 2.",
               objectiveId: "CCNA-1.4",
-              difficulty: "hard",
+              difficulty: "easy",
             },
             {
               id: "tcp-b6",
@@ -760,11 +757,10 @@ Dual-stack hosts run IPv4 and IPv6 simultaneously. When studying for CCNA, pract
                 { id: "d", text: "Link-layer control protocols" }
               ],
               correctChoiceId: "b",
-              explanation: "Both are Application layer terminal access protocols.",
+              explanation: "Both are Application layer remote-access protocols — taught in the SSH/Telnet card.",
               objectiveId: "CCNA-1.1",
-              difficulty: "hard",
-            }
-          ,
+              difficulty: "easy",
+            },
             {
               id: "tcp-b7",
               prompt: "What is the correct sequence of the TCP three-way handshake?",
@@ -789,7 +785,7 @@ Dual-stack hosts run IPv4 and IPv6 simultaneously. When studying for CCNA, pract
               { id: "d", text: "TCP operates at Layer 3; UDP operates at Layer 2" }
               ],
               correctChoiceId: "b",
-              explanation: "TCP provides connection-oriented, reliable, ordered byte-stream delivery via acknowledgments and retransmissions. UDP is connectionless and has no delivery guarantee.",
+              explanation: "TCP provides connection-oriented, reliable delivery. UDP is connectionless with no delivery guarantee.",
               objectiveId: "CCNA-1.5",
               difficulty: "easy",
             },
@@ -803,23 +799,9 @@ Dual-stack hosts run IPv4 and IPv6 simultaneously. When studying for CCNA, pract
               { id: "d", text: "OSI Layers 5-7" }
               ],
               correctChoiceId: "c",
-              explanation: "The TCP/IP Transport layer directly corresponds to OSI Layer 4, handling end-to-end communication via TCP or UDP.",
+              explanation: "The TCP/IP Transport layer directly corresponds to OSI Layer 4.",
               objectiveId: "CCNA-1.1",
               difficulty: "easy",
-            },
-            {
-              id: "tcp-b10",
-              prompt: "FTP uses which TCP port pair for control and data?",
-              choices: [
-              { id: "a", text: "20 (data) and 21 (control)" },
-              { id: "b", text: "21 (data) and 22 (control)" },
-              { id: "c", text: "80 (data) and 443 (control)" },
-              { id: "d", text: "23 (data) and 25 (control)" }
-              ],
-              correctChoiceId: "a",
-              explanation: "FTP uses TCP port 21 for the control connection (commands) and TCP port 20 for the active-mode data connection.",
-              objectiveId: "CCNA-1.4",
-              difficulty: "medium",
             },
             {
               id: "tcp-b11",
@@ -831,22 +813,8 @@ Dual-stack hosts run IPv4 and IPv6 simultaneously. When studying for CCNA, pract
               { id: "d", text: "Sending an email via SMTP" }
               ],
               correctChoiceId: "b",
-              explanation: "Live video streaming tolerates some packet loss but cannot tolerate the retransmission delays TCP introduces, making UDP the better choice.",
+              explanation: "Live streaming tolerates some loss but not TCP retransmission delays — UDP fits better.",
               objectiveId: "CCNA-1.5",
-              difficulty: "medium",
-            },
-            {
-              id: "tcp-b12",
-              prompt: "DHCP uses which transport protocol and port numbers?",
-              choices: [
-              { id: "a", text: "TCP 67/68" },
-              { id: "b", text: "UDP 67/68" },
-              { id: "c", text: "UDP 53/53" },
-              { id: "d", text: "TCP 443/444" }
-              ],
-              correctChoiceId: "b",
-              explanation: "DHCP uses UDP: the server listens on UDP 67 and the client sends from UDP 68. UDP is used because the client has no IP address yet.",
-              objectiveId: "CCNA-1.4",
               difficulty: "medium",
             },
             {
@@ -859,37 +827,9 @@ Dual-stack hosts run IPv4 and IPv6 simultaneously. When studying for CCNA, pract
               { id: "d", text: "443" }
               ],
               correctChoiceId: "b",
-              explanation: "SSH runs on TCP port 22 and provides encrypted terminal access, replacing unencrypted Telnet (TCP 23).",
+              explanation: "SSH runs on TCP port 22 — on the lesson's common ports card.",
               objectiveId: "CCNA-1.4",
               difficulty: "easy",
-            },
-            {
-              id: "tcp-b14",
-              prompt: "TCP window size is used for which purpose?",
-              choices: [
-              { id: "a", text: "Encryption key exchange" },
-              { id: "b", text: "Flow control — limiting how much data can be sent before an ACK is required" },
-              { id: "c", text: "Setting the MTU on the link" },
-              { id: "d", text: "Identifying the destination application" }
-              ],
-              correctChoiceId: "b",
-              explanation: "The TCP receive window advertises how many bytes the receiver can buffer, enabling flow control between sender and receiver.",
-              objectiveId: "CCNA-1.5",
-              difficulty: "medium",
-            },
-            {
-              id: "tcp-b15",
-              prompt: "TFTP (Trivial File Transfer Protocol) uses which transport and port?",
-              choices: [
-              { id: "a", text: "TCP 21" },
-              { id: "b", text: "TCP 69" },
-              { id: "c", text: "UDP 69" },
-              { id: "d", text: "UDP 21" }
-              ],
-              correctChoiceId: "c",
-              explanation: "TFTP uses UDP port 69. It is a lightweight, connectionless file-transfer protocol used for bootloader and IOS image transfers on network devices.",
-              objectiveId: "CCNA-1.5",
-              difficulty: "medium",
             },
             {
               id: "tcp-b16",
@@ -901,65 +841,9 @@ Dual-stack hosts run IPv4 and IPv6 simultaneously. When studying for CCNA, pract
               { id: "d", text: "0 – 65535" }
               ],
               correctChoiceId: "a",
-              explanation: "IANA defines ports 0–1023 as well-known ports assigned to common protocols. Registered ports are 1024–49151; dynamic/ephemeral ports are 49152–65535.",
+              explanation: "IANA defines ports 0–1023 as well-known — taught in the port ranges card.",
               objectiveId: "CCNA-1.4",
-              difficulty: "medium",
-            },
-            {
-              id: "tcp-b17",
-              prompt: "In a TCP segment, the acknowledgment number field contains:",
-              choices: [
-              { id: "a", text: "The sequence number of the last byte sent" },
-              { id: "b", text: "The next byte the receiver expects to receive" },
-              { id: "c", text: "The total size of the segment" },
-              { id: "d", text: "The source port number" }
-              ],
-              correctChoiceId: "b",
-              explanation: "The ACK number tells the sender the next byte the receiver expects, implicitly acknowledging all previous bytes.",
-              objectiveId: "CCNA-1.5",
-              difficulty: "hard",
-            },
-            {
-              id: "tcp-b18",
-              prompt: "SNMP (Simple Network Management Protocol) uses which transport and port?",
-              choices: [
-              { id: "a", text: "TCP 161" },
-              { id: "b", text: "UDP 161" },
-              { id: "c", text: "TCP 162" },
-              { id: "d", text: "UDP 514" }
-              ],
-              correctChoiceId: "b",
-              explanation: "SNMP agents listen on UDP 161; SNMP traps are sent to the manager on UDP 162.",
-              objectiveId: "CCNA-1.4",
-              difficulty: "hard",
-            },
-            {
-              id: "tcp-b19",
-              prompt: "Which TCP flag, when set, immediately terminates a connection without the normal four-way teardown?",
-              choices: [
-              { id: "a", text: "FIN" },
-              { id: "b", text: "SYN" },
-              { id: "c", text: "RST" },
-              { id: "d", text: "PSH" }
-              ],
-              correctChoiceId: "c",
-              explanation: "The RST (Reset) flag abruptly terminates a connection. FIN initiates graceful teardown; SYN initiates connection setup; PSH pushes data to the application.",
-              objectiveId: "CCNA-1.5",
-              difficulty: "hard",
-            },
-            {
-              id: "tcp-b20",
-              prompt: "NTP (Network Time Protocol) uses which transport and well-known port?",
-              choices: [
-              { id: "a", text: "TCP 123" },
-              { id: "b", text: "UDP 123" },
-              { id: "c", text: "UDP 161" },
-              { id: "d", text: "TCP 49" }
-              ],
-              correctChoiceId: "b",
-              explanation: "NTP uses UDP port 123 to synchronize clocks between network devices. UDP is appropriate because NTP messages are small and timeliness matters more than reliability.",
-              objectiveId: "CCNA-1.4",
-              difficulty: "medium",
+              difficulty: "easy",
             }],
           assignments: [
             {

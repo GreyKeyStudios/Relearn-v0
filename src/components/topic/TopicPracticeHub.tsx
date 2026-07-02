@@ -69,7 +69,7 @@ export function TopicPracticeHub({ certId, topic }: TopicPracticeHubProps) {
     steps.push({
       step: stepNum++,
       title: `Question bank drill (${bankCount} questions)`,
-      detail: "Extra reps for exam depth — optional after quiz and flashcards.",
+      detail: "Extra reps on what this lesson taught — not ahead-of-curriculum port trivia.",
       href: `/cert/${certId}/quiz/${topic.id}?bank=1`,
       icon: Library,
     });
