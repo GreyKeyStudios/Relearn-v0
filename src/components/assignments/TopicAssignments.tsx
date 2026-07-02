@@ -40,7 +40,7 @@ export function TopicAssignments({ certId, assignments }: TopicAssignmentsProps)
   if (ordered.length === 0) return null;
 
   return (
-    <section className="mb-6">
+    <section id="topic-assignments" className="mb-6 scroll-mt-6">
       <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-zinc-400">
         Practice Assignments
       </h2>

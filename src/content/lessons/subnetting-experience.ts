@@ -229,9 +229,17 @@ export const SUBNETTING_EXPERIENCE: TopicExperience = {
           id: "network-addr",
           label: "Network address",
           tier: "basics",
-          shortDefinition: "First address in the block — identifies the subnet, not a device.",
+          shortDefinition:
+            "First address in the block — identifies the subnet, not a device.",
         },
       ],
+    },
+    {
+      id: "network-why",
+      type: "teach",
+      tcpLayer: 2,
+      headline: "Why is the network address reserved?",
+      body: "192.168.1.64 does not name a PC — it names the subnet itself. Folder label, not a file inside. Hosts live at .65 and up; .64 is the subnet's identity on the network.",
     },
     {
       id: "broadcast-addr",
@@ -247,6 +255,13 @@ export const SUBNETTING_EXPERIENCE: TopicExperience = {
           shortDefinition: "Last address in the block — one below the next boundary.",
         },
       ],
+    },
+    {
+      id: "broadcast-why",
+      type: "teach",
+      tcpLayer: 2,
+      headline: "Why is the broadcast reserved?",
+      body: "192.168.1.127 is one-to-all for that subnet — every device on the block listens. Send an update or ARP request here and everyone hears it. No single host owns that address.",
     },
     {
       id: "usable-range",

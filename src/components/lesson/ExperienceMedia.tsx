@@ -2,6 +2,13 @@
 
 import type { ExperienceMediaDef } from "@/content/types";
 import { BlockFinderDiagram } from "@/components/lesson/BlockFinderDiagram";
+import { IpRangesRecallTable } from "@/components/lesson/IpRangesRecallTable";
+import { WifiChannelDialDiagram } from "@/components/lesson/WifiChannelDialDiagram";
+import { WirelessRecallTable } from "@/components/lesson/WirelessRecallTable";
+import { Ipv4Ipv6CompareTable } from "@/components/lesson/Ipv4Ipv6CompareTable";
+import { Ipv6LeadingZeroStrip } from "@/components/lesson/Ipv6LeadingZeroStrip";
+import { Ipv6PrefixDiagram } from "@/components/lesson/Ipv6PrefixDiagram";
+import { Ipv6TypesTable } from "@/components/lesson/Ipv6TypesTable";
 import { SubnetPieDiagram } from "@/components/lesson/SubnetPieDiagram";
 import {
   ArrowDown,
@@ -70,6 +77,61 @@ export function ExperienceMedia({ media, animate = true }: ExperienceMediaProps)
         ip={media.ip}
         prefix={media.prefix}
         mode={media.mode ?? "interactive"}
+        animate={animate}
+      />
+    );
+  }
+
+  if (media.kind === "ip-ranges-table") {
+    return (
+      <div className={enterClass}>
+        <IpRangesRecallTable />
+      </div>
+    );
+  }
+
+  if (media.kind === "ipv6-types-table") {
+    return (
+      <div className={enterClass}>
+        <Ipv6TypesTable />
+      </div>
+    );
+  }
+
+  if (media.kind === "ipv6-prefix") {
+    return (
+      <Ipv6PrefixDiagram prefix={media.prefix ?? 64} animate={animate} />
+    );
+  }
+
+  if (media.kind === "ipv4-ipv6-compare") {
+    return (
+      <div className={enterClass}>
+        <Ipv4Ipv6CompareTable />
+      </div>
+    );
+  }
+
+  if (media.kind === "ipv6-leading-zeros") {
+    return (
+      <div className={enterClass}>
+        <Ipv6LeadingZeroStrip />
+      </div>
+    );
+  }
+
+  if (media.kind === "wireless-recall-table") {
+    return (
+      <div className={enterClass}>
+        <WirelessRecallTable />
+      </div>
+    );
+  }
+
+  if (media.kind === "wifi-channel-dial") {
+    return (
+      <WifiChannelDialDiagram
+        showOverlap={media.showOverlap ?? true}
         animate={animate}
       />
     );

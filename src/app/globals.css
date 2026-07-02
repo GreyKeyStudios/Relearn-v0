@@ -54,10 +54,27 @@ body {
   animation: experience-media-enter 300ms ease-out both;
 }
 
+@keyframes wifi-channel-bar-in {
+  from {
+    opacity: 0;
+    transform: scaleX(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+.wifi-channel-bar {
+  transform-origin: left center;
+  animation: wifi-channel-bar-in 450ms ease-out both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .experience-enter,
   .experience-enter-back,
-  .experience-media-enter {
+  .experience-media-enter,
+  .wifi-channel-bar {
     animation: none;
   }
 }
