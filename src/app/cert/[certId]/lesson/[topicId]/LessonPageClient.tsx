@@ -28,7 +28,6 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { getNextTopicInPath } from "@/lib/curriculum";
 import {
   clearLessonProgress,
-  hasSavedLessonProgress,
 } from "@/lib/lesson-steps";
 import { TopicWhatsNext } from "@/components/topic/TopicWhatsNext";
 
@@ -88,7 +87,6 @@ export function LessonPageClient({
 
   useEffect(() => {
     if (!hydrated || !isComplete) return;
-    if (hasSavedLessonProgress(certId, topicId)) return;
     setLessonUnlocked(true);
   }, [hydrated, isComplete, certId, topicId]);
 
@@ -109,6 +107,24 @@ export function LessonPageClient({
     () => getNextTopicInPath(cert, topicId),
     [cert, topicId]
   );
+
+  // Avoid mounting the lesson player/stepper before hydration.
+  // Otherwise a completed lesson can look like it "restarts" on fresh load
+  // until the store finishes hydrating and unlocks the after-lesson hub.
+  if (!hydrated) {
+    return (
+      <div>
+        <PageHeader
+          title={topic.name}
+          subtitle={`${cert.shortName} · ${domain.name}`}
+          backHref={`/cert/${certId}`}
+        />
+        <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-4 text-sm text-zinc-400">
+          Loading your progress…
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>

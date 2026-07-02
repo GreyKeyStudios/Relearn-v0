@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { Topic } from "@/content/types";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { Brain, Layers, Library, Wrench } from "lucide-react";
+import { Brain, Layers, Library, Wrench, ChevronRight } from "lucide-react";
 
 interface TopicPracticeHubProps {
   certId: string;
@@ -83,11 +83,12 @@ export function TopicPracticeHub({ certId, topic }: TopicPracticeHubProps) {
       <p className="mt-1 text-sm text-zinc-400">
         Follow this order — teach first, then test, then drill deeper.
       </p>
+      <p className="mt-1 text-xs text-zinc-500">Each step is clickable.</p>
       <ol className="mt-4 flex flex-col gap-3">
         {steps.map((item) => {
           const Icon = item.icon;
           const content = (
-            <div className="flex gap-3 rounded-xl border border-zinc-800 bg-zinc-950/50 p-3 transition-colors hover:border-zinc-700">
+            <div className="group flex cursor-pointer items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-950/50 p-3 transition-colors hover:border-zinc-700">
               <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-sky-950 text-xs font-semibold text-sky-400">
                 {item.step}
               </span>
@@ -98,6 +99,7 @@ export function TopicPracticeHub({ certId, topic }: TopicPracticeHubProps) {
                 </div>
                 <p className="mt-0.5 text-xs leading-relaxed text-zinc-500">{item.detail}</p>
               </div>
+              <ChevronRight className="h-5 w-5 shrink-0 text-zinc-600 transition-colors group-hover:text-zinc-400" />
             </div>
           );
 

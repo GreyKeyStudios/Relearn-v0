@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { QuizEngine } from "@/components/quiz/QuizEngine";
@@ -34,6 +34,7 @@ export function QuizPageClient({
 
   const isBank = bank === "1";
   const isRetryMissed = retry === "missed";
+  const retryIdsRef = useRef<string[] | null>(null);
 
   const { questions, objectiveUnavailable, subtitle, title } = useMemo(() => {
     const baseQuestions = isBank ? (topic.questionBank ?? []) : topic.quiz;
@@ -71,7 +72,10 @@ export function QuizPageClient({
 
   const displayQuestions = useMemo(() => {
     if (isRetryMissed) {
-      const retryIds = consumeQuizRetryIds(certId, topicId);
+      if (retryIdsRef.current === null) {
+        retryIdsRef.current = consumeQuizRetryIds(certId, topicId);
+      }
+      const retryIds = retryIdsRef.current;
       if (retryIds) {
         const idSet = new Set(retryIds);
         const filtered = questions.filter((q) => idSet.has(q.id));

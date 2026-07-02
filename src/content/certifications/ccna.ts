@@ -59,10 +59,10 @@ Encapsulation wraps upper-layer data with headers (and sometimes trailers) as it
           guidedExample: {
             title: "Ping works but the website fails — where to look",
             steps: [
-              "ping 8.8.8.8 succeeds → lower layers (Physical through Network) likely fine.",
-              "ping fails by hostname but works by IP → suspect DNS (Application layer).",
-              "Browser shows connection refused → server or firewall at Transport/Application.",
-              "Pick one direction (bottom-up or top-down) and test one layer at a time — do not jump randomly.",
+              "First, test with an IP address (not a name): ping 8.8.8.8 (Google DNS). If this works, your PC can reach a remote IP — Physical/Data Link/Network are *probably* OK.",
+              "A hostname is a human-friendly name like example.com. If ping by hostname fails but ping by IP works, DNS name resolution is the likely issue (Application layer).",
+              "If the site loads but says “connection refused,” the network path worked — the server (or firewall) rejected the TCP connection at the destination (Transport/Application).",
+              "Troubleshoot one layer at a time (bottom-up or top-down). Don’t jump randomly — change one thing, re-test, repeat.",
             ],
           },
           commonMistakes: [
