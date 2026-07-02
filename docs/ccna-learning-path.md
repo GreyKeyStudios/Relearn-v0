@@ -120,4 +120,15 @@ Foundation (must be solid first): `osi-model`, `tcp-ip-model`, `ethernet`, `rout
 
 ---
 
+## Bridge backlog (post–Wave 1)
+
+- **Subnetting mastery split:** track **Understanding** vs **Speed** separately (concept vs timed drill reps). Speed Mode = timed subnet simulator after familiar tier.
+- **Subnetting polish:** animated “Story of a /24” pie lesson (Phase 3).
+- **IP ranges Professor QA (passed ~92–94%):** mnemonic `10=ALL · 172=16–31 · 192=168` added to lesson; watch 172.40 public trap and router-vs-switch for NAT wording.
+- **IPv6 Professor QA (passed ~90–92%):** `/64` prefix visual, leading-zero examples strip, IPv4↔IPv6 role compare table; compression drill assignment for extra reps.
+- **Wireless Professor QA (passed ~88–90%):** BSSID vs SSID, WEP-why, roaming, open Wi-Fi, shared-air vs dedicated wire, troubleshoot L1–2 first; channel dial visual.
+- **Post-lesson Curriculum Confidence survey (Phase 5):** stars + “which questions felt unfair?” checklist after Professor Mode sessions.
+
+---
+
 *Update this doc when P4.8-Path completes each wave audit.*

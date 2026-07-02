@@ -4,6 +4,9 @@ import { TCP_IP_MODEL_EXPERIENCE } from "@/content/lessons/tcp-ip-model-experien
 import { ETHERNET_MODEL_EXPERIENCE } from "@/content/lessons/ethernet-model-experience";
 import { IPV4_ADDRESSING_EXPERIENCE } from "@/content/lessons/ipv4-addressing-experience";
 import { SUBNETTING_EXPERIENCE } from "@/content/lessons/subnetting-experience";
+import { IP_RANGES_EXPERIENCE } from "@/content/lessons/ip-ranges-experience";
+import { IPV6_BASICS_EXPERIENCE } from "@/content/lessons/ipv6-basics-experience";
+import { WIRELESS_BASICS_EXPERIENCE } from "@/content/lessons/wireless-basics-experience";
 
 export const ccna: Certification = {
   id: "ccna",
@@ -45,13 +48,23 @@ Encapsulation wraps upper-layer data with headers (and sometimes trailers) as it
             experience: OSI_MODEL_EXPERIENCE,
           },
           keyFacts: [
-            "The OSI model has 7 layers: Application, Presentation, Session, Transport, Network, Data Link, Physical",
-            "Layer 3 (Network) handles IP addressing and routing decisions",
-            "Layer 2 (Data Link) uses MAC addresses for local network delivery",
-            "Layer 4 (Transport) uses TCP for reliable delivery and UDP for fast, connectionless delivery",
-            "Encapsulation adds headers as data moves down the OSI stack",
-            "The Application layer (Layer 7) is closest to the end user",
+            "Seven layers: Application, Presentation, Session, Transport, Network, Data Link, Physical",
+            "Mnemonic top-down: APSTNDP — All People Seem To Need Data Processing",
+            "Mnemonic bottom-up: PDNTSPA — Please Do Not Throw Sausage Pizza Away",
+            "PDU names: segments (L4), packets (L3), frames (L2), bits (L1)",
+            "Encapsulation adds headers going down the stack; receiving strips them going up",
+            "Troubleshoot systematically — pick bottom-up or top-down and stay consistent",
           ],
+          lightbulbMoment: "Every layer has exactly one job.",
+          guidedExample: {
+            title: "Ping works but the website fails — where to look",
+            steps: [
+              "ping 8.8.8.8 succeeds → lower layers (Physical through Network) likely fine.",
+              "ping fails by hostname but works by IP → suspect DNS (Application layer).",
+              "Browser shows connection refused → server or firewall at Transport/Application.",
+              "Pick one direction (bottom-up or top-down) and test one layer at a time — do not jump randomly.",
+            ],
+          },
           commonMistakes: [
             "Memorizing layers top-to-bottom but forgetting PDU names (bits, frames, packets, segments)",
             "Placing TLS/encryption at Application when exam expects Presentation (Layer 6)",
@@ -66,6 +79,7 @@ Encapsulation wraps upper-layer data with headers (and sometimes trailers) as it
             "Ethernet and MAC addressing attributed to Layer 3 instead of Data Link",
             "Encapsulation direction traps (headers added going down, removed going up)",
           ],
+          realWorldScenario: "A user can ping the file server by IP but cannot open the intranet site by name. You confirm Layer 1–3 connectivity with ping, then check DNS resolution at the Application layer before re-cabling the switch.",
           quiz: [
             {
               id: "osi-q1",
@@ -519,12 +533,23 @@ Dual-stack hosts run IPv4 and IPv6 simultaneously. When studying for CCNA, pract
           },
           keyFacts: [
             "TCP/IP has 4 layers: Application, Transport, Internet, Network Access",
-            "The Internet layer uses IP for addressing and routing (maps to OSI Layer 3)",
+            "Application collapses OSI Layers 5–7 (HTTP, DNS, SMTP live here)",
+            "Internet layer = IP addressing and routing (maps to OSI Layer 3); ICMP lives here too",
             "TCP provides reliable delivery; UDP provides fast, connectionless delivery",
-            "The Application layer includes HTTP, DNS, SMTP, FTP, and other protocols",
-            "Network Access combines OSI Physical and Data Link functions",
-            "TCP/IP is the model actually used on the Internet today",
+            "Network Access combines OSI Physical and Data Link (Ethernet, MAC, frames)",
+            "ARP sits at the boundary between Internet and Network Access — often called Layer 2.5",
           ],
+          lightbulbMoment: "TCP/IP is the Internet's practical version of OSI.",
+          guidedExample: {
+            title: "Map a web request to TCP/IP layers",
+            steps: [
+              "Browser builds HTTP — Application layer.",
+              "TCP adds source/destination ports and reliability — Transport layer.",
+              "IP adds source/destination addresses for routing — Internet layer.",
+              "Ethernet builds the frame with MAC addresses — Network Access layer.",
+              "Physical sends bits on the cable — still Network Access.",
+            ],
+          },
           commonMistakes: [
             "Mapping OSI layers 5-7 all to Application without understanding why TCP/IP collapses them",
             "Confusing TCP (Transport) with IP (Internet layer) responsibilities",
@@ -539,6 +564,7 @@ Dual-stack hosts run IPv4 and IPv6 simultaneously. When studying for CCNA, pract
             "TCP three-way handshake attributed to Internet layer",
             "Distractors listing five TCP/IP layers instead of four",
           ],
+          realWorldScenario: "Your laptop loads a webpage: HTTP at Application, TCP ports at Transport, IP routing at Internet, and an Ethernet frame to the default gateway at Network Access — four layers, one trip.",
           quiz: [
             {
               id: "tcp-q1",
@@ -975,16 +1001,27 @@ Jumbo frames exceed 1500-byte MTU and may not traverse all paths. Understanding 
             experience: ETHERNET_MODEL_EXPERIENCE,
           },
           keyFacts: [
-            "Ethernet is the IEEE 802.3 standard — not just a cable type",
-            "Ethernet spans OSI Layers 1 (Physical) and 2 (Data Link) using 48-bit MAC addresses",
-            "Switches learn MAC addresses and forward frames based on destination MAC",
-            "For remote destinations, the frame destination MAC is the default gateway (router)",
-            "Full-duplex on switched ports eliminates collisions",
-            "The FCS field provides error detection for Ethernet frames",
+            "Ethernet is IEEE 802.3 — spans OSI Layers 1 (Physical) and 2 (Data Link)",
+            "Frames carry packets; a frame contains source/destination MAC plus payload",
+            "Switches learn MACs and forward unicast frames; broadcasts flood the VLAN (FF:FF:FF:FF:FF:FF)",
+            "For remote destinations, the frame destination MAC is the default gateway router — not the remote host",
+            "Full-duplex switched ports eliminate collisions; hubs create collision domains",
+            "ARP resolves IP to MAC on the local segment; FCS provides frame error detection",
           ],
+          lightbulbMoment: "Ethernet delivers frames inside a local network using MAC addresses.",
+          guidedExample: {
+            title: "PC sends a packet to a remote web server",
+            steps: [
+              "PC knows the server IP but needs a Layer 2 destination on the local segment.",
+              "ARP resolves the default gateway IP to the router's MAC address.",
+              "PC builds an Ethernet frame: destination MAC = router, source MAC = PC NIC.",
+              "The IP packet inside still lists the remote server as the final destination.",
+              "Router receives the frame, strips Layer 2, and routes the packet toward the server.",
+            ],
+          },
           commonMistakes: [
             "Confusing collision domains (hubs) with broadcast domains (switches/VLANs)",
-            "Mixing up straight-through vs crossover cable pinouts for modern auto-MDIX",
+            "Putting the remote server's MAC as the frame destination when the host is off-LAN",
             "Forgetting that broadcasts (FF:FF:FF:FF:FF:FF) flood the local VLAN",
             "Attributing IP routing decisions to Ethernet switches at Layer 2",
             "Confusing EtherType field purpose with VLAN tagging (802.1Q)",
@@ -996,6 +1033,7 @@ Jumbo frames exceed 1500-byte MTU and may not traverse all paths. Understanding 
             "Frame vs packet terminology on exam questions",
             "MTU and fragmentation attributed to Ethernet instead of IP layer",
           ],
+          realWorldScenario: "A user on VLAN 10 pings a server on another subnet. The PC's frame goes to the router's MAC address; the switch forwards based on its MAC table without reading the destination IP inside the packet.",
           quiz: [
             {
               id: "ethernet-q1",
@@ -1448,13 +1486,23 @@ Every host needs a unique address in its subnet, a matching mask, and a default 
             experience: IPV4_ADDRESSING_EXPERIENCE,
           },
           keyFacts: [
-            "IPv4 addresses are 32 bits written as four dotted decimal octets (0–255 each)",
-            "Dotted decimal groups 32 binary bits into four octets for human readability",
-            "Private RFC 1918 ranges are valid — they are not routable on the public Internet",
-            "Subnet mask or CIDR prefix defines network vs host bits",
-            "Default gateway must be on the same subnet as the host",
-            "127.0.0.1 is the IPv4 loopback address",
+            "IPv4 addresses are 32 bits written as four dotted-decimal octets (0–255 each)",
+            "IP identifies hosts on networks; MAC identifies devices on a local link — both are needed",
+            "Subnet mask or CIDR prefix defines network vs host bits — same idea, two notations",
+            "Default gateway must be on the same subnet as the host to reach remote networks",
+            "Private RFC 1918 preview: 10.x, 172.16–31.x, 192.168.x — detailed in IP Ranges lesson",
+            "127.0.0.1 is loopback; 169.254.x.x is APIPA when DHCP fails",
           ],
+          lightbulbMoment: "IP tells you where; MAC tells you who on the local link.",
+          guidedExample: {
+            title: "Configure a host on 192.168.1.0/24",
+            steps: [
+              "Choose a host address inside the subnet — e.g., 192.168.1.10 (not .0 network or .255 broadcast).",
+              "Set mask /24 (255.255.255.0) so the host knows its local network boundary.",
+              "Set default gateway to a router on the same subnet — e.g., 192.168.1.1.",
+              "ping 127.0.0.1 tests the local stack; ping the gateway tests Layer 3 reachability.",
+            ],
+          },
           commonMistakes: [
             "Confusing network address, host address, and broadcast in the same subnet",
             "Incorrect binary-to-decimal conversion on exam pressure",
@@ -1469,6 +1517,7 @@ Every host needs a unique address in its subnet, a matching mask, and a default 
             "Private vs public address classification",
             "Anding IP with mask to find network address calculation questions",
           ],
+          realWorldScenario: "A new laptop on the office LAN needs 192.168.10.50/24 with gateway 192.168.10.1. You verify the address is not the network or broadcast before handing it to the user.",
           quiz: [
             {
               id: "ipv4-addressing-q1",
@@ -1934,13 +1983,14 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
             experience: SUBNETTING_EXPERIENCE,
           },
           keyFacts: [
-            "Usable hosts = 2^host_bits - 2 (exclude network and broadcast)",
-            "CIDR notation uses a slash prefix (e.g., /24, /26)",
-            "Subnet boundaries must fall on valid bit boundaries",
-            "VLSM allows different mask lengths in one design",
-            "Network address has all host bits set to 0",
-            "Broadcast address has all host bits set to 1",
+            "Exam strategy: prefix → block size → which block? → network → broadcast → hosts",
+            "Usable hosts = 2^host_bits − 2 (exclude network and broadcast) for /24–/30",
+            "Block size in last octet = 256 − subnet octet value (e.g., /26 → 256 − 192 = 64)",
+            "Network address has all host bits 0; broadcast has all host bits 1",
+            "VLSM allocates different mask lengths — largest subnets first to avoid overlap",
+            "/22–/23 cross-octet and /31–/32 have different rules — deferred to later topics",
           ],
+          lightbulbMoment: "Find the block first — everything else comes from the block.",
           guidedExample: {
             title: "Subnet 192.168.10.0/24 into Four Equal /26 Networks",
             steps: [
@@ -2810,29 +2860,42 @@ Special IPv4 ranges appear frequently on exams. Multicast 224.0.0.0–239.255.25
 Documentation TEST-NET blocks (192.0.2.0/24, 198.51.100.0/24, 203.0.113.0/24) are for examples only. Carrier-grade NAT and RFC 6598 100.64.0.0/10 sit between private and public space for ISP use.
 
 Know which addresses are routable on the public Internet vs usable only internally. NAT translates between private inside and public outside addresses.`,
+            experience: IP_RANGES_EXPERIENCE,
           },
           keyFacts: [
-            "RFC 1918: 10/8, 172.16/12, 192.168/16 are private and non-routable on the Internet",
-            "127.0.0.0/8 is reserved for loopback addresses",
-            "169.254.0.0/16 is link-local (APIPA)",
-            "224.0.0.0/4 is the IPv4 multicast range",
-            "192.0.2.0/24 is TEST-NET-1 for documentation",
-            "0.0.0.0 often means any or unspecified in routing contexts",
+            "Private mnemonic: 10 = ALL · 172 = ONLY 16–31 · 192 = ONLY 168 — read octets, not /12 math",
+            "172.40.x.x is public — same first octet as private 172.20.x.x is a common exam trap",
+            "127.0.0.0/8 = loopback · 169.254.0.0/16 = APIPA (DHCP failed) · 224.0.0.0/4 = multicast",
+            "TEST-NET docs only: 192.0.2.0/24 · 198.51.100.0/24 · 203.0.113.0/24 — not for production",
+            "Private addresses need NAT at the edge router for Internet access — not the switch",
+            "CCNA tests purpose of each range, not legacy class A/B/C labels",
           ],
+          lightbulbMoment: "Private addresses work inside; NAT at the router translates for the Internet.",
+          guidedExample: {
+            title: "Classify five addresses at a glance",
+            steps: [
+              "10.1.1.1 → private (any 10.x.x.x).",
+              "172.20.5.4 → private (172.16–172.31 only).",
+              "172.40.1.1 → public trap — not private despite starting with 172.",
+              "169.254.10.5 → APIPA — host could not get DHCP.",
+              "224.0.0.5 → multicast (OSPF All SPF Routers).",
+            ],
+          },
           commonMistakes: [
-            "Using RFC 1918 addresses on the public Internet without NAT",
-            "Confusing link-local APIPA (169.254.x.x) with private addresses",
-            "Mixing up multicast (224.0.0.0/4) with private or experimental ranges",
+            "Treating all 172.x.x.x as private — only 172.16 through 172.31 count",
+            "Confusing link-local APIPA (169.254.x.x) with private RFC 1918 addresses",
+            "Using documentation TEST-NET (192.0.2.x) like private 192.168.x in real configs",
             "Assigning loopback (127.x.x.x) to a LAN interface",
-            "Using documentation TEST-NET ranges in production configs",
+            "Expecting NAT on a switch instead of the edge router",
           ],
           examTraps: [
-            "Which range is routable on the Internet vs private only",
-            "APIPA automatic assignment when DHCP fails",
-            "Multicast OSPF address 224.0.0.5 appearing in special range questions",
-            "127.0.0.1 loopback vs any 127.x.x.x host loopback",
+            "172.40.1.1 listed as private because it starts with 172",
+            "APIPA automatic assignment when DHCP fails — 169.254.x.x",
+            "Multicast OSPF address 224.0.0.5 in special-range questions",
+            "192.0.2.1 vs 192.168.1.1 — TEST-NET vs private confusion",
             "Carrier-grade NAT 100.64.0.0/10 distinction from RFC 1918",
           ],
+          realWorldScenario: "After a DHCP server outage, laptops show 169.254.x.x addresses and cannot reach the Internet. You restore DHCP first; APIPA only allows local link communication until a lease is obtained.",
           quiz: [
             {
               id: "ip-ranges-q1",
@@ -2908,8 +2971,8 @@ Know which addresses are routable on the public Internet vs usable only internal
           flashcards: [
             {
               id: "ip-ranges-f1",
-              front: "RFC 1918 private ranges?",
-              back: "10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16",
+              front: "RFC 1918 private mnemonic?",
+              back: "10 = ALL · 172 = ONLY 16–31 · 192 = ONLY 168",
             },
             {
               id: "ip-ranges-f2",
@@ -2941,7 +3004,7 @@ Know which addresses are routable on the public Internet vs usable only internal
             "CCNA-1.7",
             "CCNA-1.11"
           ],
-          practiceType: ["reading", "quiz", "flashcard"],
+          practiceType: ["reading", "quiz", "flashcard", "simulator"],
           questionBank: [
             {
               id: "ip-ranges-b1",
@@ -3224,7 +3287,23 @@ Know which addresses are routable on the public Internet vs usable only internal
               objectiveId: "CCNA-1.11",
               difficulty: "easy",
             }],
-        
+          assignments: [
+            {
+              id: "ip-range-sim",
+              title: "IPv4 Range Classifier Drill",
+              type: "simulator",
+              instructions: "Classify addresses as private, public, loopback, APIPA, multicast, or TEST-NET. Focus on the 172.16–31 rule and 172.40 trap until you score 80%+.",
+              estimatedMinutes: 12,
+              simulatorId: "ip-range-drill",
+              completionCriteria: [
+                "Completed drill",
+                "Score 80% or higher",
+              ],
+              relatedTopicIds: ["ip-ranges"],
+              order: 1,
+            },
+          ],
+
         },
         {
           id: "ipv6-basics",
@@ -3244,29 +3323,41 @@ IPv6 addresses are 128 bits written as eight hextets separated by colons. Leadin
 Address types: Global unicast (2000::/3), unique local (fc00::/7), link-local fe80::/10 (never routed beyond local link), and multicast ff00::/8. IPv6 typically does not use broadcast; multicast replaces ARP via Neighbor Discovery (NDP).
 
 SLAAC and DHCPv6 assign addresses. EUI-64 can derive interface IDs from MAC. Know how to compress and expand addresses quickly for exam items.`,
+            experience: IPV6_BASICS_EXPERIENCE,
           },
           keyFacts: [
-            "IPv6 addresses are 128 bits, written in hexadecimal with colons",
-            "Link-local addresses use fe80::/10",
-            "Global unicast addresses start with 2000::/3",
-            "IPv6 has no broadcast; multicast is used instead",
-            "SLAAC enables automatic address configuration without DHCP",
-            "Double colon compresses one sequence of zero groups per address",
+            "IPv6 addresses are 128 bits, written in eight hexadecimal groups separated by colons",
+            "Leading zeros in a group can be dropped; use :: once to compress the longest zero run",
+            "Standard LAN prefix is /64 — first 64 bits network, last 64 bits interface ID",
+            "Global unicast 2000::/3 · link-local fe80::/10 · unique local fc00::/7 · multicast ff00::/8",
+            "IPv6 has no broadcast; Neighbor Discovery (NDP) replaces ARP for address resolution",
+            "SLAAC auto-configures addresses; DHCPv6 and dual-stack with IPv4 are common in production",
           ],
+          lightbulbMoment: "IPv6 wasn't created just because addresses ran out — it simplifies how the Internet grows.",
+          guidedExample: {
+            title: "Compress 2001:0db8:0000:0000:0000:ff00:0042:8329",
+            steps: [
+              "Drop leading zeros in each group: 2001:db8:0:0:0:ff00:42:8329.",
+              "Find the longest run of zero groups — here four zeros in the middle.",
+              "Replace that run with :: once: 2001:db8::ff00:42:8329.",
+              "Verify only one :: appears and each group has at most four hex digits.",
+            ],
+          },
           commonMistakes: [
-            "Incorrect IPv6 address compression—dropping leading zeros in wrong groups",
-            "Using more than one :: double-colon compression in one address",
-            "Forgetting that link-local addresses start with fe80::/10",
+            "Using more than one :: double-colon compression in a single address",
+            "Dropping zeros inside a group (0042 → 42 is OK; 0db8 → db8 is OK; do not shorten db8 to b8 incorrectly)",
+            "Forgetting link-local fe80::/10 is never routed beyond the local link",
+            "Assuming IPv6 removes DHCP entirely — SLAAC and DHCPv6 coexist",
             "Confusing solicited-node multicast with all-nodes multicast",
-            "Assuming IPv6 removes need for DHCP entirely—SLAAC and DHCPv6 coexist",
           ],
           examTraps: [
             "Valid vs invalid compressed IPv6 notation",
-            "Link-local fe80:: scope and zone index on hosts",
-            "EUI-64 interface ID derivation from MAC",
-            "ICMPv6 neighbor discovery replacing ARP",
+            "Link-local fe80:: scope — not routable off the local segment",
             "Global unicast 2000::/3 vs unique local fc00::/7",
+            "ICMPv6 neighbor discovery replacing ARP",
+            "EUI-64 interface ID derivation from MAC",
           ],
+          realWorldScenario: "Your home router advertises both 192.168.1.x and a global IPv6 /64 prefix — dual-stack. The PC gets IPv4 via DHCP and may get IPv6 via SLAAC at the same time.",
           quiz: [
             {
               id: "ipv6-basics-q1",
@@ -3694,29 +3785,41 @@ Site surveys, proper AP placement, and power/channel planning are critical for r
 Security progressed from WEP (broken) to WPA (TKIP) to WPA2 (AES-CCMP) and WPA3 (SAE, stronger protection). Enterprise deployments use 802.1X with a RADIUS server for authentication. A lightweight AP model uses a wireless LAN controller (WLC) for centralized management.
 
 Signal factors include RSSI, SNR, attenuation through walls, and interference from non-Wi-Fi sources. Site surveys help AP placement.`,
+            experience: WIRELESS_BASICS_EXPERIENCE,
           },
           keyFacts: [
-            "802.11 defines wireless LAN standards (n, ac, ax)",
-            "SSID is the human-readable wireless network name",
-            "WPA2/WPA3 provide authentication and encryption for WLANs",
-            "2.4 GHz: longer range, fewer non-overlapping channels (1, 6, 11)",
-            "Access points connect wireless clients to the wired network",
-            "CSMA/CA is used because wireless is a shared half-duplex medium",
+            "802.11 = wireless LAN (Wi-Fi); 802.3 = wired Ethernet — both at Layer 1–2",
+            "SSID = human-readable network name; BSSID = the AP's radio MAC address",
+            "2.4 GHz: channels 1, 6, 11 are non-overlapping in North America — plan like subnet blocks",
+            "5 GHz offers more channels and speed; 2.4 GHz offers better range through walls",
+            "Shared air + half-duplex → CSMA/CA (listen before talk); wired Ethernet has dedicated links",
+            "WEP is broken — deploy WPA2 or WPA3; roaming = same SSID, different BSSID as you move",
           ],
+          lightbulbMoment: "Wi-Fi is Ethernet over shared air, not over a dedicated wire.",
+          guidedExample: {
+            title: "Basement Wi-Fi is slow — troubleshoot Layer 1–2 first",
+            steps: [
+              "Confirm Ethernet to the router works — if yes, IP routing is probably fine.",
+              "Check signal: distance, walls, and whether the device is on 5 GHz (shorter range).",
+              "Look for channel overlap on 2.4 GHz — neighbors on channel 6 when you are on 4 causes interference.",
+              "Verify WPA2/WPA3 passphrase and security mode before checking DNS or static routes.",
+            ],
+          },
           commonMistakes: [
-            "Confusing 2.4 GHz range vs 5 GHz speed/capacity trade-offs",
-            "Mixing WPA2-Personal (PSK) with WPA2-Enterprise (802.1X)",
-            "Forgetting that SSID is not a security mechanism by itself",
-            "Attributing VLAN assignment to wireless standard instead of controller config",
-            "Ignoring channel overlap on 2.4 GHz (only 1, 6, 11 non-overlapping)",
+            "Treating SSID hiding as a security control — it only obscures the name",
+            "Confusing SSID (network name) with BSSID (AP MAC address)",
+            "Using overlapping 2.4 GHz channels instead of 1, 6, and 11",
+            "Jumping to Layer 3 routing when the issue is signal, channel, or wrong password",
+            "Deploying WEP or open Wi-Fi on a production network",
           ],
           examTraps: [
-            "802.11 standards: a/b/g/n/ac/ax frequency and generation",
-            "WPA2 vs WPA3 encryption improvements",
-            "SSID broadcast disable does not stop determined clients",
-            "Wireless controller vs autonomous AP architectures",
-            "CSMA/CA vs wired CSMA/CD difference",
+            "802.11n/ac/ax mapped to Wi-Fi 4/5/6 marketing names",
+            "WPA2 vs WPA3 — SAE improves offline password-guess resistance",
+            "CSMA/CA on wireless vs CSMA/CD on legacy half-duplex Ethernet",
+            "Roaming described as changing SSID instead of changing BSSID",
+            "Wireless controller vs autonomous AP — lightweight AP needs WLC (deferred detail)",
           ],
+          realWorldScenario: "An employee walks a long hallway while on a video call. Their phone roams between APs sharing the same SSID but different BSSIDs — the session stays up because the wireless network is designed for coverage overlap.",
           quiz: [
             {
               id: "wireless-basics-q1",

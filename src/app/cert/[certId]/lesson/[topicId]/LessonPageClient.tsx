@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { LessonContent } from "@/components/lesson/LessonContent";
 import { LessonStepper } from "@/components/lesson/LessonStepper";
@@ -9,6 +8,9 @@ import { ExperiencePlayer } from "@/components/lesson/ExperiencePlayer";
 import { KeyFactsList } from "@/components/lesson/KeyFactsList";
 import { TopicDeepDive } from "@/components/lesson/TopicDeepDive";
 import { TopicMetadataBar } from "@/components/lesson/TopicMetadataBar";
+import { TopicPracticeHub } from "@/components/topic/TopicPracticeHub";
+import { TopicLightbulbMoment } from "@/components/lesson/TopicLightbulbMoment";
+import { TopicCheatSheets } from "@/components/topic/TopicCheatSheets";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
@@ -21,7 +23,7 @@ import { getObjectiveMasteryForTopic } from "@/lib/objective-mastery";
 import { topicKey } from "@/lib/ids";
 import { useProgressStore } from "@/stores/progress-store";
 import { useStoreHydration } from "@/hooks/use-store-hydration";
-import { Brain, Layers, CheckCircle2, Library, RotateCcw } from "lucide-react";
+import { CheckCircle2, RotateCcw } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { getNextTopicInPath } from "@/lib/curriculum";
 import {
@@ -186,7 +188,9 @@ export function LessonPageClient({
               <div>
                 <p className="text-sm font-medium text-emerald-400">Lesson complete</p>
                 <p className="mt-1 text-sm text-zinc-400">
-                  Key facts, exam traps, and practice links are below.
+                  {topicId === "wireless-basics"
+                    ? "Wave 1 network fundamentals done. Start with your lightbulb moment below."
+                    : "Start with your lightbulb moment — one idea to take with you."}
                 </p>
               </div>
               <Button variant="secondary" onClick={handleRedoLesson}>
@@ -200,9 +204,15 @@ export function LessonPageClient({
 
       {lessonUnlocked && (
         <>
+          {topic.lightbulbMoment && (
+            <TopicLightbulbMoment moment={topic.lightbulbMoment} />
+          )}
+
           <div className="mb-6">
-            <KeyFactsList facts={topic.keyFacts} />
+            <KeyFactsList facts={topic.keyFacts} subtitle="From your lesson — reinforce before practice." />
           </div>
+
+          <TopicCheatSheets topic={topic} />
 
           <TopicDeepDive topic={topic} />
 
@@ -212,36 +222,9 @@ export function LessonPageClient({
             entries={objectiveEntries}
           />
 
+          <TopicPracticeHub certId={certId} topic={topic} />
+
           <TopicAssignments certId={certId} assignments={topic.assignments} />
-
-          <div className="mb-4 flex flex-col gap-3">
-            <Link href={`/cert/${certId}/quiz/${topicId}`}>
-              <Button variant="secondary" className="w-full">
-                <Brain className="mr-2 inline h-4 w-4" />
-                Take Quiz ({topic.quiz.length} questions)
-              </Button>
-            </Link>
-            <Link href={`/cert/${certId}/flashcards/${topicId}`}>
-              <Button variant="secondary" className="w-full">
-                <Layers className="mr-2 inline h-4 w-4" />
-                Flashcards ({topic.flashcards.length} cards)
-              </Button>
-            </Link>
-            {(topic.questionBank?.length ?? 0) > 0 && (
-              <Link href={`/cert/${certId}/quiz/${topicId}?bank=1`}>
-                <Button variant="secondary" className="w-full">
-                  <Library className="mr-2 inline h-4 w-4" />
-                  Question bank drill ({topic.questionBank!.length} questions)
-                </Button>
-              </Link>
-            )}
-          </div>
-
-          {usesStructuredDelivery && isComplete && (
-            <p className="mb-4 text-center text-xs text-zinc-500">
-              Lesson marked complete — quiz and flashcards stay available below.
-            </p>
-          )}
 
           {lessonUnlocked && (
             <div className="mb-6">

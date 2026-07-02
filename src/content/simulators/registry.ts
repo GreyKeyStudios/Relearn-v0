@@ -32,6 +32,7 @@ import {
   DhcpDoraDrill,
   DnsRecordDrill,
   Ipv6CompressDrill,
+  IpRangeDrill,
   NatTypeDrill,
   StaticRouteDrill,
   VlanTrunkDrill,
@@ -168,6 +169,12 @@ export const networkRegistry: SimulatorRegistryEntry[] = [
     name: "Cabling & Connector ID",
     component: CableTypeDrill,
     topicIds: ["ethernet"],
+  },
+  {
+    id: "ip-range-drill",
+    name: "IPv4 Range Classifier",
+    component: IpRangeDrill,
+    topicIds: ["ip-ranges"],
   },
   {
     id: "ipv6-compress-drill",

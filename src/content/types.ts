@@ -79,11 +79,55 @@ export interface BlockFinderMediaDef {
   mode?: "gray" | "interactive" | "revealed";
 }
 
+/** Two-column recall table for IP ranges lesson. */
+export interface IpRangesTableMediaDef {
+  kind: "ip-ranges-table";
+}
+
+/** Two-column recall table for IPv6 address types. */
+export interface Ipv6TypesTableMediaDef {
+  kind: "ipv6-types-table";
+}
+
+/** /64 network vs host split visual. */
+export interface Ipv6PrefixMediaDef {
+  kind: "ipv6-prefix";
+  prefix?: number;
+}
+
+/** IPv4 ↔ IPv6 role comparison table. */
+export interface Ipv4Ipv6CompareMediaDef {
+  kind: "ipv4-ipv6-compare";
+}
+
+/** Leading-zero compression examples strip. */
+export interface Ipv6LeadingZeroMediaDef {
+  kind: "ipv6-leading-zeros";
+}
+
+/** Wireless fundamentals recall table. */
+export interface WirelessRecallTableMediaDef {
+  kind: "wireless-recall-table";
+}
+
+/** 2.4 GHz channel dial — spacing vs width visual. */
+export interface WifiChannelDialMediaDef {
+  kind: "wifi-channel-dial";
+  showOverlap?: boolean;
+}
+
 export type ExperienceMediaDef =
   | ExperienceIconsMediaDef
   | ExperienceFlowMediaDef
   | SubnetPieMediaDef
-  | BlockFinderMediaDef;
+  | BlockFinderMediaDef
+  | IpRangesTableMediaDef
+  | Ipv6TypesTableMediaDef
+  | Ipv6PrefixMediaDef
+  | Ipv4Ipv6CompareMediaDef
+  | Ipv6LeadingZeroMediaDef
+  | WirelessRecallTableMediaDef
+  | WifiChannelDialMediaDef;
 
 export interface DeferredTerm {
   term: string;
@@ -170,6 +214,8 @@ export interface Topic {
   questionBank?: QuizQuestion[];
   /** Phase 3 CES — optional until content expanded */
   guidedExample?: GuidedExample;
+  /** One-sentence mental model — shown first on the after-lesson hub (LES) */
+  lightbulbMoment?: string;
   commonMistakes?: string[];
   examTraps?: string[];
   realWorldScenario?: string;
