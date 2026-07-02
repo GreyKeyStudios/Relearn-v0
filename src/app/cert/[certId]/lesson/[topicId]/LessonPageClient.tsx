@@ -28,7 +28,6 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { getNextTopicInPath } from "@/lib/curriculum";
 import {
   clearLessonProgress,
-  hasSavedLessonProgress,
 } from "@/lib/lesson-steps";
 import { TopicWhatsNext } from "@/components/topic/TopicWhatsNext";
 
@@ -88,7 +87,6 @@ export function LessonPageClient({
 
   useEffect(() => {
     if (!hydrated || !isComplete) return;
-    if (hasSavedLessonProgress(certId, topicId)) return;
     setLessonUnlocked(true);
   }, [hydrated, isComplete, certId, topicId]);
 
