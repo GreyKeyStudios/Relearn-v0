@@ -225,7 +225,7 @@ Parallel content (optional during P4): tag question bank items with difficulty (
 
 ## Out of scope (Phase 5+)
 
-- AI tutor explanations
+- In-app AI modes — spec in [`docs/phase-5-ai-learning.md`](docs/phase-5-ai-learning.md); Professor Mode validated externally first
 - Cloud sync
 - Native apps
 - Community / instructor tools

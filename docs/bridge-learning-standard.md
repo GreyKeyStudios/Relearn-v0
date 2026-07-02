@@ -12,6 +12,8 @@ CES (Content Expansion Standard) checks whether content *exists*. BLS checks whe
 
 Every topic must pass all 13 rules before a domain is declared exam-ready.
 
+**Topic complete gate:** [`definition-of-done.md`](definition-of-done.md) — lesson complete is not sufficient. **Relocations:** [`ccna-deferral-manifest.md`](ccna-deferral-manifest.md).
+
 ---
 
 ## The 13 rules
