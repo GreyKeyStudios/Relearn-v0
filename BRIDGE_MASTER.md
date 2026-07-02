@@ -54,7 +54,7 @@ Plan → Architecture → Standards → Completion criteria → Delegate → Int
 | **Phase 4.75** | Complete | Coach UX polish — Study Now card, weak objectives UX, planner tuning |
 | **Phase 4.8** | Complete | Bridge Learning Standard, CCNA pedagogy sprint — see `docs/bridge-learning-standard.md` |
 | **Phase 4.9** | In progress | Learning Experience Standard (B+), ExperiencePlayer, OSI reference experience, **Git/GitHub skills track (Module 1)** — see `docs/learning-experience-standard.md`, `docs/git-github-learning-architecture.md` |
-| **Phase 5** | Planned | AI-assisted learning — Explain This Mistake first (never chat-first) |
+| **Phase 5** | Planned | AI-assisted learning — multiple modes (Professor first); see [`docs/phase-5-ai-learning.md`](docs/phase-5-ai-learning.md) |
 | **Phase 6** | Planned | Native app (Capacitor/Expo after Phase 4 gates) |
 | **Phase 7** | Planned (blocked) | Python Foundations — Code Lab engine + curriculum informed by learner research |
 
@@ -431,7 +431,23 @@ Future composite inputs (weights TBD):
 | Self-reported readiness (optional) | Learner sentiment |
 | Days until exam vs. plan pace | Time pressure |
 
-Type stub: `LearnerConfidenceScore` in [`src/types/readiness.ts`](src/types/readiness.ts). Phase 5e may use for coaching; no UI until signals are proven.
+Type stub: `LearnerConfidenceScore` in [`src/types/readiness.ts`](src/types/readiness.ts). Phase 5e may use for coaching; no UI until signals are proven. Professor Mode **confidence ratings** (1–5 after each answer) are a primary input — see [`docs/phase-5-ai-learning.md`](docs/phase-5-ai-learning.md).
+
+---
+
+## 13c. Phase 5 — AI learning modes (planned)
+
+Full spec: [`docs/phase-5-ai-learning.md`](docs/phase-5-ai-learning.md)
+
+**Modes:** Study · **Professor** · Socratic · Exam · Review · **Teaching** (graduation unlock) · Interview  
+
+**Professor Mode** = oral exam / office hours — assess reasoning, not recall. **Confidence rating** after each answer. **Professor's Notes** at session end (strengths, gaps, continue-or-revisit — no percentages).
+
+**Philosophy:** Learning is not complete until you can guide someone else. Teaching Mode is the deepest mastery check; best community explanations may become curriculum insights.
+
+**Learn from learners:** AI aggregates gaps and teaching-mode analogies → **proposes** curriculum updates → **human approval required** before merge. Contributors whose input ships get profile perks (badge, optional attribution, free-access period — TBD).
+
+**Build order:** Explain This Mistake → Professor Mode → Review Mode (mastery-backed) → Study Mode → Socratic / Exam / Teaching / Interview → curriculum feedback pipeline.
 
 ---
 
@@ -477,8 +493,10 @@ Type stub: `LearnerConfidenceScore` in [`src/types/readiness.ts`](src/types/read
 ### After Phase 4.8 (per CCNA domain wave)
 - [ ] Domain audit sheet complete (4 reviewers)
 - [ ] P3-CCNA fixes applied
-- [ ] `npm run verify:curriculum -- --strict-ccna --strict-ccna-objectives --strict-pedagogy`
-- [ ] Michael learner walkthrough PASS
+- [ ] Every topic passes [`docs/definition-of-done.md`](docs/definition-of-done.md)
+- [ ] Relocations logged in [`docs/ccna-deferral-manifest.md`](docs/ccna-deferral-manifest.md)
+- [ ] `npm run verify:curriculum -- --strict-ccna --strict-ccna-objectives --strict-pedagogy --strict-experience`
+- [ ] Michael full-flow learner walkthrough PASS (not lesson-only)
 - [ ] Reflection notes in `.cursor/plans/ccna-pedagogy-audits/reflections/`
 - [ ] Reference lesson `ccna:osi-model` approved before other topics compared to it
 

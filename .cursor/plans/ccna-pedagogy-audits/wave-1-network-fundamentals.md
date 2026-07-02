@@ -2,35 +2,44 @@
 
 **Domain ID:** `network-fundamentals`  
 **Wave:** 1  
-**Status:** In progress
+**Status:** Agent audit complete — awaiting Michael full-flow walkthrough  
+**Gate:** [`docs/definition-of-done.md`](../../docs/definition-of-done.md)
 
-| Topic | BLS | Path OK? | Teach-before-test? | Cognitive OK? | Accuracy OK? | Reference quality? | Fixes for P3-CCNA |
-|-------|-----|----------|--------------------|--------------|--------------|--------------------|-------------------|
-| `osi-model` | PASS | PASS | PASS | PASS | PASS | **Approved** | Shipped — reference experience |
-| `tcp-ip-model` | PASS | PASS | PASS | PASS | PASS | **Aced — minor tweaks pending** | Michael pass; optional second pass for notes |
-| `ethernet` | PASS | PASS | PASS | PASS | PASS | **Ready for walkthrough** | LES medium shipped (18 cards, 8-q quiz, device + cable drills) |
-| `ipv4-addressing` | pending | pending | pending | pending | pending | vs OSI | Add prereq `osi-model` |
-| `subnetting` | pending | PASS | pending | pending | pending | vs OSI | prereq set |
-| `ip-ranges` | pending | pending | pending | pending | pending | vs OSI | Add prereqs |
-| `ipv6-basics` | pending | pending | pending | pending | pending | vs OSI | Add prereq |
-| `wireless-basics` | pending | pending | pending | pending | pending | vs OSI | Add prereq `ethernet` |
+| Topic | BLS | Quiz | Bank aligned? | Hub aligned? | Topic Complete? | Michael walkthrough? |
+|-------|-----|------|-------------|-------------|-----------------|----------------------|
+| `osi-model` | PASS | PASS | PASS (18) | PARTIAL | **NO** | Pending |
+| `tcp-ip-model` | PASS | PASS | PASS (11) | PASS | **NO** | Pending |
+| `ethernet` | PASS | PASS | PASS (11) | PASS | **NO** | Pending |
+| `ipv4-addressing` | PASS | PASS | PASS (6) | PASS | **NO** | Pending |
+| `subnetting` | PASS | PASS | PASS (30) | PASS | **NO** | Pending |
+| `ip-ranges` | PASS | PASS | PASS (15) | PARTIAL | **NO** | Pending |
+| `ipv6-basics` | PASS | PASS | PASS (15) | PARTIAL | **NO** | Pending |
+| `wireless-basics` | PASS | PASS | PASS (14) | PARTIAL | **NO** | Pending |
 
-## Path designer notes
+**Domain production-ready:** NO — 0/8 topics signed off (agent pass ≠ Topic Complete)
 
-- Order in `ccna.ts` matches canonical path (osi → tcp-ip → ethernet → ipv4 …)
-- See [`docs/ccna-learning-path.md`](../../docs/ccna-learning-path.md)
+## 2026-07-02 alignment sprint (pass 2)
 
-## Lesson designer notes (osi-model)
+- **ethernet:** Bank 20→11; hub traps/scenario aligned to LES (no VLAN/802.1Q/auto-MDIX)
+- **ipv4-addressing:** Bank 20→6; hub guided example + traps aligned; subnetting-only items removed
+- **subnetting:** Bank 40→30; removed `/22`–`/23` cross-octet cluster; scenario uses `/24`→`/26`
 
-- **BLS-1 FAIL:** PDU content tested before encapsulation step (fixed in platform + content)
-- **BLS-5:** Checkpoints must bind to `osi-q4` (layers) and `osi-q5` (encapsulation) on correct steps via `lessonCheckpoints`
+## 2026-07-02 alignment sprint (pass 1)
 
-## Cognitive reviewer notes (osi-model)
+- Created [`docs/definition-of-done.md`](../../docs/definition-of-done.md) and [`docs/ccna-deferral-manifest.md`](../../docs/ccna-deferral-manifest.md)
+- **OSI:** Removed `osi-b10`, `osi-b20`; fixed flashcards/hub
+- **TCP/IP:** Hub + bank aligned
+- **ip-ranges / ipv6 / wireless:** Bank + drill trims
 
-- **BLS-2 FAIL:** Paragraph 2 listed all 7 layer functions at once — split across steps
-- **BLS-2:** Encapsulation + PDUs must be separate step from layer names
+## Remaining before Topic Complete
 
-## SME notes (osi-model)
+- [ ] Michael full flow per topic (lesson → hub → flashcards → quiz → bank → drills → PT)
+- [ ] Professor Mode without hidden knowledge
+- [ ] Optional: trim legacy `lesson.content` prose on topics still showing pre-LES dumps in reading mode
+- [ ] ip-ranges / ipv6 / ipv6 hub `lesson.content` sync (lower priority — bank/quiz clean)
 
-- ICMP L3, TLS L6, mnemonic APSTNDP — accurate
-- Simulator after lesson — OK (BLS-7)
+## Michael integration test checklist (per topic)
+
+- [ ] Full flow completed as first-time learner
+- [ ] No "unfair" questions flagged
+- [ ] Sign Topic Complete = YES in this sheet

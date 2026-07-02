@@ -68,12 +68,11 @@ Encapsulation wraps upper-layer data with headers (and sometimes trailers) as it
           commonMistakes: [
             "Memorizing layers top-to-bottom but forgetting PDU names (bits, frames, packets, segments)",
             "Placing TLS/encryption at Application when exam expects Presentation (Layer 6)",
-            "Assuming switches always operate only at Layer 2—multilayer switches route at Layer 3",
-            "Confusing Session layer (Layer 5) with Transport connection management",
+            "Confusing Session layer (Layer 5) with Transport connection management (TCP handshake)",
             "Skipping systematic troubleshooting and jumping between layers randomly",
           ],
           examTraps: [
-            "Protocol-to-layer drag-and-drop with distractors like ARP listed at wrong layers",
+            "Protocol-to-layer drag-and-drop with distractors like ICMP at Transport",
             "Questions mixing TCP/IP four-layer model with OSI seven-layer model",
             "ICMP placement—Layer 3 Network, not Transport",
             "Ethernet and MAC addressing attributed to Layer 3 instead of Data Link",
@@ -201,7 +200,7 @@ Encapsulation wraps upper-layer data with headers (and sometimes trailers) as it
             {
               id: "osi-f4c",
               front: "Common Layer 7 protocols?",
-              back: "HTTP, DNS, SMTP, FTP, SSH",
+              back: "HTTP, DNS, SMTP",
             }
           ],
           objectives: [
@@ -339,22 +338,8 @@ Encapsulation wraps upper-layer data with headers (and sometimes trailers) as it
               difficulty: "easy",
             },
             {
-              id: "osi-b10",
-              prompt: "CRC (Cyclic Redundancy Check) error detection is performed at which OSI layer?",
-              choices: [
-              { id: "a", text: "Layer 1 – Physical" },
-              { id: "b", text: "Layer 2 – Data Link" },
-              { id: "c", text: "Layer 3 – Network" },
-              { id: "d", text: "Layer 4 – Transport" }
-              ],
-              correctChoiceId: "b",
-              explanation: "CRC is included in the Ethernet trailer (FCS) appended at Layer 2 to detect bit errors in frames.",
-              objectiveId: "CCNA-1.3",
-              difficulty: "medium",
-            },
-            {
               id: "osi-b11",
-              prompt: "HTTP, FTP, and DNS are examples of protocols operating at which OSI layer?",
+              prompt: "HTTP, DNS, and SMTP are examples of protocols operating at which OSI layer?",
               choices: [
               { id: "a", text: "Layer 4 – Transport" },
               { id: "b", text: "Layer 5 – Session" },
@@ -362,7 +347,7 @@ Encapsulation wraps upper-layer data with headers (and sometimes trailers) as it
               { id: "d", text: "Layer 7 – Application" }
               ],
               correctChoiceId: "d",
-              explanation: "HTTP, FTP, and DNS are application-layer protocols that directly serve end-user applications.",
+              explanation: "HTTP, DNS, and SMTP are application-layer protocols taught in the OSI lesson.",
               objectiveId: "CCNA-1.3",
               difficulty: "easy",
             },
@@ -477,20 +462,6 @@ Encapsulation wraps upper-layer data with headers (and sometimes trailers) as it
               explanation: "SMTP is an application-layer protocol running over TCP port 25 to transfer email between servers.",
               objectiveId: "CCNA-1.3",
               difficulty: "easy",
-            },
-            {
-              id: "osi-b20",
-              prompt: "Encapsulation at the Data Link layer wraps a Network layer packet with which elements?",
-              choices: [
-              { id: "a", text: "IP header and IP trailer" },
-              { id: "b", text: "Ethernet header (MAC addresses) and FCS trailer" },
-              { id: "c", text: "TCP header and port numbers" },
-              { id: "d", text: "HTTP header and body" }
-              ],
-              correctChoiceId: "b",
-              explanation: "Layer 2 (Data Link) encapsulation adds an Ethernet header containing source and destination MAC addresses, plus an FCS trailer for error checking.",
-              objectiveId: "CCNA-1.3",
-              difficulty: "medium",
             }],
           assignments: [
             {
@@ -532,40 +503,41 @@ Dual-stack hosts run IPv4 and IPv6 simultaneously. When studying for CCNA, pract
             experience: TCP_IP_MODEL_EXPERIENCE,
           },
           keyFacts: [
-            "TCP/IP has 4 layers: Application, Transport, Internet, Network Access",
-            "Application collapses OSI Layers 5–7 (HTTP, DNS, SMTP, SSH live here)",
-            "TCP = reliable + connection-oriented; UDP = fast + connectionless (DNS, streaming)",
-            "Port ranges: well-known 0–1023 · registered 1024–49151 · ephemeral 49152+",
-            "CCNA ports now: TCP 80/443/22/23 · UDP 53 (DNS, mostly)",
-            "Internet layer = IP + ICMP; Network Access = Ethernet/Wi-Fi (PPP on WAN links — later)",
+            "Four TCP/IP layers (ATIN): Application, Transport, Internet, Network Access",
+            "OSI map: Application ≈ layers 5–7 · Transport = 4 · Internet = 3 · Network Access = 1–2",
+            "TCP = reliable, connection-oriented (SYN → SYN-ACK → ACK); UDP = fast, connectionless",
+            "Ports live at Transport — well-known 0–1023 · registered 1024–49151 · ephemeral 49152+",
+            "Ports for this topic: TCP 80 HTTP · 443 HTTPS · 22 SSH · 23 Telnet · UDP 53 DNS (mostly)",
+            "Internet = IP + ICMP (ping); ARP is deferred to Ethernet · Network Access = Ethernet/Wi-Fi",
           ],
-          lightbulbMoment: "TCP/IP is the Internet's practical version of OSI.",
+          lightbulbMoment: "TCP/IP is the Internet's practical version of OSI — same stack, four layers instead of seven.",
           guidedExample: {
-            title: "Map a web request to TCP/IP layers",
+            title: "Load https://example.com — layer by layer",
             steps: [
-              "Browser builds HTTP — Application layer.",
-              "TCP adds source/destination ports and reliability — Transport layer.",
-              "IP adds source/destination addresses for routing — Internet layer.",
-              "Ethernet builds the frame with MAC addresses — Network Access layer.",
-              "Physical sends bits on the cable — still Network Access.",
+              "Application: browser builds an HTTP request (web protocol).",
+              "Transport: TCP wraps it, picks source port + destination port 443 (HTTPS), runs SYN → SYN-ACK → ACK.",
+              "Internet: IP adds source and destination addresses so routers can forward the packet.",
+              "Network Access: Ethernet frame with your MAC and the default gateway's MAC carries the packet on the LAN.",
+              "Same trip in reverse for the reply — each layer strips its header going back up.",
             ],
           },
           commonMistakes: [
-            "Mapping OSI layers 5-7 all to Application without understanding why TCP/IP collapses them",
-            "Confusing TCP (Transport) with IP (Internet layer) responsibilities",
-            "Thinking UDP provides reliability because it is in the Transport layer",
-            "Forgetting that Link layer combines OSI Physical and Data Link functions",
+            "Confusing TCP (Transport) with IP (Internet) — different layers, different jobs",
+            "Thinking UDP is reliable because it sits at the Transport layer",
+            "Placing SSH or Telnet at Transport or Internet — both are Application layer protocols",
             "Mixing up port numbers (Transport) with IP addresses (Internet)",
+            "Memorizing FTP, DHCP, SNMP, TFTP, or NTP ports here — those belong to IP Services topics later",
+            "Testing yourself on ARP before the Ethernet lesson — ARP is introduced there, only deferred here",
           ],
           examTraps: [
-            "Which layer does HTTP belong to—Application in TCP/IP, not Transport",
-            "ARP and Ethernet frame questions mapped to Link vs Internet layer",
-            "ICMP ping success implying all upper layers work—only proves through Network",
-            "TCP three-way handshake attributed to Internet layer",
-            "Distractors listing five TCP/IP layers instead of four",
-            "Question bank drills on FTP/DHCP/SNMP ports before those IP Services topics — learn common ports here, defer the rest",
+            "HTTP, DNS, SSH, and Telnet belong to Application — not Transport",
+            "TCP three-way handshake is Transport only — not Internet or Application",
+            "ICMP ping succeeding only proves reachability through the Internet layer",
+            "DNS is mostly UDP port 53 — do not pick TCP-only distractors without context",
+            "SSH = TCP 22 · Telnet = TCP 23 · HTTPS = TCP 443 — know these for this topic",
+            "Distractors listing five TCP/IP layers, or placing Ethernet at the Internet layer",
           ],
-          realWorldScenario: "Your laptop loads a webpage: HTTP at Application, TCP ports at Transport, IP routing at Internet, and an Ethernet frame to the default gateway at Network Access — four layers, one trip.",
+          realWorldScenario: "You open a webpage: HTTP at Application, TCP port 443 at Transport, IP routing at Internet, and an Ethernet frame to your router at Network Access. Later you SSH into a switch on TCP port 22 — same four-layer trip, different Application protocol.",
           quiz: [
             {
               id: "tcp-q1",
@@ -887,7 +859,7 @@ Jumbo frames exceed 1500-byte MTU and may not traverse all paths. Understanding 
           keyFacts: [
             "Ethernet is IEEE 802.3 — spans OSI Layers 1 (Physical) and 2 (Data Link)",
             "Frames carry packets; a frame contains source/destination MAC plus payload",
-            "Switches learn MACs and forward unicast frames; broadcasts flood the VLAN (FF:FF:FF:FF:FF:FF)",
+            "Switches learn MACs and forward unicast frames; broadcasts flood the local segment (FF:FF:FF:FF:FF:FF)",
             "For remote destinations, the frame destination MAC is the default gateway router — not the remote host",
             "Full-duplex switched ports eliminate collisions; hubs create collision domains",
             "ARP resolves IP to MAC on the local segment; FCS provides frame error detection",
@@ -904,20 +876,19 @@ Jumbo frames exceed 1500-byte MTU and may not traverse all paths. Understanding 
             ],
           },
           commonMistakes: [
-            "Confusing collision domains (hubs) with broadcast domains (switches/VLANs)",
+            "Confusing collision domains (hubs) with broadcast domains on a switch",
             "Putting the remote server's MAC as the frame destination when the host is off-LAN",
-            "Forgetting that broadcasts (FF:FF:FF:FF:FF:FF) flood the local VLAN",
+            "Forgetting that broadcasts (FF:FF:FF:FF:FF:FF) flood the local segment",
             "Attributing IP routing decisions to Ethernet switches at Layer 2",
-            "Confusing EtherType field purpose with VLAN tagging (802.1Q)",
           ],
           examTraps: [
-            "Cable type selection based on like vs unlike devices—auto-MDIX may make either work",
             "Half vs full duplex impact on collisions and throughput",
-            "MAC address format and locally administered vs universally administered bit",
+            "MAC address format and locally vs universally administered addresses",
             "Frame vs packet terminology on exam questions",
-            "MTU and fragmentation attributed to Ethernet instead of IP layer",
+            "Destination MAC for off-LAN traffic is the default gateway — not the remote host",
+            "FCS/CRC error detection at Layer 2 — not routing or encryption",
           ],
-          realWorldScenario: "A user on VLAN 10 pings a server on another subnet. The PC's frame goes to the router's MAC address; the switch forwards based on its MAC table without reading the destination IP inside the packet.",
+          realWorldScenario: "A user on the office LAN pings a server on another subnet. The PC's frame goes to the router's MAC address; the switch forwards based on its MAC table without reading the destination IP inside the packet.",
           quiz: [
             {
               id: "ethernet-q1",
@@ -1064,48 +1035,6 @@ Jumbo frames exceed 1500-byte MTU and may not traverse all paths. Understanding 
               difficulty: "medium",
             },
             {
-              id: "ethernet-b2",
-              prompt: "Minimum Ethernet frame payload size (legacy)?",
-              choices: [
-                { id: "a", text: "46 bytes" },
-                { id: "b", text: "64 bytes" },
-                { id: "c", text: "1500 bytes" },
-                { id: "d", text: "4 bytes" }
-              ],
-              correctChoiceId: "a",
-              explanation: "Minimum payload is 46 bytes; minimum frame size 64 bytes including header/FCS.",
-              objectiveId: "CCNA-1.5",
-              difficulty: "hard",
-            },
-            {
-              id: "ethernet-b3",
-              prompt: "Auto-MDIX eliminates the need for:",
-              choices: [
-                { id: "a", text: "Crossover cables in many cases" },
-                { id: "b", text: "IP addresses" },
-                { id: "c", text: "VLAN tags" },
-                { id: "d", text: "Default gateways" }
-              ],
-              correctChoiceId: "a",
-              explanation: "Auto-MDIX adapts pair wiring automatically.",
-              objectiveId: "CCNA-1.6",
-              difficulty: "hard",
-            },
-            {
-              id: "ethernet-b4",
-              prompt: "EtherType field indicates:",
-              choices: [
-                { id: "a", text: "IP version" },
-                { id: "b", text: "Upper-layer protocol or frame length" },
-                { id: "c", text: "VLAN color" },
-                { id: "d", text: "Duplex setting" }
-              ],
-              correctChoiceId: "b",
-              explanation: "EtherType identifies the encapsulated protocol (e.g., 0x0800 for IPv4).",
-              objectiveId: "CCNA-1.5",
-              difficulty: "hard",
-            },
-            {
               id: "ethernet-b5",
               prompt: "Full-duplex on a switch port means:",
               choices: [
@@ -1132,35 +1061,6 @@ Jumbo frames exceed 1500-byte MTU and may not traverse all paths. Understanding 
               explanation: "Cat 5e/6 supports Gigabit Ethernet on UTP.",
               objectiveId: "CCNA-1.5",
               difficulty: "hard",
-            }
-          ,
-            {
-              id: "ethernet-b7",
-              prompt: "What is the maximum cable length for 1000BASE-T (Gigabit Ethernet over Cat5e/Cat6)?",
-              choices: [
-              { id: "a", text: "55 meters" },
-              { id: "b", text: "100 meters" },
-              { id: "c", text: "185 meters" },
-              { id: "d", text: "500 meters" }
-              ],
-              correctChoiceId: "b",
-              explanation: "1000BASE-T (IEEE 802.3ab) specifies a maximum segment length of 100 meters over Cat5e or better UTP cabling.",
-              objectiveId: "CCNA-1.3",
-              difficulty: "easy",
-            },
-            {
-              id: "ethernet-b8",
-              prompt: "What is the minimum valid Ethernet frame size (including header and FCS)?",
-              choices: [
-              { id: "a", text: "40 bytes" },
-              { id: "b", text: "64 bytes" },
-              { id: "c", text: "128 bytes" },
-              { id: "d", text: "512 bytes" }
-              ],
-              correctChoiceId: "b",
-              explanation: "Ethernet requires a minimum frame size of 64 bytes to ensure collision detection works properly. Frames smaller than 64 bytes are called runts and are discarded.",
-              objectiveId: "CCNA-1.3",
-              difficulty: "easy",
             },
             {
               id: "ethernet-b9",
@@ -1219,48 +1119,6 @@ Jumbo frames exceed 1500-byte MTU and may not traverse all paths. Understanding 
               difficulty: "medium",
             },
             {
-              id: "ethernet-b13",
-              prompt: "Auto-MDIX on a switch port allows:",
-              choices: [
-              { id: "a", text: "Automatic speed negotiation only" },
-              { id: "b", text: "Automatic crossover detection so straight-through or crossover cables both work" },
-              { id: "c", text: "Automatic VLAN assignment" },
-              { id: "d", text: "Automatic PoE negotiation" }
-              ],
-              correctChoiceId: "b",
-              explanation: "Auto-MDIX automatically adjusts the transmit and receive pairs, so either a straight-through or crossover cable can connect any two devices.",
-              objectiveId: "CCNA-1.3",
-              difficulty: "medium",
-            },
-            {
-              id: "ethernet-b14",
-              prompt: "A received Ethernet frame smaller than 64 bytes is called a:",
-              choices: [
-              { id: "a", text: "Giant" },
-              { id: "b", text: "Runt" },
-              { id: "c", text: "Jabber" },
-              { id: "d", text: "Fragment" }
-              ],
-              correctChoiceId: "b",
-              explanation: "Runts are frames below the 64-byte minimum, typically caused by collisions in half-duplex environments. Giants exceed the 1518-byte maximum.",
-              objectiveId: "CCNA-1.3",
-              difficulty: "medium",
-            },
-            {
-              id: "ethernet-b15",
-              prompt: "An Ethernet frame sent to a multicast MAC address such as 01:00:5E:xx:xx:xx is processed by:",
-              choices: [
-              { id: "a", text: "Only the device with that exact MAC" },
-              { id: "b", text: "All devices on the segment" },
-              { id: "c", text: "Only devices that have joined the multicast group" },
-              { id: "d", text: "No device — multicast MACs are discarded" }
-              ],
-              correctChoiceId: "c",
-              explanation: "Multicast frames are processed only by NICs or software that have registered interest in the specific multicast group address.",
-              objectiveId: "CCNA-1.4",
-              difficulty: "medium",
-            },
-            {
               id: "ethernet-b16",
               prompt: "The first 24 bits (3 bytes) of a MAC address identify the:",
               choices: [
@@ -1273,20 +1131,6 @@ Jumbo frames exceed 1500-byte MTU and may not traverse all paths. Understanding 
               explanation: "The OUI occupies the first 24 bits of a 48-bit MAC address and is assigned by IEEE to identify the manufacturer (e.g., Cisco, Intel).",
               objectiveId: "CCNA-1.4",
               difficulty: "medium",
-            },
-            {
-              id: "ethernet-b17",
-              prompt: "10GBASE-SR is a 10 Gigabit Ethernet standard designed for use over:",
-              choices: [
-              { id: "a", text: "Cat6 UTP up to 100 m" },
-              { id: "b", text: "Short-range multimode fiber" },
-              { id: "c", text: "Single-mode fiber up to 40 km" },
-              { id: "d", text: "Coaxial cable" }
-              ],
-              correctChoiceId: "b",
-              explanation: "10GBASE-SR uses short-wavelength laser (850 nm) over multimode fiber, with a reach up to 400 m on OM4 fiber.",
-              objectiveId: "CCNA-1.3",
-              difficulty: "hard",
             },
             {
               id: "ethernet-b18",
@@ -1303,32 +1147,32 @@ Jumbo frames exceed 1500-byte MTU and may not traverse all paths. Understanding 
               difficulty: "medium",
             },
             {
-              id: "ethernet-b19",
-              prompt: "The 8-byte Ethernet preamble and SFD (Start Frame Delimiter) serve which purpose?",
+              id: "ethernet-b21",
+              prompt: "CRC (Cyclic Redundancy Check) error detection in Ethernet is performed using which field?",
               choices: [
-              { id: "a", text: "Carry the source MAC address" },
-              { id: "b", text: "Synchronize receiver clock and mark the start of the frame" },
-              { id: "c", text: "Provide error detection at the end of the frame" },
-              { id: "d", text: "Carry the VLAN tag" }
+              { id: "a", text: "EtherType" },
+              { id: "b", text: "FCS at the end of the frame" },
+              { id: "c", text: "Preamble" },
+              { id: "d", text: "VLAN tag" }
               ],
               correctChoiceId: "b",
-              explanation: "The preamble (7 bytes of alternating 1s and 0s) plus the 1-byte SFD clock-synchronize the receiver and indicate where the actual frame begins.",
+              explanation: "The Frame Check Sequence (FCS) stores the CRC fingerprint — taught in the Ethernet FCS cards.",
               objectiveId: "CCNA-1.3",
-              difficulty: "hard",
+              difficulty: "medium",
             },
             {
-              id: "ethernet-b20",
-              prompt: "Late collisions on an Ethernet interface are most commonly caused by:",
+              id: "ethernet-b22",
+              prompt: "Layer 2 encapsulation wraps an IP packet with:",
               choices: [
-              { id: "a", text: "High CPU utilization on the switch" },
-              { id: "b", text: "A duplex mismatch between two connected devices" },
-              { id: "c", text: "An incorrect IP address configuration" },
-              { id: "d", text: "A faulty DNS server" }
+              { id: "a", text: "IP header and IP trailer" },
+              { id: "b", text: "Ethernet header (MAC addresses) and FCS trailer" },
+              { id: "c", text: "TCP header and port numbers" },
+              { id: "d", text: "HTTP header and body" }
               ],
               correctChoiceId: "b",
-              explanation: "Late collisions occur after the 64-byte slot time and are a classic symptom of a duplex mismatch — one side is full-duplex while the other is half-duplex.",
+              explanation: "Ethernet adds source/destination MAC addresses and an FCS for error checking — relocated from OSI topic after deferral.",
               objectiveId: "CCNA-1.3",
-              difficulty: "hard",
+              difficulty: "medium",
             }],
           assignments: [
             {
@@ -1374,34 +1218,32 @@ Every host needs a unique address in its subnet, a matching mask, and a default 
             "IP identifies hosts on networks; MAC identifies devices on a local link — both are needed",
             "Subnet mask or CIDR prefix defines network vs host bits — same idea, two notations",
             "Default gateway must be on the same subnet as the host to reach remote networks",
-            "Private RFC 1918 preview: 10.x, 172.16–31.x, 192.168.x — detailed in IP Ranges lesson",
+            "Private RFC 1918: 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 — details in IP Ranges lesson",
             "127.0.0.1 is loopback; 169.254.x.x is APIPA when DHCP fails",
           ],
           lightbulbMoment: "IP tells you where; MAC tells you who on the local link.",
           guidedExample: {
             title: "Configure a host on 192.168.1.0/24",
             steps: [
-              "Choose a host address inside the subnet — e.g., 192.168.1.10 (not .0 network or .255 broadcast).",
+              "Choose a host address inside the subnet — e.g., 192.168.1.10 on a /24 network.",
               "Set mask /24 (255.255.255.0) so the host knows its local network boundary.",
               "Set default gateway to a router on the same subnet — e.g., 192.168.1.1.",
               "ping 127.0.0.1 tests the local stack; ping the gateway tests Layer 3 reachability.",
             ],
           },
           commonMistakes: [
-            "Confusing network address, host address, and broadcast in the same subnet",
-            "Incorrect binary-to-decimal conversion on exam pressure",
             "Setting wrong default gateway outside the host's subnet",
-            "Using classful thinking (Class A/B/C) when CIDR/VLSM is required",
-            "Forgetting that /32 is valid for host routes or loopbacks",
+            "Invalid octet values above 255 in dotted-decimal notation",
+            "Confusing loopback (127.x) with APIPA (169.254.x)",
+            "Mixing up which octets belong to private vs public space without checking RFC 1918",
           ],
           examTraps: [
-            "Given IP and mask, identify invalid host address (network or broadcast)",
-            "Subnet mask in dotted decimal vs prefix length conversion",
+            "Subnet mask in dotted decimal vs prefix length conversion (/24 = 255.255.255.0)",
             "Default gateway must be reachable on local subnet",
             "Private vs public address classification",
-            "Anding IP with mask to find network address calculation questions",
+            "APIPA 169.254.x.x means DHCP failed — not a valid routable address",
           ],
-          realWorldScenario: "A new laptop on the office LAN needs 192.168.10.50/24 with gateway 192.168.10.1. You verify the address is not the network or broadcast before handing it to the user.",
+          realWorldScenario: "A new laptop on the office LAN needs 192.168.10.50/24 with gateway 192.168.10.1. You confirm the address and gateway share the same /24 before handing it to the user.",
           quiz: [
             {
               id: "ipv4-addressing-q1",
@@ -1511,7 +1353,7 @@ Every host needs a unique address in its subnet, a matching mask, and a default 
             {
               id: "ipv4-addressing-f2",
               front: "What does a /24 prefix mean?",
-              back: "24 network bits, mask 255.255.255.0, 256 addresses (254 usable hosts in a typical subnet)",
+              back: "24 network bits, mask 255.255.255.0 — host vs network split taught in subnetting",
             },
             {
               id: "ipv4-addressing-f3",
@@ -1548,48 +1390,6 @@ Every host needs a unique address in its subnet, a matching mask, and a default 
           practiceType: ["reading", "quiz", "flashcard", "simulator"],
           questionBank: [
             {
-              id: "ipv4-addressing-b1",
-              prompt: "/26 prefix has how many host bits?",
-              choices: [
-                { id: "a", text: "6" },
-                { id: "b", text: "8" },
-                { id: "c", text: "24" },
-                { id: "d", text: "26" }
-              ],
-              correctChoiceId: "a",
-              explanation: "/26 leaves 32−26 = 6 host bits.",
-              objectiveId: "CCNA-1.8",
-              difficulty: "medium",
-            },
-            {
-              id: "ipv4-addressing-b2",
-              prompt: "255.255.255.252 prefix length?",
-              choices: [
-                { id: "a", text: "/30" },
-                { id: "b", text: "/31" },
-                { id: "c", text: "/32" },
-                { id: "d", text: "/28" }
-              ],
-              correctChoiceId: "a",
-              explanation: "255.255.255.252 equals /30.",
-              objectiveId: "CCNA-1.7",
-              difficulty: "hard",
-            },
-            {
-              id: "ipv4-addressing-b3",
-              prompt: "Which is a valid host address in 192.168.1.0/24?",
-              choices: [
-                { id: "a", text: "192.168.1.0" },
-                { id: "b", text: "192.168.1.255" },
-                { id: "c", text: "192.168.1.100" },
-                { id: "d", text: "192.168.2.1" }
-              ],
-              correctChoiceId: "c",
-              explanation: ".0 is network; .255 is broadcast in /24.",
-              objectiveId: "CCNA-1.8",
-              difficulty: "hard",
-            },
-            {
               id: "ipv4-addressing-b4",
               prompt: "127.0.0.1 belongs to:",
               choices: [
@@ -1601,20 +1401,6 @@ Every host needs a unique address in its subnet, a matching mask, and a default 
               correctChoiceId: "a",
               explanation: "127.0.0.0/8 is reserved for loopback.",
               objectiveId: "CCNA-1.7",
-              difficulty: "hard",
-            },
-            {
-              id: "ipv4-addressing-b5",
-              prompt: "How many usable hosts in a /30?",
-              choices: [
-                { id: "a", text: "2" },
-                { id: "b", text: "4" },
-                { id: "c", text: "6" },
-                { id: "d", text: "14" }
-              ],
-              correctChoiceId: "a",
-              explanation: "/30 has 4 addresses minus network and broadcast = 2 usable.",
-              objectiveId: "CCNA-1.8",
               difficulty: "hard",
             },
             {
@@ -1630,35 +1416,6 @@ Every host needs a unique address in its subnet, a matching mask, and a default 
               explanation: "Gateway must be reachable on the local subnet.",
               objectiveId: "CCNA-1.7",
               difficulty: "hard",
-            }
-          ,
-            {
-              id: "ipv4-addressing-b7",
-              prompt: "What is the first octet range for Class B IP addresses?",
-              choices: [
-              { id: "a", text: "1 – 126" },
-              { id: "b", text: "128 – 191" },
-              { id: "c", text: "192 – 223" },
-              { id: "d", text: "224 – 239" }
-              ],
-              correctChoiceId: "b",
-              explanation: "Class B addresses start with binary 10 in the first two bits, giving first-octet values of 128–191.",
-              objectiveId: "CCNA-1.6",
-              difficulty: "easy",
-            },
-            {
-              id: "ipv4-addressing-b8",
-              prompt: "What is the default subnet mask for a Class A address in CIDR prefix notation?",
-              choices: [
-              { id: "a", text: "/8" },
-              { id: "b", text: "/16" },
-              { id: "c", text: "/24" },
-              { id: "d", text: "/32" }
-              ],
-              correctChoiceId: "a",
-              explanation: "Class A networks use a default mask of 255.0.0.0 (/8), leaving 24 bits for host addressing.",
-              objectiveId: "CCNA-1.6",
-              difficulty: "easy",
             },
             {
               id: "ipv4-addressing-b9",
@@ -1689,20 +1446,6 @@ Every host needs a unique address in its subnet, a matching mask, and a default 
               difficulty: "medium",
             },
             {
-              id: "ipv4-addressing-b11",
-              prompt: "What is the default subnet mask for a Class C address?",
-              choices: [
-              { id: "a", text: "255.0.0.0" },
-              { id: "b", text: "255.255.0.0" },
-              { id: "c", text: "255.255.255.0" },
-              { id: "d", text: "255.255.255.128" }
-              ],
-              correctChoiceId: "c",
-              explanation: "Class C networks default to a /24 (255.255.255.0) mask, providing 8 host bits and 254 usable hosts per network.",
-              objectiveId: "CCNA-1.6",
-              difficulty: "easy",
-            },
-            {
               id: "ipv4-addressing-b12",
               prompt: "An IPv4 address is divided into which two logical parts?",
               choices: [
@@ -1713,34 +1456,6 @@ Every host needs a unique address in its subnet, a matching mask, and a default 
               ],
               correctChoiceId: "b",
               explanation: "The subnet mask separates the 32-bit IPv4 address into a network portion (identifying the subnet) and a host portion (identifying the device).",
-              objectiveId: "CCNA-1.8",
-              difficulty: "easy",
-            },
-            {
-              id: "ipv4-addressing-b13",
-              prompt: "NAT (Network Address Translation) is primarily used to:",
-              choices: [
-              { id: "a", text: "Encrypt traffic between two hosts" },
-              { id: "b", text: "Allow multiple private IP hosts to share one or more public IP addresses for Internet access" },
-              { id: "c", text: "Resolve domain names to IP addresses" },
-              { id: "d", text: "Assign IP addresses automatically from a pool" }
-              ],
-              correctChoiceId: "b",
-              explanation: "NAT conserves public IPv4 address space by translating private source addresses to a public address at the router/firewall boundary.",
-              objectiveId: "CCNA-1.11",
-              difficulty: "easy",
-            },
-            {
-              id: "ipv4-addressing-b14",
-              prompt: "How many host bits are available in a /24 network, and how many usable host addresses does this provide?",
-              choices: [
-              { id: "a", text: "8 bits — 254 usable hosts" },
-              { id: "b", text: "8 bits — 256 usable hosts" },
-              { id: "c", text: "16 bits — 65534 usable hosts" },
-              { id: "d", text: "24 bits — 16,777,214 usable hosts" }
-              ],
-              correctChoiceId: "a",
-              explanation: "A /24 mask leaves 8 host bits: 2^8 = 256 total addresses minus the network and broadcast address = 254 usable hosts.",
               objectiveId: "CCNA-1.8",
               difficulty: "easy",
             },
@@ -1757,76 +1472,6 @@ Every host needs a unique address in its subnet, a matching mask, and a default 
               explanation: "Each IPv4 octet is 8 bits. The maximum value of 8 set bits is 11111111 binary = 255 decimal.",
               objectiveId: "CCNA-1.6",
               difficulty: "easy",
-            },
-            {
-              id: "ipv4-addressing-b16",
-              prompt: "IPv4 Class D addresses (224.0.0.0 – 239.255.255.255) are reserved for:",
-              choices: [
-              { id: "a", text: "Loopback testing" },
-              { id: "b", text: "Private enterprise networks" },
-              { id: "c", text: "Multicast group communication" },
-              { id: "d", text: "Experimental use" }
-              ],
-              correctChoiceId: "c",
-              explanation: "Class D is reserved for IP multicast. Multicast packets are sent to a group address and received by all subscribers of that group.",
-              objectiveId: "CCNA-1.11",
-              difficulty: "medium",
-            },
-            {
-              id: "ipv4-addressing-b17",
-              prompt: "The IP address 0.0.0.0 is used by a host to represent:",
-              choices: [
-              { id: "a", text: "The loopback interface" },
-              { id: "b", text: "The default route or 'this host on this network' before an address is assigned" },
-              { id: "c", text: "The broadcast address for the local subnet" },
-              { id: "d", text: "An APIPA address" }
-              ],
-              correctChoiceId: "b",
-              explanation: "0.0.0.0 is used as a source address in DHCP DISCOVER packets (before the host has an IP) and as the default route (0.0.0.0/0) meaning 'any destination'.",
-              objectiveId: "CCNA-1.7",
-              difficulty: "medium",
-            },
-            {
-              id: "ipv4-addressing-b18",
-              prompt: "Classful addressing differs from classless (CIDR) addressing in that classful:",
-              choices: [
-              { id: "a", text: "Supports variable-length subnet masks" },
-              { id: "b", text: "Assigns address space in fixed Class A, B, or C blocks regardless of actual need" },
-              { id: "c", text: "Is only used with IPv6" },
-              { id: "d", text: "Requires manual address assignment" }
-              ],
-              correctChoiceId: "b",
-              explanation: "Classful addressing wastes address space by allocating entire Class A (/8), B (/16), or C (/24) blocks. CIDR (RFC 1519) introduced variable-length prefixes to use addresses more efficiently.",
-              objectiveId: "CCNA-1.6",
-              difficulty: "medium",
-            },
-            {
-              id: "ipv4-addressing-b19",
-              prompt: "To determine the network address of a host, a router performs which operation on the IP address and subnet mask?",
-              choices: [
-              { id: "a", text: "Bitwise OR" },
-              { id: "b", text: "Bitwise AND" },
-              { id: "c", text: "Bitwise XOR" },
-              { id: "d", text: "Bitwise NOT" }
-              ],
-              correctChoiceId: "b",
-              explanation: "Bitwise AND of the IP address and subnet mask zeros out the host bits and returns the network address.",
-              objectiveId: "CCNA-1.8",
-              difficulty: "medium",
-            },
-            {
-              id: "ipv4-addressing-b20",
-              prompt: "The IP address 255.255.255.255 is called a:",
-              choices: [
-              { id: "a", text: "Network address" },
-              { id: "b", text: "Directed broadcast" },
-              { id: "c", text: "Limited broadcast" },
-              { id: "d", text: "Loopback address" }
-              ],
-              correctChoiceId: "c",
-              explanation: "255.255.255.255 is the limited broadcast address — it reaches all hosts on the local segment but is not forwarded by routers. A directed broadcast targets all hosts in a specific subnet.",
-              objectiveId: "CCNA-1.11",
-              difficulty: "medium",
             }],
           assignments: [
             {
@@ -1900,7 +1545,7 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
             "Cross-octet subnetting (/22, /23) where students only calculate in the fourth octet",
             "Subnet ID vs network address confusion on multi-subnet /26 and /27 problems",
           ],
-          realWorldScenario: "Your company is opening a branch office with four departments—Sales, Engineering, Guest Wi-Fi, and a WAN link to headquarters. The architect assigns you 10.50.0.0/22 and asks you to subnet it using VLSM so each department gets only the addresses it needs. You allocate subnets largest-first, document each range for the DHCP team, assign gateways at .1 on each LAN, and verify no overlap before the implementation engineer configures routers and switches.",
+          realWorldScenario: "Your company opens a branch with four departments on 192.168.10.0/24. You subnet into four equal /26 blocks using VLSM — largest needs first — document each range for DHCP, assign gateways at .1 on each LAN, and verify no overlap before rollout.",
           estimatedStudyMinutes: 45,
           difficulty: "hard",
           prerequisites: ["ipv4-addressing"],
@@ -2113,20 +1758,6 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
               difficulty: "hard",
             },
             {
-              id: "subnetting-b5",
-              prompt: "Broadcast of 172.16.4.0/22?",
-              choices: [
-                { id: "a", text: "172.16.7.255" },
-                { id: "b", text: "172.16.4.255" },
-                { id: "c", text: "172.16.3.255" },
-                { id: "d", text: "172.16.4.0" }
-              ],
-              correctChoiceId: "a",
-              explanation: "/22 spans third octet blocks of 4: 172.16.4.0–172.16.7.255.",
-              objectiveId: "CCNA-1.10",
-              difficulty: "hard",
-            },
-            {
               id: "subnetting-b6",
               prompt: "Minimum subnet for 2 usable hosts (traditional)?",
               choices: [
@@ -2282,62 +1913,6 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
               difficulty: "medium",
             },
             {
-              id: "subnetting-b17",
-              prompt: "How many usable host addresses are in a /23 subnet?",
-              choices: [
-              { id: "a", text: "254" },
-              { id: "b", text: "510" },
-              { id: "c", text: "512" },
-              { id: "d", text: "1022" }
-              ],
-              correctChoiceId: "b",
-              explanation: "/23 leaves 9 host bits: 2^9 = 512 total addresses minus 2 (network and broadcast) = 510 usable hosts.",
-              objectiveId: "CCNA-1.10",
-              difficulty: "medium",
-            },
-            {
-              id: "subnetting-b18",
-              prompt: "What is the network address for host 172.16.20.100/23?",
-              choices: [
-              { id: "a", text: "172.16.20.0" },
-              { id: "b", text: "172.16.21.0" },
-              { id: "c", text: "172.16.22.0" },
-              { id: "d", text: "172.16.18.0" }
-              ],
-              correctChoiceId: "a",
-              explanation: "/23 in the third octet has a block size of 2. Even-numbered blocks: .20.x, .22.x, .24.x. The host 172.16.20.100 falls in the .20.0 block.",
-              objectiveId: "CCNA-1.10",
-              difficulty: "hard",
-            },
-            {
-              id: "subnetting-b19",
-              prompt: "What is the broadcast address for 172.16.20.0/23?",
-              choices: [
-              { id: "a", text: "172.16.20.255" },
-              { id: "b", text: "172.16.21.254" },
-              { id: "c", text: "172.16.21.255" },
-              { id: "d", text: "172.16.22.0" }
-              ],
-              correctChoiceId: "c",
-              explanation: "/23 spans two consecutive /24 blocks. 172.16.20.0/23 covers 172.16.20.0 through 172.16.21.255. Broadcast is 172.16.21.255.",
-              objectiveId: "CCNA-1.10",
-              difficulty: "hard",
-            },
-            {
-              id: "subnetting-b20",
-              prompt: "What is the dotted-decimal subnet mask for a /23 prefix?",
-              choices: [
-              { id: "a", text: "255.255.254.0" },
-              { id: "b", text: "255.255.252.0" },
-              { id: "c", text: "255.255.255.0" },
-              { id: "d", text: "255.255.248.0" }
-              ],
-              correctChoiceId: "a",
-              explanation: "/23 has 23 network bits. The third octet has 7 bits set: 11111110 = 254. Mask = 255.255.254.0.",
-              objectiveId: "CCNA-1.9",
-              difficulty: "easy",
-            },
-            {
               id: "subnetting-b21",
               prompt: "In VLSM design, what is the smallest subnet that accommodates exactly 50 hosts?",
               choices: [
@@ -2350,48 +1925,6 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
               explanation: "/27 gives only 30 usable hosts — too small. /26 gives 2^6 - 2 = 62 usable hosts, which is the smallest prefix that fits 50 hosts.",
               objectiveId: "CCNA-1.9",
               difficulty: "medium",
-            },
-            {
-              id: "subnetting-b22",
-              prompt: "How many usable host addresses are in a /22 subnet?",
-              choices: [
-              { id: "a", text: "510" },
-              { id: "b", text: "1022" },
-              { id: "c", text: "1024" },
-              { id: "d", text: "2046" }
-              ],
-              correctChoiceId: "b",
-              explanation: "/22 leaves 10 host bits: 2^10 = 1024 total minus 2 = 1022 usable hosts.",
-              objectiveId: "CCNA-1.10",
-              difficulty: "medium",
-            },
-            {
-              id: "subnetting-b23",
-              prompt: "What is the network address for host 10.1.4.50/22?",
-              choices: [
-              { id: "a", text: "10.1.0.0" },
-              { id: "b", text: "10.1.4.0" },
-              { id: "c", text: "10.1.5.0" },
-              { id: "d", text: "10.1.3.0" }
-              ],
-              correctChoiceId: "b",
-              explanation: "/22 block size in the third octet is 4. Blocks: .0.x, .4.x, .8.x... Host 10.1.4.50 falls in the 10.1.4.0 block.",
-              objectiveId: "CCNA-1.10",
-              difficulty: "hard",
-            },
-            {
-              id: "subnetting-b24",
-              prompt: "What is the broadcast address for 10.1.4.0/22?",
-              choices: [
-              { id: "a", text: "10.1.4.255" },
-              { id: "b", text: "10.1.5.255" },
-              { id: "c", text: "10.1.7.255" },
-              { id: "d", text: "10.1.6.255" }
-              ],
-              correctChoiceId: "c",
-              explanation: "/22 spans 4 consecutive /24 blocks. 10.1.4.0/22 covers 10.1.4.0 through 10.1.7.255. Broadcast is 10.1.7.255.",
-              objectiveId: "CCNA-1.10",
-              difficulty: "hard",
             },
             {
               id: "subnetting-b25",
@@ -2492,20 +2025,6 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
               difficulty: "medium",
             },
             {
-              id: "subnetting-b32",
-              prompt: "How many /24 subnets can be created from a /16 network block?",
-              choices: [
-              { id: "a", text: "16" },
-              { id: "b", text: "64" },
-              { id: "c", text: "256" },
-              { id: "d", text: "512" }
-              ],
-              correctChoiceId: "c",
-              explanation: "Moving from /16 to /24 borrows 8 bits: 2^8 = 256 subnets.",
-              objectiveId: "CCNA-1.9",
-              difficulty: "medium",
-            },
-            {
               id: "subnetting-b33",
               prompt: "What is the dotted-decimal mask for a /30 prefix?",
               choices: [
@@ -2518,34 +2037,6 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
               explanation: "/30 has 30 network bits. The last octet has 6 bits set: 11111100 = 252. Mask = 255.255.255.252.",
               objectiveId: "CCNA-1.9",
               difficulty: "easy",
-            },
-            {
-              id: "subnetting-b34",
-              prompt: "What is the first usable host address in the 172.20.0.0/22 subnet?",
-              choices: [
-              { id: "a", text: "172.20.0.0" },
-              { id: "b", text: "172.20.0.1" },
-              { id: "c", text: "172.20.1.1" },
-              { id: "d", text: "172.20.0.2" }
-              ],
-              correctChoiceId: "b",
-              explanation: "172.20.0.0 is the network address. The first usable host is 172.20.0.1.",
-              objectiveId: "CCNA-1.10",
-              difficulty: "easy",
-            },
-            {
-              id: "subnetting-b35",
-              prompt: "What is the broadcast address for 172.20.0.0/22?",
-              choices: [
-              { id: "a", text: "172.20.0.255" },
-              { id: "b", text: "172.20.2.255" },
-              { id: "c", text: "172.20.3.255" },
-              { id: "d", text: "172.20.4.255" }
-              ],
-              correctChoiceId: "c",
-              explanation: "/22 block size in the third octet is 4. 172.20.0.0/22 spans 172.20.0.0–172.20.3.255. Broadcast is 172.20.3.255.",
-              objectiveId: "CCNA-1.10",
-              difficulty: "hard",
             },
             {
               id: "subnetting-b36",
@@ -3032,62 +2523,6 @@ Know which addresses are routable on the public Internet vs usable only internal
               difficulty: "medium",
             },
             {
-              id: "ip-ranges-b11",
-              prompt: "The 100.64.0.0/10 address block is assigned for:",
-              choices: [
-              { id: "a", text: "Loopback testing" },
-              { id: "b", text: "APIPA self-configuration" },
-              { id: "c", text: "Carrier-Grade NAT (CGN) shared address space — RFC 6598" },
-              { id: "d", text: "IPv6 transition tunneling" }
-              ],
-              correctChoiceId: "c",
-              explanation: "RFC 6598 reserves 100.64.0.0/10 for use between ISP CPE devices and carrier NAT devices. It is not routable on the public Internet.",
-              objectiveId: "CCNA-1.11",
-              difficulty: "hard",
-            },
-            {
-              id: "ip-ranges-b12",
-              prompt: "IPv4 Class E addresses (240.0.0.0 – 255.255.255.254) are reserved for:",
-              choices: [
-              { id: "a", text: "Multicast group communication" },
-              { id: "b", text: "Private enterprise networks" },
-              { id: "c", text: "Experimental purposes and future use" },
-              { id: "d", text: "Loopback only" }
-              ],
-              correctChoiceId: "c",
-              explanation: "Class E (240.0.0.0/4) is reserved for experimental use and has never been allocated for general use on the public Internet.",
-              objectiveId: "CCNA-1.11",
-              difficulty: "medium",
-            },
-            {
-              id: "ip-ranges-b13",
-              prompt: "The address 0.0.0.0/0 used in a routing table entry represents:",
-              choices: [
-              { id: "a", text: "The loopback interface" },
-              { id: "b", text: "The default route — match all destinations not covered by more specific routes" },
-              { id: "c", text: "The network broadcast address" },
-              { id: "d", text: "An invalid placeholder address" }
-              ],
-              correctChoiceId: "b",
-              explanation: "0.0.0.0/0 is the default route (quad-zero route). A router forwards packets matching no more specific prefix to the next hop of the default route.",
-              objectiveId: "CCNA-1.7",
-              difficulty: "easy",
-            },
-            {
-              id: "ip-ranges-b14",
-              prompt: "255.255.255.255 sent as a destination IP in a DHCP DISCOVER is called a:",
-              choices: [
-              { id: "a", text: "Directed broadcast" },
-              { id: "b", text: "Limited broadcast" },
-              { id: "c", text: "Multicast address" },
-              { id: "d", text: "Anycast address" }
-              ],
-              correctChoiceId: "b",
-              explanation: "255.255.255.255 is the limited broadcast address. It reaches all hosts on the local subnet and is not forwarded by routers. A directed broadcast uses the subnet's specific broadcast address.",
-              objectiveId: "CCNA-1.11",
-              difficulty: "medium",
-            },
-            {
               id: "ip-ranges-b15",
               prompt: "The 172.16.0.0/12 private range spans which address range?",
               choices: [
@@ -3098,20 +2533,6 @@ Know which addresses are routable on the public Internet vs usable only internal
               ],
               correctChoiceId: "c",
               explanation: "172.16.0.0/12 covers 172.16.0.0 through 172.31.255.255 (the /12 mask borrows 4 bits into the second octet: values 16–31).",
-              objectiveId: "CCNA-1.7",
-              difficulty: "medium",
-            },
-            {
-              id: "ip-ranges-b16",
-              prompt: "Which of the following addresses is publicly routable on the Internet?",
-              choices: [
-              { id: "a", text: "10.200.5.1" },
-              { id: "b", text: "172.20.0.1" },
-              { id: "c", text: "192.168.1.1" },
-              { id: "d", text: "203.0.113.5" }
-              ],
-              correctChoiceId: "d",
-              explanation: "203.0.113.5 is in the TEST-NET-3 range but is a public documentation address. Among the choices, it is the only one outside all RFC 1918 private blocks. In practice, 203.0.113.0/24 is not used for routing — it is documentation only. All others are RFC 1918 private.",
               objectiveId: "CCNA-1.7",
               difficulty: "medium",
             },
@@ -3409,20 +2830,6 @@ SLAAC and DHCPv6 assign addresses. EUI-64 can derive interface IDs from MAC. Kno
               difficulty: "hard",
             },
             {
-              id: "ipv6-basics-b5",
-              prompt: "IPv6 header compared to IPv4?",
-              choices: [
-                { id: "a", text: "Larger fixed header always" },
-                { id: "b", text: "Simplified fixed 40-byte base header" },
-                { id: "c", text: "No source address" },
-                { id: "d", text: "No next-header field" }
-              ],
-              correctChoiceId: "b",
-              explanation: "IPv6 base header is 40 bytes with fewer fields.",
-              objectiveId: "CCNA-1.13",
-              difficulty: "hard",
-            },
-            {
               id: "ipv6-basics-b6",
               prompt: "NDP replaces which IPv4 protocol pair?",
               choices: [
@@ -3466,20 +2873,6 @@ SLAAC and DHCPv6 assign addresses. EUI-64 can derive interface IDs from MAC. Kno
               difficulty: "easy",
             },
             {
-              id: "ipv6-basics-b9",
-              prompt: "EUI-64 is a process that generates which part of an IPv6 address from a device's MAC address?",
-              choices: [
-              { id: "a", text: "The 64-bit prefix" },
-              { id: "b", text: "The 64-bit interface identifier" },
-              { id: "c", text: "The 16-bit VLAN tag" },
-              { id: "d", text: "The 32-bit routing prefix" }
-              ],
-              correctChoiceId: "b",
-              explanation: "EUI-64 inserts FF:FE in the middle of the 48-bit MAC address and flips the Universal/Local bit to create a unique 64-bit interface ID for the host portion of an IPv6 address.",
-              objectiveId: "CCNA-1.13",
-              difficulty: "medium",
-            },
-            {
               id: "ipv6-basics-b10",
               prompt: "IPv6 multicast addresses begin with which prefix?",
               choices: [
@@ -3520,20 +2913,6 @@ SLAAC and DHCPv6 assign addresses. EUI-64 can derive interface IDs from MAC. Kno
               explanation: "NDP (Neighbor Discovery Protocol), using ICMPv6 messages, replaces ARP in IPv6. Neighbor Solicitation and Neighbor Advertisement messages perform address resolution.",
               objectiveId: "CCNA-1.13",
               difficulty: "medium",
-            },
-            {
-              id: "ipv6-basics-b13",
-              prompt: "A solicited-node multicast address is used in IPv6 to:",
-              choices: [
-              { id: "a", text: "Identify all routers on a link" },
-              { id: "b", text: "Efficiently perform address resolution (similar to ARP) for a specific host" },
-              { id: "c", text: "Carry routing protocol updates" },
-              { id: "d", text: "Compress link-local addresses" }
-              ],
-              correctChoiceId: "b",
-              explanation: "Solicited-node multicast (ff02::1:ffxx:xxxx) is derived from the last 24 bits of the target IPv6 address. NDP uses it to limit Neighbor Solicitation messages to a small group instead of broadcasting.",
-              objectiveId: "CCNA-1.13",
-              difficulty: "hard",
             },
             {
               id: "ipv6-basics-b14",
@@ -3592,20 +2971,6 @@ SLAAC and DHCPv6 assign addresses. EUI-64 can derive interface IDs from MAC. Kno
               difficulty: "easy",
             },
             {
-              id: "ipv6-basics-b18",
-              prompt: "IPv6 does NOT support broadcast. What replaces broadcast functionality?",
-              choices: [
-              { id: "a", text: "Anycast" },
-              { id: "b", text: "Unicast to 255.255.255.255" },
-              { id: "c", text: "Multicast to all-nodes multicast address ff02::1" },
-              { id: "d", text: "Link-local unicast to fe80::1" }
-              ],
-              correctChoiceId: "c",
-              explanation: "IPv6 eliminates broadcast and uses multicast instead. The all-nodes multicast address ff02::1 is used where broadcast would have been in IPv4.",
-              objectiveId: "CCNA-1.13",
-              difficulty: "medium",
-            },
-            {
               id: "ipv6-basics-b19",
               prompt: "Which ICMPv6 message type does a router send to advertise its presence and network prefix to hosts on a link?",
               choices: [
@@ -3618,20 +2983,6 @@ SLAAC and DHCPv6 assign addresses. EUI-64 can derive interface IDs from MAC. Kno
               explanation: "Router Advertisements (ICMPv6 type 134) are sent periodically by routers (and in response to Router Solicitations) to announce the network prefix, default gateway, and other configuration flags for SLAAC.",
               objectiveId: "CCNA-1.13",
               difficulty: "medium",
-            },
-            {
-              id: "ipv6-basics-b20",
-              prompt: "A 6to4 tunnel (RFC 3056) is used to:",
-              choices: [
-              { id: "a", text: "Convert IPv6 addresses to IPv4 format" },
-              { id: "b", text: "Carry IPv6 traffic over an IPv4 network by encapsulating IPv6 packets inside IPv4 headers" },
-              { id: "c", text: "Compress IPv6 headers for WAN transmission" },
-              { id: "d", text: "Replace IPv4 routing tables with IPv6 equivalents" }
-              ],
-              correctChoiceId: "b",
-              explanation: "6to4 is a transition mechanism that encapsulates IPv6 datagrams in IPv4 packets (protocol 41), enabling IPv6 communication across IPv4 infrastructure without explicit tunnel configuration.",
-              objectiveId: "CCNA-1.12",
-              difficulty: "hard",
             }],
           assignments: [
             {
@@ -3804,8 +3155,8 @@ Signal factors include RSSI, SNR, attenuation through walls, and interference fr
             },
             {
               id: "wireless-basics-f4c",
-              front: "Enterprise Wi-Fi auth uses:",
-              back: "802.1X with RADIUS",
+              front: "CSMA/CA — what does CA mean?",
+              back: "Collision Avoidance — wireless tries to avoid collisions before transmitting",
             }
           ],
           objectives: [
@@ -3884,21 +3235,6 @@ Signal factors include RSSI, SNR, attenuation through walls, and interference fr
               difficulty: "hard",
             },
             {
-              id: "wireless-basics-b6",
-              prompt: "Higher RSSI values generally mean:",
-              choices: [
-                { id: "a", text: "Weaker signal" },
-                { id: "b", text: "Stronger signal" },
-                { id: "c", text: "No association" },
-                { id: "d", text: "WEP enabled" }
-              ],
-              correctChoiceId: "b",
-              explanation: "RSSI measured closer to 0 dBm is stronger (less negative).",
-              objectiveId: "CCNA-1.13",
-              difficulty: "hard",
-            }
-          ,
-            {
               id: "wireless-basics-b7",
               prompt: "What is the maximum channel width supported by 802.11n (Wi-Fi 4)?",
               choices: [
@@ -3925,20 +3261,6 @@ Signal factors include RSSI, SNR, attenuation through walls, and interference fr
               explanation: "The 5 GHz band offers up to 23+ non-overlapping 20 MHz channels (vs. 3 in 2.4 GHz) and is less congested because fewer consumer devices and interferers (microwaves, baby monitors) use it.",
               objectiveId: "CCNA-1.13",
               difficulty: "easy",
-            },
-            {
-              id: "wireless-basics-b9",
-              prompt: "When deploying multiple APs for full coverage, the recommended cell overlap between adjacent APs should be approximately:",
-              choices: [
-              { id: "a", text: "0% — no overlap" },
-              { id: "b", text: "10–15%" },
-              { id: "c", text: "15–20%" },
-              { id: "d", text: "50–60%" }
-              ],
-              correctChoiceId: "c",
-              explanation: "A 15–20% cell overlap ensures seamless roaming. Too little overlap creates dead zones; too much overlap causes co-channel interference when cells share the same channel.",
-              objectiveId: "CCNA-1.13",
-              difficulty: "medium",
             },
             {
               id: "wireless-basics-b10",
@@ -3983,34 +3305,6 @@ Signal factors include RSSI, SNR, attenuation through walls, and interference fr
               difficulty: "easy",
             },
             {
-              id: "wireless-basics-b13",
-              prompt: "Infrastructure mode wireless networking requires which device that standalone ad-hoc (IBSS) mode does not?",
-              choices: [
-              { id: "a", text: "A DHCP server" },
-              { id: "b", text: "An access point (AP)" },
-              { id: "c", text: "A Layer 3 switch" },
-              { id: "d", text: "A wireless bridge" }
-              ],
-              correctChoiceId: "b",
-              explanation: "Infrastructure mode (BSS) requires an access point as the central hub for all wireless communication. Ad-hoc mode (IBSS) allows devices to communicate directly peer-to-peer without an AP.",
-              objectiveId: "CCNA-1.13",
-              difficulty: "easy",
-            },
-            {
-              id: "wireless-basics-b14",
-              prompt: "What is the maximum theoretical throughput of 802.11g?",
-              choices: [
-              { id: "a", text: "11 Mbps" },
-              { id: "b", text: "54 Mbps" },
-              { id: "c", text: "150 Mbps" },
-              { id: "d", text: "300 Mbps" }
-              ],
-              correctChoiceId: "b",
-              explanation: "802.11g (2003) operates in the 2.4 GHz band with a maximum theoretical PHY rate of 54 Mbps using OFDM modulation. 802.11b is 11 Mbps; 802.11n reached 300 Mbps+ per stream.",
-              objectiveId: "CCNA-1.13",
-              difficulty: "easy",
-            },
-            {
               id: "wireless-basics-b15",
               prompt: "MIMO (Multiple Input, Multiple Output) technology, introduced in 802.11n, increases throughput by:",
               choices: [
@@ -4049,48 +3343,6 @@ Signal factors include RSSI, SNR, attenuation through walls, and interference fr
               ],
               correctChoiceId: "a",
               explanation: "CSMA/CA (Collision Avoidance) is necessary because wireless NICs cannot simultaneously transmit and listen for collisions (hidden node problem), so they use random back-off timers and optional RTS/CTS to avoid them before transmitting.",
-              objectiveId: "CCNA-1.13",
-              difficulty: "medium",
-            },
-            {
-              id: "wireless-basics-b18",
-              prompt: "What is the maximum theoretical data rate of IEEE 802.11b?",
-              choices: [
-              { id: "a", text: "2 Mbps" },
-              { id: "b", text: "11 Mbps" },
-              { id: "c", text: "54 Mbps" },
-              { id: "d", text: "100 Mbps" }
-              ],
-              correctChoiceId: "b",
-              explanation: "802.11b (1999) was the first widely adopted Wi-Fi standard. It operates in the 2.4 GHz band using DSSS modulation with a maximum rate of 11 Mbps.",
-              objectiveId: "CCNA-1.13",
-              difficulty: "easy",
-            },
-            {
-              id: "wireless-basics-b19",
-              prompt: "Channel bonding (using 80 or 160 MHz wide channels) is a feature introduced in which Wi-Fi standard?",
-              choices: [
-              { id: "a", text: "802.11g" },
-              { id: "b", text: "802.11n (40 MHz bonding only)" },
-              { id: "c", text: "802.11ac (80/160 MHz bonding)" },
-              { id: "d", text: "802.11b" }
-              ],
-              correctChoiceId: "c",
-              explanation: "802.11n introduced 40 MHz channel bonding. 802.11ac (Wi-Fi 5) extended this to 80 MHz (mandatory) and 160 MHz (optional), significantly increasing maximum throughput.",
-              objectiveId: "CCNA-1.13",
-              difficulty: "medium",
-            },
-            {
-              id: "wireless-basics-b20",
-              prompt: "An Extended Service Set (ESS) is formed when:",
-              choices: [
-              { id: "a", text: "Two wireless clients communicate directly without an AP" },
-              { id: "b", text: "Multiple access points share the same SSID and are connected via a distribution system (DS)" },
-              { id: "c", text: "A single AP creates one basic service area" },
-              { id: "d", text: "A wireless mesh connects APs without a wired backbone" }
-              ],
-              correctChoiceId: "b",
-              explanation: "An ESS consists of multiple BSSs (individual AP cells) connected by a distribution system (typically wired Ethernet) and sharing the same SSID, enabling seamless roaming across a large area.",
               objectiveId: "CCNA-1.13",
               difficulty: "medium",
             }],

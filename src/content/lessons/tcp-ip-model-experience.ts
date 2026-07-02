@@ -370,7 +370,7 @@ export const TCP_IP_MODEL_EXPERIENCE: TopicExperience = {
       type: "summary",
       showFullStack: true,
       headline: "You have the practical model.",
-      body: "Four TCP/IP layers mapped to OSI, TCP vs UDP, handshake basics, and when each model helps. Next: Ethernet — frames and switches in detail.",
+      body: "Four TCP/IP layers mapped to OSI, TCP vs UDP, handshake basics, common ports (80/443/53/22/23), and what to defer to IP Services. Next: Ethernet — frames and switches in detail.",
     },
   ],
 };

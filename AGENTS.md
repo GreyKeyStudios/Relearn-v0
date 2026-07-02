@@ -22,8 +22,11 @@ This version has breaking changes — APIs, conventions, and file structure may 
 npm run build
 npm run verify:curriculum -- --strict-ccna --strict-ccna-objectives
 npm run verify:curriculum -- --strict-pedagogy   # Phase 4.8 BLS warnings
+npm run verify:curriculum -- --strict-experience # LES storyboard checks
 npx tsc --noEmit
 ```
+
+**Topic complete gate:** [`docs/definition-of-done.md`](docs/definition-of-done.md) — no topic graduates until all artifacts align. Relocations: [`docs/ccna-deferral-manifest.md`](docs/ccna-deferral-manifest.md).
 
 ## File ownership (summary)
 

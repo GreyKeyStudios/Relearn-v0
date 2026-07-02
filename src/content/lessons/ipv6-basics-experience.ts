@@ -243,6 +243,13 @@ export const IPV6_BASICS_EXPERIENCE: TopicExperience = {
             "Neighbor Discovery Protocol — IPv6 replaces ARP; uses ICMPv6 messages.",
         },
         {
+          id: "mac",
+          label: "MAC address",
+          tier: "basics",
+          shortDefinition:
+            "Hardware address on the local link — NDP resolves IPv6 to MAC like ARP did in IPv4.",
+        },
+        {
           id: "icmpv6",
           label: "ICMPv6",
           tier: "basics",
