@@ -2,9 +2,18 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Flame, Target, Percent, ChevronDown, ChevronUp } from "lucide-react";
+import {
+  Flame,
+  Target,
+  Percent,
+  ChevronDown,
+  ChevronUp,
+  ArrowRight,
+} from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { StatCard } from "@/components/dashboard/StatCard";
+import { TrackCard } from "@/components/dashboard/TrackCard";
+import { FlagshipHero } from "@/components/dashboard/FlagshipHero";
 import { CertProgressCard } from "@/components/dashboard/CertProgressCard";
 import { WeakAreaList } from "@/components/dashboard/WeakAreaList";
 import { ActivityFeed } from "@/components/dashboard/ActivityFeed";
@@ -25,9 +34,9 @@ import { filterPlanBySessionMinutes } from "@/lib/session-planning";
 import {
   activeCertsSupportObjectives,
   certSupportsObjectiveCoaching,
-  coachingLevelLabel,
 } from "@/lib/objective-support";
 import { getQuizAccuracy } from "@/lib/progress-metrics";
+import { getPrimaryTrack, groupTracksByStatus } from "@/lib/track-status";
 import { useProgressStore } from "@/stores/progress-store";
 import { useStoreHydration } from "@/hooks/use-store-hydration";
 
@@ -47,6 +56,9 @@ export default function DashboardPage() {
   const weakTopics = getWeakTopics();
   const accuracy = getQuizAccuracy(quizAttempts);
   const activeCertIds = progressState.studyPlan.activeCertIds;
+
+  const { active: activeTracks, early: earlyTracks } = groupTracksByStatus(certs);
+  const heroCert = getPrimaryTrack(certs, activeCertIds);
 
   const rawPlan = hydrated ? buildDailyPlan(progressState, certs) : null;
   const plan =
@@ -87,30 +99,28 @@ export default function DashboardPage() {
   const planItemsBeyondCoach =
     plan?.items.filter((item) => item.href !== coachRec?.href) ?? [];
 
+  // Courses to surface on the dashboard: the learner's active picks if set,
+  // otherwise every live track. Early-access tracks stay in the library only.
+  const dashboardTracks = activeTracks.filter(
+    (c) => activeCertIds.length === 0 || activeCertIds.includes(c.id)
+  );
+
   if (hydrated && !onboardingComplete) {
     return <OnboardingWizard />;
   }
 
   return (
     <div>
-      <PageHeader
-        title="Bridge Study Companion"
-        subtitle={
-          primaryCert
-            ? `Studying ${primaryCert.shortName} · ${coachingLevelLabel(primaryCert.id, primaryCert)}`
-            : "Your certification study hub"
-        }
-      />
+      <PageHeader title="ReLearn" subtitle="Your certification study hub" />
+
+      {heroCert && <FlagshipHero cert={heroCert} />}
 
       <SessionLengthPicker />
 
       {examPace && <ExamCountdownCard pace={examPace} />}
 
       {hydrated && (
-        <StudyNowCard
-          recommendation={coachRec}
-          sessionMinutes={sessionMinutes}
-        />
+        <StudyNowCard recommendation={coachRec} sessionMinutes={sessionMinutes} />
       )}
 
       <div className="mb-6 grid grid-cols-3 gap-3">
@@ -140,13 +150,12 @@ export default function DashboardPage() {
             {coachRec ? " — expand for full plan" : ""}
           </p>
         )}
-        {planExpanded && (
-          plan ? (
+        {planExpanded &&
+          (plan ? (
             <DailyPlanCard plan={plan} highlightHref={coachRec?.href} />
           ) : (
             <p className="text-sm text-zinc-500">Loading plan…</p>
-          )
-        )}
+          ))}
         {!planExpanded && coachRec && planItemsBeyondCoach.length > 0 && (
           <button
             type="button"
@@ -170,13 +179,47 @@ export default function DashboardPage() {
         </section>
       )}
 
+      {dashboardTracks.length > 0 && (
+        <section className="mb-6">
+          <div className="mb-3 flex items-center justify-between">
+            <h2 className="text-xs font-semibold uppercase tracking-wide text-zinc-400">
+              Your courses
+            </h2>
+            <Link href="/certifications" className="text-xs text-sky-400 hover:text-sky-300">
+              Library
+            </Link>
+          </div>
+          <div className="flex flex-col gap-3">
+            {dashboardTracks.map((cert) => (
+              <TrackCard key={cert.id} cert={cert} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {earlyTracks.length > 0 && (
+        <Link
+          href="/certifications"
+          className="mb-6 flex items-center justify-between gap-3 rounded-2xl border border-dashed border-zinc-800 bg-zinc-900/40 p-4 transition-colors hover:border-zinc-700 hover:bg-zinc-900/70"
+        >
+          <div className="min-w-0">
+            <p className="text-sm font-medium text-zinc-200">The library is growing</p>
+            <p className="mt-0.5 text-xs text-zinc-500">
+              {earlyTracks.length} more track{earlyTracks.length === 1 ? "" : "s"} in development —
+              question banks are already live.
+            </p>
+          </div>
+          <ArrowRight className="h-4 w-4 shrink-0 text-zinc-500" aria-hidden />
+        </Link>
+      )}
+
       <section className="mb-6">
         <button
           type="button"
           onClick={() => setDetailsExpanded((v) => !v)}
           className="mb-3 flex w-full items-center justify-between text-sm font-semibold uppercase tracking-wide text-zinc-400"
         >
-          <span>Progress & weak areas</span>
+          <span>Progress &amp; weak areas</span>
           {detailsExpanded ? (
             <ChevronUp className="h-4 w-4" />
           ) : (
@@ -189,14 +232,14 @@ export default function DashboardPage() {
             <div className="mb-6">
               <div className="mb-3 flex items-center justify-between">
                 <h3 className="text-xs font-semibold uppercase tracking-wide text-zinc-500">
-                  Certifications
+                  All active tracks
                 </h3>
                 <Link href="/certifications" className="text-xs text-sky-400">
                   View all
                 </Link>
               </div>
               <div className="flex flex-col gap-3">
-                {certs
+                {activeTracks
                   .filter((c) => c.domains.some((d) => d.topics.length > 0))
                   .filter((c) => activeCertIds.length === 0 || activeCertIds.includes(c.id))
                   .map((cert) => (
