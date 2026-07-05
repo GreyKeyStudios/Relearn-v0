@@ -3,7 +3,9 @@
 import { useMemo, useState } from "react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { TrackCard } from "@/components/dashboard/TrackCard";
+import { PlannedTrackRow } from "@/components/dashboard/PlannedTrackRow";
 import { getAllCertifications } from "@/lib/content-selectors";
+import { filterPlannedTracks } from "@/lib/planned-tracks";
 import { groupTracksByStatus } from "@/lib/track-status";
 
 export default function CertificationsPage() {
@@ -19,13 +21,16 @@ export default function CertificationsPage() {
     );
   }, [query]);
 
+  const planned = useMemo(() => filterPlannedTracks(query), [query]);
   const { active, early } = groupTracksByStatus(filtered);
+
+  const nothingMatches = active.length === 0 && early.length === 0 && planned.length === 0;
 
   return (
     <div>
       <PageHeader
         title="Course library"
-        subtitle="One flagship experience today, with more tracks landing over time"
+        subtitle="Live tracks, early access previews, and what's landing next"
       />
 
       <input
@@ -53,11 +58,11 @@ export default function CertificationsPage() {
       {early.length > 0 && (
         <section className="mb-10 border-t border-hairline pt-6">
           <div className="mb-1 flex items-baseline justify-between">
-            <h2 className="eyebrow">In development</h2>
+            <h2 className="eyebrow">Early access</h2>
             <span className="text-xs text-faint">{early.length} tracks</span>
           </div>
           <p className="mb-3 text-xs text-muted-foreground">
-            Question banks and flashcards are live. Guided lessons are being built out.
+            Question banks and flashcards are live. Guided lessons are still being built out.
           </p>
           <div className="divide-y divide-hairline">
             {early.map((cert) => (
@@ -67,7 +72,24 @@ export default function CertificationsPage() {
         </section>
       )}
 
-      {active.length === 0 && early.length === 0 && (
+      {planned.length > 0 && (
+        <section className="mb-10 border-t border-hairline pt-6">
+          <div className="mb-1 flex items-baseline justify-between">
+            <h2 className="eyebrow">Coming soon</h2>
+            <span className="text-xs text-faint">{planned.length} planned</span>
+          </div>
+          <p className="mb-3 text-xs text-muted-foreground">
+            On the roadmap after Git proves the skill-track template — not open for study yet.
+          </p>
+          <div className="divide-y divide-hairline">
+            {planned.map((track) => (
+              <PlannedTrackRow key={track.id} track={track} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {nothingMatches && (
         <p className="text-sm text-muted-foreground">No tracks match &ldquo;{query}&rdquo;.</p>
       )}
     </div>

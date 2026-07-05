@@ -61,7 +61,7 @@ const META: Record<TrackStatus, Omit<TrackStatusMeta, "status">> = {
   },
   early: {
     label: "Early access",
-    tagline: "Quizzes ready · lessons in progress",
+    tagline: "Quizzes and flashcards live · lessons in progress",
     group: "early",
     order: 3,
     live: false,

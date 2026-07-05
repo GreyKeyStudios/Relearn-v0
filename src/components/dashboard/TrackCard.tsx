@@ -31,10 +31,11 @@ export function TrackCard({ cert }: TrackCardProps) {
 
   const isEarly = meta.status === "early";
   const showProgress = meta.live && hasContent;
+  const href = hasContent ? `/cert/${cert.id}` : "/certifications";
 
   return (
     <Link
-      href={hasContent ? `/cert/${cert.id}` : "/certifications"}
+      href={href}
       className="group block py-4 focus:outline-none"
       aria-label={`${cert.shortName} — ${meta.label}`}
     >

@@ -29,6 +29,7 @@ import {
 } from "@/lib/objective-support";
 import { getQuizAccuracy } from "@/lib/progress-metrics";
 import { groupTracksByStatus } from "@/lib/track-status";
+import { PLANNED_TRACKS } from "@/lib/planned-tracks";
 import { useProgressStore } from "@/stores/progress-store";
 import { useStoreHydration } from "@/hooks/use-store-hydration";
 
@@ -203,7 +204,7 @@ export default function DashboardPage() {
         </section>
       )}
 
-      {earlyTracks.length > 0 && (
+      {(earlyTracks.length > 0 || PLANNED_TRACKS.length > 0) && (
         <Link
           href="/certifications"
           className="group mb-10 flex items-center justify-between gap-3 border-t border-hairline pt-6"
@@ -211,8 +212,19 @@ export default function DashboardPage() {
           <div className="min-w-0">
             <p className="font-serif text-lg font-medium text-foreground">The library is growing</p>
             <p className="mt-1 text-sm text-muted-foreground">
-              {earlyTracks.length} more track{earlyTracks.length === 1 ? "" : "s"} in development —
-              question banks are already live.
+              {earlyTracks.length > 0 && (
+                <>
+                  {earlyTracks.length} early access
+                  {PLANNED_TRACKS.length > 0 ? " · " : ""}
+                </>
+              )}
+              {PLANNED_TRACKS.length > 0 && (
+                <>
+                  {PLANNED_TRACKS.length} coming soon
+                </>
+              )}
+              {" — "}
+              browse the full catalog.
             </p>
           </div>
           <ArrowRight
