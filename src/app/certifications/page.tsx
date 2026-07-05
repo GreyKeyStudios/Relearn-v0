@@ -33,18 +33,16 @@ export default function CertificationsPage() {
         placeholder="Search tracks..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        className="mb-6 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-3 text-sm text-zinc-100 placeholder:text-zinc-500 focus:border-emerald-500 focus:outline-none"
+        className="mb-8 w-full rounded-lg border border-border bg-surface px-4 py-3 text-sm text-foreground placeholder:text-faint focus:border-primary focus:outline-none"
       />
 
       {active.length > 0 && (
-        <section className="mb-8">
-          <div className="mb-3 flex items-baseline justify-between">
-            <h2 className="text-xs font-semibold uppercase tracking-wide text-zinc-400">
-              Available now
-            </h2>
-            <span className="text-xs text-zinc-600">{active.length} tracks</span>
+        <section className="mb-10 border-t border-hairline pt-6">
+          <div className="mb-1 flex items-baseline justify-between">
+            <h2 className="eyebrow">Available now</h2>
+            <span className="text-xs text-faint">{active.length} tracks</span>
           </div>
-          <div className="flex flex-col gap-3">
+          <div className="divide-y divide-hairline">
             {active.map((cert) => (
               <TrackCard key={cert.id} cert={cert} />
             ))}
@@ -53,17 +51,15 @@ export default function CertificationsPage() {
       )}
 
       {early.length > 0 && (
-        <section className="mb-6">
+        <section className="mb-10 border-t border-hairline pt-6">
           <div className="mb-1 flex items-baseline justify-between">
-            <h2 className="text-xs font-semibold uppercase tracking-wide text-zinc-400">
-              In development
-            </h2>
-            <span className="text-xs text-zinc-600">{early.length} tracks</span>
+            <h2 className="eyebrow">In development</h2>
+            <span className="text-xs text-faint">{early.length} tracks</span>
           </div>
-          <p className="mb-3 text-xs text-zinc-500">
+          <p className="mb-3 text-xs text-muted-foreground">
             Question banks and flashcards are live. Guided lessons are being built out.
           </p>
-          <div className="flex flex-col gap-3">
+          <div className="divide-y divide-hairline">
             {early.map((cert) => (
               <TrackCard key={cert.id} cert={cert} />
             ))}
@@ -72,7 +68,7 @@ export default function CertificationsPage() {
       )}
 
       {active.length === 0 && early.length === 0 && (
-        <p className="text-sm text-zinc-500">No tracks match &ldquo;{query}&rdquo;.</p>
+        <p className="text-sm text-muted-foreground">No tracks match &ldquo;{query}&rdquo;.</p>
       )}
     </div>
   );
