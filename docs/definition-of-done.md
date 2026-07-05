@@ -102,8 +102,44 @@ Record in [`.cursor/plans/ccna-pedagogy-audits/wave-*.md`](../.cursor/plans/ccna
 
 ---
 
+## Template variants
+
+Every topic belongs to a **course template** — see [`COURSE_ARCHITECTURE.md`](COURSE_ARCHITECTURE.md). Pass criteria differ by template.
+
+### Type A — Concept-driven (default for this document)
+
+Vendor certs and concept-heavy tracks (CCNA reference, Linux+, Security+, etc.).
+
+- Use the full checklist above unchanged
+- Professor Mode: explain why, trace logic, spot misconceptions
+- Deferral manifest required for relocated assessment items
+- Verify: `npm run verify:curriculum -- --strict-ccna --strict-ccna-objectives --strict-pedagogy --strict-experience` for CCNA pilot topics
+
+### Type B — Skill-driven
+
+Command and workflow tracks (Git reference, PowerShell v1). See [`TYPE_B_MASTER.md`](TYPE_B_MASTER.md).
+
+| # | Additional pass criteria |
+|---|------------------------|
+| B1 | Module 2+ includes external-lab with **Try It**, **Break It**, and **Fix It** sections |
+| B2 | `commonMistakes` and `examTraps` cover wrong command / recovery (workplace traps) |
+| B3 | At least one quiz or bank item tests predict-output or pick-the-fix |
+| B4 | Professor Mode (when used): debug and recover — not recall-only |
+| B5 | Verify: `npm run build` + `npm run verify:curriculum` + `npx tsc --noEmit` |
+
+Type B tracks do **not** require `--strict-ccna`. Optional: `--strict-experience` when LES storyboards exist.
+
+### Type C — Tool-driven (stub)
+
+Project and task completion rubric — see [`TYPE_C_MASTER.md`](TYPE_C_MASTER.md). Expand when first tool track ships.
+
+---
+
 ## Related docs
 
+- [`COURSE_ARCHITECTURE.md`](COURSE_ARCHITECTURE.md) — template taxonomy and reference tracks
+- [`TYPE_B_MASTER.md`](TYPE_B_MASTER.md) — Type B lesson loop and Break/Fix labs
+- [`TYPE_C_MASTER.md`](TYPE_C_MASTER.md) — Type C stub
 - [`bridge-learning-standard.md`](bridge-learning-standard.md) — BLS rules (what "aligned" means)
 - [`learning-experience-standard.md`](learning-experience-standard.md) — LES storyboard rules
 - [`ccna-deferral-manifest.md`](ccna-deferral-manifest.md) — relocated assessment items

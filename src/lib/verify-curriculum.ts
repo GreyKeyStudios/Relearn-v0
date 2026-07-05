@@ -83,6 +83,8 @@ export function smokeTestPaths(): { path: string; ok: boolean; detail: string }[
   const secCert = getAssignment("security-plus", "cert-chain-drill");
 
   const gitLab = getAssignment("git-github", "git-lab-spot-vc-problem");
+  const gitLocalLab = getAssignment("git-github", "git-lab-local-basics");
+  const gitCapstoneLab = getAssignment("git-github", "git-lab-capstone");
   const psLab = getAssignment("powershell", "ps-lab-first-commands");
 
   return [
@@ -135,6 +137,26 @@ export function smokeTestPaths(): { path: string; ok: boolean; detail: string }[
       path: "/cert/git-github/assignment/git-lab-spot-vc-problem",
       ok: !!gitLab && gitLab.assignment.type === "external-lab",
       detail: "Git/GitHub spot-the-problem lab",
+    },
+    {
+      path: "/cert/git-github/lesson/git-history-and-diff",
+      ok: !!gitLocalLab,
+      detail: "Git/GitHub Module 2 lesson and local basics lab resolve",
+    },
+    {
+      path: "/cert/git-github/assignment/git-lab-local-basics",
+      ok: !!gitLocalLab && gitLocalLab.assignment.type === "external-lab",
+      detail: "Git/GitHub local basics lab",
+    },
+    {
+      path: "/cert/git-github/lesson/git-bridge-capstone",
+      ok: !!gitCapstoneLab,
+      detail: "Git/GitHub capstone lesson and lab resolve",
+    },
+    {
+      path: "/cert/git-github/assignment/git-lab-capstone",
+      ok: !!gitCapstoneLab && gitCapstoneLab.assignment.type === "external-lab",
+      detail: "Git/GitHub capstone lab",
     },
     {
       path: "/cert/powershell/lesson/ps-why-the-shell",

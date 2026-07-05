@@ -9,9 +9,10 @@ Bridge Study Companion is the **first implementation** of the broader **ReLearn*
 ## 0. Agent command block
 
 ```text
-Read BRIDGE_MASTER.md.
+Read docs/COURSE_ARCHITECTURE.md, then BRIDGE_MASTER.md.
+For Type B tracks: also read docs/TYPE_B_MASTER.md and the track architecture doc.
 For Phase 7 (Python): also read docs/python-learning-architecture.md.
-For Git/GitHub skills track: also read docs/git-github-learning-architecture.md.
+For Git/GitHub (Type B reference): also read docs/git-github-learning-architecture.md.
 Execute only the agent ID assigned to you (M0, P3-*, P4-*, P7-*, etc.).
 Only edit files assigned to that agent.
 When finished, summarize: files changed, what works, blockers.
@@ -53,7 +54,7 @@ Plan → Architecture → Standards → Completion criteria → Delegate → Int
 | **Phase 4.5** | Complete | Objective/domain mastery, difficulty tags, interactive case studies (CCNA pilot) |
 | **Phase 4.75** | Complete | Coach UX polish — Study Now card, weak objectives UX, planner tuning |
 | **Phase 4.8** | Complete | Bridge Learning Standard, CCNA pedagogy sprint — see `docs/bridge-learning-standard.md` |
-| **Phase 4.9** | In progress | Learning Experience Standard (B+), ExperiencePlayer, OSI reference experience, **Git/GitHub skills track (Module 1)** — see `docs/learning-experience-standard.md`, `docs/git-github-learning-architecture.md` |
+| **Phase 4.9** | In progress | Learning Experience Standard (B+), ExperiencePlayer, **Git/GitHub Type B reference track (Modules 1–7)**, PowerShell Type B v1 — see `docs/COURSE_ARCHITECTURE.md`, `docs/TYPE_B_MASTER.md`, `docs/learning-experience-standard.md`, `docs/git-github-learning-architecture.md` |
 | **Phase 5** | Planned | AI-assisted learning — multiple modes (Professor first); see [`docs/phase-5-ai-learning.md`](docs/phase-5-ai-learning.md) |
 | **Phase 6** | Planned | Native app (Capacitor/Expo after Phase 4 gates) |
 | **Phase 7** | Planned (blocked) | Python Foundations — Code Lab engine + curriculum informed by learner research |
@@ -72,7 +73,7 @@ Bridge Study Companion implements **Tier 1** today. Future subjects follow a tie
 |---|---|---|---|
 | **1** | IT Foundations | CCNA, Network+, Security+, CySA+, AWS CP, Azure, Linux+, ITIL | Phase 1–4.75 (complete) |
 | **2** | IT Automation | Python Foundations | Phase 7 (planned, blocked) |
-| **3** | Applied Technology | Git/GitHub Foundations, APIs, DevOps, Cloud Projects | Phase 4.9 (Git Module 1 live via cert shell) / Phase 8+ |
+| **3** | Applied Technology | Git/GitHub (Type B reference), PowerShell (Type B v1), SQL, Bash, APIs, DevOps | Phase 4.9+ / Phase 8+ |
 | **4** | ReLearn Labs | Robotics, IoT, Physical Computing | Future |
 
 ```text
@@ -86,6 +87,18 @@ Tier 4  ReLearn Labs        → robotics, IoT, physical computing
 
 Full Python architecture: [`docs/python-learning-architecture.md`](docs/python-learning-architecture.md)  
 Git/GitHub skills track (Path A): [`docs/git-github-learning-architecture.md`](docs/git-github-learning-architecture.md)
+
+### Reference tracks (course templates)
+
+Platform constitution: [`docs/COURSE_ARCHITECTURE.md`](docs/COURSE_ARCHITECTURE.md)
+
+| Template | Reference track | Master doc |
+|----------|-----------------|------------|
+| **A** — Concept | CCNA | BLS, CES, [`docs/definition-of-done.md`](docs/definition-of-done.md) |
+| **B** — Skill | Git & GitHub | [`docs/TYPE_B_MASTER.md`](docs/TYPE_B_MASTER.md) |
+| **C** — Tool | TBD | [`docs/TYPE_C_MASTER.md`](docs/TYPE_C_MASTER.md) |
+
+New platform patterns ship in the reference track first, then propagate. PowerShell is Type B v1 proof; Git is the canonical Type B reference.
 
 ---
 

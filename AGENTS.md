@@ -8,7 +8,9 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 # ReLearn v0 — agent rules
 
-**Read first:** [`BRIDGE_MASTER.md`](BRIDGE_MASTER.md) · [`CONTRIBUTING.md`](CONTRIBUTING.md)
+**Read first:** [`docs/COURSE_ARCHITECTURE.md`](docs/COURSE_ARCHITECTURE.md) · [`BRIDGE_MASTER.md`](BRIDGE_MASTER.md) · [`CONTRIBUTING.md`](CONTRIBUTING.md)
+
+For **Type B** tracks: also read [`docs/TYPE_B_MASTER.md`](docs/TYPE_B_MASTER.md) and the track architecture doc (e.g. [`docs/git-github-learning-architecture.md`](docs/git-github-learning-architecture.md)).
 
 ## Git workflow
 

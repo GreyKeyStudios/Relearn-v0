@@ -1,9 +1,20 @@
 # Git & GitHub Learning Architecture — Bridge / ReLearn
 
-**Status:** Approved for content planning — Path A delivery, Path B design  
+**Status:** Approved — **canonical Type B reference track** (see [`TYPE_B_MASTER.md`](TYPE_B_MASTER.md), [`COURSE_ARCHITECTURE.md`](COURSE_ARCHITECTURE.md))  
 **Tier:** ReLearn Tier 3 — Applied Technology (Professional Foundations)  
-**Track type:** Skills track (architecturally) — temporary Certification schema delivery  
-**Related:** [`subject-onboarding-process.md`](subject-onboarding-process.md), [`learning-experience-standard.md`](learning-experience-standard.md), [`BRIDGE_MASTER.md`](../BRIDGE_MASTER.md) §2b
+**Track type:** Skills track (Type B) — temporary Certification schema delivery  
+**Related:** [`TYPE_B_MASTER.md`](TYPE_B_MASTER.md), [`subject-onboarding-process.md`](subject-onboarding-process.md), [`learning-experience-standard.md`](learning-experience-standard.md), [`BRIDGE_MASTER.md`](../BRIDGE_MASTER.md) §2b
+
+### Break / Fix hooks per module (TYPE_B_MASTER)
+
+| Module | Lab ID | Break It scenario | Fix It recovery |
+|--------|--------|-------------------|-----------------|
+| 2 Local Git | `git-lab-local-basics` | `git commit` without `git add` | `git status` → `git add` → commit |
+| 3 Branches | `git-lab-branches` | Commit on wrong branch | `git log` → cherry-pick or move commit via branch workflow |
+| 4 Remotes | `git-lab-github-remote` | `git push` rejected (non-fast-forward) | `git pull` then push |
+| 5 Workflow | `git-lab-pull-request` | Staged `.env` or secret file | `git restore --staged` + `.gitignore` |
+| 6 Recovery | `git-lab-recovery` | Bad `git add`, merge conflict markers | `git restore`, resolve markers, `git status` first |
+| 7 Capstone | `git-lab-capstone` | End-to-end — errors expected | Status → diff → small fix → PR |
 
 ---
 
