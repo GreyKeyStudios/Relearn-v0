@@ -3,15 +3,13 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ChevronDown, ChevronUp, ArrowRight } from "lucide-react";
-import { PageHeader } from "@/components/layout/PageHeader";
 import { StatCard } from "@/components/dashboard/StatCard";
 import { TrackCard } from "@/components/dashboard/TrackCard";
-import { FlagshipHero } from "@/components/dashboard/FlagshipHero";
+import { ConceptHero } from "@/components/dashboard/ConceptHero";
 import { CertProgressCard } from "@/components/dashboard/CertProgressCard";
 import { WeakAreaList } from "@/components/dashboard/WeakAreaList";
 import { ActivityFeed } from "@/components/dashboard/ActivityFeed";
 import { DailyPlanCard } from "@/components/planner/DailyPlanCard";
-import { StudyNowCard } from "@/components/planner/StudyNowCard";
 import { StudyPlanSettings } from "@/components/planner/StudyPlanSettings";
 import { ExamCountdownCard } from "@/components/planner/ExamCountdownCard";
 import { SessionLengthPicker } from "@/components/planner/SessionLengthPicker";
@@ -19,6 +17,7 @@ import { OnboardingWizard } from "@/components/onboarding/OnboardingWizard";
 import { WeakObjectivesCard } from "@/components/mastery/WeakObjectivesCard";
 import { getAllCertifications } from "@/lib/content-selectors";
 import { getCoachRecommendationForSession } from "@/lib/coach-recommendation";
+import { getConceptHero } from "@/lib/concept-hero";
 import { getNextCurriculumStep } from "@/lib/curriculum";
 import { buildDailyPlan } from "@/lib/study-planner";
 import { getWeakObjectivesForActiveCerts } from "@/lib/objective-mastery";
@@ -29,7 +28,7 @@ import {
   certSupportsObjectiveCoaching,
 } from "@/lib/objective-support";
 import { getQuizAccuracy } from "@/lib/progress-metrics";
-import { getPrimaryTrack, groupTracksByStatus } from "@/lib/track-status";
+import { groupTracksByStatus } from "@/lib/track-status";
 import { useProgressStore } from "@/stores/progress-store";
 import { useStoreHydration } from "@/hooks/use-store-hydration";
 
@@ -51,7 +50,6 @@ export default function DashboardPage() {
   const activeCertIds = progressState.studyPlan.activeCertIds;
 
   const { active: activeTracks, early: earlyTracks } = groupTracksByStatus(certs);
-  const heroCert = getPrimaryTrack(certs, activeCertIds);
 
   const rawPlan = hydrated ? buildDailyPlan(progressState, certs) : null;
   const plan =
@@ -60,6 +58,7 @@ export default function DashboardPage() {
       : rawPlan;
 
   const coachRec = hydrated ? getCoachRecommendationForSession(progressState, certs) : null;
+  const conceptHero = hydrated ? getConceptHero(progressState, certs, coachRec) : null;
   const examPace = hydrated ? getExamPaceSummary(progressState, certs) : null;
 
   const weakObjectives = hydrated
@@ -110,12 +109,21 @@ export default function DashboardPage() {
 
   return (
     <div>
-      <PageHeader eyebrow={today} title="ReLearn" subtitle="One idea at a time." />
+      <header className="flex items-center justify-between pt-2">
+        <span className="font-serif text-lg font-medium tracking-tight text-foreground">
+          ReLearn
+        </span>
+        <span className="eyebrow">{today}</span>
+      </header>
 
-      {heroCert && <FlagshipHero cert={heroCert} />}
-
-      {hydrated && (
-        <StudyNowCard recommendation={coachRec} sessionMinutes={sessionMinutes} />
+      {hydrated ? (
+        <ConceptHero hero={conceptHero} />
+      ) : (
+        <div className="mb-12 pt-4">
+          <div className="mb-4 h-3 w-24 rounded bg-muted" />
+          <div className="h-9 w-3/4 rounded bg-muted" />
+          <div className="mt-4 h-5 w-full rounded bg-muted" />
+        </div>
       )}
 
       <div className="mb-10">
