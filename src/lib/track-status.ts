@@ -44,8 +44,10 @@ const META: Record<TrackStatus, Omit<TrackStatusMeta, "status">> = {
     live: true,
   },
   reference: {
-    label: "Reference skill",
-    tagline: "Reference implementation for skill tracks",
+    // Internally this is the "reference implementation" tier (see architecture
+    // docs), but learners just see a hands-on job-skill track like Git.
+    label: "Skill track",
+    tagline: "Hands-on job skill curriculum",
     group: "active",
     order: 1,
     live: true,
