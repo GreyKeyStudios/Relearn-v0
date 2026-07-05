@@ -9,8 +9,8 @@ export function SessionLengthPicker() {
   const updateStudyPlan = useProgressStore((s) => s.updateStudyPlan);
 
   return (
-    <div className="mb-4">
-      <p className="mb-2 flex items-center gap-1 text-xs font-medium uppercase tracking-wide text-zinc-500">
+    <div>
+      <p className="eyebrow mb-3 flex items-center gap-1.5">
         <Clock className="h-3.5 w-3.5" />
         Session length
       </p>
@@ -18,10 +18,10 @@ export function SessionLengthPicker() {
         <button
           type="button"
           onClick={() => updateStudyPlan({ sessionMinutes: null })}
-          className={`rounded-full px-3 py-1.5 text-xs ${
+          className={`rounded-full border px-3 py-1.5 text-xs transition-colors ${
             sessionMinutes === null
-              ? "bg-emerald-500/20 text-emerald-400"
-              : "bg-zinc-800 text-zinc-500 hover:text-zinc-300"
+              ? "border-primary/50 bg-primary/10 text-primary"
+              : "border-border text-faint hover:text-foreground"
           }`}
         >
           Full day
@@ -31,10 +31,10 @@ export function SessionLengthPicker() {
             key={mins}
             type="button"
             onClick={() => updateStudyPlan({ sessionMinutes: mins })}
-            className={`rounded-full px-3 py-1.5 text-xs ${
+            className={`rounded-full border px-3 py-1.5 text-xs transition-colors ${
               sessionMinutes === mins
-                ? "bg-emerald-500/20 text-emerald-400"
-                : "bg-zinc-800 text-zinc-500 hover:text-zinc-300"
+                ? "border-primary/50 bg-primary/10 text-primary"
+                : "border-border text-faint hover:text-foreground"
             }`}
           >
             {mins} min
@@ -42,7 +42,7 @@ export function SessionLengthPicker() {
         ))}
       </div>
       {sessionMinutes && (
-        <p className="mt-2 text-xs text-zinc-500">
+        <p className="mt-2 text-xs text-faint">
           Recommendations filtered to fit ~{sessionMinutes} minutes.
         </p>
       )}

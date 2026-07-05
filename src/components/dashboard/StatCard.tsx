@@ -1,5 +1,4 @@
 import { type ReactNode } from "react";
-import { Card } from "@/components/ui/Card";
 
 interface StatCardProps {
   label: string;
@@ -7,14 +6,17 @@ interface StatCardProps {
   icon?: ReactNode;
 }
 
-export function StatCard({ label, value, icon }: StatCardProps) {
+/**
+ * Quiet, understated stat used in the dashboard footer strip. Big serif
+ * numeral over a small-caps label — deliberately not a boxed "metric tile".
+ */
+export function StatCard({ label, value }: StatCardProps) {
   return (
-    <Card className="flex flex-col gap-1">
-      <div className="flex items-center justify-between">
-        <span className="text-xs text-zinc-400">{label}</span>
-        {icon}
-      </div>
-      <span className="text-2xl font-semibold text-zinc-50">{value}</span>
-    </Card>
+    <div className="flex flex-col gap-1 px-1 py-2 text-center">
+      <span className="font-serif text-3xl font-medium leading-none text-foreground">
+        {value}
+      </span>
+      <span className="eyebrow">{label}</span>
+    </div>
   );
 }
