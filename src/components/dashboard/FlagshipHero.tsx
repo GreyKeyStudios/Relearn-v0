@@ -1,9 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import type { Certification } from "@/content/types";
-import { ProgressBar } from "@/components/ui/ProgressBar";
 import { getCertProgressPercent } from "@/lib/progress-metrics";
 import { getCertMasteryPercent } from "@/lib/mastery";
 import { getNextCurriculumStep } from "@/lib/curriculum";
@@ -15,6 +14,11 @@ interface FlagshipHeroProps {
   cert: Certification;
 }
 
+/**
+ * The editorial hero — a single, calm "here is what matters right now" moment.
+ * Large serif display, hairline structure, one restrained accent. No boxes,
+ * no gradients, no stat tiles.
+ */
 export function FlagshipHero({ cert }: FlagshipHeroProps) {
   const completedLessons = useProgressStore((s) => s.completedLessons);
   const completedAssignments = useProgressStore((s) => s.completedAssignments);
@@ -31,43 +35,57 @@ export function FlagshipHero({ cert }: FlagshipHeroProps) {
   const kindLabel = isSkillsTrack(cert) ? "ReLearn skill track" : `${cert.vendor} certification`;
 
   return (
-    <section className="mb-6 overflow-hidden rounded-2xl border border-emerald-500/25 bg-gradient-to-br from-emerald-500/10 via-zinc-900 to-zinc-900">
-      <div className="p-5">
-        <div className="mb-4 flex items-start justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-emerald-500/20 text-xl font-bold text-emerald-300">
-              {cert.shortName.slice(0, 2)}
-            </div>
-            <div className="min-w-0">
-              <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/40 bg-emerald-500/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-300">
-                <Sparkles className="h-3 w-3" aria-hidden />
-                {meta.label}
-              </span>
-              <h2 className="mt-1 text-xl font-semibold text-zinc-50">{cert.shortName}</h2>
-              <p className="truncate text-xs text-zinc-400">{kindLabel}</p>
-            </div>
-          </div>
-        </div>
+    <section className="mb-10 border-b border-hairline pb-8">
+      <p className="eyebrow mb-4">
+        {meta.label} · {kindLabel}
+      </p>
 
-        {hasContent ? (
-          <>
-            <ProgressBar value={progress} className="mb-2" />
-            <div className="mb-4 flex items-center justify-between text-xs text-zinc-400">
-              <span>{progress}% complete</span>
-              <span>Mastery {mastery}%</span>
+      <h2 className="text-balance font-serif text-4xl font-medium leading-[1.05] tracking-tight text-foreground">
+        {cert.shortName}
+      </h2>
+      <p className="mt-3 max-w-md text-pretty leading-relaxed text-muted-foreground">
+        {cert.overview ?? cert.name}
+      </p>
+
+      {hasContent ? (
+        <>
+          {started && (
+            <div className="mt-6 flex items-baseline gap-6">
+              <span className="flex items-baseline gap-1.5">
+                <span className="font-serif text-2xl font-medium text-foreground">
+                  {progress}
+                  <span className="text-base text-faint">%</span>
+                </span>
+                <span className="eyebrow">complete</span>
+              </span>
+              <span className="flex items-baseline gap-1.5">
+                <span className="font-serif text-2xl font-medium text-foreground">
+                  {mastery}
+                  <span className="text-base text-faint">%</span>
+                </span>
+                <span className="eyebrow">mastery</span>
+              </span>
             </div>
-            <Link
-              href={href}
-              className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-emerald-500 active:bg-emerald-700"
-            >
-              {started ? "Continue studying" : "Start the course"}
-              <ArrowRight className="h-4 w-4" aria-hidden />
-            </Link>
-          </>
-        ) : (
-          <p className="text-sm text-zinc-400">Content for this track is coming soon.</p>
-        )}
-      </div>
+          )}
+
+          <Link
+            href={href}
+            className="group mt-6 inline-flex items-center gap-2 text-sm font-medium text-primary transition-colors hover:text-foreground"
+          >
+            <span className="border-b border-primary/40 pb-0.5 group-hover:border-foreground">
+              {started ? "Continue where you left off" : "Begin the course"}
+            </span>
+            <ArrowRight
+              className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
+              aria-hidden
+            />
+          </Link>
+        </>
+      ) : (
+        <p className="mt-6 text-sm text-muted-foreground">
+          Content for this track is coming soon.
+        </p>
+      )}
     </section>
   );
 }

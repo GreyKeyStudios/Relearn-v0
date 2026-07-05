@@ -34,17 +34,17 @@ export function WeakObjectivesCard({
     return (
       <Card className="mb-6 p-4">
         <div className="mb-2 flex items-center gap-2">
-          <Target className="h-4 w-4 text-zinc-500" />
-          <h3 className="text-sm font-semibold text-zinc-400">{title}</h3>
+          <Target className="h-4 w-4 text-faint" />
+          <h3 className="font-serif text-lg font-medium text-foreground">{title}</h3>
         </div>
-        <p className="text-xs text-zinc-600">{levelLabel}</p>
+        <p className="eyebrow">{levelLabel}</p>
         {certId && coachingLevelLabel(certId) === "Exam-objective coaching" ? (
-          <p className="mt-2 text-sm text-zinc-500">
+          <p className="mt-2 text-sm text-muted-foreground">
             Complete quizzes on tagged topics to unlock objective-level coaching. We need at least{" "}
             {OBJECTIVE_MIN_ATTEMPTS} attempts per objective before surfacing weak areas.
           </p>
         ) : (
-          <p className="mt-2 text-sm text-zinc-500">
+          <p className="mt-2 text-sm text-muted-foreground">
             Take quizzes to identify topic-level weak areas. Objective drills are available for CCNA;
             other tracks use topic-level coaching.
           </p>
@@ -61,22 +61,22 @@ export function WeakObjectivesCard({
   return (
     <Card className="mb-6 p-4">
       <div className="mb-3 flex items-center gap-2">
-        <Target className="h-4 w-4 text-amber-400" />
-        <h3 className="text-sm font-semibold text-zinc-200">{title}</h3>
+        <Target className="h-4 w-4 text-primary" />
+        <h3 className="font-serif text-lg font-medium text-foreground">{title}</h3>
       </div>
       <ul className="space-y-3">
         {objectives.map((obj) => (
           <li key={obj.objectiveId}>
             <Link
               href={obj.href}
-              className="block rounded-lg border border-zinc-800 p-3 hover:bg-zinc-900"
+              className="block rounded-md border border-border p-3 transition-colors hover:border-hairline hover:bg-surface-raised"
             >
               <div className="mb-1 flex items-start justify-between gap-2">
                 <div className="min-w-0">
-                  <p className="text-sm font-medium text-zinc-200">{obj.shortLabel}</p>
-                  <p className="text-xs text-zinc-500">{obj.topicName}</p>
+                  <p className="text-sm font-medium text-foreground">{obj.shortLabel}</p>
+                  <p className="text-xs text-faint">{obj.topicName}</p>
                 </div>
-                <span className="shrink-0 text-sm font-medium text-amber-400">{obj.score}%</span>
+                <span className="shrink-0 text-sm font-medium text-primary">{obj.score}%</span>
               </div>
               <ProgressBar value={obj.score} />
             </Link>

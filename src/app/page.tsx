@@ -2,14 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import {
-  Flame,
-  Target,
-  Percent,
-  ChevronDown,
-  ChevronUp,
-  ArrowRight,
-} from "lucide-react";
+import { ChevronDown, ChevronUp, ArrowRight } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { StatCard } from "@/components/dashboard/StatCard";
 import { TrackCard } from "@/components/dashboard/TrackCard";
@@ -109,42 +102,47 @@ export default function DashboardPage() {
     return <OnboardingWizard />;
   }
 
+  const today = new Date().toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  });
+
   return (
     <div>
-      <PageHeader title="ReLearn" subtitle="Your certification study hub" />
+      <PageHeader eyebrow={today} title="ReLearn" subtitle="One idea at a time." />
 
       {heroCert && <FlagshipHero cert={heroCert} />}
-
-      <SessionLengthPicker />
-
-      {examPace && <ExamCountdownCard pace={examPace} />}
 
       {hydrated && (
         <StudyNowCard recommendation={coachRec} sessionMinutes={sessionMinutes} />
       )}
 
-      <div className="mb-6 grid grid-cols-3 gap-3">
-        <StatCard label="Streak" value={streak} icon={<Flame className="h-4 w-4 text-amber-400" />} />
-        <StatCard label="Accuracy" value={`${accuracy}%`} icon={<Percent className="h-4 w-4 text-sky-400" />} />
-        <StatCard label="Weak Areas" value={weakTopics.length} icon={<Target className="h-4 w-4 text-amber-400" />} />
+      <div className="mb-10">
+        <SessionLengthPicker />
+        {examPace && (
+          <div className="mt-4">
+            <ExamCountdownCard pace={examPace} />
+          </div>
+        )}
       </div>
 
-      <section className="mb-6">
+      <section className="mb-10 border-t border-hairline pt-6">
         <StudyPlanSettings />
         <button
           type="button"
           onClick={() => setPlanExpanded((v) => !v)}
-          className="mb-3 flex w-full items-center justify-between text-sm font-semibold uppercase tracking-wide text-zinc-400"
+          className="flex w-full items-center justify-between"
         >
-          <span>Today&apos;s study plan</span>
+          <span className="eyebrow">Today&apos;s study plan</span>
           {planExpanded ? (
-            <ChevronUp className="h-4 w-4" />
+            <ChevronUp className="h-4 w-4 text-faint" />
           ) : (
-            <ChevronDown className="h-4 w-4" />
+            <ChevronDown className="h-4 w-4 text-faint" />
           )}
         </button>
         {!planExpanded && plan && plan.items.length > 0 && (
-          <p className="mb-2 text-xs text-zinc-500">
+          <p className="mt-2 text-xs text-faint">
             {plan.items.length} item{plan.items.length === 1 ? "" : "s"} · {plan.usedMinutes}/
             {plan.dailyBudgetMinutes} min
             {coachRec ? " — expand for full plan" : ""}
@@ -152,15 +150,17 @@ export default function DashboardPage() {
         )}
         {planExpanded &&
           (plan ? (
-            <DailyPlanCard plan={plan} highlightHref={coachRec?.href} />
+            <div className="mt-3">
+              <DailyPlanCard plan={plan} highlightHref={coachRec?.href} />
+            </div>
           ) : (
-            <p className="text-sm text-zinc-500">Loading plan…</p>
+            <p className="mt-3 text-sm text-faint">Loading plan…</p>
           ))}
         {!planExpanded && coachRec && planItemsBeyondCoach.length > 0 && (
           <button
             type="button"
             onClick={() => setPlanExpanded(true)}
-            className="text-xs text-sky-400 hover:text-sky-300"
+            className="mt-2 text-xs text-primary hover:text-foreground"
           >
             +{planItemsBeyondCoach.length} more in today&apos;s plan
           </button>
@@ -180,16 +180,14 @@ export default function DashboardPage() {
       )}
 
       {dashboardTracks.length > 0 && (
-        <section className="mb-6">
-          <div className="mb-3 flex items-center justify-between">
-            <h2 className="text-xs font-semibold uppercase tracking-wide text-zinc-400">
-              Your courses
-            </h2>
-            <Link href="/certifications" className="text-xs text-sky-400 hover:text-sky-300">
+        <section className="mb-10 border-t border-hairline pt-6">
+          <div className="mb-1 flex items-center justify-between">
+            <h2 className="eyebrow">Your courses</h2>
+            <Link href="/certifications" className="text-xs text-primary hover:text-foreground">
               Library
             </Link>
           </div>
-          <div className="flex flex-col gap-3">
+          <div className="divide-y divide-hairline">
             {dashboardTracks.map((cert) => (
               <TrackCard key={cert.id} cert={cert} />
             ))}
@@ -200,41 +198,42 @@ export default function DashboardPage() {
       {earlyTracks.length > 0 && (
         <Link
           href="/certifications"
-          className="mb-6 flex items-center justify-between gap-3 rounded-2xl border border-dashed border-zinc-800 bg-zinc-900/40 p-4 transition-colors hover:border-zinc-700 hover:bg-zinc-900/70"
+          className="group mb-10 flex items-center justify-between gap-3 border-t border-hairline pt-6"
         >
           <div className="min-w-0">
-            <p className="text-sm font-medium text-zinc-200">The library is growing</p>
-            <p className="mt-0.5 text-xs text-zinc-500">
+            <p className="font-serif text-lg font-medium text-foreground">The library is growing</p>
+            <p className="mt-1 text-sm text-muted-foreground">
               {earlyTracks.length} more track{earlyTracks.length === 1 ? "" : "s"} in development —
               question banks are already live.
             </p>
           </div>
-          <ArrowRight className="h-4 w-4 shrink-0 text-zinc-500" aria-hidden />
+          <ArrowRight
+            className="h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5"
+            aria-hidden
+          />
         </Link>
       )}
 
-      <section className="mb-6">
+      <section className="mb-10 border-t border-hairline pt-6">
         <button
           type="button"
           onClick={() => setDetailsExpanded((v) => !v)}
-          className="mb-3 flex w-full items-center justify-between text-sm font-semibold uppercase tracking-wide text-zinc-400"
+          className="flex w-full items-center justify-between"
         >
-          <span>Progress &amp; weak areas</span>
+          <span className="eyebrow">Progress &amp; weak areas</span>
           {detailsExpanded ? (
-            <ChevronUp className="h-4 w-4" />
+            <ChevronUp className="h-4 w-4 text-faint" />
           ) : (
-            <ChevronDown className="h-4 w-4" />
+            <ChevronDown className="h-4 w-4 text-faint" />
           )}
         </button>
 
         {detailsExpanded && (
-          <>
-            <div className="mb-6">
+          <div className="mt-5">
+            <div className="mb-8">
               <div className="mb-3 flex items-center justify-between">
-                <h3 className="text-xs font-semibold uppercase tracking-wide text-zinc-500">
-                  All active tracks
-                </h3>
-                <Link href="/certifications" className="text-xs text-sky-400">
+                <h3 className="eyebrow">All active tracks</h3>
+                <Link href="/certifications" className="text-xs text-primary hover:text-foreground">
                   View all
                 </Link>
               </div>
@@ -248,22 +247,25 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            <div className="mb-6">
-              <h3 className="mb-3 text-xs font-semibold uppercase tracking-wide text-zinc-500">
-                Weak areas by topic
-              </h3>
+            <div className="mb-8">
+              <h3 className="mb-3 eyebrow">Weak areas by topic</h3>
               <WeakAreaList weakTopics={weakTopics} limit={3} />
             </div>
 
             <div>
-              <h3 className="mb-3 text-xs font-semibold uppercase tracking-wide text-zinc-500">
-                Recent activity
-              </h3>
+              <h3 className="mb-3 eyebrow">Recent activity</h3>
               <ActivityFeed activities={recentActivity} />
             </div>
-          </>
+          </div>
         )}
       </section>
+
+      {/* Stats demoted to a quiet editorial footer strip */}
+      <footer className="grid grid-cols-3 divide-x divide-hairline border-t border-hairline pt-6">
+        <StatCard label="Day streak" value={streak} />
+        <StatCard label="Accuracy" value={`${accuracy}%`} />
+        <StatCard label="Weak areas" value={weakTopics.length} />
+      </footer>
     </div>
   );
 }

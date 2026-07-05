@@ -30,7 +30,7 @@ export function StudyPlanSettings() {
           setDraft(studyPlan);
           setOpen(true);
         }}
-        className="mb-3 flex items-center gap-1 text-xs text-sky-400 hover:text-sky-300"
+        className="mb-3 flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground"
       >
         <Settings2 className="h-3.5 w-3.5" />
         Study plan settings
@@ -40,8 +40,8 @@ export function StudyPlanSettings() {
 
   return (
     <Card className="mb-4 p-4">
-      <h3 className="mb-3 text-sm font-semibold text-zinc-200">Study plan settings</h3>
-      <label className="mb-3 block text-xs text-zinc-400">
+      <h3 className="mb-3 font-serif text-lg font-medium text-foreground">Study plan settings</h3>
+      <label className="mb-3 block text-xs text-muted-foreground">
         Exam date (optional)
         <input
           type="date"
@@ -49,10 +49,10 @@ export function StudyPlanSettings() {
           onChange={(e) =>
             setDraft((d) => ({ ...d, examDate: e.target.value || null }))
           }
-          className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-zinc-100"
+          className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground"
         />
       </label>
-      <label className="mb-3 block text-xs text-zinc-400">
+      <label className="mb-3 block text-xs text-muted-foreground">
         Weekly study minutes ({draft.weeklyMinutes}) — ~{Math.round(draft.weeklyMinutes / 7)} min/day
         <input
           type="range"
@@ -66,7 +66,7 @@ export function StudyPlanSettings() {
           className="mt-2 w-full"
         />
       </label>
-      <p className="mb-2 text-xs text-zinc-500">Active certifications (empty = all)</p>
+      <p className="mb-2 text-xs text-faint">Active certifications (empty = all)</p>
       <div className="mb-4 flex flex-wrap gap-2">
         {certs.map((cert) => {
           const active =
@@ -93,10 +93,10 @@ export function StudyPlanSettings() {
                   };
                 });
               }}
-              className={`rounded-full px-2.5 py-1 text-xs ${
+              className={`rounded-full border px-2.5 py-1 text-xs transition-colors ${
                 active
-                  ? "bg-sky-500/20 text-sky-400"
-                  : "bg-zinc-800 text-zinc-500"
+                  ? "border-primary/50 bg-primary/10 text-primary"
+                  : "border-border text-faint hover:text-foreground"
               }`}
             >
               {cert.shortName}

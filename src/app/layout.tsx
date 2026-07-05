@@ -42,9 +42,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`dark ${geistSans.variable} ${geistMono.variable} h-full bg-zinc-950 antialiased`}
+      className={`dark ${geistSans.variable} ${geistMono.variable} ${fraunces.variable} h-full bg-background antialiased`}
     >
-      <body className="min-h-full bg-zinc-950 text-zinc-100">
+      <body className="min-h-full bg-background text-foreground font-sans">
         <AppShell>{children}</AppShell>
       </body>
     </html>
