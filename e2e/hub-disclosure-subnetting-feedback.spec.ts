@@ -148,6 +148,33 @@ test.describe("hub disclosure + subnetting feedback", () => {
     await expect(page.getByText(/Default static AD is 1/i)).toBeVisible();
   });
 
+  test("need a refresher appears for dhcp (IP Services)", async ({ page }) => {
+    await seedCcnaFreshLearner(page);
+    await page.goto("/cert/ccna/lesson/dhcp");
+    await waitForHydration(page);
+    await page
+      .getByText(/Loading your progress/i)
+      .waitFor({ state: "hidden", timeout: 30_000 })
+      .catch(() => undefined);
+
+    const refresher = page.locator("details").filter({ hasText: /Need a refresher/i });
+    await expect(refresher).toBeVisible();
+    await refresher.locator("summary").click();
+    await expect(refresher.getByText(/DORA sequence/i)).toBeVisible();
+  });
+
+  test("dns quiz teaches A vs other record types", async ({ page }) => {
+    await seedCcnaFreshLearner(page);
+    await page.goto("/cert/ccna/quiz/dns");
+    await waitForHydration(page);
+    await expect(
+      page.getByText(/Which DNS record maps a name to IPv4/i)
+    ).toBeVisible({ timeout: 15_000 });
+    await page.getByRole("button", { name: /^MX$/ }).click();
+    await page.getByRole("button", { name: /Check Answer/i }).click();
+    await expect(page.getByText(/A record maps a hostname to an IPv4/i)).toBeVisible();
+  });
+
   test("subnetting quiz: richer teaching after incorrect answers", async ({ page }) => {
     test.setTimeout(120_000);
     await seedCcnaFreshLearner(page);
