@@ -241,6 +241,7 @@ async function judgeTopic(
 
 async function main() {
   const args = parseArgs(process.argv.slice(2));
+  const force = process.argv.includes("--force");
   const topics = args.all
     ? listEvidenceTopicIds()
     : args.allPilots
@@ -260,31 +261,57 @@ async function main() {
   const budget = { used: 0, max: maxCalls };
 
   console.log(
-    `audit:judge topics=[${topics.join(", ")}] dryRun=${args.dryRun} maxCalls=${maxCalls}`
+    `audit:judge topics=[${topics.join(", ")}] dryRun=${args.dryRun} maxCalls=${maxCalls} force=${force}`
   );
   console.log(`Expected checkpoints per lesson (max): ${ALL_CHECKPOINTS.join(", ")}`);
 
+  if (!args.dryRun) fs.mkdirSync(judgmentRoot(), { recursive: true });
+
   const judgments: LessonJudgment[] = [];
   for (const topicId of topics) {
-    judgments.push(await judgeTopic(topicId, { dryRun: args.dryRun, callBudget: budget }));
+    const existingPath = judgmentRoot(`${topicId}.json`);
+    if (!args.dryRun && !force && fs.existsSync(existingPath)) {
+      const existing = JSON.parse(
+        fs.readFileSync(existingPath, "utf8")
+      ) as LessonJudgment;
+      judgments.push(existing);
+      console.log(`\n${topicId}: skip (existing judgment)`);
+      continue;
+    }
+
+    const judgment = await judgeTopic(topicId, {
+      dryRun: args.dryRun,
+      callBudget: budget,
+    });
+    judgments.push(judgment);
+    if (!args.dryRun) {
+      fs.writeFileSync(existingPath, JSON.stringify(judgment, null, 2), "utf8");
+      console.log(`  saved ${existingPath}`);
+    }
   }
 
   if (!args.dryRun) {
-    fs.mkdirSync(judgmentRoot(), { recursive: true });
-    for (const j of judgments) {
-      fs.writeFileSync(
-        judgmentRoot(`${j.lessonId}.json`),
-        JSON.stringify(j, null, 2),
-        "utf8"
-      );
-    }
-    const md = renderJudgmentMarkdown(judgments, {
+    // Rebuild summary from all on-disk judgments when using --all
+    const forSummary =
+      args.all
+        ? listEvidenceTopicIds()
+            .map((id) => {
+              const p = judgmentRoot(`${id}.json`);
+              if (!fs.existsSync(p)) return null;
+              return JSON.parse(fs.readFileSync(p, "utf8")) as LessonJudgment;
+            })
+            .filter((j): j is LessonJudgment => Boolean(j))
+        : judgments;
+
+    const md = renderJudgmentMarkdown(forSummary, {
       title: args.all
         ? "# CCNA lesson judgment (full catalog)"
         : "# CCNA lesson judgment (pilot)",
     });
     fs.writeFileSync(judgmentRoot("summary.md"), md, "utf8");
-    console.log(`\nWrote ${judgmentRoot("summary.md")} (API calls used: ${budget.used})`);
+    console.log(
+      `\nWrote ${judgmentRoot("summary.md")} (${forSummary.length} lessons, API calls used: ${budget.used})`
+    );
   } else {
     console.log(`\nDry-run complete. Estimated calls ≤ ${topics.length * 9} (cap ${maxCalls}).`);
   }
