@@ -4,6 +4,47 @@ Local-first browser testing for ReLearn / Bridge Study Companion. Progress lives
 
 Future persona label (docs only): `demo@greykeystudios.dev`.
 
+## Sign-off pipeline (CCNA)
+
+Use this order before Michael marks Topic Complete:
+
+```text
+1. Playwright mechanical walk (every topic)
+       ↓
+2. Evidence capture + vision judge (optional but preferred)
+       ↓
+3. npm run audit:chatgpt-export  →  paste reports/ccna-chatgpt-triage.md into ChatGPT
+       ↓
+4. ChatGPT triage: IMPLEMENT / SKIP / DEFER per finding
+       ↓
+5. Implement only approved items (feature branch → PR → dev)
+       ↓
+6. Michael full-course walkthrough + sign-off on wave sheets
+```
+
+Agents do **not** auto-fix curriculum from judgments. ChatGPT and Michael decide.
+
+### Commands (full course)
+
+```bash
+# 1) Mechanical walk — every CCNA topic → reports/ccna-ux-audit.md
+npm run test:e2e:audit
+
+# 2) Evidence + AI judge — every topic with a captured manifest
+npm run audit:evidence -- --all
+npm run audit:judge -- --all
+
+# Or cheaper pilots only (subnetting, osi-model, switching)
+npm run audit:evidence
+npm run audit:judge -- --all-pilots
+
+# 3) ChatGPT paste dossier
+npm run audit:chatgpt-export
+# → reports/ccna-chatgpt-triage.md (gitignored under reports/)
+```
+
+`OPENAI_API_KEY` in `.env.local` is required for `audit:judge`. Full-course judge may use ~9 API calls per topic; `--all` raises the default call cap.
+
 ## Run Playwright
 
 ```bash
@@ -20,7 +61,7 @@ Suite coverage:
 | `e2e/demo-profiles.spec.ts` | `/dev` console, all 6 profiles (persona assertions + catalog smoke) |
 | `e2e/learner-loop.spec.ts` | Deep overdue → review → answer path |
 | `e2e/ccna-curriculum-audit.spec.ts` | Walks **every CCNA topic** as a first-time learner (Continue through lesson player), scores soft heuristics, then quiz/flashcards; writes `reports/ccna-ux-audit.md` |
-| `e2e/ccna-evidence-pilot.spec.ts` | Captures **8 named checkpoints** (screenshots + text) for Subnetting, OSI, Switching — not every screen |
+| `e2e/ccna-evidence-pilot.spec.ts` | Captures **8 named checkpoints** (screenshots + text) — pilots by default, or `--all` / `--topic=` |
 
 ```bash
 npm run test:e2e:audit
@@ -33,9 +74,10 @@ Open the mechanical report: [`reports/ccna-ux-audit.md`](../reports/ccna-ux-audi
 Playwright walks; a vision model grades **evidence bundles**, not every Continue.
 
 ```bash
-# Capture evidence for 3 pilots (or one topic)
+# Capture evidence for 3 pilots (or one topic, or all)
 npm run audit:evidence
 npm run audit:evidence -- --topic=subnetting
+npm run audit:evidence -- --all
 
 # Preview API call plan (no key needed)
 npm run audit:judge -- --dry-run --topic=subnetting
@@ -43,21 +85,23 @@ npm run audit:judge -- --dry-run --topic=subnetting
 # Grade (requires OPENAI_API_KEY)
 npm run audit:judge -- --topic=subnetting
 npm run audit:judge -- --all-pilots
+npm run audit:judge -- --all
 ```
 
 Artifacts:
 - `reports/ccna-evidence/<topicId>/` — screenshots + JSON + `manifest.json`
 - `reports/ccna-judgment/<topicId>.json` + `summary.md`
+- `reports/ccna-chatgpt-triage.md` — mechanical + judgment packaged for ChatGPT
 
 Env (put these in **`.env.local`** at the repo root — the file is gitignored):
 - `OPENAI_API_KEY` — required for judge
 - `AUDIT_JUDGE_MODEL` — default `gpt-4.1-mini`
 - `AUDIT_JUDGE_MAX_TOKENS` — default `800`
-- `AUDIT_JUDGE_MAX_CALLS` — default `30` (hard cap)
+- `AUDIT_JUDGE_MAX_CALLS` — default `30` pilots; auto-raised for `--all`
 
 `audit:judge` loads `.env.local` then `.env` automatically. Do not commit API keys.
 
-Cost: ≤ **9 calls/lesson** (≤8 checkpoints + 1 overall). Pilots ≤ ~27 calls. Skip missing checkpoints.
+Cost: ≤ **9 calls/lesson** (≤8 checkpoints + 1 overall). Pilots ≤ ~27 calls. Full cert ≤ ~189 calls. Skip missing checkpoints.
 
 **What it grades:** clarity, pacing, clutter, pedagogy, incorrect-answer feedback, prerequisites, next action — structured findings you approve/reject. Not autonomous code fixes.
 

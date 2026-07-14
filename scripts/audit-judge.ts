@@ -5,6 +5,8 @@
  *   npx tsx scripts/audit-judge.ts --dry-run --topic=subnetting
  *   npx tsx scripts/audit-judge.ts --topic=subnetting
  *   npx tsx scripts/audit-judge.ts --all-pilots
+ *   npx tsx scripts/audit-judge.ts --all
+ *     (every topic with reports/ccna-evidence/<id>/manifest.json)
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -55,14 +57,27 @@ function parseArgs(argv: string[]) {
   const out = {
     dryRun: false,
     allPilots: false,
+    all: false,
     topic: "" as string,
   };
   for (const a of argv) {
     if (a === "--dry-run") out.dryRun = true;
     else if (a === "--all-pilots") out.allPilots = true;
+    else if (a === "--all") out.all = true;
     else if (a.startsWith("--topic=")) out.topic = a.slice("--topic=".length);
   }
   return out;
+}
+
+function listEvidenceTopicIds(): string[] {
+  const root = evidenceRoot();
+  if (!fs.existsSync(root)) return [];
+  return fs
+    .readdirSync(root, { withFileTypes: true })
+    .filter((d) => d.isDirectory())
+    .map((d) => d.name)
+    .filter((id) => fs.existsSync(evidenceRoot(id, "manifest.json")))
+    .sort();
 }
 
 function evidenceRoot(...parts: string[]) {
@@ -226,13 +241,22 @@ async function judgeTopic(
 
 async function main() {
   const args = parseArgs(process.argv.slice(2));
-  const topics = args.allPilots
-    ? [...PILOT_TOPIC_IDS]
-    : args.topic
-      ? [args.topic]
-      : [...PILOT_TOPIC_IDS];
+  const topics = args.all
+    ? listEvidenceTopicIds()
+    : args.allPilots
+      ? [...PILOT_TOPIC_IDS]
+      : args.topic
+        ? [args.topic]
+        : [...PILOT_TOPIC_IDS];
 
-  const maxCalls = Number(process.env.AUDIT_JUDGE_MAX_CALLS ?? 30);
+  if (args.all && topics.length === 0) {
+    throw new Error(
+      "No evidence manifests found under reports/ccna-evidence/. Run: npm run audit:evidence -- --all"
+    );
+  }
+
+  const defaultMax = args.all ? Math.max(200, topics.length * 9) : 30;
+  const maxCalls = Number(process.env.AUDIT_JUDGE_MAX_CALLS ?? defaultMax);
   const budget = { used: 0, max: maxCalls };
 
   console.log(
@@ -254,7 +278,11 @@ async function main() {
         "utf8"
       );
     }
-    const md = renderJudgmentMarkdown(judgments);
+    const md = renderJudgmentMarkdown(judgments, {
+      title: args.all
+        ? "# CCNA lesson judgment (full catalog)"
+        : "# CCNA lesson judgment (pilot)",
+    });
     fs.writeFileSync(judgmentRoot("summary.md"), md, "utf8");
     console.log(`\nWrote ${judgmentRoot("summary.md")} (API calls used: ${budget.used})`);
   } else {
