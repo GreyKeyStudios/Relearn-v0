@@ -240,6 +240,44 @@ const BY_TOPIC: Record<string, PrerequisiteRefresherItem[]> = {
       tip: "Queries are usually UDP/53; large answers and zone transfers use TCP/53. Don't confuse with HTTP 80/443.",
     },
   ],
+  acls: [
+    {
+      id: "routing-fundamentals",
+      title: "Routing Fundamentals",
+      tip: "ACLs sit on interfaces and filter IP traffic — knowing how packets get routed makes ACL placement click.",
+      topicId: "routing-fundamentals",
+    },
+    {
+      id: "std-vs-ext",
+      title: "Standard vs extended",
+      tip: "Standard = source IP only. Extended = source, destination, protocol, ports. Implicit deny at the bottom.",
+    },
+  ],
+  "network-security": [
+    {
+      id: "cia",
+      title: "CIA triad",
+      tip: "Confidentiality, Integrity, Availability — the three goals everything else (auth, crypto, ACLs) supports.",
+    },
+    {
+      id: "wireless-basics",
+      title: "Wireless Basics",
+      tip: "WPA3 is the wireless encryption piece of defense-in-depth; port security/802.1X cover the wired edge.",
+      topicId: "wireless-basics",
+    },
+  ],
+  "automation-basics": [
+    {
+      id: "planes",
+      title: "Control vs data plane",
+      tip: "Control plane = decisions (routing/SDN controller). Data plane = forwarding. SDN separates them.",
+    },
+    {
+      id: "api-json",
+      title: "APIs speak JSON",
+      tip: "REST APIs usually carry JSON over HTTP — not Ethernet frames or STP BPDUs.",
+    },
+  ],
 };
 
 export function getPrerequisiteRefreshers(

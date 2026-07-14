@@ -175,6 +175,33 @@ test.describe("hub disclosure + subnetting feedback", () => {
     await expect(page.getByText(/A record maps a hostname to an IPv4/i)).toBeVisible();
   });
 
+  test("need a refresher appears for acls (Security)", async ({ page }) => {
+    await seedCcnaFreshLearner(page);
+    await page.goto("/cert/ccna/lesson/acls");
+    await waitForHydration(page);
+    await page
+      .getByText(/Loading your progress/i)
+      .waitFor({ state: "hidden", timeout: 30_000 })
+      .catch(() => undefined);
+
+    const refresher = page.locator("details").filter({ hasText: /Need a refresher/i });
+    await expect(refresher).toBeVisible();
+    await refresher.locator("summary").click();
+    await expect(refresher.getByText(/Standard vs extended/i)).toBeVisible();
+  });
+
+  test("automation quiz teaches SDN planes", async ({ page }) => {
+    await seedCcnaFreshLearner(page);
+    await page.goto("/cert/ccna/quiz/automation-basics");
+    await waitForHydration(page);
+    await expect(page.getByText(/SDN primarily separates/i)).toBeVisible({
+      timeout: 15_000,
+    });
+    await page.getByRole("button", { name: /IP and MAC/i }).click();
+    await page.getByRole("button", { name: /Check Answer/i }).click();
+    await expect(page.getByText(/centralizes the control plane/i)).toBeVisible();
+  });
+
   test("subnetting quiz: richer teaching after incorrect answers", async ({ page }) => {
     test.setTimeout(120_000);
     await seedCcnaFreshLearner(page);
