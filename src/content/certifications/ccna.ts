@@ -7,6 +7,10 @@ import { SUBNETTING_EXPERIENCE } from "@/content/lessons/subnetting-experience";
 import { IP_RANGES_EXPERIENCE } from "@/content/lessons/ip-ranges-experience";
 import { IPV6_BASICS_EXPERIENCE } from "@/content/lessons/ipv6-basics-experience";
 import { WIRELESS_BASICS_EXPERIENCE } from "@/content/lessons/wireless-basics-experience";
+import { SWITCHING_EXPERIENCE } from "@/content/lessons/switching-experience";
+import { VLANS_EXPERIENCE } from "@/content/lessons/vlans-experience";
+import { TRUNKING_EXPERIENCE } from "@/content/lessons/trunking-experience";
+import { STP_EXPERIENCE } from "@/content/lessons/stp-experience";
 
 export const ccna: Certification = {
   id: "ccna",
@@ -220,7 +224,7 @@ Encapsulation wraps upper-layer data with headers (and sometimes trailers) as it
                 { id: "d", text: "Bit" }
               ],
               correctChoiceId: "b",
-              explanation: "Layer 2 PDUs are called frames.",
+              explanation: "Data Link PDUs are frames — not packets (L3), segments (L4), or bits (L1). Switches bridge on MAC frames at Layer 2.",
               objectiveId: "CCNA-1.3",
               difficulty: "medium",
             },
@@ -234,7 +238,7 @@ Encapsulation wraps upper-layer data with headers (and sometimes trailers) as it
                 { id: "d", text: "Layer 7" }
               ],
               correctChoiceId: "c",
-              explanation: "Routers make forwarding decisions using Layer 3 IP addresses.",
+              explanation: "Routers forward using Layer 3 IP addresses — not L1 signals, L2 MAC switching, or L7 application data.",
               objectiveId: "CCNA-1.1",
               difficulty: "hard",
             },
@@ -248,7 +252,7 @@ Encapsulation wraps upper-layer data with headers (and sometimes trailers) as it
                 { id: "d", text: "SMTP" }
               ],
               correctChoiceId: "b",
-              explanation: "UDP is connectionless at Layer 4.",
+              explanation: "UDP is connectionless best-effort at Layer 4 — unlike TCP's handshake. HTTP/SMTP are L7 apps that ride on transport.",
               objectiveId: "CCNA-1.2",
               difficulty: "hard",
             },
@@ -262,7 +266,7 @@ Encapsulation wraps upper-layer data with headers (and sometimes trailers) as it
                 { id: "d", text: "Cable specifications" }
               ],
               correctChoiceId: "b",
-              explanation: "Presentation handles syntax, encoding, compression, and encryption.",
+              explanation: "Presentation (L6) handles syntax, encoding, and encryption — not MAC bridging, IP routing, or physical cabling.",
               objectiveId: "CCNA-1.3",
               difficulty: "hard",
             },
@@ -276,7 +280,7 @@ Encapsulation wraps upper-layer data with headers (and sometimes trailers) as it
                 { id: "d", text: "Layer 4" }
               ],
               correctChoiceId: "b",
-              explanation: "Classic switch forwarding is Layer 2.",
+              explanation: "Classic LAN switches forward on MAC addresses at Layer 2 — not L1 NIC bits, L3 routing, or L4 transport.",
               objectiveId: "CCNA-1.1",
               difficulty: "hard",
             },
@@ -290,7 +294,7 @@ Encapsulation wraps upper-layer data with headers (and sometimes trailers) as it
                 { id: "d", text: "Only in routers" }
               ],
               correctChoiceId: "b",
-              explanation: "Receiving hosts strip headers layer by layer going up.",
+              explanation: "Receivers de-encapsulate going up (strip headers per layer) — unlike encapsulation going down. Not only L1 or routers.",
               objectiveId: "CCNA-1.2",
               difficulty: "hard",
             }
@@ -305,7 +309,7 @@ Encapsulation wraps upper-layer data with headers (and sometimes trailers) as it
               { id: "d", text: "Layer 7 – Application" }
               ],
               correctChoiceId: "b",
-              explanation: "The Session layer (Layer 5) sets up, coordinates, and terminates conversations between applications.",
+              explanation: "Session (L5) sets up and tears down conversations — not Transport ports (L4), Presentation crypto (L6), or app protocols (L7).",
               objectiveId: "CCNA-1.3",
               difficulty: "easy",
             },
@@ -319,7 +323,7 @@ Encapsulation wraps upper-layer data with headers (and sometimes trailers) as it
               { id: "d", text: "Layer 7 – Application" }
               ],
               correctChoiceId: "b",
-              explanation: "The Network layer (Layer 3) encapsulates the segment into a packet by adding the source and destination IP addresses.",
+              explanation: "At L3 the segment becomes a packet when IP addresses are added — not MAC (L2), ports (L4), or application data (L7).",
               objectiveId: "CCNA-1.1",
               difficulty: "easy",
             },
@@ -333,7 +337,7 @@ Encapsulation wraps upper-layer data with headers (and sometimes trailers) as it
               { id: "d", text: "Datagram" }
               ],
               correctChoiceId: "c",
-              explanation: "TCP calls its PDU a segment; the Transport layer PDU is officially named a segment (TCP) or datagram (UDP), but 'segment' is the standard exam answer.",
+              explanation: "CCNA names the Transport PDU a segment (TCP) — not packet (L3) or frame (L2). Do not treat datagram as the only exam answer.",
               objectiveId: "CCNA-1.2",
               difficulty: "easy",
             },
@@ -347,7 +351,7 @@ Encapsulation wraps upper-layer data with headers (and sometimes trailers) as it
               { id: "d", text: "Layer 7 – Application" }
               ],
               correctChoiceId: "d",
-              explanation: "HTTP, DNS, and SMTP are application-layer protocols taught in the OSI lesson.",
+              explanation: "HTTP, DNS, and SMTP are Application-layer protocols — not Transport, Session, or Presentation by themselves.",
               objectiveId: "CCNA-1.3",
               difficulty: "easy",
             },
@@ -361,7 +365,7 @@ Encapsulation wraps upper-layer data with headers (and sometimes trailers) as it
               { id: "d", text: "Layer 7 – Application" }
               ],
               correctChoiceId: "b",
-              explanation: "ICMP is a Layer 3 protocol carried inside IP packets; it is used by ping and traceroute.",
+              explanation: "ICMP runs at Layer 3 inside IP packets (ping/traceroute) — unlike TCP/UDP at L4, Ethernet framing at L2, or HTTP at L7.",
               objectiveId: "CCNA-1.1",
               difficulty: "medium",
             },
@@ -375,7 +379,7 @@ Encapsulation wraps upper-layer data with headers (and sometimes trailers) as it
               { id: "d", text: "Layer 5 – Session" }
               ],
               correctChoiceId: "a",
-              explanation: "The Physical layer defines how bits are transmitted over a medium as electrical voltages, light pulses, or radio waves.",
+              explanation: "Physical (L1) moves bits as electrical/optical/radio signals — not frames (L2), packets (L3), or sessions (L5).",
               objectiveId: "CCNA-1.3",
               difficulty: "easy",
             },
@@ -389,7 +393,7 @@ Encapsulation wraps upper-layer data with headers (and sometimes trailers) as it
               { id: "d", text: "Layer 7 – Application" }
               ],
               correctChoiceId: "c",
-              explanation: "Port numbers identify upper-layer services and reside in the Transport layer (TCP/UDP) header.",
+              explanation: "Port numbers live in the Transport (TCP/UDP) header — not in MAC (L2), IP (L3), or the app name alone (L7).",
               objectiveId: "CCNA-1.2",
               difficulty: "easy",
             },
@@ -403,7 +407,7 @@ Encapsulation wraps upper-layer data with headers (and sometimes trailers) as it
               { id: "d", text: "Bit" }
               ],
               correctChoiceId: "b",
-              explanation: "Layer 3 (Network) PDUs are called packets; they include the IP header with logical addresses.",
+              explanation: "Network-layer PDUs are packets with logical IP addresses — not segments (L4), frames (L2), or raw bits (L1).",
               objectiveId: "CCNA-1.1",
               difficulty: "easy",
             },
@@ -417,7 +421,7 @@ Encapsulation wraps upper-layer data with headers (and sometimes trailers) as it
               { id: "d", text: "Layer 7 – Application" }
               ],
               correctChoiceId: "c",
-              explanation: "TLS/SSL handles data formatting and encryption, which maps to the Presentation layer (Layer 6) on CCNA exams.",
+              explanation: "On CCNA exams, TLS/SSL maps to Presentation (L6) for formatting/crypto — not L3 routing, L4 ports, or L7 alone.",
               objectiveId: "CCNA-1.3",
               difficulty: "medium",
             },
@@ -431,7 +435,7 @@ Encapsulation wraps upper-layer data with headers (and sometimes trailers) as it
               { id: "d", text: "Reload the router OS" }
               ],
               correctChoiceId: "b",
-              explanation: "Bottom-up troubleshooting starts at Layer 1. Physical connectivity must be confirmed before checking higher-layer issues.",
+              explanation: "Bottom-up troubleshooting starts at Layer 1 (cable/link) — not apps, packet captures, or OS reloads first.",
               objectiveId: "CCNA-1.1",
               difficulty: "medium",
             },
@@ -445,7 +449,7 @@ Encapsulation wraps upper-layer data with headers (and sometimes trailers) as it
               { id: "d", text: "Application Presentation Session Network Transport Data Physical" }
               ],
               correctChoiceId: "b",
-              explanation: "'All People Seem To Need Data Processing' maps to Application, Presentation, Session, Transport, Network, Data Link, Physical (Layers 7 to 1).",
+              explanation: "APSTNDP maps L7→L1 (Application…Physical) — not Please Do Not Throw Sausage Pizza Away (L1→7) or scrambled orders.",
               objectiveId: "CCNA-1.2",
               difficulty: "easy",
             },
@@ -459,7 +463,7 @@ Encapsulation wraps upper-layer data with headers (and sometimes trailers) as it
               { id: "d", text: "Layer 7 – Application" }
               ],
               correctChoiceId: "d",
-              explanation: "SMTP is an application-layer protocol running over TCP port 25 to transfer email between servers.",
+              explanation: "SMTP is an Application-layer email protocol over TCP/25 — not Layer 3 routing, Layer 4 itself, or Session control.",
               objectiveId: "CCNA-1.3",
               difficulty: "easy",
             }],
@@ -674,7 +678,7 @@ Dual-stack hosts run IPv4 and IPv6 simultaneously. When studying for CCNA, pract
                 { id: "d", text: "53" }
               ],
               correctChoiceId: "b",
-              explanation: "HTTPS uses TCP port 443 (taught in the Transport ports card).",
+              explanation: "HTTPS uses TCP 443 — not 80 (HTTP), 22 (SSH), or 53 (DNS). Match the service to its well-known port.",
               objectiveId: "CCNA-1.4",
               difficulty: "medium",
             },
@@ -688,7 +692,7 @@ Dual-stack hosts run IPv4 and IPv6 simultaneously. When studying for CCNA, pract
                 { id: "d", text: "ARP" }
               ],
               correctChoiceId: "b",
-              explanation: "Most DNS queries use UDP port 53 — covered in the lesson's common ports card.",
+              explanation: "Most DNS queries use UDP/53 — not TCP-only, ICMP, or ARP. TCP/53 is mainly for zone transfers and large replies.",
               objectiveId: "CCNA-1.1",
               difficulty: "medium",
             },
@@ -702,7 +706,7 @@ Dual-stack hosts run IPv4 and IPv6 simultaneously. When studying for CCNA, pract
                 { id: "d", text: "Bit" }
               ],
               correctChoiceId: "b",
-              explanation: "IP packets are Internet layer PDUs (also covered in the OSI lesson prerequisite).",
+              explanation: "Internet-layer PDUs are IP packets — not segments (Transport), frames (Network Access), or bits alone.",
               objectiveId: "CCNA-1.1",
               difficulty: "medium",
             },
@@ -716,7 +720,7 @@ Dual-stack hosts run IPv4 and IPv6 simultaneously. When studying for CCNA, pract
                 { id: "d", text: "Network Access" }
               ],
               correctChoiceId: "d",
-              explanation: "Network Access combines OSI Layers 1 and 2.",
+              explanation: "TCP/IP Network Access combines OSI Layers 1 and 2 — not Application, Transport, or Internet by itself.",
               objectiveId: "CCNA-1.4",
               difficulty: "easy",
             },
@@ -730,7 +734,7 @@ Dual-stack hosts run IPv4 and IPv6 simultaneously. When studying for CCNA, pract
                 { id: "d", text: "Link-layer control protocols" }
               ],
               correctChoiceId: "b",
-              explanation: "Both are Application layer remote-access protocols — taught in the SSH/Telnet card.",
+              explanation: "SSH and Telnet are Application-layer remote-access protocols — not Internet, Transport, or link-layer services.",
               objectiveId: "CCNA-1.1",
               difficulty: "easy",
             },
@@ -744,7 +748,7 @@ Dual-stack hosts run IPv4 and IPv6 simultaneously. When studying for CCNA, pract
               { id: "d", text: "SYN-ACK → SYN → ACK" }
               ],
               correctChoiceId: "b",
-              explanation: "TCP establishes connections with SYN (client), SYN-ACK (server), ACK (client) before data transfer begins.",
+              explanation: "TCP handshake is SYN → SYN-ACK → ACK — not ACK-first or SYN-ACK before SYN. Wrong order fails the connection.",
               objectiveId: "CCNA-1.5",
               difficulty: "easy",
             },
@@ -758,7 +762,7 @@ Dual-stack hosts run IPv4 and IPv6 simultaneously. When studying for CCNA, pract
               { id: "d", text: "TCP operates at Layer 3; UDP operates at Layer 2" }
               ],
               correctChoiceId: "b",
-              explanation: "TCP provides connection-oriented, reliable delivery. UDP is connectionless with no delivery guarantee.",
+              explanation: "TCP is connection-oriented and reliable; UDP is connectionless with no delivery guarantee — not the reverse.",
               objectiveId: "CCNA-1.5",
               difficulty: "easy",
             },
@@ -772,7 +776,7 @@ Dual-stack hosts run IPv4 and IPv6 simultaneously. When studying for CCNA, pract
               { id: "d", text: "OSI Layers 5-7" }
               ],
               correctChoiceId: "c",
-              explanation: "The TCP/IP Transport layer directly corresponds to OSI Layer 4.",
+              explanation: "TCP/IP Transport maps directly to OSI Layer 4 — not Data Link (L2), Network (L3), or Session/Presentation/Application.",
               objectiveId: "CCNA-1.1",
               difficulty: "easy",
             },
@@ -786,7 +790,7 @@ Dual-stack hosts run IPv4 and IPv6 simultaneously. When studying for CCNA, pract
               { id: "d", text: "Sending an email via SMTP" }
               ],
               correctChoiceId: "b",
-              explanation: "Live streaming tolerates some loss but not TCP retransmission delays — UDP fits better.",
+              explanation: "Live streaming prefers UDP (tolerates loss, avoids retransmit delay) — unlike file transfer/email, which need TCP.",
               objectiveId: "CCNA-1.5",
               difficulty: "medium",
             },
@@ -800,7 +804,7 @@ Dual-stack hosts run IPv4 and IPv6 simultaneously. When studying for CCNA, pract
               { id: "d", text: "443" }
               ],
               correctChoiceId: "b",
-              explanation: "SSH runs on TCP port 22 — on the lesson's common ports card.",
+              explanation: "SSH uses TCP port 22 for secure remote CLI — not 23 (Telnet), 3389 (RDP), or 443 (HTTPS).",
               objectiveId: "CCNA-1.4",
               difficulty: "easy",
             },
@@ -814,7 +818,7 @@ Dual-stack hosts run IPv4 and IPv6 simultaneously. When studying for CCNA, pract
               { id: "d", text: "0 – 65535" }
               ],
               correctChoiceId: "a",
-              explanation: "IANA defines ports 0–1023 as well-known — taught in the port ranges card.",
+              explanation: "IANA well-known ports are 0–1023 — vs registered 1024–49151 and ephemeral/dynamic high client ports.",
               objectiveId: "CCNA-1.4",
               difficulty: "easy",
             }],
@@ -1035,7 +1039,7 @@ Jumbo frames exceed 1500-byte MTU and may not traverse all paths. Understanding 
                 { id: "d", text: "10 Gbps" }
               ],
               correctChoiceId: "b",
-              explanation: "100BASE-T is Fast Ethernet at 100 Mbps.",
+              explanation: "100BASE-T is Fast Ethernet at 100 Mbps — not 10BASE-T (10), Gigabit (1000), or 10-Gig naming.",
               objectiveId: "CCNA-1.6",
               difficulty: "medium",
             },
@@ -1049,7 +1053,7 @@ Jumbo frames exceed 1500-byte MTU and may not traverse all paths. Understanding 
                 { id: "d", text: "Wireless only" }
               ],
               correctChoiceId: "b",
-              explanation: "Full-duplex uses separate paths for TX/RX.",
+              explanation: "Full-duplex sends and receives at once on separate paths — unlike half-duplex, which shares one collision domain.",
               objectiveId: "CCNA-1.6",
               difficulty: "hard",
             },
@@ -1063,7 +1067,7 @@ Jumbo frames exceed 1500-byte MTU and may not traverse all paths. Understanding 
                 { id: "d", text: "Coax RG-59 only" }
               ],
               correctChoiceId: "b",
-              explanation: "Cat 5e/6 supports Gigabit Ethernet on UTP.",
+              explanation: "Cat 5e/6 copper UTP supports Gigabit Ethernet — not Cat3 for 1G, and not coax/RG-59 as the default medium.",
               objectiveId: "CCNA-1.5",
               difficulty: "hard",
             },
@@ -1077,7 +1081,7 @@ Jumbo frames exceed 1500-byte MTU and may not traverse all paths. Understanding 
               { id: "d", text: "00:0C:29:XX:XX:XX" }
               ],
               correctChoiceId: "b",
-              explanation: "FF:FF:FF:FF:FF:FF is the Ethernet broadcast address. All devices on the segment process frames with this destination.",
+              explanation: "Ethernet broadcast destination is FF:FF:FF:FF:FF:FF — not all-zeros, and not multicast like 01:00:5E.",
               objectiveId: "CCNA-1.4",
               difficulty: "easy",
             },
@@ -1091,7 +1095,7 @@ Jumbo frames exceed 1500-byte MTU and may not traverse all paths. Understanding 
               { id: "d", text: "Auto-duplex" }
               ],
               correctChoiceId: "b",
-              explanation: "Full-duplex uses separate wire pairs for transmit and receive simultaneously. Half-duplex cannot send and receive at the same time and relies on CSMA/CD.",
+              explanation: "Full-duplex uses separate TX/RX pairs simultaneously — vs half-duplex, which cannot do both at once and needs CSMA/CD.",
               objectiveId: "CCNA-1.3",
               difficulty: "easy",
             },
@@ -1105,7 +1109,7 @@ Jumbo frames exceed 1500-byte MTU and may not traverse all paths. Understanding 
               { id: "d", text: "IEEE 802.1X" }
               ],
               correctChoiceId: "b",
-              explanation: "IEEE 802.3 defines the Ethernet standard for wired LANs. 802.11 is Wi-Fi, 802.1Q is VLAN tagging, and 802.1X is port-based access control.",
+              explanation: "IEEE 802.3 defines wired Ethernet LANs — vs 802.11 (Wi-Fi), 802.1Q (VLAN tags), and 802.1X (port auth).",
               objectiveId: "CCNA-1.3",
               difficulty: "easy",
             },
@@ -1133,7 +1137,7 @@ Jumbo frames exceed 1500-byte MTU and may not traverse all paths. Understanding 
               { id: "d", text: "IP subnet" }
               ],
               correctChoiceId: "b",
-              explanation: "The OUI occupies the first 24 bits of a 48-bit MAC address and is assigned by IEEE to identify the manufacturer (e.g., Cisco, Intel).",
+              explanation: "The OUI is the first 24 bits of a 48-bit MAC (vendor ID from IEEE) — not a serial, subnet, or host-only field.",
               objectiveId: "CCNA-1.4",
               difficulty: "medium",
             },
@@ -1147,7 +1151,7 @@ Jumbo frames exceed 1500-byte MTU and may not traverse all paths. Understanding 
               { id: "d", text: "Subnet" }
               ],
               correctChoiceId: "b",
-              explanation: "Each switch port is its own collision domain. All ports on the same switch (without VLANs) share a single broadcast domain.",
+              explanation: "Each switch port is its own collision domain, but ports still share one broadcast domain by default — not one collision domain.",
               objectiveId: "CCNA-1.4",
               difficulty: "medium",
             },
@@ -1161,7 +1165,7 @@ Jumbo frames exceed 1500-byte MTU and may not traverse all paths. Understanding 
               { id: "d", text: "VLAN tag" }
               ],
               correctChoiceId: "b",
-              explanation: "The Frame Check Sequence (FCS) stores the CRC fingerprint — taught in the Ethernet FCS cards.",
+              explanation: "FCS/CRC is the frame trailer that checks integrity — not EtherType, preamble, or payload length fields.",
               objectiveId: "CCNA-1.3",
               difficulty: "medium",
             },
@@ -1409,7 +1413,7 @@ Every host needs a unique address in its subnet, a matching mask, and a default 
                 { id: "d", text: "APIPA" }
               ],
               correctChoiceId: "a",
-              explanation: "127.0.0.0/8 is reserved for loopback.",
+              explanation: "127.0.0.0/8 is loopback (host-local) — not a gateway, DNS server, or public LAN address on the wire.",
               objectiveId: "CCNA-1.7",
               difficulty: "hard",
             },
@@ -1423,7 +1427,7 @@ Every host needs a unique address in its subnet, a matching mask, and a default 
                 { id: "d", text: "A public IP" }
               ],
               correctChoiceId: "a",
-              explanation: "Gateway must be reachable on the local subnet.",
+              explanation: "The default gateway must be on the same subnet as the host — not an off-subnet IP, public-only address, or APIPA peer.",
               objectiveId: "CCNA-1.7",
               difficulty: "hard",
             },
@@ -1437,7 +1441,7 @@ Every host needs a unique address in its subnet, a matching mask, and a default 
               { id: "d", text: "The host has a valid loopback address" }
               ],
               correctChoiceId: "b",
-              explanation: "169.254.0.0/16 is the APIPA (Automatic Private IP Addressing) range. Windows/Linux assign an address from this range when DHCP is unavailable.",
+              explanation: "169.254.0.0/16 is APIPA when DHCP fails — not RFC1918 private space, and not Internet-routable addressing.",
               objectiveId: "CCNA-1.11",
               difficulty: "medium",
             },
@@ -1451,7 +1455,7 @@ Every host needs a unique address in its subnet, a matching mask, and a default 
               { id: "d", text: "128.0.0.1" }
               ],
               correctChoiceId: "c",
-              explanation: "192.168.255.254 is within the private 192.168.0.0/16 range. 192.0.2.x is documentation-only; 172.32.x.x is public; 128.0.x.x is public.",
+              explanation: "192.168.255.254 is private (192.168.0.0/16) — vs 192.0.2.x (docs), 172.32.x (public), and 128.0.x (public).",
               objectiveId: "CCNA-1.7",
               difficulty: "medium",
             },
@@ -1465,7 +1469,7 @@ Every host needs a unique address in its subnet, a matching mask, and a default 
               { id: "d", text: "Unicast portion and multicast portion" }
               ],
               correctChoiceId: "b",
-              explanation: "The subnet mask separates the 32-bit IPv4 address into a network portion (identifying the subnet) and a host portion (identifying the device).",
+              explanation: "The subnet mask splits network bits vs host bits in the 32-bit address — it is not a speed knob or routing protocol.",
               objectiveId: "CCNA-1.8",
               difficulty: "easy",
             },
@@ -1479,7 +1483,7 @@ Every host needs a unique address in its subnet, a matching mask, and a default 
               { id: "d", text: "255" }
               ],
               correctChoiceId: "d",
-              explanation: "Each IPv4 octet is 8 bits. The maximum value of 8 set bits is 11111111 binary = 255 decimal.",
+              explanation: "Each IPv4 octet is 8 bits, so max value is 255 (all bits set) — not 256, 128, or 1024 trap values.",
               objectiveId: "CCNA-1.6",
               difficulty: "easy",
             }],
@@ -1728,8 +1732,7 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
                 { id: "d", text: "192.168.1.0" }
               ],
               correctChoiceId: "a",
-              explanation:
-                "/26 block size is 64, so subnets in the last octet are .0, .64, .128, .192. Count: 1st=.0, 2nd=.64, 3rd=.128.",
+              explanation: "/26 block size is 64, so last-octet starts are .0, .64, .128, .192. The 3rd subnet is .128 — not .64, .192, or .0.",
               objectiveId: "CCNA-1.10",
               difficulty: "medium",
             },
@@ -1743,7 +1746,7 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
                 { id: "d", text: "32" }
               ],
               correctChoiceId: "a",
-              explanation: "Borrow 4 bits → 2^4 = 16 subnets.",
+              explanation: "Borrowing 4 host bits from a /24 yields 2^4 = 16 subnets (to /28) — not 8, 4, or 32 subnets.",
               objectiveId: "CCNA-1.9",
               difficulty: "medium",
             },
@@ -1757,7 +1760,7 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
                 { id: "d", text: "10.1.1.3" }
               ],
               correctChoiceId: "b",
-              explanation: ".0 is network; .1 is first usable.",
+              explanation: "In a /30-style micro-subnet, .0 is the network and .1 is first usable — not .0 as a host, not .2 first, not .3 usable.",
               objectiveId: "CCNA-1.10",
               difficulty: "hard",
             },
@@ -1771,7 +1774,7 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
                 { id: "d", text: "Vector Link Subnet Method" }
               ],
               correctChoiceId: "b",
-              explanation: "VLSM uses different prefix lengths in one design.",
+              explanation: "VLSM uses different prefix lengths in one design — unlike FLSM, where every subnet is the same size.",
               objectiveId: "CCNA-1.9",
               difficulty: "hard",
             },
@@ -1785,7 +1788,7 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
                 { id: "d", text: "/8" }
               ],
               correctChoiceId: "a",
-              explanation: "/30 provides 2 usable host addresses.",
+              explanation: "/30 leaves 2 host bits so usable hosts = 2^2 - 2 = 2 — not 4 usable, and not /29 which has six.",
               objectiveId: "CCNA-1.9",
               difficulty: "hard",
             },
@@ -1799,7 +1802,7 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
                 { id: "d", text: "126" }
               ],
               correctChoiceId: "a",
-              explanation: "/27 leaves 5 host bits: 2^5 - 2 = 30 usable addresses.",
+              explanation: "/27 leaves 5 host bits: 2^5 - 2 = 30 usable addresses — not 32 total-as-usable, 62, or 14.",
               objectiveId: "CCNA-1.10",
               difficulty: "hard",
             },
@@ -1813,7 +1816,7 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
                 { id: "d", text: "255.255.255.0" }
               ],
               correctChoiceId: "a",
-              explanation: "/25 borrows 1 bit from the fourth octet: 128 decimal = 255.255.255.128.",
+              explanation: "/25 borrows 1 bit in the fourth octet: binary 10000000 = 128, so mask 255.255.255.128 — not .192/.224/.0.",
               objectiveId: "CCNA-1.9",
               difficulty: "hard",
             }
@@ -1828,7 +1831,7 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
               { id: "d", text: "192.168.10.0" }
               ],
               correctChoiceId: "b",
-              explanation: "/29 has a block size of 8. Subnets: .0, .8, .16, .24, .32, .40, .48... The host .45 falls in the .40 block, so the network address is 192.168.10.40.",
+              explanation: "/29 block size 8 → .0,.8,.16,… Host .45 falls in .40–.47, so network is .40 — not .32, .48, or .0.",
               objectiveId: "CCNA-1.10",
               difficulty: "medium",
             },
@@ -1842,7 +1845,7 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
               { id: "d", text: "192.168.10.255" }
               ],
               correctChoiceId: "a",
-              explanation: "/29 block size is 8. Starting at .40, the subnet range is .40–.47. The last address (.47) is the broadcast.",
+              explanation: "/29 subnet starting at .40 spans .40–.47; broadcast is .47 — not .46 (last usable) or .48 (next network).",
               objectiveId: "CCNA-1.10",
               difficulty: "medium",
             },
@@ -1856,7 +1859,7 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
               { id: "d", text: "192.168.10.42" }
               ],
               correctChoiceId: "c",
-              explanation: "The network address is .40 (reserved). The first usable host is .41.",
+              explanation: "The network address .40 is reserved; first usable host is .41 — do not assign the network ID to a host.",
               objectiveId: "CCNA-1.10",
               difficulty: "medium",
             },
@@ -1870,7 +1873,7 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
               { id: "d", text: "14" }
               ],
               correctChoiceId: "b",
-              explanation: "/29 leaves 3 host bits: 2^3 = 8 total addresses minus network and broadcast = 6 usable hosts.",
+              explanation: "/29 has 8 addresses total; usable hosts = 8 − 2 = 6 — do not forget to subtract network and broadcast.",
               objectiveId: "CCNA-1.10",
               difficulty: "easy",
             },
@@ -1884,7 +1887,7 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
               { id: "d", text: "255.255.255.224" }
               ],
               correctChoiceId: "b",
-              explanation: "/29 has 29 network bits. The last octet has 5 bits set: 11111000 = 248. So the mask is 255.255.255.248.",
+              explanation: "/29 sets 5 bits in the last octet: 11111000 = 248, so mask 255.255.255.248 — not .240, .252, or .255.",
               objectiveId: "CCNA-1.9",
               difficulty: "easy",
             },
@@ -1898,7 +1901,7 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
               { id: "d", text: "10.0.0.0" }
               ],
               correctChoiceId: "b",
-              explanation: "/27 has a block size of 32. Subnets in the last octet: .0, .32, .64, .96, .128, .160... The host .130 falls in the .128 block.",
+              explanation: "/27 block size 32 → .0,.32,.64,.96,.128… Host .130 sits in the .128 block — not .96 or .160.",
               objectiveId: "CCNA-1.10",
               difficulty: "medium",
             },
@@ -1912,7 +1915,7 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
               { id: "d", text: "10.0.0.158" }
               ],
               correctChoiceId: "a",
-              explanation: "/27 block size is 32. The subnet .128 spans .128–.159. Broadcast is .159.",
+              explanation: "/27 subnet .128 spans .128–.159; broadcast is .159 — not .158 (still usable) or .160 (next net).",
               objectiveId: "CCNA-1.10",
               difficulty: "medium",
             },
@@ -1926,7 +1929,7 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
               { id: "d", text: "32" }
               ],
               correctChoiceId: "b",
-              explanation: "Moving from /24 to /27 borrows 3 bits: 2^3 = 8 subnets, each with 30 usable hosts.",
+              explanation: "Moving /24 to /27 borrows 3 bits → 8 subnets with 30 usable each — not 4/16 subnets, and not 32 usable.",
               objectiveId: "CCNA-1.9",
               difficulty: "medium",
             },
@@ -1954,7 +1957,7 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
               { id: "d", text: "255.255.255.252" }
               ],
               correctChoiceId: "b",
-              explanation: "/28 has 28 network bits. The fourth octet has 4 bits set: 11110000 = 240. Mask = 255.255.255.240.",
+              explanation: "/28 sets 4 bits in the last octet: 11110000 = 240, so mask 255.255.255.240 — not .224, .248, or .255.",
               objectiveId: "CCNA-1.9",
               difficulty: "easy",
             },
@@ -1968,7 +1971,7 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
               { id: "d", text: "6" }
               ],
               correctChoiceId: "a",
-              explanation: "/28 leaves 4 host bits: 2^4 = 16 total minus 2 = 14 usable hosts.",
+              explanation: "/28 has 16 addresses total; usable hosts = 16 - 2 = 14 — not 16, 15, or 30 usable hosts.",
               objectiveId: "CCNA-1.10",
               difficulty: "easy",
             },
@@ -1982,7 +1985,7 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
               { id: "d", text: "192.168.100.176" }
               ],
               correctChoiceId: "a",
-              explanation: "/28 block size is 16. Subnets in the last octet: .0, .16, .32... .176, .192, .208. Host .200 falls in the .192 block.",
+              explanation: "/28 block size 16 → …,.176,.192,.208. Host .200 falls in .192–.207 — not .176 or .208.",
               objectiveId: "CCNA-1.10",
               difficulty: "medium",
             },
@@ -1996,7 +1999,7 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
               { id: "d", text: "192.168.100.255" }
               ],
               correctChoiceId: "b",
-              explanation: "/28 block size is 16. The .192 subnet spans .192–.207. Broadcast is .207.",
+              explanation: "/28 subnet .192 spans .192–.207; broadcast is .207 — not .206 (last usable) or .208 (next).",
               objectiveId: "CCNA-1.10",
               difficulty: "medium",
             },
@@ -2010,7 +2013,7 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
               { id: "d", text: "2" }
               ],
               correctChoiceId: "b",
-              explanation: "Going from /27 to /30 borrows 3 more bits: 2^3 = 8 /30 subnets per /27.",
+              explanation: "From /27 to /30 you borrow 3 more bits → 2^3 = 8 point-to-point /30s per /27 — not 4 or 16.",
               objectiveId: "CCNA-1.9",
               difficulty: "medium",
             },
@@ -2024,7 +2027,7 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
               { id: "d", text: "10.5.0.128" }
               ],
               correctChoiceId: "c",
-              explanation: "/26 block size 64: subnet is 10.5.0.64 (network) to 10.5.0.127 (broadcast). Usable range: .65–.126. Only .100 is a valid usable host.",
+              explanation: "/26 block .64–.127: usable is .65–.126. Only an in-range host is valid — not network, broadcast, or out-of-range.",
               objectiveId: "CCNA-1.10",
               difficulty: "medium",
             },
@@ -2038,7 +2041,7 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
               { id: "d", text: "/31" }
               ],
               correctChoiceId: "b",
-              explanation: "/30 provides exactly 2 usable hosts (2^2 - 2 = 2), making it the traditional choice for point-to-point WAN links. /31 is also valid (RFC 3021) but /30 is the classic CCNA answer.",
+              explanation: "Point-to-point traditionally uses /30 (exactly 2 usable) — not /29 waste, and classic CCNA still prefers /30 over /31.",
               objectiveId: "CCNA-1.9",
               difficulty: "medium",
             },
@@ -2052,7 +2055,7 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
               { id: "d", text: "255.255.255.254" }
               ],
               correctChoiceId: "c",
-              explanation: "/30 has 30 network bits. The last octet has 6 bits set: 11111100 = 252. Mask = 255.255.255.252.",
+              explanation: "/30 sets 6 bits in the last octet: 11111100 = 252, so mask 255.255.255.252 — not .248 or .254.",
               objectiveId: "CCNA-1.9",
               difficulty: "easy",
             },
@@ -2066,7 +2069,7 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
               { id: "d", text: "0" }
               ],
               correctChoiceId: "a",
-              explanation: "/30 leaves 2 host bits: 2^2 = 4 total addresses minus network and broadcast = 2 usable hosts.",
+              explanation: "/30 has 4 addresses total; usable hosts = 4 - 2 = 2 — do not count all four as assignable hosts.",
               objectiveId: "CCNA-1.10",
               difficulty: "easy",
             },
@@ -2094,7 +2097,7 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
               { id: "d", text: "192.168.1.80" }
               ],
               correctChoiceId: "b",
-              explanation: "/27 block size is 32. Subnets: .0, .32, .64, .96, .128... Host .100 falls in the .96 block. Network address = 192.168.1.96.",
+              explanation: "/27 block size 32 → .0,.32,.64,.96,.128… Host .100 is in the .96 block — not .64, .128, or .80.",
               objectiveId: "CCNA-1.10",
               difficulty: "medium",
             },
@@ -2108,7 +2111,7 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
               { id: "d", text: "192.168.1.125" }
               ],
               correctChoiceId: "b",
-              explanation: "/27 subnet .96 spans .96–.127. Broadcast is .127. Last usable host is one below broadcast = .126.",
+              explanation: "Subnet .96–.127: last usable host is one below broadcast = .126 — not the broadcast address .127.",
               objectiveId: "CCNA-1.10",
               difficulty: "medium",
             },
@@ -2122,7 +2125,7 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
               { id: "d", text: "192.168.1.255" }
               ],
               correctChoiceId: "b",
-              explanation: "/27 block size 32: the .96 subnet spans .96–.127. The broadcast address is 192.168.1.127.",
+              explanation: "/27 .96 spans .96–.127; directed broadcast is .127 — not .126, .128, or .255 unless the mask says so.",
               objectiveId: "CCNA-1.10",
               difficulty: "medium",
             },
@@ -2136,8 +2139,7 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
                 { id: "d", text: "255.255.255.255" },
               ],
               correctChoiceId: "c",
-              explanation:
-                "Directed broadcast = last address in the block (all host bits 1). For 192.168.5.0/24 that is 192.168.5.255. 255.255.255.255 is limited broadcast (local segment only); .0 is the network address.",
+              explanation: "Directed broadcast is the last address in the subnet (e.g. .255 for /24) — vs limited 255.255.255.255 and vs network .0.",
               objectiveId: "CCNA-1.10",
               difficulty: "easy",
             }],
@@ -2422,7 +2424,7 @@ Skip legacy class A/B/C labels for exam day. Focus on the purpose of each range 
                 { id: "d", text: "169.254.0.0/16" }
               ],
               correctChoiceId: "b",
-              explanation: "224.0.0.0/4 is IPv4 multicast.",
+              explanation: "224.0.0.0/4 is the IPv4 multicast range — not private unicast, loopback, or APIPA link-local space.",
               objectiveId: "CCNA-1.11",
               difficulty: "medium",
             },
@@ -2436,7 +2438,7 @@ Skip legacy class A/B/C labels for exam day. Focus on the purpose of each range 
                 { id: "d", text: "APIPA" }
               ],
               correctChoiceId: "b",
-              explanation: "RFC 5737 documentation block.",
+              explanation: "RFC 5737 documentation/TEST-NET blocks are for examples in books — not private, loopback, or APIPA ranges.",
               objectiveId: "CCNA-1.7",
               difficulty: "hard",
             },
@@ -2450,7 +2452,7 @@ Skip legacy class A/B/C labels for exam day. Focus on the purpose of each range 
                 { id: "d", text: "Broadcast only" }
               ],
               correctChoiceId: "a",
-              explanation: "172.16.0.0/12 is private RFC 1918.",
+              explanation: "172.16.0.0/12 (addresses 172.16 through 172.31) is RFC1918 private — not 172.32+, which is public.",
               objectiveId: "CCNA-1.11",
               difficulty: "hard",
             },
@@ -2464,7 +2466,7 @@ Skip legacy class A/B/C labels for exam day. Focus on the purpose of each range 
                 { id: "d", text: "DNS anycast" }
               ],
               correctChoiceId: "b",
-              explanation: "127.0.0.0/8 is loopback.",
+              explanation: "127.0.0.0/8 is loopback processed on the host — not a LAN gateway, DHCP pool, or DNS anycast target.",
               objectiveId: "CCNA-1.7",
               difficulty: "hard",
             },
@@ -2478,7 +2480,7 @@ Skip legacy class A/B/C labels for exam day. Focus on the purpose of each range 
                 { id: "d", text: "Neither" }
               ],
               correctChoiceId: "b",
-              explanation: "10.x is private and needs translation for public Internet.",
+              explanation: "10.0.0.0/8 is private and needs NAT to reach the public Internet — unlike public TEST-NET examples such as 203.0.113.x.",
               objectiveId: "CCNA-1.11",
               difficulty: "hard",
             },
@@ -2492,7 +2494,7 @@ Skip legacy class A/B/C labels for exam day. Focus on the purpose of each range 
                 { id: "d", text: "192.168.0.0/16" }
               ],
               correctChoiceId: "b",
-              explanation: "169.254.0.0/16 is link-local/APIPA.",
+              explanation: "169.254.0.0/16 is APIPA/link-local self-assignment — not 10/8, 224/4 multicast, or 192.168/16 private.",
               objectiveId: "CCNA-1.7",
               difficulty: "hard",
             }
@@ -2521,7 +2523,7 @@ Skip legacy class A/B/C labels for exam day. Focus on the purpose of each range 
               { id: "d", text: "RFC 3022" }
               ],
               correctChoiceId: "b",
-              explanation: "RFC 1918 (Address Allocation for Private Internets) defines the three private IPv4 ranges: 10.0.0.0/8, 172.16.0.0/12, and 192.168.0.0/16.",
+              explanation: "RFC 1918 defines private 10/8, 172.16/12, and 192.168/16 — vs documentation (5737) or public addressing RFCs.",
               objectiveId: "CCNA-1.7",
               difficulty: "easy",
             },
@@ -2535,7 +2537,7 @@ Skip legacy class A/B/C labels for exam day. Focus on the purpose of each range 
               { id: "d", text: "The address is a private 172.16.0.0 range address" }
               ],
               correctChoiceId: "b",
-              explanation: "169.254.0.0/16 is the APIPA range. When DHCP fails, Windows and other OSes self-assign an address in this range. No gateway is assigned because APIPA only provides link-local communication.",
+              explanation: "When DHCP fails, hosts self-assign 169.254/16 APIPA with no gateway — not a static success, public IP, or 172.16 private lease.",
               objectiveId: "CCNA-1.11",
               difficulty: "easy",
             },
@@ -2549,7 +2551,7 @@ Skip legacy class A/B/C labels for exam day. Focus on the purpose of each range 
               { id: "d", text: "Experimental research" }
               ],
               correctChoiceId: "b",
-              explanation: "RFC 5737 defines three documentation prefixes: 192.0.2.0/24 (TEST-NET-1), 198.51.100.0/24 (TEST-NET-2), and 203.0.113.0/24 (TEST-NET-3). These appear in RFCs and textbooks but must never be routed.",
+              explanation: "RFC 5737 TEST-NET prefixes (192.0.2/24, 198.51.100/24, 203.0.113/24) are for docs only — do not route them like real ISP space.",
               objectiveId: "CCNA-1.7",
               difficulty: "medium",
             },
@@ -2563,7 +2565,7 @@ Skip legacy class A/B/C labels for exam day. Focus on the purpose of each range 
               { id: "d", text: "172.16.0.0 – 172.24.255.255" }
               ],
               correctChoiceId: "c",
-              explanation: "172.16.0.0/12 covers 172.16.0.0 through 172.31.255.255 (the /12 mask borrows 4 bits into the second octet: values 16–31).",
+              explanation: "172.16.0.0/12 ends at 172.31.255.255 — not 172.16.255.255 only, not 172.255, and not stopping at 172.24.",
               objectiveId: "CCNA-1.7",
               difficulty: "medium",
             },
@@ -2605,7 +2607,7 @@ Skip legacy class A/B/C labels for exam day. Focus on the purpose of each range 
               { id: "d", text: "It is the multicast range" }
               ],
               correctChoiceId: "b",
-              explanation: "127.0.0.0/8 is the loopback range (RFC 990). Packets destined to any address in this range are processed locally by the TCP/IP stack and never transmitted on any network interface.",
+              explanation: "127/8 loopback stays on the local stack — not private LAN, APIPA, or multicast destinations on the wire.",
               objectiveId: "CCNA-1.11",
               difficulty: "easy",
             }],
@@ -2797,7 +2799,7 @@ SLAAC lets hosts self-configure from router advertisements; DHCPv6 can still ass
                 { id: "d", text: "127.0.0.1" }
               ],
               correctChoiceId: "a",
-              explanation: "::1 expands to all zeros except last hextet 1.",
+              explanation: "::1 expands to 0000:0000:0000:0000:0000:0000:0000:0001 — not a MAC, fe80 link-local, or the IPv4 string 127.0.0.1.",
               objectiveId: "CCNA-1.13",
               difficulty: "medium",
             },
@@ -2811,7 +2813,7 @@ SLAAC lets hosts self-configure from router advertisements; DHCPv6 can still ass
                 { id: "d", text: "ff00::/8" }
               ],
               correctChoiceId: "b",
-              explanation: "fc00::/7 is unique local (similar to private IPv4).",
+              explanation: "fc00::/7 is unique local (ULA, private-like) — vs 2000::/3 global, fe80::/10 link-local, and ff00::/8 multicast.",
               objectiveId: "CCNA-1.12",
               difficulty: "hard",
             },
@@ -2825,7 +2827,7 @@ SLAAC lets hosts self-configure from router advertisements; DHCPv6 can still ass
                 { id: "d", text: "Deprecated" }
               ],
               correctChoiceId: "b",
-              explanation: "fe80::/10 never leaves the local link.",
+              explanation: "fe80::/10 is link-local and does not leave the local link — not globally routable and not multicast (ff00::/8).",
               objectiveId: "CCNA-1.13",
               difficulty: "hard",
             },
@@ -2839,7 +2841,7 @@ SLAAC lets hosts self-configure from router advertisements; DHCPv6 can still ass
                 { id: "d", text: "None" }
               ],
               correctChoiceId: "a",
-              explanation: "Only one :: sequence per address.",
+              explanation: "Only one double-colon (::) compression is allowed per IPv6 address — not two :: sequences or unlimited.",
               objectiveId: "CCNA-1.12",
               difficulty: "hard",
             },
@@ -2853,7 +2855,7 @@ SLAAC lets hosts self-configure from router advertisements; DHCPv6 can still ass
                 { id: "d", text: "DHCP only" }
               ],
               correctChoiceId: "b",
-              explanation: "Neighbor Discovery handles reachability and MAC resolution.",
+              explanation: "Neighbor Discovery handles on-link reachability and MAC resolution — not TCP, DNS, or DHCPv6 by itself.",
               objectiveId: "CCNA-1.12",
               difficulty: "hard",
             }
@@ -2868,7 +2870,7 @@ SLAAC lets hosts self-configure from router advertisements; DHCPv6 can still ass
               { id: "d", text: "ff00::/8" }
               ],
               correctChoiceId: "c",
-              explanation: "IANA allocates global unicast addresses from the 2000::/3 range (all addresses beginning with binary 001), which includes 2001::/32, 2002::/16, etc.",
+              explanation: "Global unicast is allocated from 2000::/3 — vs fe80::/10 link-local, fc00::/7 ULA, and ff00::/8 multicast.",
               objectiveId: "CCNA-1.12",
               difficulty: "medium",
             },
@@ -2882,7 +2884,7 @@ SLAAC lets hosts self-configure from router advertisements; DHCPv6 can still ass
               { id: "d", text: "256 bits" }
               ],
               correctChoiceId: "c",
-              explanation: "IPv6 addresses are 128 bits long (compared to 32-bit IPv4), written as 8 groups of 4 hexadecimal digits separated by colons.",
+              explanation: "IPv6 addresses are 128 bits (eight hextets) — not 32-bit IPv4 size, and not 64 or 256 as the address length.",
               objectiveId: "CCNA-1.12",
               difficulty: "easy",
             },
@@ -2896,7 +2898,7 @@ SLAAC lets hosts self-configure from router advertisements; DHCPv6 can still ass
               { id: "d", text: "ff00::/8" }
               ],
               correctChoiceId: "d",
-              explanation: "All IPv6 multicast addresses start with ff (binary 11111111). There is no broadcast in IPv6; multicast replaces it for one-to-many delivery.",
+              explanation: "IPv6 multicast starts with ff (ff00::/8). There is no broadcast — do not confuse with fe80, fc00, or 2000 unicast.",
               objectiveId: "CCNA-1.12",
               difficulty: "medium",
             },
@@ -2910,7 +2912,7 @@ SLAAC lets hosts self-configure from router advertisements; DHCPv6 can still ass
               { id: "d", text: "Compress its IPv6 address using :: notation" }
               ],
               correctChoiceId: "a",
-              explanation: "SLAAC (RFC 4862) lets hosts auto-configure a global unicast address by combining the /64 prefix from a Router Advertisement with a self-generated 64-bit interface ID, no DHCPv6 required.",
+              explanation: "SLAAC builds a global address from RA /64 + interface ID without needing DHCPv6 — not DHCPv6-only, IPv4 auto, or :: tricks.",
               objectiveId: "CCNA-1.13",
               difficulty: "medium",
             },
@@ -2924,7 +2926,7 @@ SLAAC lets hosts self-configure from router advertisements; DHCPv6 can still ass
               { id: "d", text: "RIPng" }
               ],
               correctChoiceId: "a",
-              explanation: "NDP (Neighbor Discovery Protocol), using ICMPv6 messages, replaces ARP in IPv6. Neighbor Solicitation and Neighbor Advertisement messages perform address resolution.",
+              explanation: "NDP using ICMPv6 replaces ARP for on-link address resolution — not DHCPv6, OSPF, or RIPng.",
               objectiveId: "CCNA-1.13",
               difficulty: "medium",
             },
@@ -2938,7 +2940,7 @@ SLAAC lets hosts self-configure from router advertisements; DHCPv6 can still ass
               { id: "d", text: "192.168.0.1" }
               ],
               correctChoiceId: "c",
-              explanation: "IPv6 ::1 (0000...0001) is the loopback address, functionally equivalent to IPv4's 127.0.0.1. Packets sent to ::1 never leave the host's network stack.",
+              explanation: "IPv6 ::1 is the loopback address, like IPv4 127.0.0.1 — not 0.0.0.0, broadcast, or a LAN gateway.",
               objectiveId: "CCNA-1.13",
               difficulty: "easy",
             },
@@ -2952,7 +2954,7 @@ SLAAC lets hosts self-configure from router advertisements; DHCPv6 can still ass
               { id: "d", text: "16" }
               ],
               correctChoiceId: "c",
-              explanation: "A 128-bit IPv6 address is written as 8 groups of 4 hex digits (8 × 16 bits = 128 bits), separated by colons.",
+              explanation: "Write IPv6 as 8 hextets of 4 hex digits (8 x 16 = 128 bits) — not 4, 6, or 16 groups.",
               objectiveId: "CCNA-1.12",
               difficulty: "easy",
             },
@@ -2966,7 +2968,7 @@ SLAAC lets hosts self-configure from router advertisements; DHCPv6 can still ass
               { id: "d", text: "The host requires two separate network interfaces" }
               ],
               correctChoiceId: "b",
-              explanation: "Dual-stack is an IPv6 transition mechanism where a host runs both protocol stacks simultaneously. It selects IPv4 or IPv6 based on the destination address and DNS resolution.",
+              explanation: "Dual-stack runs IPv4 and IPv6 together and picks by destination/DNS — not tunnel-only, loopback-only, or dual NICs required.",
               objectiveId: "CCNA-1.12",
               difficulty: "easy",
             },
@@ -2980,7 +2982,7 @@ SLAAC lets hosts self-configure from router advertisements; DHCPv6 can still ass
               { id: "d", text: "Replaced with 0000" }
               ],
               correctChoiceId: "b",
-              explanation: "Leading zeros within any 16-bit group may be dropped. For example, 2001:0db8:0000:0000:0000:0000:0000:0001 can be shortened to 2001:db8::1.",
+              explanation: "Leading zeros in a hextet may be dropped (2001:0db8 → 2001:db8) — not forbidden, and not a substitute for multiple ::.",
               objectiveId: "CCNA-1.12",
               difficulty: "easy",
             },
@@ -2994,7 +2996,7 @@ SLAAC lets hosts self-configure from router advertisements; DHCPv6 can still ass
               { id: "d", text: "Redirect" }
               ],
               correctChoiceId: "b",
-              explanation: "Router Advertisements (ICMPv6 type 134) are sent periodically by routers (and in response to Router Solicitations) to announce the network prefix, default gateway, and other configuration flags for SLAAC.",
+              explanation: "Router Advertisements (ICMPv6 type 134) announce prefix/gateway for SLAAC — vs Neighbor Solicitation, Echo, or Redirect.",
               objectiveId: "CCNA-1.13",
               difficulty: "medium",
             }],
@@ -3185,7 +3187,7 @@ Air is a shared half-duplex medium, so wireless uses CSMA/CA (listen before talk
                 { id: "d", text: "Wi-Fi 7" }
               ],
               correctChoiceId: "c",
-              explanation: "802.11ax is Wi-Fi 6.",
+              explanation: "802.11ax is marketed as Wi-Fi 6 — not Wi-Fi 4 (802.11n), Wi-Fi 5 (ac), or Wi-Fi 7 (be).",
               objectiveId: "CCNA-1.13",
               difficulty: "medium",
             },
@@ -3199,7 +3201,7 @@ Air is a shared half-duplex medium, so wireless uses CSMA/CA (listen before talk
                 { id: "d", text: "Open auth" }
               ],
               correctChoiceId: "c",
-              explanation: "AES-based WPA2/WPA3 is current best practice.",
+              explanation: "Current best practice is WPA2/WPA3 with AES-CCMP — not WEP, TKIP-only legacy modes, or open networks.",
               objectiveId: "CCNA-1.13",
               difficulty: "hard",
             },
@@ -3213,7 +3215,7 @@ Air is a shared half-duplex medium, so wireless uses CSMA/CA (listen before talk
                 { id: "d", text: "STP root bridge" }
               ],
               correctChoiceId: "b",
-              explanation: "Split-MAC architecture uses a WLC.",
+              explanation: "Split-MAC / lightweight APs get config from a WLC — not from DNS, STP, or DHCP option 43 alone as the architecture.",
               objectiveId: "CCNA-1.13",
               difficulty: "hard",
             },
@@ -3227,7 +3229,7 @@ Air is a shared half-duplex medium, so wireless uses CSMA/CA (listen before talk
                 { id: "d", text: "All channels overlap equally" }
               ],
               correctChoiceId: "a",
-              explanation: "Channels 1, 6, 11 do not overlap in 2.4 GHz.",
+              explanation: "In 2.4 GHz, only channels 1, 6, and 11 are non-overlapping — adjacent channel sets do overlap and interfere.",
               objectiveId: "CCNA-1.13",
               difficulty: "hard",
             },
@@ -3241,7 +3243,7 @@ Air is a shared half-duplex medium, so wireless uses CSMA/CA (listen before talk
                 { id: "d", text: "SSID password" }
               ],
               correctChoiceId: "b",
-              explanation: "BSSID is the MAC of the access point radio.",
+              explanation: "BSSID is the access point radio MAC address — not the SSID string, a VLAN ID, or the Wi-Fi password.",
               objectiveId: "CCNA-1.13",
               difficulty: "hard",
             },
@@ -3255,7 +3257,7 @@ Air is a shared half-duplex medium, so wireless uses CSMA/CA (listen before talk
               { id: "d", text: "160 MHz" }
               ],
               correctChoiceId: "b",
-              explanation: "802.11n introduced channel bonding, allowing 40 MHz channels (combining two adjacent 20 MHz channels) to increase throughput compared to the 20 MHz maximum of older standards.",
+              explanation: "802.11n channel bonding tops out at 40 MHz wide channels — not 80/160 MHz widths from later standards.",
               objectiveId: "CCNA-1.13",
               difficulty: "medium",
             },
@@ -3283,7 +3285,7 @@ Air is a shared half-duplex medium, so wireless uses CSMA/CA (listen before talk
               { id: "d", text: "Open authentication without encryption" }
               ],
               correctChoiceId: "b",
-              explanation: "WPA3 replaces the Pre-Shared Key (PSK) handshake with SAE (Dragonfly handshake), which is resistant to offline dictionary attacks and provides forward secrecy.",
+              explanation: "WPA3 replaces the PSK handshake with SAE (Dragonfly) — not RC4/WEP, TKIP-only, or open authentication.",
               objectiveId: "CCNA-1.13",
               difficulty: "medium",
             },
@@ -3297,7 +3299,7 @@ Air is a shared half-duplex medium, so wireless uses CSMA/CA (listen before talk
               { id: "d", text: "6 GHz only" }
               ],
               correctChoiceId: "b",
-              explanation: "802.11ac (Wi-Fi 5) operates only in the 5 GHz band. 802.11n operates in both 2.4 GHz and 5 GHz. Wi-Fi 6E and Wi-Fi 7 add the 6 GHz band.",
+              explanation: "802.11ac (Wi-Fi 5) is 5 GHz only — not 2.4-only, not mandatory dual-band like n, and not 6 GHz-only (Wi-Fi 6E/7).",
               objectiveId: "CCNA-1.13",
               difficulty: "easy",
             },
@@ -3311,7 +3313,7 @@ Air is a shared half-duplex medium, so wireless uses CSMA/CA (listen before talk
               { id: "d", text: "Define the IP subnet used on the wireless LAN" }
               ],
               correctChoiceId: "b",
-              explanation: "The SSID is the network name broadcast in Beacon frames. Clients use it to identify and connect to a specific wireless network. Multiple APs can share the same SSID to form an Extended Service Set (ESS).",
+              explanation: "SSID is the human-readable network name in beacons — not the BSSID/MAC, cipher suite, or IP subnet.",
               objectiveId: "CCNA-1.13",
               difficulty: "easy",
             },
@@ -3325,7 +3327,7 @@ Air is a shared half-duplex medium, so wireless uses CSMA/CA (listen before talk
               { id: "d", text: "Reducing the preamble length in each frame" }
               ],
               correctChoiceId: "b",
-              explanation: "MIMO uses multiple antennas at both transmitter and receiver to send several spatial data streams simultaneously, multiplying throughput without requiring additional spectrum.",
+              explanation: "MIMO multiplies throughput with spatial streams on multiple antennas — not by raising the band alone or compressing L2.",
               objectiveId: "CCNA-1.13",
               difficulty: "medium",
             },
@@ -3339,7 +3341,7 @@ Air is a shared half-duplex medium, so wireless uses CSMA/CA (listen before talk
               { id: "d", text: "Less interference from other devices" }
               ],
               correctChoiceId: "c",
-              explanation: "Lower-frequency radio waves (2.4 GHz) travel farther and penetrate solid objects better than higher-frequency 5 GHz signals, though at the cost of less available bandwidth and more congestion.",
+              explanation: "2.4 GHz travels farther and penetrates better — vs 5 GHz, which usually offers more clean channels and higher rates.",
               objectiveId: "CCNA-1.13",
               difficulty: "easy",
             },
@@ -3353,7 +3355,7 @@ Air is a shared half-duplex medium, so wireless uses CSMA/CA (listen before talk
               { id: "d", text: "Carrier Assignment — carriers are pre-assigned to each device" }
               ],
               correctChoiceId: "a",
-              explanation: "CSMA/CA (Collision Avoidance) is necessary because wireless NICs cannot simultaneously transmit and listen for collisions (hidden node problem), so they use random back-off timers and optional RTS/CTS to avoid them before transmitting.",
+              explanation: "Wireless uses CSMA/CA (avoid collisions) instead of wired CSMA/CD — radios do not listen for collisions while transmitting.",
               objectiveId: "CCNA-1.13",
               difficulty: "medium",
             }],
@@ -3399,6 +3401,7 @@ Modern switches support cut-through (forwards after reading destination MAC, low
 Microsegmentation with switches eliminates collision domains on each port. Broadcast storms can still occur within a VLAN—use storm control and proper STP. Port security can limit MAC addresses learned on access ports.
 
 Show commands: show mac address-table, show interfaces status, show spanning-tree. Clear the MAC table with clear mac address-table dynamic when troubleshooting sticky entries.`,
+            experience: SWITCHING_EXPERIENCE,
           },
           keyFacts: [
             "Switches forward based on destination MAC addresses",
@@ -3406,21 +3409,20 @@ Show commands: show mac address-table, show interfaces status, show spanning-tre
             "Each switched full-duplex port is its own collision domain",
             "Unknown destination MACs cause flooding to all ports in the VLAN",
             "Store-and-forward checks FCS; cut-through forwards faster with less checking",
-            "Access ports carry one VLAN; trunk ports carry multiple VLANs",
+            "Access ports typically carry one untagged VLAN (trunk detail comes next)",
           ],
           commonMistakes: [
             "Assuming switches break up broadcast domains without VLANs",
             "Confusing MAC address table aging with ARP cache timeouts",
             "Forgetting that unknown unicast frames are flooded out all ports except ingress",
             "Mixing up collision domain boundaries on switched full-duplex ports",
-            "Configuring speed/duplex mismatch causing intermittent connectivity",
+            "Confusing collision domains with broadcast domains on a switch",
           ],
           examTraps: [
             "How a switch learns MAC addresses—source MAC on received frames",
             "Destination unknown unicast flooding behavior",
             "Store-and-forward vs cut-through switching latency trade-offs",
-            "Port security questions mixed into basic switching scenarios",
-            "CAM table overflow attacks beyond CCNA but MAC learning process is tested",
+            "Collision vs broadcast domain on full-duplex switched ports",
           ],
           quiz: [
             {
@@ -3547,7 +3549,7 @@ Show commands: show mac address-table, show interfaces status, show spanning-tre
                 { id: "d", text: "TCP port" }
               ],
               correctChoiceId: "b",
-              explanation: "Cut-through starts forwarding before entire frame arrives.",
+              explanation: "Cut-through starts forwarding after the destination MAC — vs store-and-forward, which waits for the whole frame/FCS.",
               objectiveId: "CCNA-2.4",
               difficulty: "medium",
             },
@@ -3561,7 +3563,7 @@ Show commands: show mac address-table, show interfaces status, show spanning-tre
                 { id: "d", text: "DNS failure" }
               ],
               correctChoiceId: "a",
-              explanation: "If MAC table fills, unknown unicast flooding increases.",
+              explanation: "When the MAC/CAM table fills, unknown unicast flooding rises — not VLAN deletes, OSPF flaps, or DNS issues.",
               objectiveId: "CCNA-2.3",
               difficulty: "hard",
             },
@@ -3575,7 +3577,7 @@ Show commands: show mac address-table, show interfaces status, show spanning-tre
                 { id: "d", text: "TTL exceeded" }
               ],
               correctChoiceId: "a",
-              explanation: "Half/full duplex mismatch causes collisions/errors.",
+              explanation: "Duplex mismatch causes late collisions and errors — not STP topology changes, APIPA, or TTL expiry as the root cause.",
               objectiveId: "CCNA-2.4",
               difficulty: "hard",
             },
@@ -3589,7 +3591,7 @@ Show commands: show mac address-table, show interfaces status, show spanning-tre
                 { id: "d", text: "Patch panel" }
               ],
               correctChoiceId: "b",
-              explanation: "Routing between VLANs requires a Layer 3 device.",
+              explanation: "Inter-VLAN traffic needs a Layer 3 device (router/SVI) — a pure L2 switch or hub does not route between VLANs.",
               objectiveId: "CCNA-2.3",
               difficulty: "hard",
             },
@@ -3603,7 +3605,7 @@ Show commands: show mac address-table, show interfaces status, show spanning-tre
                 { id: "d", text: "24 hours always" }
               ],
               correctChoiceId: "a",
-              explanation: "Aging timers vary; Cisco default often 300s for dynamic entries.",
+              explanation: "Dynamic MAC entries age (Cisco default often 300s) — they do not last forever, and not typically 1 second or 24h always.",
               objectiveId: "CCNA-2.4",
               difficulty: "hard",
             },
@@ -3617,7 +3619,7 @@ Show commands: show mac address-table, show interfaces status, show spanning-tre
                 { id: "d", text: "Static, dynamic, floating" }
               ],
               correctChoiceId: "a",
-              explanation: "Port security can protect, restrict, or shutdown on violation.",
+              explanation: "Port-security violations use protect, restrict, or shutdown — not WPA settings or floating static routes.",
               objectiveId: "CCNA-2.3",
               difficulty: "hard",
             }
@@ -3640,6 +3642,7 @@ VLANs logically segment a switch into separate broadcast domains. VLAN 1 is defa
 Inter-VLAN routing requires a router-on-a-stick (subinterfaces) or multilayer switch SVI (interface vlan 10). Each SVI needs an IP address and no shutdown. show vlan brief lists VLANs and ports.
 
 Voice VLANs and data VLANs can be assigned to the same port for IP phones with PCs behind them. Native VLAN considerations apply on trunks—covered in trunking topic.`,
+            experience: VLANS_EXPERIENCE,
           },
           keyFacts: [
             "VLANs create separate broadcast domains on a switch",
@@ -3647,7 +3650,7 @@ Voice VLANs and data VLANs can be assigned to the same port for IP phones with P
             "Access ports belong to a single VLAN",
             "Inter-VLAN routing requires a Layer 3 device",
             "SVI is a virtual routed interface for a VLAN on a multilayer switch",
-            "802.1Q tags carry VLAN ID on trunk links",
+            "VLAN 1 is the Cisco default; move user data off it when practical",
           ],
           guidedExample: {
             title: "Create Sales and Engineering VLANs with Inter-VLAN Routing",
@@ -3665,14 +3668,14 @@ Voice VLANs and data VLANs can be assigned to the same port for IP phones with P
             "Configuring SVIs without issuing no shutdown, leaving gateways down",
             "Expecting hosts in different VLANs to communicate without a Layer 3 device",
             "Using VLAN 1 for user data despite security best practice to avoid the default VLAN",
-            "Mismatching VLAN IDs on trunk allowed lists between switches",
+            "Creating VLANs without documenting IDs consistently across switches",
           ],
           examTraps: [
             "Questions that assume VLANs replace routing—different VLANs still need L3 for cross-VLAN traffic",
             "Trick answers listing VLAN 0 or 4095 as valid standard VLAN IDs",
             "Confusing SVI (Layer 3 VLAN interface) with access port VLAN assignment",
             "Scenarios where ping works within a VLAN but fails across VLANs due to missing gateway or SVI",
-            "Voice VLAN questions mixing data VLAN, voice VLAN, and trunk requirements on one port",
+            "Voice VLAN light questions—data VLAN vs voice VLAN on the same access port",
           ],
           realWorldScenario: "A retail chain is segmenting store networks so POS terminals, back-office PCs, and guest Wi-Fi are isolated. You create VLAN 10 for POS, VLAN 20 for staff, and VLAN 30 for guests on access-layer switches, then configure SVIs on the distribution switch as default gateways. When a cashier cannot reach the inventory server in VLAN 20, you verify the PC is in VLAN 10, confirm the SVI is up, and check that inter-VLAN routing is enabled.",
           estimatedStudyMinutes: 35,
@@ -3803,7 +3806,7 @@ Voice VLANs and data VLANs can be assigned to the same port for IP phones with P
                 { id: "d", text: "VLAN 4094" }
               ],
               correctChoiceId: "b",
-              explanation: "VLAN 1 is the default VLAN.",
+              explanation: "VLAN 1 is the factory-default VLAN on Cisco switches — not VLAN 0, VLAN 10, or VLAN 4094 by default.",
               objectiveId: "CCNA-2.6",
               difficulty: "medium",
             },
@@ -3817,7 +3820,7 @@ Voice VLANs and data VLANs can be assigned to the same port for IP phones with P
                 { id: "d", text: "65535" }
               ],
               correctChoiceId: "c",
-              explanation: "Standard VLAN range 1–4094.",
+              explanation: "Valid VLAN IDs run 1–4094 — not a 256-only ceiling, not stopping at 1005 as the absolute max, and not 65535.",
               objectiveId: "CCNA-2.5",
               difficulty: "medium",
             },
@@ -3831,7 +3834,7 @@ Voice VLANs and data VLANs can be assigned to the same port for IP phones with P
                 { id: "d", text: "Segmented Virtual IP" }
               ],
               correctChoiceId: "a",
-              explanation: "SVI is a Layer 3 VLAN interface on multilayer switches.",
+              explanation: "An SVI is a Switched Virtual Interface — a Layer 3 VLAN interface on a multilayer switch, not an access port or trunk by itself.",
               objectiveId: "CCNA-2.6",
               difficulty: "hard",
             },
@@ -3845,7 +3848,7 @@ Voice VLANs and data VLANs can be assigned to the same port for IP phones with P
                 { id: "d", text: "Use APIPA" }
               ],
               correctChoiceId: "b",
-              explanation: "Different VLANs need L3 routing to communicate.",
+              explanation: "Hosts in different VLANs have no L2 path between them — they need Layer 3 routing instead of staying on one broadcast domain.",
               objectiveId: "CCNA-2.5",
               difficulty: "hard",
             },
@@ -3859,7 +3862,7 @@ Voice VLANs and data VLANs can be assigned to the same port for IP phones with P
                 { id: "d", text: "Dot1x only" }
               ],
               correctChoiceId: "b",
-              explanation: "Access mode assigns one untagged VLAN.",
+              explanation: "Access mode assigns one untagged data VLAN — not trunk (multi-VLAN), routed-port only, or 802.1X config alone.",
               objectiveId: "CCNA-2.6",
               difficulty: "hard",
             },
@@ -3873,7 +3876,7 @@ Voice VLANs and data VLANs can be assigned to the same port for IP phones with P
                 { id: "d", text: "NAT overload" }
               ],
               correctChoiceId: "a",
-              explanation: "Voice VLAN tags phone traffic separately from PC data.",
+              explanation: "A voice VLAN tags phone frames separately from the PC's data VLAN — not an SSID, OSPF area, or NAT pool.",
               objectiveId: "CCNA-2.5",
               difficulty: "hard",
             },
@@ -3887,7 +3890,7 @@ Voice VLANs and data VLANs can be assigned to the same port for IP phones with P
                 { id: "d", text: "vtp domain Guest" }
               ],
               correctChoiceId: "a",
-              explanation: "vlan <id> and name <label> creates and names a VLAN.",
+              explanation: "Create/name with vlan <id> then name <label> — not switchport mode or VTP domain commands as the VLAN create step.",
               objectiveId: "CCNA-2.6",
               difficulty: "hard",
             },
@@ -3901,7 +3904,7 @@ Voice VLANs and data VLANs can be assigned to the same port for IP phones with P
                 { id: "d", text: "DHCP snooping" }
               ],
               correctChoiceId: "a",
-              explanation: "SVIs provide Layer 3 gateways for each VLAN.",
+              explanation: "SVIs act as Layer 3 gateways per VLAN for inter-VLAN routing — not access-only L2, NAT, or DHCP snooping alone.",
               objectiveId: "CCNA-2.5",
               difficulty: "hard",
             }
@@ -3976,6 +3979,7 @@ Dynamic Trunking Protocol (DTP) can negotiate trunk formation between Cisco devi
 Dynamic Trunking Protocol (DTP) can negotiate trunk/access—best practice sets explicit switchport mode trunk and disables DTP with switchport nonegotiate on security-sensitive designs. show interfaces trunk verifies mode, native VLAN, and allowed VLANs.
 
 Only trunks should exist between switches carrying multiple VLANs; access ports connect end devices.`,
+            experience: TRUNKING_EXPERIENCE,
           },
           keyFacts: [
             "802.1Q adds a 4-byte VLAN tag to Ethernet frames on trunks",
@@ -3983,20 +3987,20 @@ Only trunks should exist between switches carrying multiple VLANs; access ports 
             "Native VLAN frames may traverse untagged on Cisco trunks",
             "Native VLAN must match on both ends of a trunk",
             "switchport trunk allowed vlan restricts which VLANs cross the link",
-            "DTP negotiates trunk status on Cisco switches (often disabled in secure designs)",
+            "Prefer explicit switchport mode trunk; DTP is optional and often disabled",
           ],
           commonMistakes: [
             "Native VLAN mismatch between trunk ends causing untagged traffic leaks",
             "Allowing all VLANs on trunks instead of pruning to required VLANs only",
             "Configuring access mode on switch-to-switch links that need trunks",
-            "Forgetting that 802.1Q adds 4 bytes, slightly reducing effective MTU",
             "Assuming DTP will always negotiate trunk—explicit mode is safer",
+            "Forgetting to verify with show interfaces trunk after changes",
           ],
           examTraps: [
             "Native VLAN untagged behavior on Cisco 802.1Q trunks",
             "switchport trunk allowed vlan syntax and default allow-all behavior",
             "Router-on-a-stick subinterface encapsulation dot1Q <vlan>",
-            "DTP desirable/auto/nonegotiate mode combinations",
+            "switchport nonegotiate to stop DTP on an explicit trunk",
             "802.1Q vs ISL—CCNA focuses on 802.1Q as the standard",
           ],
           quiz: [
@@ -4124,7 +4128,7 @@ Only trunks should exist between switches carrying multiple VLANs; access ports 
                 { id: "d", text: "SSID" }
               ],
               correctChoiceId: "a",
-              explanation: "Tag carries VLAN ID (12 bits) and priority fields.",
+              explanation: "An 802.1Q tag carries the 12-bit VLAN ID (and CoS priority) — not IP TOS alone, not a MAC rewrite, not an SSID.",
               objectiveId: "CCNA-2.7",
               difficulty: "medium",
             },
@@ -4138,7 +4142,7 @@ Only trunks should exist between switches carrying multiple VLANs; access ports 
                 { id: "d", text: "DHCP block" }
               ],
               correctChoiceId: "b",
-              explanation: "Native VLAN mismatch is a common trunk misconfiguration.",
+              explanation: "Native VLAN mismatch sends untagged frames into the wrong VLAN — it does not auto-shutdown the trunk by itself.",
               objectiveId: "CCNA-2.6",
               difficulty: "hard",
             },
@@ -4152,7 +4156,7 @@ Only trunks should exist between switches carrying multiple VLANs; access ports 
                 { id: "d", text: "Sets SSID" }
               ],
               correctChoiceId: "a",
-              explanation: "Explicit trunk mode is recommended.",
+              explanation: "Prefer explicit switchport mode trunk — vs access mode or depending on DTP negotiation alone.",
               objectiveId: "CCNA-2.7",
               difficulty: "hard",
             },
@@ -4166,7 +4170,7 @@ Only trunks should exist between switches carrying multiple VLANs; access ports 
                 { id: "d", text: "Set OSPF cost" }
               ],
               correctChoiceId: "a",
-              explanation: "Prune VLANs not needed across the link.",
+              explanation: "Allowed-VLAN lists prune which VLANs cross the trunk — restrict by VLAN ID, not by IP ACL, WPA, or OSPF.",
               objectiveId: "CCNA-2.6",
               difficulty: "hard",
             },
@@ -4180,7 +4184,7 @@ Only trunks should exist between switches carrying multiple VLANs; access ports 
                 { id: "d", text: "Default Trunk Port" }
               ],
               correctChoiceId: "a",
-              explanation: "DTP negotiates trunk/access between Cisco devices.",
+              explanation: "DTP (Dynamic Trunking Protocol) negotiates trunk vs access between Cisco peers — it is not a routing or wireless protocol.",
               objectiveId: "CCNA-2.7",
               difficulty: "hard",
             },
@@ -4194,7 +4198,7 @@ Only trunks should exist between switches carrying multiple VLANs; access ports 
                 { id: "d", text: "None" }
               ],
               correctChoiceId: "a",
-              explanation: "Native VLAN traffic is untagged on 802.1Q trunks.",
+              explanation: "Native VLAN traffic is untagged on 802.1Q trunks — not every frame untagged, and not 'no untagged frames ever.'",
               objectiveId: "CCNA-2.6",
               difficulty: "hard",
             }
@@ -4216,7 +4220,8 @@ Spanning Tree Protocol (802.1D and RSTP 802.1w) prevents Layer 2 loops by blocki
 
 Port states in classic STP: blocking, listening, learning, forwarding. PortFast on access ports skips delays but must never face another switch. BPDU Guard disables ports receiving BPDUs on PortFast-enabled access ports.
 
-EtherChannel bundles links for bandwidth and redundancy—STP treats the bundle as one logical link. Verify with show spanning-tree vlan 1 and show spanning-tree root.`,
+EtherChannel bundles are a later depth topic—STP treats a channel as one logical link when present. Verify with show spanning-tree vlan 1 and show spanning-tree root.`,
+            experience: STP_EXPERIENCE,
           },
           keyFacts: [
             "STP prevents Layer 2 loops by blocking redundant paths",
@@ -4224,21 +4229,21 @@ EtherChannel bundles links for bandwidth and redundancy—STP treats the bundle 
             "Root port is the best path to the root bridge on non-root switches",
             "802.1w Rapid STP converges faster than classic 802.1D",
             "PortFast allows immediate forwarding on access ports connected to hosts",
-            "BPDU Guard protects against connecting unauthorized switches",
+            "BPDU Guard protects PortFast edge ports from rogue switches",
           ],
           commonMistakes: [
             "Disabling STP on switches with redundant links, causing loops",
             "Confusing root bridge election (lowest bridge ID) with lowest MAC always winning",
             "Forgetting that blocked ports still receive BPDUs",
-            "Mixing up port roles: root, designated, alternate/alternate blocked",
-            "Ignoring port priority and cost when predicting root port selection",
+            "Mixing up port roles: root, designated, alternate/blocked",
+            "Enabling PortFast on trunks toward other switches",
           ],
           examTraps: [
             "Root bridge election with priority + MAC tiebreak",
             "Which port is blocked in a triangle topology with given costs",
             "RSTP vs legacy STP convergence terminology (802.1w)",
-            "BPDU guard and root guard purpose on access vs trunk ports",
-            "PVST+ per-VLAN spanning tree vs single spanning tree",
+            "PortFast + BPDU Guard on host access ports",
+            "Blocked ports listen for BPDUs but do not forward user traffic",
           ],
           quiz: [
             {
@@ -4365,7 +4370,7 @@ EtherChannel bundles links for bandwidth and redundancy—STP treats the bundle 
                 { id: "d", text: "100 only" }
               ],
               correctChoiceId: "a",
-              explanation: "Bridge priority changes in 4096 steps on Cisco.",
+              explanation: "Cisco bridge priority increments in steps of 4096 — not by 1, not free-form 65535 jumps as steps, not by 100.",
               objectiveId: "CCNA-2.9",
               difficulty: "medium",
             },
@@ -4379,7 +4384,7 @@ EtherChannel bundles links for bandwidth and redundancy—STP treats the bundle 
                 { id: "d", text: "Trunk with native VLAN 1 only" }
               ],
               correctChoiceId: "a",
-              explanation: "Each non-root switch has one root port toward root.",
+              explanation: "Each non-root switch has exactly one root port (best path toward the root) — not a blocked port role as RP.",
               objectiveId: "CCNA-2.8",
               difficulty: "hard",
             },
@@ -4393,7 +4398,7 @@ EtherChannel bundles links for bandwidth and redundancy—STP treats the bundle 
                 { id: "d", text: "WAN serial links" }
               ],
               correctChoiceId: "a",
-              explanation: "PortFast skips STP timing on edge access ports.",
+              explanation: "PortFast skips Listening/Learning delays on edge access ports — not on core trunks or WAN-facing links.",
               objectiveId: "CCNA-2.9",
               difficulty: "hard",
             },
@@ -4407,7 +4412,7 @@ EtherChannel bundles links for bandwidth and redundancy—STP treats the bundle 
                 { id: "d", text: "DNS NXDOMAIN" }
               ],
               correctChoiceId: "a",
-              explanation: "Loops cause excessive broadcasts and instability.",
+              explanation: "Layer 2 loops cause broadcast storms and MAC instability — not TTL expiry, APIPA, or DNS failure as the loop symptom.",
               objectiveId: "CCNA-2.8",
               difficulty: "hard",
             },
@@ -4421,7 +4426,7 @@ EtherChannel bundles links for bandwidth and redundancy—STP treats the bundle 
                 { id: "d", text: "VTP" }
               ],
               correctChoiceId: "a",
-              explanation: "802.1w is Rapid STP.",
+              explanation: "IEEE 802.1w defines Rapid STP (RSTP) — not WEP encryption, Wi-Fi 802.11, or VTP domain control.",
               objectiveId: "CCNA-2.9",
               difficulty: "hard",
             },
@@ -4435,7 +4440,7 @@ EtherChannel bundles links for bandwidth and redundancy—STP treats the bundle 
                 { id: "d", text: "Same as alternate port" }
               ],
               correctChoiceId: "a",
-              explanation: "One designated port per segment forwards BPDUs/data.",
+              explanation: "One designated port per segment forwards BPDUs/data — it is not always blocked, and not the alternate role.",
               objectiveId: "CCNA-2.8",
               difficulty: "hard",
             }
@@ -4614,7 +4619,7 @@ When multiple routes exist to the same prefix, compare administrative distance f
                 { id: "d", text: "1" }
               ],
               correctChoiceId: "b",
-              explanation: "OSPF internal routes AD 110.",
+              explanation: "OSPF internal routes have administrative distance 110 — vs EIGRP 90, RIP 120, and connected 0/static 1.",
               objectiveId: "CCNA-3.2",
               difficulty: "medium",
             },
@@ -4628,7 +4633,7 @@ When multiple routes exist to the same prefix, compare administrative distance f
                 { id: "d", text: "170" }
               ],
               correctChoiceId: "a",
-              explanation: "Internal EIGRP AD is 90.",
+              explanation: "Internal EIGRP AD is 90 — lower than OSPF 110 and RIP 120, so EIGRP wins when multiple protocols learn the same prefix.",
               objectiveId: "CCNA-3.1",
               difficulty: "hard",
             },
@@ -4642,7 +4647,7 @@ When multiple routes exist to the same prefix, compare administrative distance f
                 { id: "d", text: "APIPA" }
               ],
               correctChoiceId: "b",
-              explanation: "OSPF is link-state.",
+              explanation: "OSPF is link-state — unlike RIP's distance-vector approach or static routes with no neighbor discovery.",
               objectiveId: "CCNA-3.2",
               difficulty: "hard",
             },
@@ -4656,7 +4661,7 @@ When multiple routes exist to the same prefix, compare administrative distance f
                 { id: "d", text: "Route Injection Block" }
               ],
               correctChoiceId: "a",
-              explanation: "RIB is the routing table used to build FIB.",
+              explanation: "The RIB is the routing table used to build the FIB — not a bridge table, DHCP binding table, or ARP cache.",
               objectiveId: "CCNA-3.1",
               difficulty: "hard",
             },
@@ -4670,7 +4675,7 @@ When multiple routes exist to the same prefix, compare administrative distance f
                 { id: "d", text: "Requires NAT" }
               ],
               correctChoiceId: "a",
-              explanation: "ECMP forwards across equal-metric paths.",
+              explanation: "ECMP load-shares across equal-metric paths — not single-path static-only when multiple equal costs exist.",
               objectiveId: "CCNA-3.2",
               difficulty: "hard",
             },
@@ -4684,7 +4689,7 @@ When multiple routes exist to the same prefix, compare administrative distance f
                 { id: "d", text: "VLAN tag assignment on host" }
               ],
               correctChoiceId: "a",
-              explanation: "Routers route based on destination IP.",
+              explanation: "Routers forward based on destination IP lookup — not destination MAC on hosts, SSID, or VLAN ID alone.",
               objectiveId: "CCNA-3.1",
               difficulty: "hard",
             }
@@ -4871,7 +4876,7 @@ IPv6 static routes use ipv6 route prefix/length next-hop. Practice both IPv4 and
                 { id: "d", text: "Assign APIPA" }
               ],
               correctChoiceId: "a",
-              explanation: "Router may need a second lookup to reach next-hop.",
+              explanation: "A recursive static needs a second lookup to resolve the next-hop IP via another route — not a direct connected hop only.",
               objectiveId: "CCNA-3.4",
               difficulty: "medium",
             },
@@ -4885,7 +4890,7 @@ IPv6 static routes use ipv6 route prefix/length next-hop. Practice both IPv4 and
                 { id: "d", text: "shutdown route" }
               ],
               correctChoiceId: "a",
-              explanation: "Negate with no ip route matching statement.",
+              explanation: "Remove a static with no ip route matching the same prefix/next-hop — not delete vlan, clear arp, or shutdown alone.",
               objectiveId: "CCNA-3.3",
               difficulty: "hard",
             },
@@ -4899,7 +4904,7 @@ IPv6 static routes use ipv6 route prefix/length next-hop. Practice both IPv4 and
                 { id: "d", text: "APIPA" }
               ],
               correctChoiceId: "a",
-              explanation: "Connected routes have AD 0 and win over static.",
+              explanation: "Connected routes (AD 0) beat static routes (AD 1) for the same prefix — connected always wins preference.",
               objectiveId: "CCNA-3.4",
               difficulty: "hard",
             },
@@ -4913,7 +4918,7 @@ IPv6 static routes use ipv6 route prefix/length next-hop. Practice both IPv4 and
                 { id: "d", text: "MAC address" }
               ],
               correctChoiceId: "a",
-              explanation: "Point-to-point links often use exit interface.",
+              explanation: "On point-to-point links you often specify an exit interface (or next-hop) — not an SSID, VLAN name, or MAC.",
               objectiveId: "CCNA-3.3",
               difficulty: "hard",
             },
@@ -4927,7 +4932,7 @@ IPv6 static routes use ipv6 route prefix/length next-hop. Practice both IPv4 and
                 { id: "d", text: "VTP domain" }
               ],
               correctChoiceId: "a",
-              explanation: "0.0.0.0/0 is default route.",
+              explanation: "0.0.0.0/0 is the default route (gateway of last resort) — used when no more-specific prefix matches.",
               objectiveId: "CCNA-3.4",
               difficulty: "hard",
             },
@@ -4941,7 +4946,7 @@ IPv6 static routes use ipv6 route prefix/length next-hop. Practice both IPv4 and
                 { id: "d", text: "DHCPv6 server" }
               ],
               correctChoiceId: "a",
-              explanation: "ipv6 route syntax for static IPv6 routing.",
+              explanation: "Use ipv6 route for IPv6 statics — not NAT, OSPFv3 adjacency commands, or DHCPv6 for static forwarding.",
               objectiveId: "CCNA-3.3",
               difficulty: "hard",
             }
@@ -5154,7 +5159,7 @@ Enable with router ospf 1, network statements or interface ip ospf commands. Ver
                 { id: "d", text: "SSID" }
               ],
               correctChoiceId: "a",
-              explanation: "OSPF uses cost based on bandwidth.",
+              explanation: "OSPF metric is interface cost (from bandwidth) — not hop count, delay-only scoring, or SSID-based metrics.",
               objectiveId: "CCNA-3.6",
               difficulty: "medium",
             },
@@ -5168,7 +5173,7 @@ Enable with router ospf 1, network statements or interface ip ospf commands. Ver
                 { id: "d", text: "VLAN 1" }
               ],
               correctChoiceId: "a",
-              explanation: "Area 0 is the OSPF backbone.",
+              explanation: "Area 0 is the OSPF backbone; non-backbone areas attach through it — not optional decorative numbering.",
               objectiveId: "CCNA-3.5",
               difficulty: "medium",
             },
@@ -5182,7 +5187,7 @@ Enable with router ospf 1, network statements or interface ip ospf commands. Ver
                 { id: "d", text: "DNS name" }
               ],
               correctChoiceId: "a",
-              explanation: "Manual router-id wins if configured.",
+              explanation: "A manually configured router-id wins over highest-IP selection — configure RID when you want a stable ID.",
               objectiveId: "CCNA-3.6",
               difficulty: "hard",
             },
@@ -5196,7 +5201,7 @@ Enable with router ospf 1, network statements or interface ip ospf commands. Ver
                 { id: "d", text: "APIPA mode" }
               ],
               correctChoiceId: "a",
-              explanation: "Full state indicates complete adjacency.",
+              explanation: "OSPF Full means LSDB is synced and adjacency is complete — not ExStart alone, and not a no-hello state.",
               objectiveId: "CCNA-3.5",
               difficulty: "hard",
             },
@@ -5210,7 +5215,7 @@ Enable with router ospf 1, network statements or interface ip ospf commands. Ver
                 { id: "d", text: "NAT translation" }
               ],
               correctChoiceId: "a",
-              explanation: "Hellos detect neighbors on links.",
+              explanation: "OSPF Hellos discover and keep neighbors alive on a link — they do not encrypt payloads or perform NAT.",
               objectiveId: "CCNA-3.6",
               difficulty: "hard",
             },
@@ -5224,7 +5229,7 @@ Enable with router ospf 1, network statements or interface ip ospf commands. Ver
                 { id: "d", text: "DHCP relay" }
               ],
               correctChoiceId: "a",
-              explanation: "DR/BDR reduce adjacency count on LANs.",
+              explanation: "DR/BDR election on multi-access LANs reduces adjacency count — not STP root, VTP server, or DHCP relay roles.",
               objectiveId: "CCNA-3.5",
               difficulty: "hard",
             },
@@ -5238,7 +5243,7 @@ Enable with router ospf 1, network statements or interface ip ospf commands. Ver
                 { id: "d", text: "239.255.255.255" }
               ],
               correctChoiceId: "a",
-              explanation: "224.0.0.5 is AllSPFRouters.",
+              explanation: "224.0.0.5 is AllSPFRouters — not 224.0.0.1 all-hosts alone, not limited broadcast, not 239.x as the OSPF standard.",
               objectiveId: "CCNA-3.6",
               difficulty: "hard",
             },
@@ -5252,7 +5257,7 @@ Enable with router ospf 1, network statements or interface ip ospf commands. Ver
                 { id: "d", text: "255.255.255.255" }
               ],
               correctChoiceId: "a",
-              explanation: "Wildcard 0.255.255.255 matches the /8—inverse of 255.0.0.0.",
+              explanation: "Wildcard 0.255.255.255 matches the /8 as the inverse of mask 255.0.0.0 — do not paste the subnet mask itself into the network statement.",
               objectiveId: "CCNA-3.5",
               difficulty: "hard",
             }
@@ -5469,7 +5474,7 @@ NAT breaks end-to-end connectivity for some protocols but conserves IPv4 address
                 { id: "d", text: "MAC only" }
               ],
               correctChoiceId: "a",
-              explanation: "PAT multiplexes using L4 ports.",
+              explanation: "PAT/overload multiplexes many inside hosts by tracking L4 ports — not by VLAN, SSID, or MAC alone.",
               objectiveId: "CCNA-3.8",
               difficulty: "medium",
             },
@@ -5483,7 +5488,7 @@ NAT breaks end-to-end connectivity for some protocols but conserves IPv4 address
                 { id: "d", text: "Console port" }
               ],
               correctChoiceId: "a",
-              explanation: "Mark inside on private-side interfaces.",
+              explanation: "Mark private-facing interfaces with ip nat inside — do not put only outside on the LAN/private side.",
               objectiveId: "CCNA-3.7",
               difficulty: "hard",
             },
@@ -5497,7 +5502,7 @@ NAT breaks end-to-end connectivity for some protocols but conserves IPv4 address
                 { id: "d", text: "VLAN to subnet" }
               ],
               correctChoiceId: "a",
-              explanation: "Static NAT is 1:1 fixed mapping.",
+              explanation: "Static NAT is a fixed one-to-one inside-to-outside mapping — not automatic many-to-many port overload.",
               objectiveId: "CCNA-3.8",
               difficulty: "hard",
             },
@@ -5511,7 +5516,7 @@ NAT breaks end-to-end connectivity for some protocols but conserves IPv4 address
                 { id: "d", text: "APIPA" }
               ],
               correctChoiceId: "a",
-              explanation: "Outside global is public routable representation.",
+              explanation: "Outside global is the public, Internet-visible address after translation — not the private inside local.",
               objectiveId: "CCNA-3.7",
               difficulty: "hard",
             },
@@ -5525,7 +5530,7 @@ NAT breaks end-to-end connectivity for some protocols but conserves IPv4 address
                 { id: "d", text: "STP BPDUs" }
               ],
               correctChoiceId: "a",
-              explanation: "PAT allows many hosts behind one public IP.",
+              explanation: "PAT lets many hosts share one public IP via ports — that is how overload conserves scarce IPv4 addresses.",
               objectiveId: "CCNA-3.8",
               difficulty: "hard",
             },
@@ -5539,7 +5544,7 @@ NAT breaks end-to-end connectivity for some protocols but conserves IPv4 address
                 { id: "d", text: "802.1X" }
               ],
               correctChoiceId: "a",
-              explanation: "NAT can interfere with IPsec unless passthrough/ALG used.",
+              explanation: "NAT can break IPsec unless NAT-T/passthrough is used — unrelated to STP, VTP, or 802.1X port control.",
               objectiveId: "CCNA-3.7",
               difficulty: "hard",
             }
@@ -5732,7 +5737,7 @@ DHCPv6 uses similar concepts with ICMPv6 and DHCPv6 messages for IPv6 environmen
                 { id: "d", text: "Request" }
               ],
               correctChoiceId: "a",
-              explanation: "Client begins with DHCP Discover broadcast.",
+              explanation: "A DHCP client begins with Discover (broadcast) — not Offer, Request, or Ack as the first message sent.",
               objectiveId: "CCNA-4.2",
               difficulty: "medium",
             },
@@ -5746,7 +5751,7 @@ DHCPv6 uses similar concepts with ICMPv6 and DHCPv6 messages for IPv6 environmen
                 { id: "d", text: "HTTPS" }
               ],
               correctChoiceId: "a",
-              explanation: "Helper address relays DHCP to remote server.",
+              explanation: "ip helper-address relays DHCP/BootP to a server on another subnet — not OSPF, STP, or HTTPS helpers.",
               objectiveId: "CCNA-4.1",
               difficulty: "hard",
             },
@@ -5760,7 +5765,7 @@ DHCPv6 uses similar concepts with ICMPv6 and DHCPv6 messages for IPv6 environmen
                 { id: "d", text: "VLAN ID" }
               ],
               correctChoiceId: "a",
-              explanation: "Option 6 lists DNS server IPs.",
+              explanation: "DHCP option 6 lists DNS server IP addresses — not the default gateway (option 3), lease time, or VLAN ID.",
               objectiveId: "CCNA-4.2",
               difficulty: "hard",
             },
@@ -5774,7 +5779,7 @@ DHCPv6 uses similar concepts with ICMPv6 and DHCPv6 messages for IPv6 environmen
                 { id: "d", text: "Trunk mismatch" }
               ],
               correctChoiceId: "a",
-              explanation: "169.254.x.x means no DHCP lease obtained.",
+              explanation: "Seeing 169.254.x.x APIPA means no DHCP lease was obtained — the client could not reach a DHCP server.",
               objectiveId: "CCNA-4.1",
               difficulty: "hard",
             },
@@ -5788,7 +5793,7 @@ DHCPv6 uses similar concepts with ICMPv6 and DHCPv6 messages for IPv6 environmen
                 { id: "d", text: "ARP reply" }
               ],
               correctChoiceId: "a",
-              explanation: "ACK finalizes the lease offer.",
+              explanation: "DHCP ACK is the final lease confirmation — not Discover, and not IPv6 RA or ARP as the confirm step.",
               objectiveId: "CCNA-4.2",
               difficulty: "hard",
             },
@@ -5802,7 +5807,7 @@ DHCPv6 uses similar concepts with ICMPv6 and DHCPv6 messages for IPv6 environmen
                 { id: "d", text: "Loopback interface" }
               ],
               correctChoiceId: "a",
-              explanation: "Trusted ports allow server responses; untrusted block rogue offers.",
+              explanation: "DHCP snooping trusts server-facing ports and treats access ports as untrusted by default — do not trust every access port.",
               objectiveId: "CCNA-4.1",
               difficulty: "hard",
             }
@@ -6000,7 +6005,7 @@ DNS security topics include DNSSEC (signing) and filtering malicious domains—h
                 { id: "d", text: "Root hint" }
               ],
               correctChoiceId: "a",
-              explanation: "CNAME maps alias to canonical name.",
+              explanation: "CNAME maps an alias to a canonical name — not an AAAA address, MX mail exchange, or the zone root alone.",
               objectiveId: "CCNA-4.4",
               difficulty: "medium",
             },
@@ -6014,7 +6019,7 @@ DNS security topics include DNSSEC (signing) and filtering malicious domains—h
                 { id: "d", text: "Runs STP" }
               ],
               correctChoiceId: "a",
-              explanation: "Authoritative servers host zone data.",
+              explanation: "Authoritative servers host the zone's real records — unlike cache-only resolvers that only remember answers.",
               objectiveId: "CCNA-4.3",
               difficulty: "hard",
             },
@@ -6028,7 +6033,7 @@ DNS security topics include DNSSEC (signing) and filtering malicious domains—h
                 { id: "d", text: "22" }
               ],
               correctChoiceId: "a",
-              explanation: "Standard DNS queries use UDP/53.",
+              explanation: "Standard client DNS queries use UDP port 53 — not 443 (HTTPS), 67 (DHCP), or 22 (SSH).",
               objectiveId: "CCNA-4.4",
               difficulty: "hard",
             },
@@ -6042,7 +6047,7 @@ DNS security topics include DNSSEC (signing) and filtering malicious domains—h
                 { id: "d", text: "Canonical alias" }
               ],
               correctChoiceId: "a",
-              explanation: "AAAA maps name to IPv6.",
+              explanation: "AAAA records map a hostname to an IPv6 address — not IPv4 (A), mail exchangers (MX), or aliases (CNAME).",
               objectiveId: "CCNA-4.3",
               difficulty: "hard",
             },
@@ -6056,7 +6061,7 @@ DNS security topics include DNSSEC (signing) and filtering malicious domains—h
                 { id: "d", text: "Assigns VLANs" }
               ],
               correctChoiceId: "a",
-              explanation: "Recursive mode chases referrals for client.",
+              explanation: "A recursive resolver chases referrals for the client — vs authoritative-only servers that answer only their zones.",
               objectiveId: "CCNA-4.4",
               difficulty: "hard",
             },
@@ -6070,7 +6075,7 @@ DNS security topics include DNSSEC (signing) and filtering malicious domains—h
                 { id: "d", text: "Subnet masks" }
               ],
               correctChoiceId: "a",
-              explanation: "PTR maps IP to hostname in reverse zones.",
+              explanation: "PTR maps an IP address back to a hostname in reverse zones — not MX, TXT, or a subnet mask record.",
               objectiveId: "CCNA-4.3",
               difficulty: "hard",
             }
@@ -6278,7 +6283,7 @@ Wildcard masks invert subnet masks for ACL matching—0 means must match, 1 mean
                 { id: "d", text: "7000–7999" }
               ],
               correctChoiceId: "a",
-              explanation: "Standard ACLs use 1–99 and extended ranges.",
+              explanation: "Standard numbered ACLs use 1–99 (and expanded 1300–1999) — not the extended-only 100–199 range.",
               objectiveId: "CCNA-5.2",
               difficulty: "medium",
             },
@@ -6292,7 +6297,7 @@ Wildcard masks invert subnet masks for ACL matching—0 means must match, 1 mean
                 { id: "d", text: "Broadcast only" }
               ],
               correctChoiceId: "a",
-              explanation: "0=match bit, 1=ignore bit in each octet position.",
+              explanation: "In a wildcard, 0 means match this bit and 1 means ignore — so 0.0.255.255 is not the same as a host mask.",
               objectiveId: "CCNA-5.1",
               difficulty: "medium",
             },
@@ -6306,7 +6311,7 @@ Wildcard masks invert subnet masks for ACL matching—0 means must match, 1 mean
                 { id: "d", text: "Ignored on trunks" }
               ],
               correctChoiceId: "a",
-              explanation: "Top-down first-match semantics.",
+              explanation: "ACLs evaluate top-down and stop at first match — later ACE lines are not checked for that packet.",
               objectiveId: "CCNA-5.2",
               difficulty: "hard",
             },
@@ -6320,7 +6325,7 @@ Wildcard masks invert subnet masks for ACL matching—0 means must match, 1 mean
                 { id: "d", text: "VLAN list" }
               ],
               correctChoiceId: "a",
-              explanation: "101 falls in extended range 100–199.",
+              explanation: "ACL number 101 falls in the extended range 100–199 — it is not a standard ACL in 1–99.",
               objectiveId: "CCNA-5.1",
               difficulty: "hard",
             },
@@ -6334,7 +6339,7 @@ Wildcard masks invert subnet masks for ACL matching—0 means must match, 1 mean
                 { id: "d", text: "line vty only always" }
               ],
               correctChoiceId: "a",
-              explanation: "ip access-group applies ACL to interface direction.",
+              explanation: "ip access-group binds an ACL to an interface direction (in/out) — not trunk mode or OSPF network statements.",
               objectiveId: "CCNA-5.2",
               difficulty: "hard",
             },
@@ -6348,7 +6353,7 @@ Wildcard masks invert subnet masks for ACL matching—0 means must match, 1 mean
                 { id: "d", text: "Disables logging" }
               ],
               correctChoiceId: "a",
-              explanation: "Named ACLs support remarks and incremental edits.",
+              explanation: "Named ACLs allow remarks and easier inserts/deletes — unlike rigid renumbering of classic numbered lines only.",
               objectiveId: "CCNA-5.1",
               difficulty: "hard",
             },
@@ -6362,7 +6367,7 @@ Wildcard masks invert subnet masks for ACL matching—0 means must match, 1 mean
                 { id: "d", text: "Forward to CPU" }
               ],
               correctChoiceId: "a",
-              explanation: "Unmatched traffic is implicitly denied.",
+              explanation: "Traffic that matches no ACE hits the implicit deny any at the end — it is not permitted by default.",
               objectiveId: "CCNA-5.2",
               difficulty: "hard",
             },
@@ -6376,7 +6381,7 @@ Wildcard masks invert subnet masks for ACL matching—0 means must match, 1 mean
                 { id: "d", text: "800-899" }
               ],
               correctChoiceId: "a",
-              explanation: "Extended numbered ACLs use 100-199 (and extended ranges).",
+              explanation: "Extended numbered ACLs use 100–199 (plus expanded ranges) — not the standard ACL numbers 1–99.",
               objectiveId: "CCNA-5.1",
               difficulty: "hard",
             }
@@ -6589,7 +6594,7 @@ Security monitoring uses syslog, SNMP, and NetFlow/IPFIX for visibility.`,
                 { id: "d", text: "SSID names" }
               ],
               correctChoiceId: "a",
-              explanation: "Stateful inspection matches return traffic to sessions.",
+              explanation: "Stateful inspection tracks sessions so return traffic can match — unlike stateless ACLs that check each packet alone.",
               objectiveId: "CCNA-5.4",
               difficulty: "medium",
             },
@@ -6603,7 +6608,7 @@ Security monitoring uses syslog, SNMP, and NetFlow/IPFIX for visibility.`,
                 { id: "d", text: "Opens all VLANs" }
               ],
               correctChoiceId: "a",
-              explanation: "Shutdown mode err-disables the interface.",
+              explanation: "Port-security violation shutdown err-disables the interface — not just drop quietly forever without err-disable.",
               objectiveId: "CCNA-5.3",
               difficulty: "medium",
             },
@@ -6617,7 +6622,7 @@ Security monitoring uses syslog, SNMP, and NetFlow/IPFIX for visibility.`,
                 { id: "d", text: "VTP pruning" }
               ],
               correctChoiceId: "a",
-              explanation: "IPsec secures site-to-site and remote VPNs.",
+              explanation: "IPsec protects site-to-site and remote-access VPN traffic — not DHCP leases, STP, or VTP as crypto.",
               objectiveId: "CCNA-5.4",
               difficulty: "hard",
             },
@@ -6631,7 +6636,7 @@ Security monitoring uses syslog, SNMP, and NetFlow/IPFIX for visibility.`,
                 { id: "d", text: "DNS cache poison only" }
               ],
               correctChoiceId: "a",
-              explanation: "Phishing tricks users into revealing credentials.",
+              explanation: "Phishing is social engineering that tricks users into giving credentials — not an L2 loop or routing failure.",
               objectiveId: "CCNA-5.3",
               difficulty: "hard",
             },
@@ -6645,7 +6650,7 @@ Security monitoring uses syslog, SNMP, and NetFlow/IPFIX for visibility.`,
                 { id: "d", text: "Cable faults" }
               ],
               correctChoiceId: "a",
-              explanation: "Dynamic ARP Inspection validates ARP against DHCP snooping table.",
+              explanation: "DAI validates ARP replies against the DHCP snooping binding table — blocking ARP spoofing, not unrelated DHCP offers alone.",
               objectiveId: "CCNA-5.4",
               difficulty: "hard",
             },
@@ -6659,7 +6664,7 @@ Security monitoring uses syslog, SNMP, and NetFlow/IPFIX for visibility.`,
                 { id: "d", text: "Notice" }
               ],
               correctChoiceId: "a",
-              explanation: "Severity 0 is emergency (most critical).",
+              explanation: "Syslog severity 0 means emergency (most critical) — not informational or debugging severity levels.",
               objectiveId: "CCNA-5.3",
               difficulty: "hard",
             },
@@ -6673,7 +6678,7 @@ Security monitoring uses syslog, SNMP, and NetFlow/IPFIX for visibility.`,
                 { id: "d", text: "Removing ACLs for speed" }
               ],
               correctChoiceId: "a",
-              explanation: "Layered controls reduce risk if one mechanism fails.",
+              explanation: "Defense-in-depth layers controls so one failure does not doom you — unlike relying on a single firewall only.",
               objectiveId: "CCNA-5.4",
               difficulty: "hard",
             },
@@ -6687,7 +6692,7 @@ Security monitoring uses syslog, SNMP, and NetFlow/IPFIX for visibility.`,
                 { id: "d", text: "NAT translations" }
               ],
               correctChoiceId: "a",
-              explanation: "802.1X is port-based network access control.",
+              explanation: "802.1X provides port-based NAC before granting LAN access — not DNS filtering, OSPF auth alone, or NAT.",
               objectiveId: "CCNA-5.3",
               difficulty: "hard",
             }
@@ -6891,7 +6896,7 @@ Start small: automate show commands, backup configs, and validate compliance bef
                 { id: "d", text: "STP BPDUs" }
               ],
               correctChoiceId: "a",
-              explanation: "RESTCONF is HTTP REST for structured config.",
+              explanation: "RESTCONF exposes YANG-modeled device config over HTTP REST — not SNMPv1 polling, Telnet CLI, or STP.",
               objectiveId: "CCNA-6.2",
               difficulty: "medium",
             },
@@ -6905,7 +6910,7 @@ Start small: automate show commands, backup configs, and validate compliance bef
                 { id: "d", text: "DHCP options" }
               ],
               correctChoiceId: "a",
-              explanation: "Ansible is agentless using SSH/API.",
+              explanation: "Ansible is agentless and usually drives devices over SSH/API — it does not require a full agent OS on every router.",
               objectiveId: "CCNA-6.1",
               difficulty: "hard",
             },
@@ -6919,7 +6924,7 @@ Start small: automate show commands, backup configs, and validate compliance bef
                 { id: "d", text: "VLAN from SSID" }
               ],
               correctChoiceId: "a",
-              explanation: "SDN centralizes control logic.",
+              explanation: "SDN centralizes control-plane logic while data-plane forwarding stays distributed — vs combined box-by-box control.",
               objectiveId: "CCNA-6.2",
               difficulty: "hard",
             },
@@ -6933,7 +6938,7 @@ Start small: automate show commands, backup configs, and validate compliance bef
                 { id: "d", text: "Cable testing only" }
               ],
               correctChoiceId: "a",
-              explanation: "Day 2 is ongoing operations.",
+              explanation: "Day 2 covers ongoing operations (monitor, patch, change) — not only Day 0 rack-and-stack install work.",
               objectiveId: "CCNA-6.1",
               difficulty: "hard",
             },
@@ -6947,7 +6952,7 @@ Start small: automate show commands, backup configs, and validate compliance bef
                 { id: "d", text: "Encapsulates Ethernet" }
               ],
               correctChoiceId: "a",
-              explanation: "JSON is common REST API payload format.",
+              explanation: "JSON is a common REST API payload format — it is not a replacement for TCP, and not a binary link protocol.",
               objectiveId: "CCNA-6.2",
               difficulty: "hard",
             },
@@ -6961,7 +6966,7 @@ Start small: automate show commands, backup configs, and validate compliance bef
                 { id: "d", text: "DHCP leases" }
               ],
               correctChoiceId: "a",
-              explanation: "Git tracks IaC changes over time.",
+              explanation: "Git versions IaC/config over time for review and rollback — not MAC learning, OSPF LSAs, or DHCP leases.",
               objectiveId: "CCNA-6.1",
               difficulty: "hard",
             }
