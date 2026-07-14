@@ -78,7 +78,7 @@ Encapsulation wraps upper-layer data with headers (and sometimes trailers) as it
             "Ethernet and MAC addressing attributed to Layer 3 instead of Data Link",
             "Encapsulation direction traps (headers added going down, removed going up)",
           ],
-          realWorldScenario: "A user can ping the file server by IP but cannot open the intranet site by name. You confirm Layer 1–3 connectivity with ping, then check DNS resolution at the Application layer before re-cabling the switch.",
+          realWorldScenario: "A user can ping the file server by IP but cannot open the intranet site by name. You confirm Layer 1–3 connectivity with ping by IP, then check DNS name resolution at the Application layer — the path is fine; the name lookup is not.",
           quiz: [
             {
               id: "osi-q1",
@@ -2125,6 +2125,21 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
               explanation: "/27 block size 32: the .96 subnet spans .96–.127. The broadcast address is 192.168.1.127.",
               objectiveId: "CCNA-1.10",
               difficulty: "medium",
+            },
+            {
+              id: "subnetting-b41",
+              prompt: "What is the directed broadcast address for the 192.168.5.0/24 network?",
+              choices: [
+                { id: "a", text: "192.168.5.0" },
+                { id: "b", text: "192.168.5.254" },
+                { id: "c", text: "192.168.5.255" },
+                { id: "d", text: "255.255.255.255" },
+              ],
+              correctChoiceId: "c",
+              explanation:
+                "Directed broadcast = last address in the block (all host bits 1). For 192.168.5.0/24 that is 192.168.5.255. 255.255.255.255 is limited broadcast (local segment only); .0 is the network address.",
+              objectiveId: "CCNA-1.10",
+              difficulty: "easy",
             }],
           externalResources: [
             {
@@ -2240,19 +2255,13 @@ Use your lesson notes — no external tools required.`,
           name: "IP Ranges",
           lesson: {
             title: "Special and Reserved IPv4 Ranges",
-            content: `Beyond standard host addressing, several IPv4 ranges serve special purposes that CCNA candidates must recognize instantly. These include private addresses, loopback, link-local, multicast, and reserved documentation ranges.
+            content: `Beyond standard host addressing, several IPv4 ranges serve special purposes you must recognize instantly: private (RFC 1918), loopback, link-local/APIPA, multicast, and documentation TEST-NET blocks.
 
-RFC 1918 private addresses are used internally and require NAT or proxy to reach the Internet. The 127.0.0.0/8 block is reserved for loopback. Link-local 169.254.0.0/16 (APIPA) allows communication on a local segment when no DHCP server responds.
+RFC 1918 private addresses stay inside your network and need NAT at the edge for Internet access. Mnemonic: 10 = ALL · 172 = ONLY 16–31 · 192 = ONLY 168. The 127.0.0.0/8 block is loopback. Link-local 169.254.0.0/16 (APIPA) appears when DHCP fails — local link only, no gateway.
 
-Multicast addresses fall in 224.0.0.0/4 for one-to-many delivery. Reserved ranges like 0.0.0.0/8 should not appear on production hosts. TEST-NET blocks 192.0.2.0/24, 198.51.100.0/24, and 203.0.113.0/24 are for documentation only.
+Multicast is 224.0.0.0/4 (224–239) for one-to-many delivery (for example OSPF 224.0.0.5). TEST-NET blocks 192.0.2.0/24, 198.51.100.0/24, and 203.0.113.0/24 are for documentation examples only — never production.
 
-Recognizing these ranges helps you quickly eliminate wrong answers on exams and diagnose misconfigurations.
-
-Special IPv4 ranges appear frequently on exams. Multicast 224.0.0.0–239.255.255.255 delivers one-to-many traffic (e.g., OSPF 224.0.0.5). Reserved and experimental ranges should not appear on production Internet routing tables.
-
-Documentation TEST-NET blocks (192.0.2.0/24, 198.51.100.0/24, 203.0.113.0/24) are for examples only. Carrier-grade NAT and RFC 6598 100.64.0.0/10 sit between private and public space for ISP use.
-
-Know which addresses are routable on the public Internet vs usable only internally. NAT translates between private inside and public outside addresses.`,
+Skip legacy class A/B/C labels for exam day. Focus on the purpose of each range and the 172.40-vs-172.20 private trap.`,
             experience: IP_RANGES_EXPERIENCE,
           },
           keyFacts: [
@@ -2286,7 +2295,7 @@ Know which addresses are routable on the public Internet vs usable only internal
             "APIPA automatic assignment when DHCP fails — 169.254.x.x",
             "Multicast OSPF address 224.0.0.5 in special-range questions",
             "192.0.2.1 vs 192.168.1.1 — TEST-NET vs private confusion",
-            "Carrier-grade NAT 100.64.0.0/10 distinction from RFC 1918",
+            "Calling 10.0.0.0/8 a “Class A private” label instead of reading the /8 purpose",
           ],
           realWorldScenario: "After a DHCP server outage, laptops show 169.254.x.x addresses and cannot reach the Internet. You restore DHCP first; APIPA only allows local link communication until a lease is obtained.",
           quiz: [
@@ -2301,7 +2310,7 @@ Know which addresses are routable on the public Internet vs usable only internal
               ],
               correctChoiceId: "c",
               explanation:
-                "IPv4 multicast is the Class D range 224.0.0.0/4 (224–239). Private, loopback, and APIPA ranges are different special blocks with different jobs.",
+                "IPv4 multicast is 224.0.0.0/4 (addresses 224–239). Private, loopback, and APIPA ranges are different special blocks with different jobs — not multicast.",
               objectiveId: "CCNA-1.7",
               difficulty: "easy",
             },
@@ -2498,7 +2507,7 @@ Know which addresses are routable on the public Internet vs usable only internal
               { id: "d", text: "169.254.0.0/16 — 65,536 addresses" }
               ],
               correctChoiceId: "c",
-              explanation: "10.0.0.0/8 (Class A private) is the largest private block with over 16 million addresses, far exceeding 172.16.0.0/12 (~1M) and 192.168.0.0/16 (~65K).",
+              explanation: "10.0.0.0/8 is the largest RFC 1918 private block (~16M addresses). 172.16.0.0/12 is ~1M and 192.168.0.0/16 is ~65K — skip class A/B/C labels and compare the prefix sizes.",
               objectiveId: "CCNA-1.7",
               difficulty: "easy",
             },
@@ -2582,22 +2591,8 @@ Know which addresses are routable on the public Internet vs usable only internal
               { id: "d", text: "4" }
               ],
               correctChoiceId: "c",
-              explanation: "RFC 1918 defines three private ranges: 10.0.0.0/8 (Class A), 172.16.0.0/12 (Class B), and 192.168.0.0/16 (Class C).",
+              explanation: "RFC 1918 defines three private ranges: 10.0.0.0/8, 172.16.0.0/12, and 192.168.0.0/16 — memorize the prefixes and purposes, not legacy class letters.",
               objectiveId: "CCNA-1.7",
-              difficulty: "easy",
-            },
-            {
-              id: "ip-ranges-b19",
-              prompt: "What is the directed broadcast address for the 192.168.5.0/24 network?",
-              choices: [
-              { id: "a", text: "192.168.5.0" },
-              { id: "b", text: "192.168.5.254" },
-              { id: "c", text: "192.168.5.255" },
-              { id: "d", text: "255.255.255.255" }
-              ],
-              correctChoiceId: "c",
-              explanation: "The directed broadcast for 192.168.5.0/24 is 192.168.5.255 — all host bits set to 1. This targets all hosts in that specific subnet.",
-              objectiveId: "CCNA-1.11",
               difficulty: "easy",
             },
             {
@@ -2637,19 +2632,11 @@ Know which addresses are routable on the public Internet vs usable only internal
           name: "IPv6 Basics",
           lesson: {
             title: "Introduction to IPv6",
-            content: `IPv6 uses 128-bit addresses written as eight groups of four hexadecimal digits separated by colons, such as 2001:db8::1. Double colons represent consecutive groups of zeros, used only once per address. IPv6 solves IPv4 exhaustion with a vastly larger address space and simplifies header format.
+            content: `IPv6 uses 128-bit addresses written as eight hextets (groups of four hex digits) separated by colons, such as 2001:db8::1. Drop leading zeros in a hextet; use :: once to compress the longest run of zero hextets. Loopback is ::1.
 
-IPv6 address types include unicast, multicast, and anycast. There is no IPv6 broadcast; multicast replaces it. Global unicast addresses (2000::/3) are routable on the Internet. Link-local addresses (fe80::/10) are automatically configured and used for neighbor discovery on local segments.
+Recall table: Global unicast 2000::/3 · Unique local fc00::/7 · Link-local fe80::/10 (never routed beyond the local link) · Multicast ff00::/8. Standard LAN prefix is /64. IPv6 has no broadcast — Neighbor Discovery (NDP) replaces ARP.
 
-Stateless Address Autoconfiguration (SLAAC) allows hosts to derive addresses from router advertisements without a DHCP server. DHCPv6 can still assign addresses and options. IPv6 neighbor discovery replaces ARP, using ICMPv6 messages.
-
-Transition mechanisms include dual-stack, tunneling, and translation. CCNA focuses on addressing format, prefix lengths, and basic configuration concepts.
-
-IPv6 addresses are 128 bits written as eight hextets separated by colons. Leading zeros in a hextet can be omitted, and one consecutive zero group can be replaced with :: (only once per address). Loopback is ::1; unspecified is ::.
-
-Address types: Global unicast (2000::/3), unique local (fc00::/7), link-local fe80::/10 (never routed beyond local link), and multicast ff00::/8. IPv6 typically does not use broadcast; multicast replaces ARP via Neighbor Discovery (NDP).
-
-SLAAC and DHCPv6 assign addresses. EUI-64 can derive interface IDs from MAC. Know how to compress and expand addresses quickly for exam items.`,
+SLAAC lets hosts self-configure from router advertisements; DHCPv6 can still assign addresses and options. Dual-stack (IPv4 + IPv6 together) is common in production. Focus exam practice on compress/expand and recognizing address types — not deep header math or deferred interface-ID tricks.`,
             experience: IPV6_BASICS_EXPERIENCE,
           },
           keyFacts: [
@@ -2675,14 +2662,14 @@ SLAAC and DHCPv6 assign addresses. EUI-64 can derive interface IDs from MAC. Kno
             "Dropping zeros inside a group (0042 → 42 is OK; 0db8 → db8 is OK; do not shorten db8 to b8 incorrectly)",
             "Forgetting link-local fe80::/10 is never routed beyond the local link",
             "Assuming IPv6 removes DHCP entirely — SLAAC and DHCPv6 coexist",
-            "Confusing solicited-node multicast with all-nodes multicast",
+            "Treating unique local (fc00::/7) like a public Internet routable address",
           ],
           examTraps: [
             "Valid vs invalid compressed IPv6 notation",
             "Link-local fe80:: scope — not routable off the local segment",
             "Global unicast 2000::/3 vs unique local fc00::/7",
             "ICMPv6 neighbor discovery replacing ARP",
-            "EUI-64 interface ID derivation from MAC",
+            "Using :: more than once in a single compressed address",
           ],
           realWorldScenario: "Your home router advertises both 192.168.1.x and a global IPv6 /64 prefix — dual-stack. The PC gets IPv4 via DHCP and may get IPv6 via SLAAC at the same time.",
           quiz: [
@@ -3034,19 +3021,11 @@ SLAAC and DHCPv6 assign addresses. EUI-64 can derive interface IDs from MAC. Kno
           name: "Wireless Basics",
           lesson: {
             title: "802.11 Wireless LAN Fundamentals",
-            content: `Wireless LANs use IEEE 802.11 standards to transmit data over radio frequencies instead of copper or fiber. Common standards include 802.11n (Wi-Fi 4), 802.11ac (Wi-Fi 5), and 802.11ax (Wi-Fi 6). The 2.4 GHz band offers better range but more interference; 5 GHz and 6 GHz bands provide more channels and higher throughput.
+            content: `Wireless LANs use IEEE 802.11 (Wi-Fi) to send frames over radio instead of a dedicated Ethernet cable. Map standards: 802.11n = Wi-Fi 4 · 802.11ac = Wi-Fi 5 · 802.11ax = Wi-Fi 6. 2.4 GHz reaches farther through walls; 5 GHz offers more channels and usually higher speed.
 
-A wireless network consists of access points (APs) that bridge wireless clients to the wired infrastructure, wireless LAN controllers (WLCs) that manage multiple APs centrally, and client devices with wireless NICs. SSID is the network name clients see when connecting. WPA2 and WPA3 protect wireless traffic from eavesdropping.
+SSID is the human-readable network name. BSSID is the AP radio’s MAC address — when you roam, the SSID stays the same while the BSSID changes. On 2.4 GHz in North America, channels 1, 6, and 11 are the non-overlapping set.
 
-Wireless uses half-duplex shared medium access; CSMA/CA reduces collisions because radios cannot transmit and listen simultaneously on the same channel. Channel overlap in 2.4 GHz causes interference and degraded performance.
-
-Site surveys, proper AP placement, and power/channel planning are critical for reliable coverage.
-
-802.11 standards evolve: 802.11n (Wi-Fi 4) uses MIMO and 2.4/5 GHz; 802.11ac (Wi-Fi 5) focuses on 5 GHz; 802.11ax (Wi-Fi 6) improves efficiency with OFDMA. Channels in 2.4 GHz overlap—use 1, 6, and 11 in North America for non-overlapping 20 MHz channels.
-
-Security progressed from WEP (broken) to WPA (TKIP) to WPA2 (AES-CCMP) and WPA3 (SAE, stronger protection). Enterprise deployments use 802.1X with a RADIUS server for authentication. A lightweight AP model uses a wireless LAN controller (WLC) for centralized management.
-
-Signal factors include RSSI, SNR, attenuation through walls, and interference from non-Wi-Fi sources. Site surveys help AP placement.`,
+Air is a shared half-duplex medium, so wireless uses CSMA/CA (listen before talk). Security: WEP is broken — deploy WPA2 or WPA3. Wireless LAN controller (WLC) detail and enterprise 802.1X depth are deferred; this topic focuses on client experience and channel/SSID basics.`,
             experience: WIRELESS_BASICS_EXPERIENCE,
           },
           keyFacts: [
