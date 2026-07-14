@@ -46,7 +46,7 @@ export const AUTOMATION_BASICS_EXPERIENCE: TopicExperience = {
       type: "teach",
       tcpLayer: 4,
       headline: "SDN: control vs data plane.",
-      body: "Software-Defined Networking separates decision-making (control plane) from packet forwarding (data plane). Controllers hold logic; devices emphasize fast forwarding.",
+      body: "Software-Defined Networking separates decision-making (control plane) from packet forwarding (data plane). Controllers hold the logic — devices emphasize the fast path. That plane split is SDN’s core idea, not addressing schemes or VLAN vs trunk.",
       terms: [
         {
           id: "sdn",

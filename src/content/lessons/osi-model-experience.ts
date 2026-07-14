@@ -78,7 +78,7 @@ export const OSI_MODEL_EXPERIENCE: TopicExperience = {
     {
       id: "memory-check",
       type: "checkpoint",
-      showFullStack: true,
+      showFullStack: false,
       headline: "Quick check — layer order",
       checkpointQuestionId: "osi-q4",
     },

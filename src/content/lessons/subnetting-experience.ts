@@ -219,6 +219,13 @@ export const SUBNETTING_EXPERIENCE: TopicExperience = {
       checkpointQuestionId: "subnetting-q8",
     },
     {
+      id: "ends-hero",
+      type: "hero",
+      tcpLayer: 2,
+      headline: "Network & broadcast = block ends.",
+      body: "Milestone: you can find the slice. Next — name the first and last address in that slice, then the usable hosts between them.",
+    },
+    {
       id: "network-addr",
       type: "teach",
       tcpLayer: 2,
@@ -292,6 +299,13 @@ export const SUBNETTING_EXPERIENCE: TopicExperience = {
       checkpointQuestionId: "subnetting-q4",
     },
     {
+      id: "range-recap",
+      type: "memory",
+      tcpLayer: 2,
+      headline: "Range first: network → broadcast → hosts.",
+      body: "Pause and lock the order: find the block, then first address (network), last address (broadcast), usable hosts in between (−2). Full walkthroughs come next.",
+    },
+    {
       id: "cheat-order",
       type: "teach",
       tcpLayer: 2,
@@ -345,6 +359,13 @@ export const SUBNETTING_EXPERIENCE: TopicExperience = {
       tcpLayer: 2,
       headline: "Quick check — /26 hosts",
       checkpointQuestionId: "subnetting-q1",
+    },
+    {
+      id: "borrow-hero",
+      type: "hero",
+      tcpLayer: 2,
+      headline: "Borrow bits to cut more slices.",
+      body: "Milestone: you can read a finished subnet’s range. Next — carve more subnets from one parent block by borrowing host bits.",
     },
     {
       id: "borrow-slice",
@@ -455,6 +476,13 @@ export const SUBNETTING_EXPERIENCE: TopicExperience = {
       tcpLayer: 2,
       headline: "Quick check — broadcast",
       checkpointQuestionId: "subnetting-q2",
+    },
+    {
+      id: "vlsm-hero",
+      type: "hero",
+      tcpLayer: 2,
+      headline: "VLSM — right-sized blocks.",
+      body: "Milestone: equal-slice designs make sense. Next — mix prefix lengths so each site only gets the addresses it needs.",
     },
     {
       id: "vlsm-what",

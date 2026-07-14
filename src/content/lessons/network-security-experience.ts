@@ -23,7 +23,7 @@ export const NETWORK_SECURITY_EXPERIENCE: TopicExperience = {
           label: "CIA triad",
           tier: "basics",
           shortDefinition:
-            "Confidentiality, Integrity, Availability — the three classic security goals.",
+            "Three classic security goals — the next screen spells each one out.",
         },
       ],
     },

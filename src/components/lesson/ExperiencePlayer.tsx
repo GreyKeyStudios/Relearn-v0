@@ -163,12 +163,26 @@ export function ExperiencePlayer({
       </div>
 
       {anchorType === "osi-stack" && (
-        <div className="shrink-0">
+        <div
+          className={
+            isCheckpoint
+              ? "pointer-events-none select-none opacity-25 blur-[2px] transition-opacity"
+              : undefined
+          }
+          aria-hidden={isCheckpoint}
+        >
           <OsiStackDiagram highlightLayer={highlightLayer} compact />
         </div>
       )}
       {anchorType === "tcp-ip-stack" && (
-        <div className="shrink-0">
+        <div
+          className={
+            isCheckpoint
+              ? "pointer-events-none select-none opacity-25 blur-[2px] transition-opacity"
+              : undefined
+          }
+          aria-hidden={isCheckpoint}
+        >
           <TcpIpStackDiagram highlightLayer={highlightLayer} compact />
         </div>
       )}
