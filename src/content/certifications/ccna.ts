@@ -149,7 +149,7 @@ Encapsulation wraps upper-layer data with headers (and sometimes trailers) as it
               ],
               correctChoiceId: "a",
               explanation:
-                "From bottom (Layer 1) to top (Layer 7): Physical, Data Link, Network, Transport, Session, Presentation, Application.",
+                "Bottom-up (Layer 1 → 7) is Physical, Data Link, Network, Transport, Session, Presentation, Application — PDNTSPA. Top-down (APSTNDP) is the same stack read the other way, not a different model. Swapping Data Link and Network is a common reverse-order trap.",
               objectiveId: "CCNA-1.1",
               difficulty: "easy",
             },
@@ -915,7 +915,7 @@ Jumbo frames exceed 1500-byte MTU and may not traverse all paths. Understanding 
               ],
               correctChoiceId: "b",
               explanation:
-                "Ethernet builds Layer 2 frames with MAC addresses. Layer 3 is IP routing; Layer 4 is TCP/UDP ports — different jobs than Ethernet.",
+                "Ethernet’s job is Layer 2 framing with MAC addresses. Layer 1 is only bits, cables, and signals — not framed delivery. Layer 3 routes by IP; Layer 4 uses ports. Choosing Physical mixes the medium with MAC-based frames.",
               objectiveId: "CCNA-1.5",
               difficulty: "easy",
             },
@@ -944,7 +944,8 @@ Jumbo frames exceed 1500-byte MTU and may not traverse all paths. Understanding 
                 { id: "d", text: "Simplex" },
               ],
               correctChoiceId: "b",
-              explanation: "Full-duplex allows simultaneous send and receive on separate paths, eliminating collisions.",
+              explanation:
+                "Full-duplex uses separate TX/RX paths so send and receive happen together — collisions go away. Half-duplex shares one path and must take turns (CSMA/CD). “Auto” only negotiates; it is not itself a duplex mode.",
               objectiveId: "CCNA-1.5",
               difficulty: "easy",
             },
@@ -1289,7 +1290,7 @@ Every host needs a unique address in its subnet, a matching mask, and a default 
               ],
               correctChoiceId: "b",
               explanation:
-                "IPv4 is 32 bits (four 8-bit octets). 128 bits is IPv6 — a common mix-up on exams.",
+                "IPv4 is 32 bits — four octets of eight bits each (max value 255 per octet). 128 bits is IPv6 — a common mix-up on exams.",
               objectiveId: "CCNA-1.8",
               difficulty: "easy",
             },
@@ -1613,7 +1614,8 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
                 { id: "d", text: "Automatic DHCP assignment" },
               ],
               correctChoiceId: "b",
-              explanation: "Variable Length Subnet Masks enable efficient use of address space with mixed prefix lengths.",
+              explanation:
+                "VLSM means different prefix lengths in one design (for example a /24 LAN next to a /30 WAN) so you do not waste hosts. Fixed-length subnetting uses one mask everywhere. VLSM is not “IPv6 only” and is not DHCP.",
               objectiveId: "CCNA-1.9",
               difficulty: "easy",
             },
@@ -2695,7 +2697,7 @@ SLAAC lets hosts self-configure from router advertisements; DHCPv6 can still ass
               ],
               correctChoiceId: "d",
               explanation:
-                "IPv6 uses 128-bit addresses (eight 16-bit hextets). IPv4 is 32 bits — choosing 32 here is the classic trap.",
+                "IPv6 uses 128 bits total: eight hextets of 16 bits each (four hex digits per hextet). IPv4 is 32 bits — choosing 32 here is the classic trap.",
               objectiveId: "CCNA-1.12",
               difficulty: "easy",
             },
@@ -6154,7 +6156,7 @@ Defer deep IPv6 ACL catalogs, reflexive ACLs, and time-based ACLs.`,
               ],
               correctChoiceId: "a",
               explanation:
-                "Standard ACLs match source IP only. Extended ACLs add destination, protocol, and ports — picking B is describing extended, not standard.",
+                "Standard ACLs match source IP only. Matching source plus destination, protocol, and ports describes an extended ACL — that is the usual exam trap when those extras sneak into a “standard” answer.",
               objectiveId: "CCNA-5.1",
               difficulty: "easy",
             },

@@ -3,8 +3,8 @@
 import Link from "next/link";
 import type { ObjectiveMasteryEntry } from "@/lib/objective-mastery";
 import { OBJECTIVE_MIN_ATTEMPTS, OBJECTIVE_WEAK_PERCENT } from "@/lib/mastery-thresholds";
-import { Card } from "@/components/ui/Card";
 import { ProgressBar } from "@/components/ui/ProgressBar";
+import { DisclosureSection } from "@/components/ui/DisclosureSection";
 
 interface ObjectiveMasteryListProps {
   certId: string;
@@ -21,8 +21,7 @@ export function ObjectiveMasteryList({
   if (practiced.length === 0) return null;
 
   return (
-    <Card className="mb-6 p-4">
-      <h3 className="mb-3 text-sm font-semibold text-zinc-200">Objective mastery</h3>
+    <DisclosureSection title="Objective mastery" titleClassName="text-zinc-200" className="mb-6">
       <ul className="space-y-3">
         {practiced.map((entry) => (
           <li key={entry.objectiveId}>
@@ -47,6 +46,6 @@ export function ObjectiveMasteryList({
           </li>
         ))}
       </ul>
-    </Card>
+    </DisclosureSection>
   );
 }

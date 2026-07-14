@@ -80,7 +80,7 @@ export const TCP_IP_MODEL_EXPERIENCE: TopicExperience = {
     {
       id: "memory-check",
       type: "checkpoint",
-      showFullStack: true,
+      showFullStack: false,
       headline: "Quick check — how many layers?",
       checkpointQuestionId: "tcp-q1",
     },

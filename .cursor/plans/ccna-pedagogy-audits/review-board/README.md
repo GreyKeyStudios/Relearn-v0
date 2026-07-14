@@ -5,6 +5,7 @@ Git-tracked operational state for the [Curriculum Review Board](../../../docs/CU
 | File | Purpose |
 |------|---------|
 | [`decision-log.md`](decision-log.md) | Durable finding decisions |
+| [`grouped-triage-2026-07-13.md`](grouped-triage-2026-07-13.md) | Deduplicated Ship / Improve / Intentional themes (not 222 rows) |
 | [`ccna-scoreboard.md`](ccna-scoreboard.md) | Factual CCNA sign-off dashboard |
 
 ## Rules

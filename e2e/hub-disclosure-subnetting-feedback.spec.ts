@@ -57,6 +57,14 @@ test.describe("hub disclosure + subnetting feedback", () => {
       page.getByText(/Subnet 192\.168\.10\.0\/24 into Four Equal/i)
     ).toBeVisible();
 
+    const whatsNext = page.locator("details").filter({ hasText: /^What's next/i });
+    await expect(whatsNext).toBeVisible();
+    await expect(whatsNext).not.toHaveAttribute("open", "");
+    // Next topic CTA stays collapsed until the learner expands What's next
+    await expect(page.getByRole("button", { name: /Continue to /i })).toBeHidden();
+    await whatsNext.locator("summary").click();
+    await expect(page.getByRole("button", { name: /Continue to /i })).toBeVisible();
+
     await expect(page.getByText(/Complete/i).first()).toBeVisible();
   });
 
@@ -188,6 +196,24 @@ test.describe("hub disclosure + subnetting feedback", () => {
     await expect(refresher).toBeVisible();
     await refresher.locator("summary").click();
     await expect(refresher.getByText(/Standard vs extended/i)).toBeVisible();
+  });
+
+  test("acl quiz explains standard vs extended without letter shortcuts", async ({ page }) => {
+    await seedCcnaFreshLearner(page);
+    await page.goto("/cert/ccna/quiz/acls");
+    await waitForHydration(page);
+    await expect(
+      page.getByText(/Standard ACLs match traffic based on/i)
+    ).toBeVisible({ timeout: 15_000 });
+    await page
+      .getByRole("button", { name: /Source and destination IP and ports/i })
+      .click();
+    await page.getByRole("button", { name: /Check Answer/i }).click();
+    await expect(
+      page.getByText(/Standard ACLs match source IP only/i)
+    ).toBeVisible();
+    await expect(page.getByText(/extended ACL/i)).toBeVisible();
+    await expect(page.getByText(/picking B/i)).toHaveCount(0);
   });
 
   test("automation quiz teaches SDN planes", async ({ page }) => {
