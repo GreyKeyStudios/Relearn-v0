@@ -4521,7 +4521,8 @@ When multiple routes exist to the same prefix, compare administrative distance f
                 { id: "d", text: "VLAN ID only" },
               ],
               correctChoiceId: "b",
-              explanation: "Routers use destination IP addresses and routing tables for path selection.",
+              explanation:
+                "Routers forward by destination IP using the routing table. MAC tables are for Layer 2 switches; VLAN IDs alone do not choose the Layer 3 path.",
               objectiveId: "CCNA-3.1",
               difficulty: "easy",
             },
@@ -4535,7 +4536,8 @@ When multiple routes exist to the same prefix, compare administrative distance f
                 { id: "d", text: "Static routes are ignored" },
               ],
               correctChoiceId: "b",
-              explanation: "The route with the longest matching prefix takes precedence.",
+              explanation:
+                "Among matching routes, the most specific prefix wins (/24 beats /16 beats 0.0.0.0/0). Metric and AD decide among equal prefixes — they do not override a longer match.",
               objectiveId: "CCNA-3.2",
               difficulty: "easy",
             },
@@ -4549,7 +4551,8 @@ When multiple routes exist to the same prefix, compare administrative distance f
                 { id: "d", text: "169.254.0.0/16" },
               ],
               correctChoiceId: "b",
-              explanation: "0.0.0.0/0 matches all destinations not covered by more specific routes.",
+              explanation:
+                "0.0.0.0/0 is the gateway of last resort — it matches only when nothing more specific exists. 127/8 is loopback; 169.254 is APIPA.",
               objectiveId: "CCNA-3.1",
               difficulty: "easy",
             },
@@ -4563,7 +4566,8 @@ When multiple routes exist to the same prefix, compare administrative distance f
                 { id: "d", text: "Always the default route" },
               ],
               correctChoiceId: "b",
-              explanation: "When an interface has an IP and is up, its network appears as connected.",
+              explanation:
+                "When an interface has an IP and is up/up, IOS installs that network as Connected (code C) — no static or OSPF needed for the local wire.",
               objectiveId: "CCNA-3.2",
               difficulty: "easy",
             },
@@ -4577,7 +4581,8 @@ When multiple routes exist to the same prefix, compare administrative distance f
                 { id: "d", text: "Unchanged" },
               ],
               correctChoiceId: "b",
-              explanation: "TTL decreases by one at each hop; at zero the packet is discarded.",
+              explanation:
+                "Each router hop decrements TTL by 1. When TTL hits 0, the packet is dropped (and often an ICMP Time Exceeded is sent) — that is how traceroute works.",
               objectiveId: "CCNA-3.1",
               difficulty: "medium",
             },
@@ -4773,7 +4778,8 @@ IPv6 static routes use ipv6 route prefix/length next-hop. Practice both IPv4 and
                 { id: "d", text: "110" },
               ],
               correctChoiceId: "b",
-              explanation: "Static routes have AD 1; connected routes have AD 0.",
+              explanation:
+                "Default static AD is 1 (highly preferred). Connected is 0; EIGRP 90 and OSPF 110 are common protocol ADs — not the static default.",
               objectiveId: "CCNA-3.3",
               difficulty: "easy",
             },
@@ -4787,7 +4793,8 @@ IPv6 static routes use ipv6 route prefix/length next-hop. Practice both IPv4 and
                 { id: "d", text: "Only IPv6 support" },
               ],
               correctChoiceId: "b",
-              explanation: "Floating statics use elevated AD so they activate only when primary routes disappear.",
+              explanation:
+                "You raise AD (e.g. AD 210) so the floating static stays out of the table until the primary (lower AD) disappears — then it becomes backup.",
               objectiveId: "CCNA-3.4",
               difficulty: "easy",
             },
@@ -4801,7 +4808,8 @@ IPv6 static routes use ipv6 route prefix/length next-hop. Practice both IPv4 and
                 { id: "d", text: "no ip routing" },
               ],
               correctChoiceId: "b",
-              explanation: "0.0.0.0/0 with next-hop defines a default route.",
+              explanation:
+                "`ip route 0.0.0.0 0.0.0.0 <next-hop>` installs the default (0.0.0.0/0). A 127 route is loopback space — not a gateway of last resort.",
               objectiveId: "CCNA-3.3",
               difficulty: "easy",
             },
@@ -4815,7 +4823,8 @@ IPv6 static routes use ipv6 route prefix/length next-hop. Practice both IPv4 and
                 { id: "d", text: "Wireless SSIDs" },
               ],
               correctChoiceId: "b",
-              explanation: "Statics work well where topology is stable and small.",
+              explanation:
+                "Statics shine on stub/edge sites where few destinations change rarely. Large cores usually need dynamic protocols (OSPF/EIGRP) to scale.",
               objectiveId: "CCNA-3.4",
               difficulty: "easy",
             },
@@ -4829,7 +4838,8 @@ IPv6 static routes use ipv6 route prefix/length next-hop. Practice both IPv4 and
                 { id: "d", text: "SSID" },
               ],
               correctChoiceId: "b",
-              explanation: "Next-hop IP avoids ARP resolution problems on broadcast segments.",
+              explanation:
+                "On Ethernet, next-hop IP tells the router who to ARP for. Exit-interface-only statics on multi-access media can force messy recursive ARP behavior.",
               objectiveId: "CCNA-3.3",
               difficulty: "medium",
             },
@@ -5051,7 +5061,8 @@ Enable with router ospf 1, network statements or interface ip ospf commands. Ver
                 { id: "d", text: "Hybrid wireless" },
               ],
               correctChoiceId: "b",
-              explanation: "OSPF builds a complete topology map using link-state advertisements.",
+              explanation:
+                "OSPF is link-state: routers flood LSAs and each builds a topology map (SPF). Distance vector (RIP) shares routes; path vector is BGP's model.",
               objectiveId: "CCNA-3.5",
               difficulty: "easy",
             },
@@ -5065,7 +5076,8 @@ Enable with router ospf 1, network statements or interface ip ospf commands. Ver
                 { id: "d", text: "Stub area only" },
               ],
               correctChoiceId: "b",
-              explanation: "Area 0 is the backbone; inter-area routing goes through it.",
+              explanation:
+                "Area 0 is the backbone. Non-backbone areas attach to Area 0 so inter-area routes have a consistent transit hub.",
               objectiveId: "CCNA-3.6",
               difficulty: "easy",
             },
@@ -5079,7 +5091,8 @@ Enable with router ospf 1, network statements or interface ip ospf commands. Ver
                 { id: "d", text: "MAC address" },
               ],
               correctChoiceId: "b",
-              explanation: "Cost = reference bandwidth / interface bandwidth (default ref 100 Mbps).",
+              explanation:
+                "Default cost ≈ reference bandwidth ÷ interface bandwidth (ref often 100 Mbps). Hop count is RIP's metric — not OSPF's.",
               objectiveId: "CCNA-3.5",
               difficulty: "easy",
             },
@@ -5093,7 +5106,8 @@ Enable with router ospf 1, network statements or interface ip ospf commands. Ver
                 { id: "d", text: "239.255.255.255" },
               ],
               correctChoiceId: "b",
-              explanation: "224.0.0.5 is AllSPFRouters multicast address.",
+              explanation:
+                "224.0.0.5 is AllSPFRouters — OSPF Hellos/updates to all OSPF routers on the link. 255.255.255.255 is limited broadcast; 127.0.0.1 is loopback.",
               objectiveId: "CCNA-3.6",
               difficulty: "easy",
             },
@@ -5107,7 +5121,8 @@ Enable with router ospf 1, network statements or interface ip ospf commands. Ver
                 { id: "d", text: "255.0.0.0" },
               ],
               correctChoiceId: "b",
-              explanation: "Wildcard 0.0.0.255 matches the /24—inverse of the subnet mask.",
+              explanation:
+                "OSPF `network` uses a wildcard (inverse of the mask). /24 → 0.0.0.255. Writing 255.255.255.0 here is the subnet mask — the classic mix-up.",
               objectiveId: "CCNA-3.5",
               difficulty: "easy",
             },
@@ -5361,7 +5376,8 @@ NAT breaks end-to-end connectivity for some protocols but conserves IPv4 address
                 { id: "d", text: "VLAN tagging" },
               ],
               correctChoiceId: "b",
-              explanation: "Port Address Translation overloads a single public IP with many internal hosts.",
+              explanation:
+                "PAT = NAT overload: many inside hosts share one (or few) public IPs by translating unique port numbers. Static NAT is a fixed one-to-one map.",
               objectiveId: "CCNA-3.7",
               difficulty: "easy",
             },
@@ -5375,7 +5391,8 @@ NAT breaks end-to-end connectivity for some protocols but conserves IPv4 address
                 { id: "d", text: "ip route 0.0.0.0" },
               ],
               correctChoiceId: "b",
-              explanation: "ip nat inside designates the internal (private) interface.",
+              explanation:
+                "`ip nat inside` marks the private/LAN side; `ip nat outside` marks the public/WAN side. Pools define address sets — they do not tag an interface role.",
               objectiveId: "CCNA-3.8",
               difficulty: "easy",
             },
@@ -5389,7 +5406,8 @@ NAT breaks end-to-end connectivity for some protocols but conserves IPv4 address
                 { id: "d", text: "IPv6 only" },
               ],
               correctChoiceId: "b",
-              explanation: "Static NAT permanently maps one private IP to one public IP.",
+              explanation:
+                "Static NAT permanently maps one inside local IP to one inside global IP (servers that need a fixed public face). Many-to-one with ports is PAT.",
               objectiveId: "CCNA-3.7",
               difficulty: "easy",
             },
@@ -5403,7 +5421,8 @@ NAT breaks end-to-end connectivity for some protocols but conserves IPv4 address
                 { id: "d", text: "MAC address" },
               ],
               correctChoiceId: "b",
-              explanation: "Inside local is the real private IP before translation.",
+              explanation:
+                "Inside local = the real private address on the host before NAT. Inside global is what the outside world sees after translation.",
               objectiveId: "CCNA-3.8",
               difficulty: "easy",
             },
@@ -5417,7 +5436,8 @@ NAT breaks end-to-end connectivity for some protocols but conserves IPv4 address
                 { id: "d", text: "Enable STP" },
               ],
               correctChoiceId: "b",
-              explanation: "NAT allows many private hosts to share one or few public IPs.",
+              explanation:
+                "NAT (especially PAT) lets many private hosts share scarce public IPv4 addresses. It is not a routing protocol and does not create VLANs or STP loops.",
               objectiveId: "CCNA-3.7",
               difficulty: "medium",
             },
