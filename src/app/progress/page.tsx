@@ -89,7 +89,7 @@ export default function ProgressPage() {
 
       <section className="mb-6">
         <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-zinc-400">
-          Per Certification
+          Per Course
         </h2>
         <div className="flex flex-col gap-3">
           {certs

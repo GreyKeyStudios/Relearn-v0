@@ -8,6 +8,7 @@ import { ExperiencePlayer } from "@/components/lesson/ExperiencePlayer";
 import { KeyFactsList } from "@/components/lesson/KeyFactsList";
 import { TopicDeepDive } from "@/components/lesson/TopicDeepDive";
 import { TopicMetadataBar } from "@/components/lesson/TopicMetadataBar";
+import { TopicPrerequisiteRefreshers } from "@/components/lesson/TopicPrerequisiteRefreshers";
 import { TopicPracticeHub } from "@/components/topic/TopicPracticeHub";
 import { TopicLightbulbMoment } from "@/components/lesson/TopicLightbulbMoment";
 import { TopicCheatSheets } from "@/components/topic/TopicCheatSheets";
@@ -151,6 +152,13 @@ export function LessonPageClient({
         prerequisiteNames={prerequisiteNames}
       />
 
+      <TopicPrerequisiteRefreshers
+        certId={certId}
+        topicId={topicId}
+        prerequisiteIds={topic.prerequisites ?? []}
+        prerequisiteNames={prerequisiteNames}
+      />
+
       <div className="mb-6">
         {!lessonUnlocked ? (
           topic.lesson.experience?.screens &&
@@ -224,13 +232,18 @@ export function LessonPageClient({
             <TopicLightbulbMoment moment={topic.lightbulbMoment} />
           )}
 
-          <div className="mb-6">
-            <KeyFactsList facts={topic.keyFacts} subtitle="From your lesson — reinforce before practice." />
-          </div>
+          {/* Practice path + primary CTA before dense reference sections */}
+          <TopicPracticeHub certId={certId} topic={topic} primaryCtaAtTop />
 
-          <TopicCheatSheets topic={topic} />
+          <KeyFactsList
+            facts={topic.keyFacts}
+            subtitle="From your lesson — reinforce before practice."
+            collapsible
+          />
 
           <TopicDeepDive topic={topic} />
+
+          <TopicCheatSheets topic={topic} />
 
           <ObjectiveMasteryList
             certId={certId}
@@ -238,21 +251,17 @@ export function LessonPageClient({
             entries={objectiveEntries}
           />
 
-          <TopicPracticeHub certId={certId} topic={topic} />
-
           <TopicAssignments certId={certId} assignments={topic.assignments} />
 
-          {lessonUnlocked && (
-            <div className="mb-6">
-              <TopicWhatsNext
-                certId={certId}
-                topicId={topicId}
-                topicName={topic.name}
-                nextTopic={nextTopic}
-                variant="hub"
-              />
-            </div>
-          )}
+          <div className="mb-6">
+            <TopicWhatsNext
+              certId={certId}
+              topicId={topicId}
+              topicName={topic.name}
+              nextTopic={nextTopic}
+              variant="hub"
+            />
+          </div>
 
           {!usesStructuredDelivery && !isComplete && (
             <div>

@@ -9,9 +9,40 @@ import { Brain, Layers, Library, Wrench, ChevronRight } from "lucide-react";
 interface TopicPracticeHubProps {
   certId: string;
   topic: Topic;
+  /** Prefer a single primary CTA at the top of the card (default true). */
+  primaryCtaAtTop?: boolean;
 }
 
-export function TopicPracticeHub({ certId, topic }: TopicPracticeHubProps) {
+export function getPracticeHubPrimaryAction(
+  certId: string,
+  topic: Topic
+): { href: string; label: string } | null {
+  if (topic.quiz.length > 0) {
+    return {
+      href: `/cert/${certId}/quiz/${topic.id}`,
+      label: "Start with quiz",
+    };
+  }
+  if (topic.flashcards.length > 0) {
+    return {
+      href: `/cert/${certId}/flashcards/${topic.id}`,
+      label: "Start with flashcards",
+    };
+  }
+  if ((topic.questionBank?.length ?? 0) > 0) {
+    return {
+      href: `/cert/${certId}/quiz/${topic.id}?bank=1`,
+      label: "Start question bank drill",
+    };
+  }
+  return null;
+}
+
+export function TopicPracticeHub({
+  certId,
+  topic,
+  primaryCtaAtTop = true,
+}: TopicPracticeHubProps) {
   const quizCount = topic.quiz.length;
   const flashcardCount = topic.flashcards.length;
   const bankCount = topic.questionBank?.length ?? 0;
@@ -75,6 +106,8 @@ export function TopicPracticeHub({ certId, topic }: TopicPracticeHubProps) {
     });
   }
 
+  const primary = getPracticeHubPrimaryAction(certId, topic);
+
   return (
     <Card className="mb-6 border-zinc-800 bg-zinc-900/60 p-4">
       <h3 className="text-sm font-semibold uppercase tracking-wide text-sky-400">
@@ -84,6 +117,18 @@ export function TopicPracticeHub({ certId, topic }: TopicPracticeHubProps) {
         Follow this order — teach first, then test, then drill deeper.
       </p>
       <p className="mt-1 text-xs text-zinc-500">Each step is clickable.</p>
+
+      {primaryCtaAtTop && primary && (
+        <div className="mt-4">
+          <Link href={primary.href}>
+            <Button className="w-full">
+              <Brain className="mr-2 inline h-4 w-4" />
+              {primary.label}
+            </Button>
+          </Link>
+        </div>
+      )}
+
       <ol className="mt-4 flex flex-col gap-3">
         {steps.map((item) => {
           const Icon = item.icon;
@@ -126,12 +171,13 @@ export function TopicPracticeHub({ certId, topic }: TopicPracticeHubProps) {
           return <li key={item.step}>{content}</li>;
         })}
       </ol>
-      {quizCount > 0 && (
+
+      {!primaryCtaAtTop && primary && (
         <div className="mt-4">
-          <Link href={`/cert/${certId}/quiz/${topic.id}`}>
+          <Link href={primary.href}>
             <Button className="w-full">
               <Brain className="mr-2 inline h-4 w-4" />
-              Start with quiz
+              {primary.label}
             </Button>
           </Link>
         </div>

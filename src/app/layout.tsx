@@ -23,7 +23,7 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "ReLearn — Certification study companion",
+  title: "ReLearn — Course study companion",
   description:
     "A mobile-first learning platform built around one flagship experience (CCNA) with focused skill tracks and immersive lessons, quizzes, and flashcards.",
 };

@@ -60,7 +60,7 @@ export function OnboardingWizard() {
         <div className="min-h-0 flex-1 overflow-y-auto px-5 py-4">
           {step === "cert" && (
             <>
-              <h2 className="text-lg font-semibold text-zinc-50">Which certification are you studying?</h2>
+              <h2 className="text-lg font-semibold text-zinc-50">Which course are you studying?</h2>
               <p className="mt-1 text-sm text-zinc-400">
                 We&apos;ll focus your study plan and recommendations on this track.
               </p>

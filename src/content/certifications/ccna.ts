@@ -1560,7 +1560,8 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
                 { id: "d", text: "254" },
               ],
               correctChoiceId: "b",
-              explanation: "/26 leaves 6 host bits: 2^6 - 2 = 62 usable addresses.",
+              explanation:
+                "/26 leaves 6 host bits (32 − 26 = 6). 2^6 = 64 total addresses in each block. Two are reserved: network (all host bits 0) and broadcast (all host bits 1). Usable hosts = 64 − 2 = 62.",
               objectiveId: "CCNA-1.9",
               difficulty: "easy",
             },
@@ -1602,7 +1603,8 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
                 { id: "d", text: "64" },
               ],
               correctChoiceId: "b",
-              explanation: "/28 has 4 host bits: 2^4 = 16 total addresses.",
+              explanation:
+                "/28 leaves 4 host bits (32 − 28 = 4). Total addresses = 2^4 = 16 (network through broadcast). This question asks for total addresses, not usable hosts.",
               objectiveId: "CCNA-1.10",
               difficulty: "easy",
             },
@@ -1630,7 +1632,8 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
                 { id: "d", text: "192–255" },
               ],
               correctChoiceId: "b",
-              explanation: "/26 block size 64. Ninety falls in the 64–127 slice.",
+              explanation:
+                "/26 means 26 network bits, so 6 host bits remain (32 − 26). Those 6 bits make block size 2^6 = 64. Last-octet blocks therefore start at 0, 64, 128, 192. .90 is ≥ 64 and < 128, so it belongs in 64–127.",
               objectiveId: "CCNA-1.10",
               difficulty: "easy",
             },
@@ -1644,7 +1647,8 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
                 { id: "d", text: "96–127" },
               ],
               correctChoiceId: "b",
-              explanation: "/27 block size 32. Forty-five falls in the 32–63 slice.",
+              explanation:
+                "/27 leaves 5 host bits (32 − 27 = 5). Block size = 2^5 = 32. Last-octet blocks start at 0, 32, 64, 96…. .45 is ≥ 32 and < 64, so it belongs in 32–63.",
               objectiveId: "CCNA-1.10",
               difficulty: "easy",
             },
@@ -1658,7 +1662,8 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
                 { id: "d", text: "224–239" },
               ],
               correctChoiceId: "b",
-              explanation: "/28 block size 16. Two hundred falls in the 192–207 slice.",
+              explanation:
+                "/28 leaves 4 host bits (32 − 28 = 4). Block size = 2^4 = 16. Last-octet blocks start at 0, 16, 32… 176, 192, 208…. .200 is ≥ 192 and < 208, so it belongs in 192–207.",
               objectiveId: "CCNA-1.10",
               difficulty: "easy",
             },
@@ -1711,7 +1716,8 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
                 { id: "d", text: "192.168.1.0" }
               ],
               correctChoiceId: "a",
-              explanation: "Subnets: .0, .64, .128, .192 — third is .128.",
+              explanation:
+                "/26 block size is 64, so subnets in the last octet are .0, .64, .128, .192. Count: 1st=.0, 2nd=.64, 3rd=.128.",
               objectiveId: "CCNA-1.10",
               difficulty: "medium",
             },
