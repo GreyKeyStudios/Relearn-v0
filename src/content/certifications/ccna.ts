@@ -11,6 +11,10 @@ import { SWITCHING_EXPERIENCE } from "@/content/lessons/switching-experience";
 import { VLANS_EXPERIENCE } from "@/content/lessons/vlans-experience";
 import { TRUNKING_EXPERIENCE } from "@/content/lessons/trunking-experience";
 import { STP_EXPERIENCE } from "@/content/lessons/stp-experience";
+import { ROUTING_FUNDAMENTALS_EXPERIENCE } from "@/content/lessons/routing-fundamentals-experience";
+import { STATIC_ROUTES_EXPERIENCE } from "@/content/lessons/static-routes-experience";
+import { OSPF_BASICS_EXPERIENCE } from "@/content/lessons/ospf-basics-experience";
+import { NAT_EXPERIENCE } from "@/content/lessons/nat-experience";
 
 export const ccna: Certification = {
   id: "ccna",
@@ -4458,19 +4462,14 @@ EtherChannel bundles are a later depth topic—STP treats a channel as one logic
           name: "Routing Fundamentals",
           lesson: {
             title: "IP Routing Concepts",
-            content: `Routing is the process of forwarding IP packets from source to destination across multiple networks. Routers examine destination IP addresses, consult routing tables, and select the best path based on metrics and administrative distance. Routing occurs at OSI Layer 3.
+            content: `Routing forwards IP packets across networks. Routers read destination IP, consult the routing table (RIB), and choose a next hop. That is Layer 3 — different from Layer 2 switches that forward by MAC.
 
-A routing table contains routes learned dynamically or configured statically. Each entry includes a prefix, next-hop IP or exit interface, administrative distance, and metric. Longest prefix match determines which route applies when multiple entries match a destination.
+Each route entry includes a prefix, next-hop or exit interface, administrative distance, and metric. Longest prefix match picks the most specific route when several match. Connected routes appear when an interface is up/up with an IP. Default route 0.0.0.0/0 is the gateway of last resort. TTL decrements each hop.
 
-Connected routes appear automatically when an interface is configured with an IP address and is up/up. Default route (0.0.0.0/0) forwards traffic when no specific match exists. TTL is decremented at each router hop.
+Control plane builds the table (static or protocols); data plane forwards packets. Static routes and OSPF come next — defer deep EIGRP and CEF/FIB internals.
 
-Understanding routing tables, next-hop concepts, and the difference between routing and forwarding is core CCNA knowledge.
-
-Routing protocols classify as distance-vector (RIP, EIGRP classic behavior) or link-state (OSPF, IS-IS). Hybrid EIGRP combines features. Metrics differ: hop count (RIP), bandwidth/delay (EIGRP), cost (OSPF).
-
-The forwarding plane (data plane) moves packets; the control plane builds routing tables via protocols or static config. CEF (Cisco Express Forwarding) enables fast switching on routers after the routing table (RIB) is built.
-
-When multiple routes exist to the same prefix, compare administrative distance first, then metric. show ip route displays codes: C connected, S static, O OSPF, etc.`,
+show ip route codes: C connected, S static, O OSPF. When equal-length prefixes compete, compare administrative distance first, then metric.`,
+            experience: ROUTING_FUNDAMENTALS_EXPERIENCE,
           },
           keyFacts: [
             "Routers forward packets based on destination IP and routing table lookup",
@@ -4492,7 +4491,7 @@ When multiple routes exist to the same prefix, compare administrative distance f
             "Administrative distance: static vs OSPF vs connected",
             "Default route 0.0.0.0/0 gateway of last resort",
             "Routing vs switching decision at Layer 3 boundary",
-            "Show ip route codes (C, S, O, etc.) interpretation",
+            "Show ip route codes (C, S, O) interpretation",
           ],
           quiz: [
             {
@@ -4717,17 +4716,14 @@ When multiple routes exist to the same prefix, compare administrative distance f
           name: "Static Routes",
           lesson: {
             title: "Configuring Static Routing",
-            content: `Static routes are manually configured entries that tell a router how to reach specific networks. They use minimal CPU and bandwidth compared to dynamic routing protocols but require manual updates when topology changes. Static routes suit small networks, stub networks, and default routes toward ISPs.
+            content: `Static routes are manually configured paths — low overhead, full control, manual updates when design changes. They suit stub networks, simple labs, and default routes toward ISPs.
 
-Configure a static route on Cisco IOS with ip route network mask next-hop or exit-interface. Floating static routes have a higher administrative distance than dynamic routes and activate only when the primary route fails.
+Cisco syntax: ip route network mask next-hop (or exit-interface). Default: ip route 0.0.0.0 0.0.0.0 next-hop. Static AD defaults to 1. Floating statics use a higher AD so they install only when the primary disappears.
 
-A next-hop address is preferred on multi-access networks like Ethernet to avoid ARP issues. Default static route ip route 0.0.0.0 0.0.0.0 next-hop provides Internet exit. Verify with show ip route static and test with traceroute or ping.
+On Ethernet, prefer a next-hop IP over exit-interface-only (cleaner ARP). Recursive lookup: the router may need another route to resolve a non-connected next-hop. Verify with show ip route static; remove with no ip route.
 
-Recursive lookups occur when a route points to a next-hop IP—the router must resolve that next-hop via another route. Directly connected next-hops avoid some recursion issues. Null0 routes summarize black-hole routes to prevent routing loops in redistribution scenarios.
-
-Verify static routes with show running-config | section ip route, show ip route static, and traceroute. Remove with no ip route. Floating static backup example: ip route 0.0.0.0 0.0.0.0 203.0.113.1 200 (AD 200) backing up OSPF default.
-
-IPv6 static routes use ipv6 route prefix/length next-hop. Practice both IPv4 and IPv6 static syntax for CCNA.`,
+IPv6 uses ipv6 route prefix/length next-hop — same idea; deep IPv6 static design is later. Defer Null0 redistribution blackhole complexity.`,
+            experience: STATIC_ROUTES_EXPERIENCE,
           },
           keyFacts: [
             "Static routes are manually configured; no protocol overhead",
@@ -4739,7 +4735,7 @@ IPv6 static routes use ipv6 route prefix/length next-hop. Practice both IPv4 and
           ],
           commonMistakes: [
             "Pointing static route next-hop to unreachable or wrong interface",
-            "Forgetting exit interface on point-to-point links when next-hop omitted",
+            "Using exit-interface-only statics on Ethernet when next-hop is clearer",
             "Not adding reciprocal routes causing one-way connectivity",
             "Confusing floating static (higher AD) with primary static route",
             "Using static routes in large dynamic networks without documentation",
@@ -4747,9 +4743,9 @@ IPv6 static routes use ipv6 route prefix/length next-hop. Practice both IPv4 and
           examTraps: [
             "ip route destination mask next-hop vs exit-interface syntax",
             "Floating static backup route with administrative distance > 1",
-            "Default static route propagation and gateway of last resort",
+            "Default static route and gateway of last resort",
             "Recursive lookup failure when next-hop is unreachable",
-            "Null0 static route for summarization and blackholing",
+            "Static AD 1 vs connected 0 for the same prefix",
           ],
           quiz: [
             {
@@ -4846,18 +4842,18 @@ IPv6 static routes use ipv6 route prefix/length next-hop. Practice both IPv4 and
             },
             {
               id: "static-routes-f4",
-              front: "Null0 route purpose?",
-              back: "Discard traffic matching prefix (black hole)",
+              front: "Verify static routes?",
+              back: "show ip route static (also show running-config | section ip route)",
             },
             {
               id: "static-routes-f4b",
-              front: "Verify static routes?",
-              back: "show ip route static",
+              front: "Floating static AD example?",
+              back: "Higher than dynamic protocol (e.g., 200)",
             },
             {
               id: "static-routes-f4c",
-              front: "Floating static AD example?",
-              back: "Higher than dynamic protocol (e.g., 200)",
+              front: "Ethernet static preference?",
+              back: "Specify next-hop IP (avoid exit-interface-only on multi-access)",
             }
           ],
           objectives: [
@@ -4985,17 +4981,14 @@ IPv6 static routes use ipv6 route prefix/length next-hop. Practice both IPv4 and
           name: "OSPF Basics",
           lesson: {
             title: "OSPF Fundamentals",
-            content: `Open Shortest Path First (OSPF) is a link-state interior gateway protocol that uses Dijkstra's algorithm to compute the shortest path tree. OSPF routers flood Link State Advertisements (LSAs) to build a synchronized topology database within an area. OSPF is classless, supports VLSM, and uses cost (based on bandwidth) as its metric.
+            content: `OSPF is a link-state IGP: routers flood topology within an area, build a synchronized database, and run SPF (Dijkstra) for best paths. Metric is cost from interface bandwidth. OSPF is classless and supports VLSM.
 
-All routers in an area must have identical link-state databases. Area 0 is the backbone; all other areas connect to it. Router ID is a 32-bit value, often derived from a loopback or highest active IP. Neighbor adjacencies form via Hello packets sent to 224.0.0.5.
+Area 0 is the backbone; other areas connect through it. Router ID is a 32-bit identity (manual preferred, else highest loopback, else highest active IP). Hellos on 224.0.0.5 discover neighbors; Full means databases match. DR/BDR cut adjacency mesh on Ethernet.
 
-Designated Router (DR) and Backup DR reduce adjacency count on multi-access networks like Ethernet. Configure with router ospf process-id and network statements using wildcard masks.
+Configure with router ospf <process-id> and network statements with wildcard masks (inverse of subnet mask). Process ID is local only — not the area ID. Verify: show ip ospf neighbor, show ip route ospf.
 
-OSPF is a link-state IGP using Dijkstra SPF to build a topology map. Routers form adjacencies on shared segments; DR/BDR election reduces LSA flooding on multi-access networks like Ethernet. Router ID is chosen from manual config, highest loopback IP, or highest active interface IP.
-
-OSPF areas: area 0 (backbone) is required; other areas connect to area 0. LSA types describe networks and external routes—CCNA focuses on concepts more than every LSA type detail.
-
-Enable with router ospf 1, network statements or interface ip ospf commands. Verify neighbors: show ip ospf neighbor. Cost is based on interface bandwidth reference.`,
+Defer full LSA type catalogs, fancy multi-area designs, and deep authentication.`,
+            experience: OSPF_BASICS_EXPERIENCE,
           },
           keyFacts: [
             "OSPF is a link-state protocol using cost as metric",
@@ -5026,9 +5019,9 @@ Enable with router ospf 1, network statements or interface ip ospf commands. Ver
           examTraps: [
             "Wildcard mask questions inverting subnet mask bits (0.0.0.255 for /24, not 255.255.255.0)",
             "Router ID selection order: manual router-id beats highest loopback beats highest active interface",
-            "Cost calculation traps using reference bandwidth / interface bandwidth",
-            "Hello multicast address 224.0.0.5 vs 224.0.0.6 (DR/BDR) confusion",
-            "Area 0 backbone rule—virtual links are beyond CCNA but area connectivity questions appear",
+            "Cost from interface bandwidth (reference bandwidth ÷ speed)",
+            "Hello multicast address 224.0.0.5",
+            "Area 0 backbone rule for multi-area attachment",
           ],
           realWorldScenario: "A regional office has three routers connecting HQ, a warehouse LAN, and a backup Internet link. You enable OSPF area 0 on all three, set loopback router IDs for stability, and verify Full adjacencies before cutover. When the warehouse subnet disappears from HQ routing tables, you check show ip ospf neighbor, confirm the warehouse interface is in area 0, and fix a mismatched hello/dead timer on one link.",
           estimatedStudyMinutes: 45,
@@ -5315,17 +5308,14 @@ Enable with router ospf 1, network statements or interface ip ospf commands. Ver
           name: "NAT",
           lesson: {
             title: "Network Address Translation",
-            content: `Network Address Translation (NAT) modifies IP address information in packet headers as traffic crosses a router, enabling private RFC 1918 addresses to access the public Internet using fewer public IPs. Static NAT maps one private IP to one public IP permanently. PAT (NAT overload) maps many private addresses to one public IP using unique source port numbers.
+            content: `NAT rewrites IP addresses as traffic crosses a router so RFC 1918 private hosts can reach the public Internet using fewer public IPs. Static NAT is a fixed one-to-one map. PAT (NAT overload) maps many inside hosts to one public IP using unique source ports.
 
-Inside local is the actual private address on the internal host. Inside global is the translated public address seen externally. Configure with ip nat inside on the internal interface and ip nat outside on the external interface.
+Inside local = real private address on the host. Inside global = translated address seen externally. Mark interfaces: ip nat inside on the LAN side, ip nat outside toward the ISP. Deploy NAT at the network edge.
 
-NAT translations time out after inactivity. NAT is typically deployed at the network edge toward the ISP and can complicate VPNs and protocols that embed IP addresses in payload.
+Configure PAT with an ACL of inside sources and ip nat inside source list … interface <wan> overload. Verify with show ip nat translations.
 
-NAT types: static NAT (one-to-one), dynamic NAT (pool), PAT/NAT overload (many inside to one outside IP using ports). Inside local vs inside global and outside local vs outside global terminology maps private to public representations.
-
-Configure PAT: ip nat inside on internal interface, ip nat outside on external, access-list defining inside sources, ip nat inside source list 1 interface g0/0 overload. Verify with show ip nat translations.
-
-NAT breaks end-to-end connectivity for some protocols but conserves IPv4 addresses. IPv6 reduces NAT need but CCNA still tests PAT thoroughly.`,
+Defer deep outside local/outside global four-way matrix drills and IPsec NAT-T friction labs.`,
+            experience: NAT_EXPERIENCE,
           },
           keyFacts: [
             "NAT translates private addresses to public addresses at a router",
@@ -5339,15 +5329,15 @@ NAT breaks end-to-end connectivity for some protocols but conserves IPv4 address
             "Applying ip nat inside and outside on wrong interfaces",
             "Forgetting overload keyword for PAT many-to-one",
             "Confusing inside local vs inside global terminology",
-            "NAT order of operations with ACL—know inside source list flow",
-            "Expecting NAT to fix routing problems without proper routes",
+            "Expecting NAT to invent routes without proper routing in place",
+            "Expecting NAT to fix connectivity when return routes are missing",
           ],
           examTraps: [
-            "Inside local vs inside global vs outside local vs outside global",
+            "Inside local vs inside global (primary terminology pair)",
             "PAT/overload using interface IP vs NAT pool",
-            "Which interface is inside vs outside in a given topology diagram",
-            "Static NAT one-to-one vs dynamic pool vs PAT",
-            "show ip nat translations reading real exam-style output",
+            "Which interface is inside vs outside in a topology diagram",
+            "Static NAT one-to-one vs PAT many-to-one",
+            "show ip nat translations reading exam-style output",
           ],
           quiz: [
             {
