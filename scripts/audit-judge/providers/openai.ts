@@ -65,35 +65,60 @@ async function callOpenAi(params: {
     });
   }
 
-  const res = await fetch("https://api.openai.com/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${params.apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      model: params.model,
-      temperature: 0.2,
-      max_tokens: params.maxTokens,
-      response_format: { type: "json_object" },
-      messages: [
-        { role: "system", content: params.system },
-        { role: "user", content },
-      ],
-    }),
-  });
+  let lastErr: unknown;
+  for (let attempt = 1; attempt <= 4; attempt++) {
+    try {
+      const res = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${params.apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: params.model,
+          temperature: 0.2,
+          max_tokens: params.maxTokens,
+          response_format: { type: "json_object" },
+          messages: [
+            { role: "system", content: params.system },
+            { role: "user", content },
+          ],
+        }),
+      });
 
-  if (!res.ok) {
-    const errText = await res.text();
-    throw new Error(`OpenAI ${res.status}: ${errText.slice(0, 500)}`);
+      if (!res.ok) {
+        const errText = await res.text();
+        const retryable = res.status === 429 || res.status >= 500;
+        if (retryable && attempt < 4) {
+          const waitMs = attempt * 2000;
+          console.warn(`  OpenAI ${res.status}, retry in ${waitMs}ms…`);
+          await new Promise((r) => setTimeout(r, waitMs));
+          continue;
+        }
+        throw new Error(`OpenAI ${res.status}: ${errText.slice(0, 500)}`);
+      }
+
+      const data = (await res.json()) as {
+        choices?: Array<{ message?: { content?: string } }>;
+      };
+      const text = data.choices?.[0]?.message?.content;
+      if (!text) throw new Error("OpenAI returned empty content");
+      return text;
+    } catch (err) {
+      lastErr = err;
+      const msg = err instanceof Error ? err.message : String(err);
+      const networkish =
+        /fetch failed|ECONNRESET|ETIMEDOUT|socket|network/i.test(msg);
+      if (networkish && attempt < 4) {
+        const waitMs = attempt * 2000;
+        console.warn(`  ${msg}, retry in ${waitMs}ms…`);
+        await new Promise((r) => setTimeout(r, waitMs));
+        continue;
+      }
+      throw err;
+    }
   }
-
-  const data = (await res.json()) as {
-    choices?: Array<{ message?: { content?: string } }>;
-  };
-  const text = data.choices?.[0]?.message?.content;
-  if (!text) throw new Error("OpenAI returned empty content");
-  return text;
+  throw lastErr instanceof Error ? lastErr : new Error(String(lastErr));
 }
 
 export function createOpenAiJudgeProvider(opts?: {
