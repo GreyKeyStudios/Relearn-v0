@@ -15,6 +15,8 @@ import { ROUTING_FUNDAMENTALS_EXPERIENCE } from "@/content/lessons/routing-funda
 import { STATIC_ROUTES_EXPERIENCE } from "@/content/lessons/static-routes-experience";
 import { OSPF_BASICS_EXPERIENCE } from "@/content/lessons/ospf-basics-experience";
 import { NAT_EXPERIENCE } from "@/content/lessons/nat-experience";
+import { DHCP_EXPERIENCE } from "@/content/lessons/dhcp-experience";
+import { DNS_EXPERIENCE } from "@/content/lessons/dns-experience";
 
 export const ccna: Certification = {
   id: "ccna",
@@ -5568,17 +5570,14 @@ Defer deep outside local/outside global four-way matrix drills and IPsec NAT-T f
           name: "DHCP",
           lesson: {
             title: "Dynamic Host Configuration Protocol",
-            content: `DHCP automatically assigns IP addresses, subnet masks, default gateways, DNS servers, and other options to clients. DHCP uses UDP: server port 67, client port 68. The DORA process—Discover, Offer, Request, Acknowledge—leases addresses for a configurable time.
+            content: `DHCP automatically assigns IP address, mask, default gateway, and DNS servers so hosts join without static config. It uses UDP: server port 67, client port 68. The DORA exchange — Discover → Offer → Request → Acknowledge — leases an address for a configurable time.
 
-A DHCP scope defines the range of addresses a server can assign on a subnet. Exclusions reserve addresses for static devices. DHCP relay (ip helper-address on Cisco) forwards DHCP broadcasts from remote subnets to a central DHCP server.
+A scope (pool) is the range of assignable addresses on a subnet; exclusions keep static devices out of the pool. Gateway (option 3) and DNS servers (option 6) are common options.
 
-Without relay or a local server, clients may fall back to APIPA (169.254.x.x). Security considerations include DHCP snooping to prevent rogue servers.
+DHCP Discover is a broadcast and does not cross routers. On Cisco, ip helper-address on the client LAN interface relays those packets to a remote DHCP server. When no lease is obtained, Windows often falls back to APIPA 169.254.x.x (local link only).
 
-DHCP DORA: Discover (broadcast), Offer, Request, Acknowledge. Relay agents (ip helper-address on Cisco) forward broadcasts to remote DHCP servers. DHCP snooping on switches mitigates rogue servers on access VLANs.
-
-Lease time, default gateway (option 3), DNS servers (option 6), and domain name are common options. Reservations map MAC to fixed IP. Verify client lease with ipconfig /all or show ip dhcp binding on server/router.
-
-DHCPv6 uses similar concepts with ICMPv6 and DHCPv6 messages for IPv6 environments.`,
+Defer deep DHCP snooping switch config and DHCPv6 message detail.`,
+            experience: DHCP_EXPERIENCE,
           },
           keyFacts: [
             "DHCP DORA: Discover, Offer, Request, Acknowledge",
@@ -5589,18 +5588,18 @@ DHCPv6 uses similar concepts with ICMPv6 and DHCPv6 messages for IPv6 environmen
             "APIPA (169.254.x.x) occurs when DHCP fails",
           ],
           commonMistakes: [
-            "DHCP pool excluding network or broadcast addresses incorrectly",
-            "Forgetting ip helper-address or DHCP relay for remote subnets",
-            "Lease scope not matching subnet mask or gateway",
-            "Confusing DORA process order (Discover, Offer, Request, Acknowledge)",
-            "Not reserving addresses for servers still in dynamic pool",
+            "Forgetting ip helper-address when the DHCP server is on another subnet",
+            "Scope/pool or gateway option not matching the client subnet",
+            "Confusing DORA order (Discover, Offer, Request, Acknowledge)",
+            "Treating APIPA 169.254.x.x as a successful routed lease",
+            "Expecting DHCP Discover broadcasts to cross routers without relay",
           ],
           examTraps: [
-            "DORA sequence and which message is broadcast vs unicast",
-            "ip helper-address UDP ports 67/68 relay to remote DHCP server",
+            "DORA sequence — Discover first from the client",
+            "UDP 67 server / 68 client (not DNS 53)",
+            "ip helper-address relays DHCP across subnets",
             "APIPA 169.254.x.x when DHCP fails",
-            "Excluded-address range configuration on Cisco IOS",
-            "DHCP snooping trusted vs untrusted port concept",
+            "Scope defines the assignable address pool",
           ],
           quiz: [
             {
@@ -5707,8 +5706,8 @@ DHCPv6 uses similar concepts with ICMPv6 and DHCPv6 messages for IPv6 environmen
             },
             {
               id: "dhcp-f4c",
-              front: "Rogue DHCP mitigation?",
-              back: "DHCP snooping",
+              front: "APIPA means?",
+              back: "No DHCP lease — 169.254.x.x local link only",
             }
           ],
           objectives: [
@@ -5836,17 +5835,14 @@ DHCPv6 uses similar concepts with ICMPv6 and DHCPv6 messages for IPv6 environmen
           name: "DNS",
           lesson: {
             title: "Domain Name System",
-            content: `DNS translates human-readable domain names like www.example.com into IP addresses that computers use for routing. DNS is a hierarchical, distributed database organized into zones. The resolution process starts at the client's configured DNS resolver.
+            content: `DNS translates human-readable names like www.example.com into IP addresses. It is a light hierarchy of zones (root → TLD → organization). Clients query a configured resolver; that resolver often works recursively until it gets an answer from an authoritative server for the zone.
 
-Resource record types include A (IPv4), AAAA (IPv6), CNAME (alias), MX (mail), NS (name server), and PTR (reverse lookup). TTL on records controls caching duration. DNS uses UDP/TCP port 53.
+Core record types for CCNA: A (IPv4), AAAA (IPv6), CNAME (alias to another name), MX (mail exchange), PTR (reverse IP→name). TTL controls how long answers may be cached.
 
-Common issues: wrong DNS server configured, stale cache, firewall blocking port 53, or missing records. DHCP often provides DNS server addresses automatically to clients.
+DNS uses port 53 — usually UDP for queries; TCP for large replies or zone transfers. DHCP often hands out the DNS server list (option 6). If ping by IP works but names fail, suspect DNS.
 
-DNS resolves names to IP addresses hierarchically: root, TLD (.com), authoritative servers. Record types: A/AAAA (address), CNAME (alias), MX (mail), NS (name server), PTR (reverse), TXT (text). Resolver queries recursive; authoritative answers for its zone.
-
-DNS uses UDP 53 for queries; TCP 53 for large responses or zone transfers. Split-horizon DNS returns different answers inside vs outside corporate networks. nslookup and dig test resolution.
-
-DNS security topics include DNSSEC (signing) and filtering malicious domains—high-level CCNA awareness.`,
+Defer DNSSEC, split-horizon/views design, and dig mastery labs.`,
+            experience: DNS_EXPERIENCE,
           },
           keyFacts: [
             "DNS maps domain names to IP addresses",
@@ -5857,18 +5853,18 @@ DNS security topics include DNSSEC (signing) and filtering malicious domains—h
             "TTL controls how long resolvers cache a record",
           ],
           commonMistakes: [
-            "Confusing A record (hostname to IPv4) with AAAA (IPv6) and PTR (reverse)",
-            "Assuming DNS resolves MAC addresses—ARP handles Layer 2",
-            "Forgetting recursive vs iterative query roles",
-            "MX record priority confusion for mail server selection",
-            "Caching TTL ignored causing stale record troubleshooting misses",
+            "Confusing A (IPv4) with AAAA (IPv6), CNAME (alias), and PTR (reverse)",
+            "Assuming DNS resolves MAC addresses — ARP/ND handle Layer 2",
+            "Ignoring TTL/cache when a “fixed” record still looks stale",
+            "Thinking name failure always means the whole path is down",
+            "Forgetting DHCP often supplies the DNS server list",
           ],
           examTraps: [
-            "Record type matching: A, AAAA, CNAME, MX, PTR, NS, SOA",
-            "FQDN vs hostname vs search domain suffix behavior",
-            "Recursive query to resolver vs iterative between servers",
-            "DNS over UDP port 53 vs TCP for large responses",
-            "nslookup/dig style output interpretation on exams",
+            "Record types: A, AAAA, CNAME, MX, PTR",
+            "Port 53 — UDP common; TCP for large/zone",
+            "TTL = cache lifetime (not IP hop TTL)",
+            "Recursive resolver vs authoritative zone owner (light)",
+            "DHCP often provides client DNS server addresses",
           ],
           quiz: [
             {
