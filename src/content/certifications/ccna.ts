@@ -17,6 +17,9 @@ import { OSPF_BASICS_EXPERIENCE } from "@/content/lessons/ospf-basics-experience
 import { NAT_EXPERIENCE } from "@/content/lessons/nat-experience";
 import { DHCP_EXPERIENCE } from "@/content/lessons/dhcp-experience";
 import { DNS_EXPERIENCE } from "@/content/lessons/dns-experience";
+import { ACLS_EXPERIENCE } from "@/content/lessons/acls-experience";
+import { NETWORK_SECURITY_EXPERIENCE } from "@/content/lessons/network-security-experience";
+import { AUTOMATION_BASICS_EXPERIENCE } from "@/content/lessons/automation-basics-experience";
 
 export const ccna: Certification = {
   id: "ccna",
@@ -6095,17 +6098,12 @@ Defer DNSSEC, split-horizon/views design, and dig mastery labs.`,
           name: "ACLs",
           lesson: {
             title: "Access Control Lists",
-            content: `Access Control Lists (ACLs) filter traffic on Cisco routers and switches by matching packet attributes—source/destination IP, protocol, and port numbers. Standard ACLs match only source IP address. Extended ACLs match source/destination IP, protocol, and port.
+            content: `ACLs filter traffic by matching packet fields and returning permit or deny. Standard ACLs match source IP only; extended ACLs match source/destination IP, protocol, and ports. Evaluation is top-down — first match wins — and every ACL ends with an implicit deny all.
 
-ACLs are processed top-to-bottom; the first match wins. An implicit deny all exists at the end. Place standard ACLs close to the destination; extended ACLs close to the source for efficiency.
+Wildcard masks are not subnet masks: 0 means must match that bit, 1 means ignore. Place extended ACLs near the source and standard ACLs nearer the destination. Named ACLs are easier to read than numbers alone; apply with ip access-group … in|out on an interface.
 
-Wildcard masks in ACLs differ from subnet masks—0 means must match and 1 means don't care. Apply ACLs to interfaces with ip access-group name in or out.
-
-Standard ACLs (1–99, 1300–1999) filter source IP only. Extended ACLs (100–199, 2000–2699) filter source/dest IP, protocol, and ports. Named ACLs improve readability. ACLs are processed top-down; first match wins; implicit deny all at end.
-
-Place standard ACLs close to destination; extended ACLs close to source (best practice guidelines). IPv6 ACLs use similar logic with ipv6 access-list.
-
-Wildcard masks invert subnet masks for ACL matching—0 means must match, 1 means ignore. Example: 0.0.0.255 matches any host in last octet.`,
+Defer deep IPv6 ACL catalogs, reflexive ACLs, and time-based ACLs.`,
+            experience: ACLS_EXPERIENCE,
           },
           keyFacts: [
             "Standard ACLs match source IP only; extended match source, destination, ports",
@@ -6134,11 +6132,11 @@ Wildcard masks invert subnet masks for ACL matching—0 means must match, 1 mean
             "Applying ACLs to the wrong interface direction (in vs out)",
           ],
           examTraps: [
-            "Rule-order questions where permit any any above a deny makes the deny never match",
-            "Wildcard mask answers that use subnet mask values instead of inverses",
-            "Standard vs extended placement—exam expects extended near source, standard near destination",
-            "Numbered ACL range traps: 1-99 standard, 100-199 extended",
-            "Questions about what happens to return traffic when only outbound ACL is applied",
+            "First-match order — permit any any above a deny makes the deny dead",
+            "Wildcard 0 = match, 1 = ignore (not a subnet mask)",
+            "Extended near source; standard nearer destination",
+            "Numbered ranges: 1–99 standard, 100–199 extended",
+            "ip access-group in vs out relative to the interface",
           ],
           realWorldScenario: "Your organization's security team requires that only the accounting subnet may reach the payroll server on TCP port 443, while all other internal subnets are denied. You write an extended ACL with permit tcp for the accounting network and deny ip for everyone else, place it inbound on the router interface closest to the sources, and test from HR (should fail) and accounting (should succeed) before change-control approval.",
           estimatedStudyMinutes: 40,
@@ -6406,17 +6404,12 @@ Wildcard masks invert subnet masks for ACL matching—0 means must match, 1 mean
           name: "Network Security",
           lesson: {
             title: "Network Security Fundamentals",
-            content: `Network security protects confidentiality, integrity, and availability of data and infrastructure. The CIA triad guides control selection. Defense in depth layers multiple controls—physical, network, host, and application—so no single failure compromises everything.
+            content: `Network security starts with the CIA triad — confidentiality, integrity, availability — and defense in depth: multiple overlapping controls so one failure does not open everything. High-level threats include phishing and unauthorized access.
 
-Common threats include malware, phishing, DDoS attacks, and unauthorized access. Mitigations include firewalls, IPS/IDS, 802.1X port-based network access control, VPNs, and segmentation with VLANs and ACLs.
+Stateful firewalls track sessions. Port security limits MACs on switch access ports (sticky learning; violation shutdown can err-disable). 802.1X authenticates before granting LAN access. VPN/IPsec encrypts traffic over untrusted paths; WPA2/WPA3 protect wireless. Syslog severity 0 means emergency (most severe).
 
-Cisco security features relevant to CCNA include port security, DHCP snooping, Dynamic ARP Inspection, and WPA2/WPA3 for wireless. Always follow least privilege and keep firmware patched.
-
-Defense in depth layers controls at network, host, and application levels. Firewalls filter traffic by stateful inspection, ACLs, and zones (inside/outside/DMZ). VPNs encrypt remote access (SSL/IPsec). 802.1X port-based NAC authenticates devices before network access.
-
-Common threats: reconnaissance, DoS, MITM, password attacks, malware. Mitigations include patching, strong auth, segmentation, logging, and user training. Port security limits MACs on switch ports; DHCP snooping and DAI protect L2 infrastructure.
-
-Security monitoring uses syslog, SNMP, and NetFlow/IPFIX for visibility.`,
+Defer deep DAI/DHCP snooping config, IPS signature catalogs, and full syslog severity laundry lists.`,
+            experience: NETWORK_SECURITY_EXPERIENCE,
           },
           keyFacts: [
             "CIA triad: Confidentiality, Integrity, Availability",
@@ -6439,17 +6432,17 @@ Security monitoring uses syslog, SNMP, and NetFlow/IPFIX for visibility.`,
           },
           commonMistakes: [
             "Enabling port security on trunk ports where multiple MACs are expected",
-            "Choosing protect mode when the requirement is to alert and disable the port (shutdown mode)",
             "Confusing 802.1X (authentication) with port security (MAC limiting)—they complement each other",
             "Forgetting that defense in depth means layering controls, not relying on one feature",
             "Mixing up CIA triad terms—availability vs confidentiality in mitigation scenarios",
+            "Treating one perimeter firewall as sufficient security",
           ],
           examTraps: [
-            "CIA triad acronym distractors that sound plausible but swap integrity and availability",
-            "802.1X vs 802.1Q—authentication vs VLAN tagging",
-            "Port security violation modes: protect (drop), restrict (drop + SNMP), shutdown (err-disable)",
-            "WPA2 vs WPA3 questions focusing on encryption improvements, not cable types",
-            "DAI and DHCP snooping dependency—DAI validates ARP against the DHCP snooping binding table",
+            "CIA triad — do not swap integrity and availability",
+            "802.1X vs 802.1Q — authentication vs VLAN tagging",
+            "Port security limits MACs; shutdown violation err-disables",
+            "WPA2 vs WPA3 — wireless encryption strength",
+            "Syslog severity 0 = emergency (most severe)",
           ],
           realWorldScenario: "After an unauthorized device was plugged into a conference room port and caused a minor security incident, your manager asks you to harden all single-device access ports. You enable port security with sticky MAC learning and shutdown violation mode, document err-disable recovery with shutdown/no shutdown, and coordinate with the NOC to monitor syslog for violation events during the rollout.",
           estimatedStudyMinutes: 30,
@@ -6723,39 +6716,34 @@ Security monitoring uses syslog, SNMP, and NetFlow/IPFIX for visibility.`,
           name: "Automation Basics",
           lesson: {
             title: "Network Automation and Programmability",
-            content: `Network automation reduces manual CLI configuration, improves consistency, and speeds deployments using tools and programmatic interfaces. Modern CCNA includes fundamentals of automation, controller-based networking, and how APIs enable machine-to-machine communication.
+            content: `Automation reduces manual CLI errors and keeps configs consistent. SDN separates the control plane (decisions) from the data plane (forwarding); controllers push policy to devices. REST APIs often use JSON over HTTP; NETCONF/YANG provide structured config (recognize the pair — authoring deferred).
 
-Software-Defined Networking (SDN) separates the control plane (centralized logic) from the data plane (forwarding). Controllers push policies to devices via southbound APIs. Devices expose REST APIs (HTTP/JSON), SNMP, and NETCONF/YANG for management.
+Ansible is commonly agentless over SSH/API. Infrastructure as Code stores configs in Git for history and rollback. Day 0 (deploy), Day 1 (configure), Day 2 (operate) appear on exams.
 
-Infrastructure as Code treats configs as version-controlled templates. Benefits include faster provisioning, reduced human error, and repeatable compliance checks.
-
-Network automation uses APIs (REST, NETCONF/RESTCONF), configuration management (Ansible), and controllers (Cisco DNA Center, SD-WAN). YANG models describe structured data for devices. Python scripts with Netmiko or NAPalm push configs at scale.
-
-Benefits: speed, consistency, reduced human error, audit trails via version control (Git). Day 0 (deploy), Day 1 (configure), Day 2 (operate/monitor) lifecycle terminology appears on exams.
-
-Start small: automate show commands, backup configs, and validate compliance before full self-driving network ambitions.`,
+Defer DNA Center product deep dives, YANG model authoring, and Python Netmiko scripting as later skills tracks.`,
+            experience: AUTOMATION_BASICS_EXPERIENCE,
           },
           keyFacts: [
             "Automation reduces manual errors and speeds repetitive tasks",
             "SDN separates control plane from data plane",
             "REST APIs use HTTP methods (GET, POST, PUT, DELETE) with JSON",
-            "SNMP monitors network devices; NETCONF/YANG configures them",
+            "NETCONF/YANG used for structured network configuration",
             "Infrastructure as Code version-controls network configurations",
             "Controllers push centralized policies to network devices",
           ],
           commonMistakes: [
             "Confusing SDN control plane separation with simply using SSH scripts",
             "Thinking REST only uses GET—POST, PUT, DELETE matter for config",
-            "Mixing SNMP (monitoring) with NETCONF (structured config)",
             "Assuming automation eliminates need for networking fundamentals",
             "Ignoring version control and change management for Infrastructure as Code",
+            "Treating Day 0 rack-and-stack as the same as Day 2 operations",
           ],
           examTraps: [
-            "SDN southbound vs northbound API direction",
-            "JSON over HTTP as REST API transport",
-            "YANG data models used with NETCONF/RESTCONF",
+            "SDN separates control plane from data plane",
+            "JSON over HTTP as common REST payload",
+            "NETCONF/YANG for structured config (recognition)",
             "Day 0 / Day 1 / Day 2 operations terminology",
-            "Controller-based networking vs traditional distributed control plane",
+            "Ansible often agentless; Git versions IaC",
           ],
           quiz: [
             {
