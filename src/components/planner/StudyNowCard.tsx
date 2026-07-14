@@ -25,7 +25,7 @@ const typeLabels: Record<CoachRecommendation["type"], string> = {
 export function StudyNowCard({
   recommendation,
   emptyHref = "/certifications",
-  emptyLabel = "Browse certifications",
+  emptyLabel = "Browse courses",
   sessionMinutes,
 }: StudyNowCardProps) {
   if (!recommendation) {

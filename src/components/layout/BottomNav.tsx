@@ -6,7 +6,7 @@ import { BookOpen, Home, BarChart3, AlertTriangle } from "lucide-react";
 
 const tabs = [
   { href: "/", label: "Home", icon: Home },
-  { href: "/certifications", label: "Certs", icon: BookOpen },
+  { href: "/certifications", label: "Courses", icon: BookOpen },
   { href: "/review", label: "Review", icon: AlertTriangle },
   { href: "/progress", label: "Progress", icon: BarChart3 },
 ];

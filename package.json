@@ -9,7 +9,12 @@
     "build:preview": "next build",
     "start": "next start",
     "lint": "eslint",
-    "verify:curriculum": "tsx scripts/verify-curriculum.ts"
+    "verify:curriculum": "tsx scripts/verify-curriculum.ts",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:audit": "playwright test e2e/ccna-curriculum-audit.spec.ts",
+    "audit:evidence": "tsx scripts/audit-evidence.ts",
+    "audit:judge": "tsx scripts/audit-judge.ts"
   },
   "dependencies": {
     "lucide-react": "^1.21.0",
@@ -19,6 +24,7 @@
     "zustand": "^5.0.14"
   },
   "devDependencies": {
+    "@playwright/test": "^1.61.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

@@ -29,10 +29,10 @@ export function DailyPlanCard({ plan, highlightHref }: DailyPlanCardProps) {
   if (plan.items.length === 0) {
     return (
       <Card>
-        <p className="text-sm text-zinc-400">No plan items for today. Explore a certification to continue.</p>
+        <p className="text-sm text-zinc-400">No plan items for today. Explore a course to continue.</p>
         <Link href="/certifications">
           <Button className="mt-3 w-full" variant="secondary">
-            Browse certifications
+            Browse courses
           </Button>
         </Link>
       </Card>

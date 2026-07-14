@@ -1,6 +1,5 @@
 import type { Topic } from "@/content/types";
-import { Card } from "@/components/ui/Card";
-import { AlertTriangle, Lightbulb, ListOrdered, Briefcase } from "lucide-react";
+import { DisclosureSection } from "@/components/ui/DisclosureSection";
 
 interface TopicDeepDiveProps {
   topic: Topic;
@@ -16,66 +15,55 @@ export function TopicDeepDive({ topic }: TopicDeepDiveProps) {
   if (!hasContent) return null;
 
   return (
-    <div className="mb-6 flex flex-col gap-4">
+    <div className="mb-6 flex flex-col gap-0">
       {topic.guidedExample && (
-        <Card className="p-4">
-          <div className="mb-3 flex items-center gap-2 text-sky-400">
-            <ListOrdered className="h-4 w-4" />
-            <h3 className="text-sm font-semibold uppercase tracking-wide">
-              Guided Example
-            </h3>
-          </div>
+        <DisclosureSection title="Guided Example" titleClassName="text-sky-400">
           <p className="mb-3 font-medium text-zinc-100">{topic.guidedExample.title}</p>
           <ol className="list-inside list-decimal space-y-2 text-sm leading-relaxed text-zinc-300">
             {topic.guidedExample.steps.map((step, i) => (
               <li key={i}>{step}</li>
             ))}
           </ol>
-        </Card>
+        </DisclosureSection>
       )}
 
       {(topic.commonMistakes?.length ?? 0) > 0 && (
-        <Card className="border-amber-900/40 p-4">
-          <div className="mb-3 flex items-center gap-2 text-amber-400">
-            <AlertTriangle className="h-4 w-4" />
-            <h3 className="text-sm font-semibold uppercase tracking-wide">
-              Common Mistakes
-            </h3>
-          </div>
+        <DisclosureSection
+          title="Common Mistakes"
+          titleClassName="text-amber-400"
+          className="border-amber-900/40"
+        >
           <ul className="list-inside list-disc space-y-1.5 text-sm text-zinc-300">
             {topic.commonMistakes!.map((item) => (
               <li key={item}>{item}</li>
             ))}
           </ul>
-        </Card>
+        </DisclosureSection>
       )}
 
       {(topic.examTraps?.length ?? 0) > 0 && (
-        <Card className="border-rose-900/40 p-4">
-          <div className="mb-3 flex items-center gap-2 text-rose-400">
-            <Lightbulb className="h-4 w-4" />
-            <h3 className="text-sm font-semibold uppercase tracking-wide">
-              Exam Traps
-            </h3>
-          </div>
+        <DisclosureSection
+          title="Exam Traps"
+          titleClassName="text-rose-400"
+          className="border-rose-900/40"
+        >
           <ul className="list-inside list-disc space-y-1.5 text-sm text-zinc-300">
             {topic.examTraps!.map((item) => (
               <li key={item}>{item}</li>
             ))}
           </ul>
-        </Card>
+        </DisclosureSection>
       )}
 
       {topic.realWorldScenario && (
-        <Card className="p-4">
-          <div className="mb-3 flex items-center gap-2 text-emerald-400">
-            <Briefcase className="h-4 w-4" />
-            <h3 className="text-sm font-semibold uppercase tracking-wide">
-              Real-World Scenario
-            </h3>
-          </div>
-          <p className="text-sm leading-relaxed text-zinc-300">{topic.realWorldScenario}</p>
-        </Card>
+        <DisclosureSection
+          title="Real-World Scenario"
+          titleClassName="text-emerald-400"
+        >
+          <p className="text-sm leading-relaxed text-zinc-300">
+            {topic.realWorldScenario}
+          </p>
+        </DisclosureSection>
       )}
     </div>
   );

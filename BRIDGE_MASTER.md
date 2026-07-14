@@ -482,6 +482,7 @@ Full spec: [`docs/phase-5-ai-learning.md`](docs/phase-5-ai-learning.md)
 - Plausible quiz distractors with explanations
 - Mobile-first simulator UX
 - Free external resources only (`cost: "free"`)
+- Browser / agentic testing: see [`docs/AGENTIC_TESTING.md`](docs/AGENTIC_TESTING.md)
 
 ---
 

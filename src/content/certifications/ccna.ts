@@ -549,7 +549,8 @@ Dual-stack hosts run IPv4 and IPv6 simultaneously. When studying for CCNA, pract
                 { id: "d", text: "7" },
               ],
               correctChoiceId: "b",
-              explanation: "The TCP/IP model has 4 layers: Application, Transport, Internet, and Network Access.",
+              explanation:
+                "TCP/IP uses 4 layers (not OSI's 7): Application, Transport, Internet, and Network Access. Distractors like 7 confuse this model with OSI.",
               objectiveId: "CCNA-1.1",
               difficulty: "easy",
             },
@@ -900,7 +901,8 @@ Jumbo frames exceed 1500-byte MTU and may not traverse all paths. Understanding 
                 { id: "d", text: "Layer 4 - Transport" },
               ],
               correctChoiceId: "b",
-              explanation: "Ethernet is a Data Link layer technology that uses MAC addresses in frames.",
+              explanation:
+                "Ethernet builds Layer 2 frames with MAC addresses. Layer 3 is IP routing; Layer 4 is TCP/UDP ports — different jobs than Ethernet.",
               objectiveId: "CCNA-1.5",
               difficulty: "easy",
             },
@@ -914,7 +916,8 @@ Jumbo frames exceed 1500-byte MTU and may not traverse all paths. Understanding 
                 { id: "d", text: "VLAN tags only" },
               ],
               correctChoiceId: "b",
-              explanation: "Switches examine destination MAC addresses and consult their MAC address table.",
+              explanation:
+                "A Layer 2 switch looks up the destination MAC in its MAC address table and forwards out the matching port. It does not route by IP (that is Layer 3).",
               objectiveId: "CCNA-1.6",
               difficulty: "easy",
             },
@@ -942,7 +945,8 @@ Jumbo frames exceed 1500-byte MTU and may not traverse all paths. Understanding 
                 { id: "d", text: "VLAN identification" },
               ],
               correctChoiceId: "b",
-              explanation: "The Frame Check Sequence uses CRC to detect transmission errors.",
+              explanation:
+                "FCS (Frame Check Sequence) uses CRC so the receiver can detect bit errors. It does not encrypt, route, or assign VLANs — only error detection at Layer 2.",
               objectiveId: "CCNA-1.6",
               difficulty: "easy",
             },
@@ -956,7 +960,8 @@ Jumbo frames exceed 1500-byte MTU and may not traverse all paths. Understanding 
                 { id: "d", text: "From DNS queries" },
               ],
               correctChoiceId: "b",
-              explanation: "Switches record the source MAC address and incoming port of each frame.",
+              explanation:
+                "Learning is silent: every inbound frame's source MAC is recorded with the ingress port. ARP and DHCP help hosts, not the switch's learning process.",
               objectiveId: "CCNA-1.5",
               difficulty: "medium",
             },
@@ -1255,7 +1260,8 @@ Every host needs a unique address in its subnet, a matching mask, and a default 
                 { id: "d", text: "11.0.0.0/8" },
               ],
               correctChoiceId: "b",
-              explanation: "192.168.0.0/16 is one of the RFC 1918 private address blocks.",
+              explanation:
+                "RFC 1918 private blocks are 10.0.0.0/8, 172.16.0.0/12, and 192.168.0.0/16. 192.168.50.0/24 sits inside 192.168.0.0/16; 8.8.8.0/24 and similar public/test blocks are not private.",
               objectiveId: "CCNA-1.7",
               difficulty: "easy",
             },
@@ -1269,7 +1275,8 @@ Every host needs a unique address in its subnet, a matching mask, and a default 
                 { id: "d", text: "128" },
               ],
               correctChoiceId: "b",
-              explanation: "IPv4 uses 32-bit addresses, typically shown as four octets.",
+              explanation:
+                "IPv4 is 32 bits (four 8-bit octets). 128 bits is IPv6 — a common mix-up on exams.",
               objectiveId: "CCNA-1.8",
               difficulty: "easy",
             },
@@ -1283,7 +1290,8 @@ Every host needs a unique address in its subnet, a matching mask, and a default 
                 { id: "d", text: "DNS server" },
               ],
               correctChoiceId: "b",
-              explanation: "127.0.0.1 is the standard loopback address for testing the local TCP/IP stack.",
+              explanation:
+                "127.0.0.1 (and the whole 127.0.0.0/8 range) talks to your own stack — it never leaves the host. Gateways and DNS use other addresses.",
               objectiveId: "CCNA-1.7",
               difficulty: "easy",
             },
@@ -1311,7 +1319,8 @@ Every host needs a unique address in its subnet, a matching mask, and a default 
                 { id: "d", text: "192.0.2.0/24" },
               ],
               correctChoiceId: "b",
-              explanation: "APIPA assigns addresses from 169.254.0.0/16 automatically.",
+              explanation:
+                "When DHCP fails, Windows self-assigns from 169.254.0.0/16 (APIPA/link-local). That is not RFC 1918 private space and usually cannot reach the Internet.",
               objectiveId: "CCNA-1.7",
               difficulty: "medium",
             },
@@ -1339,7 +1348,8 @@ Every host needs a unique address in its subnet, a matching mask, and a default 
                 { id: "d", text: "192.168.1" },
               ],
               correctChoiceId: "b",
-              explanation: "10.0.5.8 is valid — four octets, each 0–255.",
+              explanation:
+                "Each of the four octets must be 0–255. 192.168.1.256 and 300.1.1.1 are impossible; 192.168.1 is missing an octet. 10.0.5.8 is valid.",
               objectiveId: "CCNA-1.7",
               difficulty: "medium",
             },
@@ -1560,7 +1570,8 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
                 { id: "d", text: "254" },
               ],
               correctChoiceId: "b",
-              explanation: "/26 leaves 6 host bits: 2^6 - 2 = 62 usable addresses.",
+              explanation:
+                "/26 leaves 6 host bits (32 − 26 = 6). 2^6 = 64 total addresses in each block. Two are reserved: network (all host bits 0) and broadcast (all host bits 1). Usable hosts = 64 − 2 = 62.",
               objectiveId: "CCNA-1.9",
               difficulty: "easy",
             },
@@ -1574,7 +1585,8 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
                 { id: "d", text: "192.168.10.255" },
               ],
               correctChoiceId: "d",
-              explanation: "In a /24, the last address .255 is the broadcast.",
+              explanation:
+                "In a /24 the entire last octet is hosts: .0 is the network address and .255 is broadcast. Usable hosts are .1–.254.",
               objectiveId: "CCNA-1.10",
               difficulty: "easy",
             },
@@ -1602,7 +1614,8 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
                 { id: "d", text: "64" },
               ],
               correctChoiceId: "b",
-              explanation: "/28 has 4 host bits: 2^4 = 16 total addresses.",
+              explanation:
+                "/28 leaves 4 host bits (32 − 28 = 4). Total addresses = 2^4 = 16 (network through broadcast). This question asks for total addresses, not usable hosts.",
               objectiveId: "CCNA-1.10",
               difficulty: "easy",
             },
@@ -1616,7 +1629,8 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
                 { id: "d", text: "Random" },
               ],
               correctChoiceId: "b",
-              explanation: "The network address is the lowest address with all host bits as 0.",
+              explanation:
+                "Network address = all host bits set to 0 (the block's floor). Broadcast = all host bits set to 1 (the block's ceiling). That is why those two are reserved.",
               objectiveId: "CCNA-1.9",
               difficulty: "easy",
             },
@@ -1630,7 +1644,8 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
                 { id: "d", text: "192–255" },
               ],
               correctChoiceId: "b",
-              explanation: "/26 block size 64. Ninety falls in the 64–127 slice.",
+              explanation:
+                "/26 means 26 network bits, so 6 host bits remain (32 − 26). Those 6 bits make block size 2^6 = 64. Last-octet blocks therefore start at 0, 64, 128, 192. .90 is ≥ 64 and < 128, so it belongs in 64–127.",
               objectiveId: "CCNA-1.10",
               difficulty: "easy",
             },
@@ -1644,7 +1659,8 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
                 { id: "d", text: "96–127" },
               ],
               correctChoiceId: "b",
-              explanation: "/27 block size 32. Forty-five falls in the 32–63 slice.",
+              explanation:
+                "/27 leaves 5 host bits (32 − 27 = 5). Block size = 2^5 = 32. Last-octet blocks start at 0, 32, 64, 96…. .45 is ≥ 32 and < 64, so it belongs in 32–63.",
               objectiveId: "CCNA-1.10",
               difficulty: "easy",
             },
@@ -1658,7 +1674,8 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
                 { id: "d", text: "224–239" },
               ],
               correctChoiceId: "b",
-              explanation: "/28 block size 16. Two hundred falls in the 192–207 slice.",
+              explanation:
+                "/28 leaves 4 host bits (32 − 28 = 4). Block size = 2^4 = 16. Last-octet blocks start at 0, 16, 32… 176, 192, 208…. .200 is ≥ 192 and < 208, so it belongs in 192–207.",
               objectiveId: "CCNA-1.10",
               difficulty: "easy",
             },
@@ -1711,7 +1728,8 @@ Exam strategy: write out the block size (256 − last octet of mask for /24-styl
                 { id: "d", text: "192.168.1.0" }
               ],
               correctChoiceId: "a",
-              explanation: "Subnets: .0, .64, .128, .192 — third is .128.",
+              explanation:
+                "/26 block size is 64, so subnets in the last octet are .0, .64, .128, .192. Count: 1st=.0, 2nd=.64, 3rd=.128.",
               objectiveId: "CCNA-1.10",
               difficulty: "medium",
             },
@@ -2282,7 +2300,8 @@ Know which addresses are routable on the public Internet vs usable only internal
                 { id: "d", text: "169.254.0.0/16" },
               ],
               correctChoiceId: "c",
-              explanation: "Multicast addresses are in 224.0.0.0/4 (224.0.0.0–239.255.255.255).",
+              explanation:
+                "IPv4 multicast is the Class D range 224.0.0.0/4 (224–239). Private, loopback, and APIPA ranges are different special blocks with different jobs.",
               objectiveId: "CCNA-1.7",
               difficulty: "easy",
             },
@@ -2296,7 +2315,8 @@ Know which addresses are routable on the public Internet vs usable only internal
                 { id: "d", text: "Loopback" },
               ],
               correctChoiceId: "b",
-              explanation: "169.254.0.0/16 is assigned automatically when DHCP is unavailable.",
+              explanation:
+                "169.254.0.0/16 is APIPA/link-local: the host assigned it because DHCP failed. It is not loopback (127) and not multicast (224).",
               objectiveId: "CCNA-1.11",
               difficulty: "easy",
             },
@@ -2310,7 +2330,8 @@ Know which addresses are routable on the public Internet vs usable only internal
                 { id: "d", text: "224.0.0.0/4" },
               ],
               correctChoiceId: "b",
-              explanation: "192.0.2.0/24 (TEST-NET-1) is reserved for documentation.",
+              explanation:
+                "192.0.2.0/24 (TEST-NET-1) is reserved for docs/examples so labs do not collide with real private 192.168.x space. 10.0.0.0/8 and 172.16.0.0/12 are RFC 1918 private.",
               objectiveId: "CCNA-1.7",
               difficulty: "easy",
             },
@@ -2338,7 +2359,8 @@ Know which addresses are routable on the public Internet vs usable only internal
                 { id: "d", text: "Default route" },
               ],
               correctChoiceId: "b",
-              explanation: "127.0.0.1 is the most common IPv4 loopback address for local testing.",
+              explanation:
+                "127.0.0.1 is loopback: packets stay on the local host for stack testing. APIPA is 169.254.x.x; neither is a LAN gateway address.",
               objectiveId: "CCNA-1.7",
               difficulty: "medium",
             },
@@ -2674,7 +2696,8 @@ SLAAC and DHCPv6 assign addresses. EUI-64 can derive interface IDs from MAC. Kno
                 { id: "d", text: "128" },
               ],
               correctChoiceId: "d",
-              explanation: "IPv6 addresses are 128 bits long.",
+              explanation:
+                "IPv6 uses 128-bit addresses (eight 16-bit hextets). IPv4 is 32 bits — choosing 32 here is the classic trap.",
               objectiveId: "CCNA-1.12",
               difficulty: "easy",
             },
@@ -2688,7 +2711,8 @@ SLAAC and DHCPv6 assign addresses. EUI-64 can derive interface IDs from MAC. Kno
                 { id: "d", text: "ff00::/8" },
               ],
               correctChoiceId: "b",
-              explanation: "fe80::/10 is the link-local range.",
+              explanation:
+                "fe80::/10 is link-local: every interface gets one and it never routes off the local link. 2000::/3 is global unicast; fc00::/7 unique local; ff00::/8 multicast.",
               objectiveId: "CCNA-1.13",
               difficulty: "easy",
             },
@@ -2702,7 +2726,8 @@ SLAAC and DHCPv6 assign addresses. EUI-64 can derive interface IDs from MAC. Kno
                 { id: "d", text: "TCP" },
               ],
               correctChoiceId: "b",
-              explanation: "Neighbor Discovery Protocol uses ICMPv6 to resolve layer 2 addresses.",
+              explanation:
+                "Neighbor Discovery (ICMPv6) finds Layer 2 addresses and neighbors on the link. ARP was IPv4-only; DNS/DHCP solve other problems.",
               objectiveId: "CCNA-1.12",
               difficulty: "easy",
             },
@@ -2716,7 +2741,8 @@ SLAAC and DHCPv6 assign addresses. EUI-64 can derive interface IDs from MAC. Kno
                 { id: "d", text: "Multicast" },
               ],
               correctChoiceId: "b",
-              explanation: "Double colon replaces one contiguous sequence of all-zero 16-bit groups.",
+              explanation:
+                ":: shortens one contiguous run of all-zero hextets (and only once per address). IPv6 has no broadcast — do not read :: as a broadcast marker.",
               objectiveId: "CCNA-1.13",
               difficulty: "easy",
             },
@@ -2730,7 +2756,8 @@ SLAAC and DHCPv6 assign addresses. EUI-64 can derive interface IDs from MAC. Kno
                 { id: "d", text: "Subnet Level Access Control" },
               ],
               correctChoiceId: "b",
-              explanation: "SLAAC lets hosts self-configure addresses from router advertisements.",
+              explanation:
+                "SLAAC lets a host build its own address from a router advertisement prefix — no DHCPv4-style lease required (DHCPv6 can still coexist).",
               objectiveId: "CCNA-1.12",
               difficulty: "medium",
             },
@@ -3066,7 +3093,8 @@ Signal factors include RSSI, SNR, attenuation through walls, and interference fr
                 { id: "d", text: "802.1X" },
               ],
               correctChoiceId: "c",
-              explanation: "IEEE 802.11 is the family of WLAN standards.",
+              explanation:
+                "IEEE 802.11 is Wi-Fi/WLAN. 802.3 is wired Ethernet; 802.1Q is VLAN tagging; 802.1X is port auth — common exam distractors.",
               objectiveId: "CCNA-1.13",
               difficulty: "easy",
             },
@@ -3080,7 +3108,8 @@ Signal factors include RSSI, SNR, attenuation through walls, and interference fr
                 { id: "d", text: "Signal Strength Indicator Data" },
               ],
               correctChoiceId: "b",
-              explanation: "SSID is the wireless network name broadcast by access points.",
+              explanation:
+                "SSID is the network name clients join. Do not confuse it with BSSID (the AP radio's MAC) or with signal-strength metrics.",
               objectiveId: "CCNA-1.13",
               difficulty: "easy",
             },
@@ -3094,7 +3123,8 @@ Signal factors include RSSI, SNR, attenuation through walls, and interference fr
                 { id: "d", text: "3, 6, 9" },
               ],
               correctChoiceId: "b",
-              explanation: "Channels 1, 6, and 11 do not overlap in the 2.4 GHz band.",
+              explanation:
+                "2.4 GHz channels are 22 MHz wide and overlap neighbors. Spacing by 5 (1, 6, 11) avoids overlap in North America.",
               objectiveId: "CCNA-1.13",
               difficulty: "easy",
             },
@@ -3108,7 +3138,8 @@ Signal factors include RSSI, SNR, attenuation through walls, and interference fr
                 { id: "d", text: "Static routing" },
               ],
               correctChoiceId: "b",
-              explanation: "WPA3 enhances encryption and replaces WPA2's weaker handshake protections.",
+              explanation:
+                "WPA3 strengthens the handshake (SAE) so offline password guesses are harder than under WPA2-PSK. It is not about Ethernet speed or VLAN tagging.",
               objectiveId: "CCNA-1.13",
               difficulty: "easy",
             },
@@ -3122,7 +3153,8 @@ Signal factors include RSSI, SNR, attenuation through walls, and interference fr
                 { id: "d", text: "Assigns public IP addresses" },
               ],
               correctChoiceId: "b",
-              explanation: "APs provide wireless connectivity and forward traffic to the wired infrastructure.",
+              explanation:
+                "An AP is mainly a wireless-to-wired bridge for client frames. WAN routing and public IP assignment are router/firewall jobs.",
               objectiveId: "CCNA-1.13",
               difficulty: "medium",
             },

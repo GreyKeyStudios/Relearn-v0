@@ -66,7 +66,7 @@ export function StudyPlanSettings() {
           className="mt-2 w-full"
         />
       </label>
-      <p className="mb-2 text-xs text-faint">Active certifications (empty = all)</p>
+      <p className="mb-2 text-xs text-faint">Active courses (empty = all)</p>
       <div className="mb-4 flex flex-wrap gap-2">
         {certs.map((cert) => {
           const active =
