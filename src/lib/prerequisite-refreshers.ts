@@ -110,6 +110,58 @@ const BY_TOPIC: Record<string, PrerequisiteRefresherItem[]> = {
       topicId: "ethernet",
     },
   ],
+  switching: [
+    {
+      id: "ethernet-l2",
+      title: "Ethernet",
+      tip: "Switches forward Ethernet frames by MAC. Flooding, learning, and access vs trunk all sit on top of that Layer 2 picture.",
+      topicId: "ethernet",
+    },
+    {
+      id: "collision-vs-broadcast",
+      title: "Collision vs broadcast domains",
+      tip: "Each switch port is typically its own collision domain; a VLAN is still one broadcast domain until you segment further.",
+    },
+  ],
+  vlans: [
+    {
+      id: "switching",
+      title: "Switching",
+      tip: "VLANs ride on switch MAC forwarding. Unknown unicasts still flood — but only inside their VLAN.",
+      topicId: "switching",
+    },
+    {
+      id: "l2-vs-l3",
+      title: "Why Layer 3 between VLANs?",
+      tip: "Separate VLANs = separate broadcast domains. Hosts in different VLANs need a router/SVI to talk — Layer 2 alone cannot bridge them.",
+    },
+  ],
+  trunking: [
+    {
+      id: "vlans",
+      title: "VLANs",
+      tip: "Trunks carry many VLANs on one link with 802.1Q tags. Access ports carry one VLAN to end hosts.",
+      topicId: "vlans",
+    },
+    {
+      id: "native-vlan",
+      title: "Native VLAN intuition",
+      tip: "Untagged frames on a trunk are treated as the native VLAN — both ends must agree or traffic lands wrong.",
+    },
+  ],
+  stp: [
+    {
+      id: "switching-loops",
+      title: "Switching",
+      tip: "STP exists because redundant switch links without it create Layer 2 loops and broadcast storms.",
+      topicId: "switching",
+    },
+    {
+      id: "portfast-edge",
+      title: "PortFast rule of thumb",
+      tip: "PortFast for host/access edges — not for trunks to other switches — so you speed up PCs without risking loops.",
+    },
+  ],
 };
 
 export function getPrerequisiteRefreshers(

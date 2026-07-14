@@ -3454,7 +3454,8 @@ Show commands: show mac address-table, show interfaces status, show spanning-tre
                 { id: "d", text: "Converts to IP routing" },
               ],
               correctChoiceId: "b",
-              explanation: "Unknown unicast destinations are flooded within the VLAN until the MAC is learned.",
+              explanation:
+                "No MAC table entry means the switch cannot pick one exit port, so it floods within the VLAN (except the ingress port) until it later learns that MAC. It does not drop the frame or jump to IP routing.",
               objectiveId: "CCNA-2.3",
               difficulty: "easy",
             },
@@ -3468,7 +3469,8 @@ Show commands: show mac address-table, show interfaces status, show spanning-tre
                 { id: "d", text: "SSID to AP" },
               ],
               correctChoiceId: "b",
-              explanation: "The CAM/MAC table associates each learned MAC with the port where it was seen.",
+              explanation:
+                "The MAC (CAM) table answers 'which port do I use for this MAC?' IP↔MAC is ARP's job; VLAN↔subnet is design/routing knowledge — not this table.",
               objectiveId: "CCNA-2.4",
               difficulty: "easy",
             },
@@ -3482,7 +3484,8 @@ Show commands: show mac address-table, show interfaces status, show spanning-tre
                 { id: "d", text: "WAN links" },
               ],
               correctChoiceId: "b",
-              explanation: "Each full-duplex port operates independently without collisions.",
+              explanation:
+                "Each full-duplex switch port is its own collision domain (and typically has none under full duplex). Broadcasts still flood within the VLAN — collision domains ≠ broadcast domains.",
               objectiveId: "CCNA-2.3",
               difficulty: "easy",
             },
@@ -3496,7 +3499,8 @@ Show commands: show mac address-table, show interfaces status, show spanning-tre
                 { id: "d", text: "Disables VLANs" },
               ],
               correctChoiceId: "b",
-              explanation: "Store-and-forward waits for the complete frame and validates the FCS.",
+              explanation:
+                "Store-and-forward buffers the whole frame and validates FCS/CRC before forwarding so corrupted frames can be dropped. Cut-through forwards sooner (after the destination MAC) without a full FCS check.",
               objectiveId: "CCNA-2.4",
               difficulty: "easy",
             },
@@ -3510,7 +3514,8 @@ Show commands: show mac address-table, show interfaces status, show spanning-tre
                 { id: "d", text: "Wireless traffic only" },
               ],
               correctChoiceId: "b",
-              explanation: "Access ports belong to a single VLAN and do not tag frames for end hosts.",
+              explanation:
+                "Access ports face end hosts: one VLAN, usually untagged. Tagged multi-VLAN traffic is what trunks do between switches/routers.",
               objectiveId: "CCNA-2.3",
               difficulty: "medium",
             },
@@ -3705,7 +3710,8 @@ Voice VLANs and data VLANs can be assigned to the same port for IP phones with P
                 { id: "d", text: "Eliminate need for routing" },
               ],
               correctChoiceId: "b",
-              explanation: "VLANs divide a switch into isolated Layer 2 broadcast domains.",
+              explanation:
+                "VLANs carve one physical switch into separate Layer 2 broadcast domains so broadcasts (and many frames) stay isolated. They do not speed cables or remove the need for Layer 3 to talk between VLANs.",
               objectiveId: "CCNA-2.5",
               difficulty: "easy",
             },
@@ -3719,7 +3725,8 @@ Voice VLANs and data VLANs can be assigned to the same port for IP phones with P
                 { id: "d", text: "100" },
               ],
               correctChoiceId: "b",
-              explanation: "VLAN 1 is the default; all ports start here until configured otherwise.",
+              explanation:
+                "Out of the box, Cisco access ports sit in VLAN 1 until you assign another. VLAN 0 is not a normal usable access VLAN ID.",
               objectiveId: "CCNA-2.6",
               difficulty: "easy",
             },
@@ -3733,7 +3740,8 @@ Voice VLANs and data VLANs can be assigned to the same port for IP phones with P
                 { id: "d", text: "Removing trunk ports" },
               ],
               correctChoiceId: "b",
-              explanation: "Routing between VLANs needs Layer 3—router subinterfaces or switch SVIs.",
+              explanation:
+                "Different VLANs are different broadcast domains — Layer 2 alone cannot forward between them. You need Layer 3 (router-on-a-stick subinterfaces or SVIs on a multilayer switch).",
               objectiveId: "CCNA-2.5",
               difficulty: "easy",
             },
@@ -3747,7 +3755,8 @@ Voice VLANs and data VLANs can be assigned to the same port for IP phones with P
                 { id: "d", text: "A NAT pool" },
               ],
               correctChoiceId: "b",
-              explanation: "Switch Virtual Interface provides Layer 3 gateway functionality for a VLAN.",
+              explanation:
+                "A Switch Virtual Interface (e.g. VLAN 10 IP on the switch) is the Layer 3 gateway for that VLAN — not a physical router NIC and not wireless/NAT config.",
               objectiveId: "CCNA-2.6",
               difficulty: "easy",
             },
@@ -3761,7 +3770,8 @@ Voice VLANs and data VLANs can be assigned to the same port for IP phones with P
                 { id: "d", text: "10–99 only" },
               ],
               correctChoiceId: "a",
-              explanation: "IEEE 802.1Q supports VLAN IDs 1–4094 for standard deployments.",
+              explanation:
+                "802.1Q VLAN IDs run 1–4094 (12-bit VID). Extended ranges exist, but 1–255-only or 0–65535 are wrong mental models for standard VLAN IDs.",
               objectiveId: "CCNA-2.5",
               difficulty: "easy",
             },
@@ -4021,7 +4031,8 @@ Only trunks should exist between switches carrying multiple VLANs; access ports 
                 { id: "d", text: "802.11" },
               ],
               correctChoiceId: "b",
-              explanation: "IEEE 802.1Q defines VLAN tagging for trunk links.",
+              explanation:
+                "802.1Q inserts the VLAN tag on trunk frames. 802.3 is Ethernet itself, 802.1X is authentication, 802.11 is Wi-Fi — common distractors.",
               objectiveId: "CCNA-2.6",
               difficulty: "easy",
             },
@@ -4035,7 +4046,8 @@ Only trunks should exist between switches carrying multiple VLANs; access ports 
                 { id: "d", text: "STP disable" },
               ],
               correctChoiceId: "b",
-              explanation: "Mismatched native VLANs lead to misdirected untagged traffic between switches.",
+              explanation:
+                "Untagged frames on a trunk are treated as the native VLAN. If ends disagree, untagged traffic lands in the wrong VLAN — outages and possible VLAN hopping risk.",
               objectiveId: "CCNA-2.7",
               difficulty: "easy",
             },
@@ -4049,7 +4061,8 @@ Only trunks should exist between switches carrying multiple VLANs; access ports 
                 { id: "d", text: "Wireless APs" },
               ],
               correctChoiceId: "b",
-              explanation: "Subinterfaces on one physical link handle each VLAN tag for inter-VLAN routing.",
+              explanation:
+                "One physical router interface is trunked; subinterfaces each match a VLAN tag and provide that VLAN's gateway. You do not need a separate physical port per VLAN.",
               objectiveId: "CCNA-2.6",
               difficulty: "easy",
             },
@@ -4063,7 +4076,8 @@ Only trunks should exist between switches carrying multiple VLANs; access ports 
                 { id: "d", text: "spanning-tree off" },
               ],
               correctChoiceId: "b",
-              explanation: "switchport nonegotiate stops DTP from attempting trunk negotiation.",
+              explanation:
+                "`switchport nonegotiate` stops DTP messages so the port won't dynamically try to form a trunk. Dynamic modes invite negotiation — the opposite of hardening.",
               objectiveId: "CCNA-2.7",
               difficulty: "easy",
             },
@@ -4077,7 +4091,8 @@ Only trunks should exist between switches carrying multiple VLANs; access ports 
                 { id: "d", text: "Operates at Layer 3 only" },
               ],
               correctChoiceId: "b",
-              explanation: "Trunks multiplex several VLANs over one link using 802.1Q tags.",
+              explanation:
+                "Trunks carry many VLANs using 802.1Q tags (plus an untagged native VLAN). Access ports carry one VLAN for end hosts — usually untagged.",
               objectiveId: "CCNA-2.6",
               difficulty: "medium",
             },
@@ -4257,7 +4272,8 @@ EtherChannel bundles links for bandwidth and redundancy—STP treats the bundle 
                 { id: "d", text: "Wireless interference" },
               ],
               correctChoiceId: "b",
-              explanation: "STP blocks redundant Layer 2 paths to prevent broadcast storms and loops.",
+              explanation:
+                "Redundant switch links without STP create Layer 2 loops and broadcast storms. STP blocks some paths so only a loop-free active tree remains.",
               objectiveId: "CCNA-2.8",
               difficulty: "easy",
             },
@@ -4271,7 +4287,8 @@ EtherChannel bundles links for bandwidth and redundancy—STP treats the bundle 
                 { id: "d", text: "Newest switch" },
               ],
               correctChoiceId: "b",
-              explanation: "Lowest bridge ID (priority + system MAC) wins root election.",
+              explanation:
+                "Bridge ID = priority + MAC. Lowest BID wins root. IP address, port count, and hardware age are not the STP election keys.",
               objectiveId: "CCNA-2.9",
               difficulty: "easy",
             },
@@ -4285,7 +4302,8 @@ EtherChannel bundles links for bandwidth and redundancy—STP treats the bundle 
                 { id: "d", text: "Disabled ports only" },
               ],
               correctChoiceId: "b",
-              explanation: "PortFast skips listening/learning delay for host-facing access ports.",
+              explanation:
+                "PortFast skips listening/learning delay for edge/access ports to PCs/phones so they come up quickly. Do not enable it on trunks toward other switches — that risks temporary loops.",
               objectiveId: "CCNA-2.8",
               difficulty: "easy",
             },
@@ -4299,7 +4317,8 @@ EtherChannel bundles links for bandwidth and redundancy—STP treats the bundle 
                 { id: "d", text: "Assigns IP addresses" },
               ],
               correctChoiceId: "b",
-              explanation: "Blocked ports do not forward frames but remain in the STP topology.",
+              explanation:
+                "Blocking stops user frame forwarding on that path but the port still participates in STP (BPDUs) so it can take over if the active path fails.",
               objectiveId: "CCNA-2.9",
               difficulty: "easy",
             },
@@ -4313,7 +4332,8 @@ EtherChannel bundles links for bandwidth and redundancy—STP treats the bundle 
                 { id: "d", text: "Works only on routers" },
               ],
               correctChoiceId: "b",
-              explanation: "RSTP significantly reduces reconvergence time after topology changes.",
+              explanation:
+                "RSTP (802.1w) converges in seconds using new port roles/states; classic 802.1D can take ~30–50s. It still elects a root and is for switches, not 'routers only.'",
               objectiveId: "CCNA-2.8",
               difficulty: "medium",
             },

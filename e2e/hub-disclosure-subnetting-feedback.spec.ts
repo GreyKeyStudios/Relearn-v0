@@ -94,6 +94,33 @@ test.describe("hub disclosure + subnetting feedback", () => {
     await expect(refresher.getByText(/OSI Data Link/i)).toBeVisible();
   });
 
+  test("need a refresher appears for vlans (Network Access)", async ({ page }) => {
+    await seedCcnaFreshLearner(page);
+    await page.goto("/cert/ccna/lesson/vlans");
+    await waitForHydration(page);
+    await page
+      .getByText(/Loading your progress/i)
+      .waitFor({ state: "hidden", timeout: 30_000 })
+      .catch(() => undefined);
+
+    const refresher = page.locator("details").filter({ hasText: /Need a refresher/i });
+    await expect(refresher).toBeVisible();
+    await refresher.locator("summary").click();
+    await expect(refresher.getByText(/Why Layer 3 between VLANs/i)).toBeVisible();
+  });
+
+  test("switching quiz teaches why on unknown MAC", async ({ page }) => {
+    await seedCcnaFreshLearner(page);
+    await page.goto("/cert/ccna/quiz/switching");
+    await waitForHydration(page);
+    await expect(
+      page.getByText(/unknown destination MAC/i)
+    ).toBeVisible({ timeout: 15_000 });
+    await page.getByRole("button", { name: /Drops the frame/i }).click();
+    await page.getByRole("button", { name: /Check Answer/i }).click();
+    await expect(page.getByText(/floods within the VLAN/i)).toBeVisible();
+  });
+
   test("subnetting quiz: richer teaching after incorrect answers", async ({ page }) => {
     test.setTimeout(120_000);
     await seedCcnaFreshLearner(page);
