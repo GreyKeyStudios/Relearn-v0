@@ -48,6 +48,12 @@ Retained IDs: `tcp-b1`, `tcp-b2`, `tcp-b4`, `tcp-b5`, `tcp-b6`, `tcp-b7`, `tcp-b
 
 Removed: `ip-ranges-b11` (CGN), `b12` (Class E), `b13` (0.0.0.0/0), `b14` (limited broadcast), `b16` (misleading public trap). Staged for later: b11/b13 → `nat`/`routing-fundamentals`; b14 → `dhcp`.
 
+### ip-ranges directed broadcast relocation (2026-07-13)
+
+| Concept | From | To | Question IDs | Status |
+|---------|------|-----|--------------|--------|
+| Directed broadcast (all host bits 1) | `ip-ranges` | `subnetting` | `ip-ranges-b19` → `subnetting-b41` | relocated |
+
 ### ipv6-basics bank trim (20 → 15)
 
 Removed: `b5` (header size), `b9` (EUI-64), `b13` (solicited-node), `b18` (ff02::1), `b20` (6to4). Simulator: replaced `ipv6-4`, `ipv6-9` drill items.

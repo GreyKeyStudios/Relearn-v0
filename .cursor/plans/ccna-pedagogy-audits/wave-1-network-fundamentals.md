@@ -7,16 +7,23 @@
 
 | Topic | BLS | Quiz | Bank aligned? | Hub aligned? | Topic Complete? | Michael walkthrough? |
 |-------|-----|------|-------------|-------------|-----------------|----------------------|
-| `osi-model` | PASS | PASS | PASS (18) | PARTIAL | **NO** | Pending |
+| `osi-model` | PASS | PASS | PASS (18) | PASS | **NO** | Pending |
 | `tcp-ip-model` | PASS | PASS | PASS (11) | PASS | **NO** | Pending |
 | `ethernet` | PASS | PASS | PASS (11) | PASS | **NO** | Pending |
 | `ipv4-addressing` | PASS | PASS | PASS (6) | PASS | **NO** | Pending |
-| `subnetting` | PASS | PASS | PASS (30) | PASS | **NO** | Pending |
-| `ip-ranges` | PASS | PASS | PASS (15) | PARTIAL | **NO** | Pending |
-| `ipv6-basics` | PASS | PASS | PASS (15) | PARTIAL | **NO** | Pending |
-| `wireless-basics` | PASS | PASS | PASS (14) | PARTIAL | **NO** | Pending |
+| `subnetting` | PASS | PASS | PASS (31) | PASS | **NO** | Pending |
+| `ip-ranges` | PASS | PASS | PASS (14) | PASS | **NO** | Pending |
+| `ipv6-basics` | PASS | PASS | PASS (15) | PASS | **NO** | Pending |
+| `wireless-basics` | PASS | PASS | PASS (14) | PASS | **NO** | Pending |
 
-**Domain production-ready:** NO — 0/8 topics signed off (agent pass ≠ Topic Complete)
+**Domain production-ready:** NO — 0/8 topics signed off (agent hub PASS ≠ Topic Complete; Michael walkthrough still required)
+
+## 2026-07-13 hub polish (pass 3)
+
+- **osi-model:** `realWorldScenario` matches DNS/Application guided path (removed “re-cabling”)
+- **ip-ranges:** Trimmed CGN / class-letter residue from reading mode + traps; Class A/B/C scrubbed from bank explanations; `ip-ranges-b19` → `subnetting-b41`
+- **ipv6-basics:** Reading mode → LES recall table; dropped EUI-64 / solicited-node hub items
+- **wireless-basics:** Reading mode trimmed to SSID/BSSID/channels/CSMA/CA/WPA (no RSSI/site-survey encyclopedia)
 
 ## 2026-07-02 alignment sprint (pass 2)
 
@@ -35,8 +42,7 @@
 
 - [ ] Michael full flow per topic (lesson → hub → flashcards → quiz → bank → drills → PT)
 - [ ] Professor Mode without hidden knowledge
-- [ ] Optional: trim legacy `lesson.content` prose on topics still showing pre-LES dumps in reading mode
-- [ ] ip-ranges / ipv6 / ipv6 hub `lesson.content` sync (lower priority — bank/quiz clean)
+- [ ] Optional: trim legacy `lesson.content` prose on PASS topics still showing pre-LES dumps in reading mode (tcp/ethernet/ipv4/subnetting)
 
 ## Michael integration test checklist (per topic)
 
