@@ -1,20 +1,21 @@
 import type { TopicExperience } from "@/content/types";
 
-/** LES experience — VLAN trunking / 802.1Q (Wave 2). */
+/** LES — Trunking: one uplink, two VLANs → tag walkthrough (Network Access rewrite). */
 export const TRUNKING_EXPERIENCE: TopicExperience = {
   anchor: { type: "osi-stack" },
   screens: [
     {
-      id: "intro-why",
+      id: "intro-job",
       type: "hero",
       osiLayer: 2,
-      headline: "One cable, many VLANs.",
-      body: "VLANs live on each switch. Between switches (or switch and router), a trunk carries multiple VLANs on one link using tags so each frame keeps its VLAN identity.",
+      headline: "One cable, two VLANs.",
+      body: "You built Sales (10) and Engineering (20) on access ports. Now SwitchA and SwitchB both need those VLANs — with only one uplink cable between them. How does the far switch know which world a frame belongs to?",
       media: {
         kind: "icons",
         items: [
-          { icon: "cable", label: "Trunk link" },
-          { icon: "layers", label: "Multiple VLANs" },
+          { icon: "switch", label: "SwitchA" },
+          { icon: "cable", label: "Uplink" },
+          { icon: "switch", label: "SwitchB" },
         ],
       },
       terms: [
@@ -22,100 +23,93 @@ export const TRUNKING_EXPERIENCE: TopicExperience = {
           id: "vlan",
           label: "VLAN",
           tier: "basics",
-          shortDefinition: "Logical broadcast domain from the VLANs lesson — trunks carry many of them.",
+          shortDefinition:
+            "From the VLAN lesson — separate Layer 2 broadcast domains by ID (e.g. 10 and 20).",
         },
         {
           id: "frame",
           label: "Frame",
           tier: "basics",
           shortDefinition:
-            "Layer 2 container — on a trunk, tagged frames keep their VLAN identity across switches.",
+            "Ethernet frame from hosts — on the uplink we need a way to mark which VLAN it belongs to.",
         },
       ],
     },
     {
-      id: "bridge-vlans",
-      type: "teach",
+      id: "problem",
+      type: "analogy",
       osiLayer: 2,
-      headline: "Access vs trunk — job split.",
-      body: "Access ports face hosts: one VLAN. Trunk ports face another switch or a router-on-a-stick: many VLANs, usually with tags. Wrong mode on a switch-to-switch link breaks isolation.",
-      terms: [
-        {
-          id: "access-port",
-          label: "Access port",
-          tier: "basics",
-          shortDefinition: "One VLAN for an end device — usually untagged.",
-        },
-        {
-          id: "trunk",
-          label: "Trunk port",
-          tier: "basics",
-          shortDefinition: "Carries multiple VLANs between network devices using tagging.",
-        },
-      ],
+      headline: "Without a tag, the uplink is confused.",
+      body: "Access ports strip away the VLAN number toward PCs. On the uplink, an untagged Sales frame looks like an untagged Engineering frame. SwitchB cannot tell which broadcast domain should receive it.",
     },
     {
-      id: "dot1q",
+      id: "insert-tag",
       type: "teach",
       osiLayer: 2,
-      headline: "IEEE 802.1Q tagging.",
-      body: "802.1Q inserts a 4-byte VLAN tag into Ethernet frames on trunks. The tag includes the VLAN ID so the other end knows which VLAN owns the frame.",
+      headline: "Worked example — insert a tag.",
+      body: "802.1Q adds a small tag inside the frame that carries the VLAN ID. SwitchA tags VID 10 before the uplink. SwitchB reads the tag, strips it toward an access port in VLAN 10, and delivers a normal untagged frame to the Sales PC.",
+      media: {
+        kind: "flow",
+        items: [
+          { icon: "monitor", label: "Access (no tag)" },
+          { icon: "layers", label: "Tag VID 10" },
+          { icon: "cable", label: "Trunk" },
+          { icon: "monitor", label: "Access (strip)" },
+        ],
+      },
       terms: [
         {
           id: "8021q",
           label: "802.1Q",
           tier: "basics",
           shortDefinition:
-            "Standard VLAN tagging method — 4-byte tag with VLAN ID (and priority bits).",
+            "IEEE standard that inserts a VLAN ID tag into Ethernet frames on trunks.",
         },
         {
-          id: "frame",
-          label: "Frame",
+          id: "trunk",
+          label: "Trunk",
           tier: "basics",
-          shortDefinition: "Tagged Ethernet frames on a trunk carry the VLAN ID in the 802.1Q header.",
+          shortDefinition:
+            "Link that carries multiple VLANs — frames are tagged so each VLAN stays distinct.",
         },
       ],
     },
     {
-      id: "std-check",
+      id: "tag-check",
       type: "checkpoint",
       osiLayer: 2,
       headline: "Quick check — tagging standard",
       checkpointQuestionId: "trunking-q1",
     },
     {
-      id: "not-8023",
-      type: "misconception",
+      id: "trunk-vs-access",
+      type: "teach",
       osiLayer: 2,
-      headline: "Trap: 802.3 is not tagging.",
-      body: "802.3 is Ethernet. 802.1Q tags VLANs. 802.1X authenticates. 802.11 is Wi-Fi. Exams love swapping these numbers.",
+      headline: "Access vs trunk job split.",
+      body: "Access: one VLAN to a host, usually untagged. Trunk: many VLANs between switches (or switch↔router), tagged. Wrong mode on the uplink breaks VLANs in silent, painful ways.",
+    },
+    {
+      id: "access-trunk-check",
+      type: "checkpoint",
+      osiLayer: 2,
+      headline: "Quick check — trunk vs access",
+      checkpointQuestionId: "trunking-q5",
     },
     {
       id: "native-vlan",
       type: "teach",
       osiLayer: 2,
-      headline: "Native VLAN — untagged.",
-      body: "On Cisco 802.1Q trunks, native VLAN frames travel untagged. Both ends must agree on which VLAN is native, or untagged traffic lands in the wrong place.",
+      headline: "Native VLAN = the untagged exception.",
+      body: "One VLAN on a trunk can travel untagged — the native VLAN. Both ends must agree. Mismatch: SwitchA’s native 10 becomes SwitchB’s native 99 → frames land wrong.",
       terms: [
         {
           id: "native-vlan",
           label: "Native VLAN",
           tier: "basics",
           shortDefinition:
-            "VLAN whose frames are untagged on a Cisco 802.1Q trunk — must match on both sides.",
+            "The VLAN whose frames cross a trunk untagged — must match on both ends.",
         },
       ],
-    },
-    {
-      id: "native-mismatch",
-      type: "teach",
-      osiLayer: 2,
-      headline: "Native VLAN mismatch hurts.",
-      body: "If ends disagree, untagged frames enter the wrong VLAN — outages and possible security leaks. Match native VLANs deliberately; do not leave mismatched defaults.",
-      studyTip: {
-        title: "Exam tip",
-        body: "Mismatch = connectivity issues and security concerns — not faster routing.",
-      },
     },
     {
       id: "native-check",
@@ -125,123 +119,61 @@ export const TRUNKING_EXPERIENCE: TopicExperience = {
       checkpointQuestionId: "trunking-q2",
     },
     {
-      id: "allowed-list",
+      id: "allowed",
       type: "teach",
       osiLayer: 2,
-      headline: "Allowed VLAN list.",
-      body: "switchport trunk allowed vlan lists which VLANs may cross the trunk. Default often allows all — best practice prunes to only required VLANs for security and clarity.",
-      terms: [
-        {
-          id: "allowed-vlans",
-          label: "Allowed VLANs",
-          tier: "basics",
-          shortDefinition:
-            "Configured set of VLANs permitted on a trunk — prune unused VLANs off the link.",
-        },
-      ],
-    },
-    {
-      id: "trunk-vs-access",
-      type: "teach",
-      osiLayer: 2,
-      headline: "Why trunks exist.",
-      body: "A trunk carries multiple VLANs with tags (plus one untagged native). An access port carries one VLAN for a host. Do not put access mode on a multi-VLAN switch uplink.",
-    },
-    {
-      id: "trunk-diff-check",
-      type: "checkpoint",
-      osiLayer: 2,
-      headline: "Quick check — trunk vs access",
-      checkpointQuestionId: "trunking-q5",
-    },
-    {
-      id: "dtp-teach",
-      type: "teach",
-      osiLayer: 2,
-      headline: "DTP negotiates trunks.",
-      body: "Dynamic Trunking Protocol can negotiate trunk vs access between Cisco peers. Convenient — and surprising when a port trunks when you did not intend it.",
-      terms: [
-        {
-          id: "dtp",
-          label: "DTP",
-          tier: "basics",
-          shortDefinition:
-            "Dynamic Trunking Protocol — Cisco negotiation for trunk versus access mode.",
-        },
-      ],
+      headline: "Allowed list = which VLANs may cross.",
+      body: "By default a trunk may allow many VLANs. switchport trunk allowed vlan prunes to only the ones you need — less flood risk and clearer intent.",
+      studyTip: {
+        title: "Design habit",
+        body: "Allow only VLANs that must cross that link — not “all” because it is convenient.",
+      },
     },
     {
       id: "explicit-trunk",
       type: "teach",
       osiLayer: 2,
       headline: "Prefer explicit trunk mode.",
-      body: "Hard-set switchport mode trunk where you want a trunk. On hardened designs, add switchport nonegotiate so DTP stops talking. Explicit beats hope.",
-      studyTip: {
-        title: "Secure habit",
-        body: "mode trunk + nonegotiate on trunks you control — do not rely on dynamic alone.",
-      },
+      body: "Set switchport mode trunk when you mean trunk. DTP can negotiate for you — and surprise you. Exams like explicit configs and nonegotiate on locked designs.",
+      terms: [
+        {
+          id: "dtp",
+          label: "DTP",
+          tier: "basics",
+          shortDefinition:
+            "Dynamic Trunking Protocol — Cisco negotiation of trunk vs access; often disabled in careful designs.",
+        },
+      ],
+      laterLearn: ["DTP modes in depth", "EtherChannel"],
     },
     {
-      id: "nonegotiate-check",
+      id: "dtp-check",
       type: "checkpoint",
       osiLayer: 2,
       headline: "Quick check — stop DTP",
       checkpointQuestionId: "trunking-q4",
     },
     {
-      id: "rotas-preview",
+      id: "roas-peek",
       type: "teach",
       osiLayer: 3,
-      headline: "Router-on-a-stick preview.",
-      body: "One router physical port trunks to the switch; subinterfaces each encapsulate one VLAN (dot1Q). That is how one cable routes many VLANs — shallow intro only.",
-      terms: [
-        {
-          id: "rotas",
-          label: "Router-on-a-stick",
-          tier: "basics",
-          shortDefinition:
-            "Single trunked router interface with 802.1Q subinterfaces for inter-VLAN routing.",
-        },
-      ],
+      headline: "Router-on-a-stick uses a trunk.",
+      body: "A router can terminate many VLANs on one physical link with subinterfaces — each subinterface has encapsulation dot1Q <vlan>. Same tag idea as switch trunks; routing details deepen with inter-VLAN design.",
+      laterLearn: ["Subinterface CLI labs", "SVI vs RoaS choice"],
     },
     {
-      id: "rotas-check",
+      id: "roas-check",
       type: "checkpoint",
       osiLayer: 3,
       headline: "Quick check — router-on-a-stick",
       checkpointQuestionId: "trunking-q3",
     },
     {
-      id: "verify-trunk",
-      type: "teach",
-      osiLayer: 2,
-      headline: "show interfaces trunk.",
-      body: "Verify mode, encapsulation, native VLAN, and allowed VLANs with show interfaces trunk. First check when VLANs appear on one switch but not the other.",
-    },
-    {
-      id: "defer-etherchannel",
-      type: "teach",
-      osiLayer: 2,
-      headline: "EtherChannel — later.",
-      body: "Bundling parallel links for bandwidth and redundancy is EtherChannel / port-channels. STP will treat a bundle as one logical link — depth deferred past this trunking pass.",
-      laterLearn: ["EtherChannel / LACP", "Port-channel and STP"],
-      terms: [
-        {
-          id: "etherchannel",
-          label: "EtherChannel",
-          tier: "later",
-          shortDefinition:
-            "Link aggregation — multiple physical links as one logical path. Full depth later.",
-          laterItems: ["LACP", "Static EtherChannel", "STP treats channel as one link"],
-        },
-      ],
-    },
-    {
       id: "summary",
       type: "summary",
       osiLayer: 2,
-      headline: "Trunking covered.",
-      body: "You can explain 802.1Q tags, access vs trunk, native VLAN match, allowed lists, and why explicit trunk (+ nonegotiate) beats DTP alone. Next: Spanning Tree.",
+      headline: "Trunking in one story.",
+      body: "One uplink needed two worlds → tags carry the VLAN ID → native is the untagged exception → allowed lists prune → prefer explicit trunks. Access stays one VLAN to the host.",
     },
   ],
 };

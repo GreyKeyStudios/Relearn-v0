@@ -3418,7 +3418,7 @@ Show commands: show mac address-table, show interfaces status, show spanning-tre
             "Switches forward based on destination MAC addresses",
             "MAC address table maps MACs to switch ports",
             "Each switched full-duplex port is its own collision domain",
-            "Unknown destination MACs cause flooding to all ports in the VLAN",
+            "Unknown destination MACs cause flooding to all other switch ports (except ingress)",
             "Store-and-forward checks FCS; cut-through forwards faster with less checking",
             "Access ports typically carry one untagged VLAN (trunk detail comes next)",
           ],
@@ -3435,19 +3435,22 @@ Show commands: show mac address-table, show interfaces status, show spanning-tre
             "Store-and-forward vs cut-through switching latency trade-offs",
             "Collision vs broadcast domain on full-duplex switched ports",
           ],
+          estimatedStudyMinutes: 35,
+          difficulty: "medium",
+          prerequisites: ["ethernet"],
           quiz: [
             {
               id: "switching-q1",
               prompt: "What happens when a switch receives a frame with an unknown destination MAC?",
               choices: [
                 { id: "a", text: "Drops the frame" },
-                { id: "b", text: "Floods to all ports in the VLAN except the incoming port" },
+                { id: "b", text: "Floods to all other ports except the incoming port" },
                 { id: "c", text: "Sends to the default gateway" },
                 { id: "d", text: "Converts to IP routing" },
               ],
               correctChoiceId: "b",
               explanation:
-                "No MAC table entry means the switch cannot pick one exit port, so it floods within the VLAN (except the ingress port) until it later learns that MAC. It does not drop the frame or jump to IP routing.",
+                "No MAC table entry means the switch cannot pick one exit port, so it floods out every other port except the ingress until it later learns that MAC. It does not drop the frame or jump to IP routing. (VLANs will later limit which ports share that flood.)",
               objectiveId: "CCNA-2.3",
               difficulty: "easy",
             },
@@ -3521,7 +3524,7 @@ Show commands: show mac address-table, show interfaces status, show spanning-tre
             {
               id: "switching-f2",
               front: "Unknown unicast destination behavior?",
-              back: "Flood the frame to all ports in the same VLAN except the source port",
+              back: "Flood the frame to all other ports except the source port",
             },
             {
               id: "switching-f3",
@@ -3734,7 +3737,7 @@ Voice VLANs and data VLANs can be assigned to the same port for IP phones with P
               ],
               correctChoiceId: "b",
               explanation:
-                "Different VLANs are different broadcast domains — Layer 2 alone cannot forward between them. You need Layer 3 (router-on-a-stick subinterfaces or SVIs on a multilayer switch).",
+                "Different VLANs are different broadcast domains — Layer 2 alone cannot forward between them. You need Layer 3 (router-on-a-stick or an SVI on a multilayer switch) to reconnect them on purpose.",
               objectiveId: "CCNA-2.5",
               difficulty: "easy",
             },
@@ -3749,7 +3752,7 @@ Voice VLANs and data VLANs can be assigned to the same port for IP phones with P
               ],
               correctChoiceId: "b",
               explanation:
-                "A Switch Virtual Interface (e.g. VLAN 10 IP on the switch) is the Layer 3 gateway for that VLAN — not a physical router NIC and not wireless/NAT config.",
+                "A Switch Virtual Interface is the switch’s Layer 3 gateway IP for a VLAN (for example VLAN 10’s gateway). Deep CLI and trunking details wait until trunks — the idea is “virtual gateway for that VLAN.”",
               objectiveId: "CCNA-2.6",
               difficulty: "easy",
             },
@@ -4014,6 +4017,9 @@ Only trunks should exist between switches carrying multiple VLANs; access ports 
             "switchport nonegotiate to stop DTP on an explicit trunk",
             "802.1Q vs ISL—CCNA focuses on 802.1Q as the standard",
           ],
+          estimatedStudyMinutes: 30,
+          difficulty: "medium",
+          prerequisites: ["vlans"],
           quiz: [
             {
               id: "trunking-q1",
@@ -4256,6 +4262,9 @@ EtherChannel bundles are a later depth topic—STP treats a channel as one logic
             "PortFast + BPDU Guard on host access ports",
             "Blocked ports listen for BPDUs but do not forward user traffic",
           ],
+          estimatedStudyMinutes: 35,
+          difficulty: "hard",
+          prerequisites: ["switching", "trunking"],
           quiz: [
             {
               id: "stp-q1",

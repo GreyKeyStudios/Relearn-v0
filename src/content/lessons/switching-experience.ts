@@ -1,6 +1,6 @@
 import type { TopicExperience } from "@/content/types";
 
-/** LES experience — Layer 2 switching fundamentals (Wave 2). */
+/** LES — Layer 2 switching: learn → forward → flood story (Network Access rewrite). */
 export const SWITCHING_EXPERIENCE: TopicExperience = {
   anchor: { type: "osi-stack" },
   screens: [
@@ -8,13 +8,14 @@ export const SWITCHING_EXPERIENCE: TopicExperience = {
       id: "intro-why",
       type: "hero",
       osiLayer: 2,
-      headline: "Switches decide where frames go.",
-      body: "You already met Ethernet frames and MAC addresses. This lesson is how a switch uses those addresses to forward traffic — and when it floods because it does not know yet.",
+      headline: "Watch one frame find its way.",
+      body: "You already know Ethernet frames and MAC addresses. Today: what a switch actually does when PC-A talks to PC-B — learn, forward, or flood when it does not know yet.",
       media: {
         kind: "icons",
         items: [
-          { icon: "switch", label: "Layer 2 switch" },
-          { icon: "network", label: "MAC table" },
+          { icon: "monitor", label: "PC-A" },
+          { icon: "switch", label: "Switch" },
+          { icon: "monitor", label: "PC-B" },
         ],
       },
       terms: [
@@ -23,7 +24,7 @@ export const SWITCHING_EXPERIENCE: TopicExperience = {
           label: "Frame",
           tier: "basics",
           shortDefinition:
-            "Layer 2 container with destination MAC, source MAC, payload, and FCS — from your Ethernet lesson.",
+            "Layer 2 container with destination MAC, source MAC, payload, and FCS — from Ethernet.",
         },
         {
           id: "mac",
@@ -36,81 +37,70 @@ export const SWITCHING_EXPERIENCE: TopicExperience = {
       ],
     },
     {
-      id: "bridge-ethernet",
-      type: "teach",
-      osiLayer: 2,
-      headline: "Ethernet built the foundation.",
-      body: "Ethernet taught frames, MAC learning basics, and hub vs switch. Switching drills the MAC table, flooding, and collision vs broadcast domains before VLANs and trunks.",
-      laterLearn: ["VLANs", "Trunking", "Spanning Tree"],
-    },
-    {
-      id: "not-a-hub",
+      id: "hub-vs-switch",
       type: "misconception",
       osiLayer: 2,
-      headline: "A switch is not a hub.",
-      body: "A hub repeats bits out every port. A switch reads the destination MAC and forwards to one port when it knows the address — quieter LAN, separate full-duplex links.",
+      headline: "A hub is not a switch.",
+      body: "A hub repeats every bit out every port — everyone hears everything. A switch builds a table and aims each frame at the right port when it can. That difference is the whole lesson.",
+      media: {
+        kind: "flow",
+        items: [
+          { icon: "server", label: "Hub: copy all" },
+          { icon: "switch", label: "Switch: choose" },
+        ],
+      },
     },
     {
-      id: "mac-table-teach",
+      id: "cast-setup",
       type: "teach",
       osiLayer: 2,
-      headline: "The MAC address table.",
-      body: "The MAC address table maps each learned MAC address to a switch port. When a frame arrives, the switch looks up the destination MAC to pick the exit port.",
-      terms: [
-        {
-          id: "mac-table",
-          label: "MAC address table",
-          tier: "basics",
-          shortDefinition:
-            "Dynamic map of MAC address → switch port. Also called the CAM table on older Cisco gear.",
-        },
-        {
-          id: "mac",
-          label: "MAC address",
-          tier: "basics",
-          shortDefinition: "The key in the MAC table — which port faces that hardware address.",
-        },
-      ],
+      headline: "Meet the cast.",
+      body: "One switch. PC-A on port 1, PC-B on port 2, PC-C on port 3. The MAC table starts empty. PC-A will send a frame destined for PC-B’s MAC.",
+      media: {
+        kind: "icons",
+        items: [
+          { icon: "monitor", label: "A · port 1" },
+          { icon: "monitor", label: "B · port 2" },
+          { icon: "monitor", label: "C · port 3" },
+        ],
+      },
     },
     {
       id: "learn-source",
       type: "teach",
       osiLayer: 2,
-      headline: "Learning from the source MAC.",
-      body: "On every received frame, the switch records the source MAC and the ingress port. That is how the table fills — not from ARP or DHCP, and not from guessing destination MACs.",
-      studyTip: {
-        title: "Exam tip",
-        body: "Learn = source MAC + incoming port. Forward = destination MAC lookup.",
-      },
-    },
-    {
-      id: "forward-known",
-      type: "teach",
-      osiLayer: 2,
-      headline: "Known destination — one exit.",
-      body: "If the destination MAC is in the table, the switch forwards the frame out that one port. Other ports stay quiet for that unicast frame.",
+      headline: "Step 1 — learn the source.",
+      body: "PC-A’s frame arrives on port 1. The switch reads the source MAC (A) and writes: “A lives on port 1.” Learning always uses the source — never the destination.",
+      terms: [
+        {
+          id: "mac",
+          label: "MAC address table",
+          tier: "basics",
+          shortDefinition:
+            "Switch map of MAC → port. Built by recording each frame’s source MAC and ingress port.",
+        },
+      ],
       media: {
         kind: "flow",
         items: [
-          { icon: "monitor", label: "Frame in" },
-          { icon: "switch", label: "Lookup dest MAC" },
-          { icon: "monitor", label: "One exit port" },
+          { icon: "monitor", label: "Frame from A" },
+          { icon: "switch", label: "Learn A→port 1" },
         ],
       },
     },
     {
-      id: "flood-unknown",
+      id: "unknown-flood",
       type: "teach",
       osiLayer: 2,
-      headline: "Unknown destination — flood.",
-      body: "No table entry for the destination MAC? The switch floods: send the frame out all ports in that VLAN except the one it arrived on. Later traffic reveals the real port.",
+      headline: "Step 2 — unknown destination floods.",
+      body: "Destination is B’s MAC, but the table has no entry yet. The switch floods: copies the frame out every port except port 1. B and C both receive it; only B keeps it.",
       terms: [
         {
           id: "flood",
           label: "Flooding",
           tier: "basics",
           shortDefinition:
-            "Copying a frame out every eligible port when the destination MAC is unknown (or for broadcasts).",
+            "Send a frame out all switch ports except the one it came in on — used when the destination MAC is unknown.",
         },
       ],
     },
@@ -122,193 +112,116 @@ export const SWITCHING_EXPERIENCE: TopicExperience = {
       checkpointQuestionId: "switching-q1",
     },
     {
-      id: "table-maps",
+      id: "b-replies",
       type: "teach",
       osiLayer: 2,
-      headline: "What the MAC table maps.",
-      body: "MAC → switch port. Not IP → MAC (that is ARP). Not VLAN → subnet (that is design). The MAC table answers: which port for this hardware address?",
+      headline: "Step 3 — B replies; table grows.",
+      body: "PC-B answers. Frame arrives on port 2 with source MAC B. Switch learns B→port 2. Now the table has A and B. Future A↔B frames can go straight — no flood.",
+      media: {
+        kind: "flow",
+        items: [
+          { icon: "monitor", label: "B replies" },
+          { icon: "switch", label: "Learn B→port 2" },
+        ],
+      },
+    },
+    {
+      id: "known-forward",
+      type: "teach",
+      osiLayer: 2,
+      headline: "Step 4 — known MAC: forward only.",
+      body: "Next frame from A to B: table says B→port 2. Switch sends that frame out port 2 only. PC-C never hears it. That is intelligent forwarding.",
+      terms: [
+        {
+          id: "forward",
+          label: "Forward",
+          tier: "basics",
+          shortDefinition:
+            "Send the frame out the single port that matches the destination MAC in the table.",
+        },
+      ],
     },
     {
       id: "table-check",
       type: "checkpoint",
       osiLayer: 2,
-      headline: "Quick check — MAC table",
+      headline: "Quick check — what the table maps",
       checkpointQuestionId: "switching-q2",
     },
     {
-      id: "collision-domain",
-      type: "teach",
+      id: "collision-broadcast",
+      type: "analogy",
       osiLayer: 2,
-      headline: "Collision domain refresher.",
-      body: "A collision domain is where simultaneous transmissions can corrupt each other. Hubs shared one big domain. Modern full-duplex switch ports give each link its own collision domain.",
-      terms: [
-        {
-          id: "collision-domain",
-          label: "Collision domain",
-          tier: "basics",
-          shortDefinition:
-            "Devices that share a path where overlapping transmissions can collide and ruin frames.",
-        },
-      ],
-    },
-    {
-      id: "broadcast-domain",
-      type: "teach",
-      osiLayer: 2,
-      headline: "Broadcast domain vs collision.",
-      body: "A broadcast domain is every port that receives a Layer 2 broadcast (dest FF:FF:FF:FF:FF:FF). One switch without VLANs — one broadcast domain. Separate collision domains ≠ separate broadcasts.",
-      terms: [
-        {
-          id: "broadcast-domain",
-          label: "Broadcast domain",
-          tier: "basics",
-          shortDefinition:
-            "All ports that receive the same Layer 2 broadcast. Switches alone do not split it — VLANs or routers do.",
-        },
-        {
-          id: "mac",
-          label: "Broadcast MAC",
-          tier: "basics",
-          shortDefinition: "FF:FF:FF:FF:FF:FF — every NIC in the broadcast domain receives the frame.",
-          example: "FF:FF:FF:FF:FF:FF",
-        },
-      ],
-      laterLearn: ["How VLANs split broadcast domains"],
-    },
-    {
-      id: "duplex-ports",
-      type: "teach",
-      osiLayer: 2,
-      headline: "Full-duplex ports, separate collisions.",
-      body: "Each full-duplex switch port connected to a host is its own collision domain — and under full duplex, collisions essentially do not occur on that link.",
+      headline: "Two different “everyone hears it” problems.",
+      body: "Collisions: two devices talk on one shared wire at once (old hubs / half-duplex). Broadcasts: one frame meant for everyone (like ARP). Switches mostly kill collisions per port — broadcasts still go to every port on this flat switch.",
       studyTip: {
-        title: "Exam tip",
-        body: "Switched full-duplex = per-port collision domains. Broadcasts still flood the VLAN.",
+        title: "Hold the distinction",
+        body: "Full-duplex switch port ≈ its own collision domain. One flat switch ≈ one broadcast domain until VLANs carve it.",
       },
     },
     {
-      id: "collision-check",
+      id: "duplex-check",
       type: "checkpoint",
       osiLayer: 2,
       headline: "Quick check — collision domains",
       checkpointQuestionId: "switching-q3",
     },
     {
-      id: "store-forward",
+      id: "show-mac",
       type: "teach",
       osiLayer: 2,
-      headline: "Store-and-forward switching.",
-      body: "Store-and-forward buffers the entire frame and checks the FCS before forwarding. Corrupted frames can be dropped. Slightly higher latency, stronger error checking.",
+      headline: "Prove it on the CLI.",
+      body: "show mac address-table lists learned MAC→port entries. clear mac address-table dynamic wipes them so the learn→flood→learn story restarts when traffic returns.",
+      studyTip: {
+        title: "Exam habit",
+        body: "Unknown destination → flood. Table maps MAC→port, not IP→MAC (that is ARP).",
+      },
+    },
+    {
+      id: "store-cut",
+      type: "teach",
+      osiLayer: 2,
+      headline: "Two forwarding styles (light).",
+      body: "Store-and-forward buffers the whole frame and checks FCS before sending — safer. Cut-through starts after the destination MAC — faster, less checking. Exams contrast them; most switches use store-and-forward.",
       terms: [
         {
           id: "fcs",
           label: "FCS",
           tier: "basics",
           shortDefinition:
-            "Frame Check Sequence — trailer checksum used to detect transmission errors.",
-        },
-        {
-          id: "store-forward",
-          label: "Store-and-forward",
-          tier: "basics",
-          shortDefinition:
-            "Receive the whole frame, validate FCS, then forward — classic reliable switching mode.",
+            "Frame Check Sequence at the end of the Ethernet frame — used for error detection.",
         },
       ],
-    },
-    {
-      id: "cut-through",
-      type: "teach",
-      osiLayer: 2,
-      headline: "Cut-through — lower latency.",
-      body: "Cut-through starts forwarding after reading the destination MAC — before the full frame arrives. Faster, but weaker error checking than store-and-forward. Light exam contrast only.",
       laterLearn: ["Fragment-free hybrids", "ASIC buffering details"],
-      terms: [
-        {
-          id: "cut-through",
-          label: "Cut-through",
-          tier: "basics",
-          shortDefinition:
-            "Forward after the destination MAC is known — lower latency, less FCS protection.",
-        },
-      ],
     },
     {
-      id: "mode-check",
+      id: "store-check",
       type: "checkpoint",
       osiLayer: 2,
       headline: "Quick check — store-and-forward",
       checkpointQuestionId: "switching-q4",
     },
     {
-      id: "show-mac",
+      id: "access-peek",
       type: "teach",
       osiLayer: 2,
-      headline: "show mac address-table.",
-      body: "On Cisco IOS, show mac address-table lists learned MAC-to-port mappings. Use it when a host is on the wrong port or the table looks empty after a clear.",
-      studyTip: {
-        title: "CLI habit",
-        body: "Also useful: show interfaces status. clear mac address-table dynamic when sticky entries linger.",
-      },
-    },
-    {
-      id: "access-preview",
-      type: "teach",
-      osiLayer: 2,
-      headline: "Access ports — light preview.",
-      body: "End devices usually sit on access ports: one VLAN, typically untagged. Multi-VLAN tagged links between switches are trunks — next topics.",
-      laterLearn: ["VLANs in depth", "802.1Q trunking"],
-      terms: [
-        {
-          id: "access-port",
-          label: "Access port",
-          tier: "basics",
-          shortDefinition:
-            "Port facing an end host — carries one VLAN. Trunk detail comes in the VLANs and trunking lessons.",
-        },
-      ],
+      headline: "End hosts sit on access ports.",
+      body: "The ports facing PCs usually carry one VLAN, untagged. Multi-VLAN links between switches use trunks — that is the next lesson. Today you only need: access = one host world.",
+      laterLearn: ["802.1Q tags", "Trunk allowed lists"],
     },
     {
       id: "access-check",
       type: "checkpoint",
       osiLayer: 2,
-      headline: "Quick check — access port",
+      headline: "Quick check — access ports",
       checkpointQuestionId: "switching-q5",
-    },
-    {
-      id: "defer-depth",
-      type: "teach",
-      osiLayer: 2,
-      headline: "What comes next.",
-      body: "VLANs will split broadcast domains. Trunking carries multiple VLANs between switches. Spanning Tree stops Layer 2 loops. Port security is a later security topic — not today.",
-      laterLearn: ["VLANs", "Trunking", "STP", "Port security"],
-      terms: [
-        {
-          id: "vlan",
-          label: "VLAN",
-          tier: "later",
-          shortDefinition: "Virtual LAN — logical broadcast domain on a switch.",
-          laterTopicId: "vlans",
-          laterTopicLabel: "VLANs",
-          laterItems: ["VLAN IDs", "Access port assignment", "Inter-VLAN routing overview"],
-        },
-        {
-          id: "stp",
-          label: "STP",
-          tier: "later",
-          shortDefinition: "Spanning Tree Protocol — loop prevention on redundant Layer 2 paths.",
-          laterTopicId: "stp",
-          laterTopicLabel: "STP",
-          laterItems: ["Root bridge", "Port roles", "PortFast"],
-        },
-      ],
     },
     {
       id: "summary",
       type: "summary",
       osiLayer: 2,
-      headline: "Switching fundamentals covered.",
-      body: "You can explain MAC learning, flooding unknowns, collision vs broadcast domains, store-and-forward vs cut-through, and show mac address-table. Next: VLANs.",
+      headline: "Switching in one story.",
+      body: "Learn source MAC→port. Unknown destination floods out other ports. Known destination forwards to one port. Collisions shrink; broadcasts still hit the whole flat switch until VLANs.",
     },
   ],
 };

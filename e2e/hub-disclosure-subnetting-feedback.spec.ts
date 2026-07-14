@@ -126,7 +126,9 @@ test.describe("hub disclosure + subnetting feedback", () => {
     ).toBeVisible({ timeout: 15_000 });
     await page.getByRole("button", { name: /Drops the frame/i }).click();
     await page.getByRole("button", { name: /Check Answer/i }).click();
-    await expect(page.getByText(/floods within the VLAN/i)).toBeVisible();
+    await expect(
+      page.getByText(/No MAC table entry means the switch cannot pick one exit port/i)
+    ).toBeVisible();
   });
 
   test("need a refresher appears for ospf-basics (IP Connectivity)", async ({ page }) => {
