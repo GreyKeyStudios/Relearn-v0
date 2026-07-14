@@ -1,215 +1,87 @@
 import type { TopicExperience } from "@/content/types";
 
-/** LES experience — Virtual LANs (Wave 2). */
+/** LES — VLANs: pain → purpose → access ports → Sales/Engineering story (Network Access rewrite). */
 export const VLANS_EXPERIENCE: TopicExperience = {
   anchor: { type: "osi-stack" },
   screens: [
     {
-      id: "intro-why",
+      id: "intro-pain",
       type: "hero",
       osiLayer: 2,
-      headline: "One switch, many broadcast domains.",
-      body: "Switching showed one broadcast domain per VLAN. VLANs let you carve the same physical switch into separate Layer 2 networks — quieter broadcasts, clearer security boundaries.",
+      headline: "Everyone hears everything.",
+      body: "One flat switch: when PC-A ARP-broadcasts, every port hears it — Sales laptops, Engineering servers, guest kiosks. Switching taught that flood. Today we stop the noise from going everywhere.",
       media: {
         kind: "icons",
         items: [
-          { icon: "switch", label: "Physical switch" },
-          { icon: "layers", label: "Logical VLANs" },
+          { icon: "monitor", label: "Sales" },
+          { icon: "monitor", label: "Eng" },
+          { icon: "switch", label: "One flood" },
         ],
       },
       terms: [
-        {
-          id: "broadcast-domain",
-          label: "Broadcast domain",
-          tier: "basics",
-          shortDefinition:
-            "Ports that receive the same Layer 2 broadcast. VLANs make separate broadcast domains on one chassis.",
-        },
-        {
-          id: "mac",
-          label: "MAC address",
-          tier: "basics",
-          shortDefinition:
-            "Layer 2 hardware address from switching — MAC tables and floods stay inside each VLAN.",
-        },
         {
           id: "frame",
           label: "Frame",
           tier: "basics",
           shortDefinition:
-            "Layer 2 container — VLANs decide which ports share the same frames and broadcasts.",
+            "Layer 2 container — on a flat switch, broadcasts still reach every port.",
+        },
+        {
+          id: "mac",
+          label: "MAC flooding",
+          tier: "basics",
+          shortDefinition:
+            "From Switching: unknown or broadcast traffic can hit every port on a flat switch.",
         },
       ],
     },
     {
-      id: "bridge-switching",
-      type: "teach",
+      id: "pain-story",
+      type: "analogy",
       osiLayer: 2,
-      headline: "Built on switching.",
-      body: "You know MAC tables and flooding within a VLAN. Without VLANs, that flood reaches every port. VLANs contain floods — and isolate groups that should not share Layer 2.",
+      headline: "Four PCs, one loud party.",
+      body: "Imagine four PCs on one switch. An ARP who-has from Sales still hits Engineering. Security and chatty apps make that worse. You need separate Layer 2 worlds without buying four switches.",
     },
     {
-      id: "what-is-vlan",
+      id: "invent-vlans",
       type: "teach",
       osiLayer: 2,
-      headline: "What is a VLAN?",
-      body: "A Virtual LAN is a logical Layer 2 segment identified by a VLAN ID. Devices in the same VLAN share a broadcast domain. Different VLANs do not talk at Layer 2 without routing.",
+      headline: "Invent separate Layer 2 worlds.",
+      body: "Put Sales on world 10 and Engineering on world 20. Broadcasts in 10 never hit ports in 20. Those worlds are Virtual LANs — VLANs — numbered IDs on the same physical switch.",
       terms: [
         {
           id: "vlan",
           label: "VLAN",
           tier: "basics",
           shortDefinition:
-            "Virtual LAN — a logical broadcast domain on a switch, tagged by a numeric VLAN ID.",
+            "Virtual LAN — a logical broadcast domain on a switch, identified by a numeric VLAN ID.",
+        },
+        {
+          id: "broadcast-domain",
+          label: "Broadcast domain",
+          tier: "basics",
+          shortDefinition:
+            "Ports that receive the same Layer 2 broadcast. Each VLAN is its own.",
         },
       ],
-    },
-    {
-      id: "benefit-check-teach",
-      type: "teach",
-      osiLayer: 2,
-      headline: "Primary benefit — segmentation.",
-      body: "VLANs do not speed cables or remove the need for IP. They logically segment one physical switch so broadcasts (and many frames) stay inside each VLAN.",
     },
     {
       id: "benefit-check",
       type: "checkpoint",
       osiLayer: 2,
-      headline: "Quick check — VLAN benefit",
+      headline: "Quick check — why VLANs",
       checkpointQuestionId: "vlans-q1",
     },
     {
       id: "vlan-id",
       type: "teach",
       osiLayer: 2,
-      headline: "VLAN IDs.",
-      body: "Each VLAN has a numeric ID. Valid IDs for normal use run roughly 1–4094 (12-bit VID in 802.1Q). Plan IDs by role: users, servers, guest, management.",
-      terms: [
-        {
-          id: "vlan-id",
-          label: "VLAN ID",
-          tier: "basics",
-          shortDefinition:
-            "Numeric identifier for a VLAN — typically 1 through 4094 on modern switches.",
-        },
-      ],
-      laterLearn: ["How 802.1Q tags carry the VLAN ID on trunks"],
-    },
-    {
-      id: "vlan1-default",
-      type: "teach",
-      osiLayer: 2,
-      headline: "VLAN 1 is the default.",
-      body: "On Cisco switches, ports start in VLAN 1 until you change them. Best practice often moves user data off VLAN 1 — but exams still expect you to know the factory default.",
+      headline: "VLAN IDs name each world.",
+      body: "VLAN IDs are numbers (roughly 1–4094). You create vlan 10 name Sales and vlan 20 name Engineering. The ID is how the switch remembers which ports share a broadcast domain.",
       studyTip: {
-        title: "Exam tip",
-        body: "Default Cisco VLAN = 1. Not 0. Not 10.",
+        title: "Range for exams",
+        body: "Standard usable VID range is about 1–4094 (12-bit). VLAN 0 / 4095 are not “normal host VLANs.”",
       },
-    },
-    {
-      id: "default-check",
-      type: "checkpoint",
-      osiLayer: 2,
-      headline: "Quick check — default VLAN",
-      checkpointQuestionId: "vlans-q2",
-    },
-    {
-      id: "access-ports",
-      type: "teach",
-      osiLayer: 2,
-      headline: "Access ports — one VLAN.",
-      body: "An access port faces an end device and belongs to a single VLAN (usually untagged). Configure mode access, then switchport access vlan <id>.",
-      terms: [
-        {
-          id: "access-port",
-          label: "Access port",
-          tier: "basics",
-          shortDefinition:
-            "Port for one host VLAN — switchport mode access + switchport access vlan.",
-        },
-      ],
-      media: {
-        kind: "flow",
-        items: [
-          { icon: "monitor", label: "PC" },
-          { icon: "cable", label: "Access port" },
-          { icon: "switch", label: "VLAN 10" },
-        ],
-      },
-    },
-    {
-      id: "create-vlan",
-      type: "teach",
-      osiLayer: 2,
-      headline: "Create and name a VLAN.",
-      body: "In global config: vlan 10 then name Sales. Assign ports afterward. Creating the VLAN alone does not move ports — forgetting assignment is a classic lab mistake.",
-    },
-    {
-      id: "isolation",
-      type: "misconception",
-      osiLayer: 2,
-      headline: "Same switch ≠ same VLAN.",
-      body: "Two PCs on one chassis in different VLANs cannot reach each other at Layer 2. The MAC table will not bridge across VLAN boundaries — you need Layer 3.",
-    },
-    {
-      id: "intervlan-need",
-      type: "teach",
-      osiLayer: 3,
-      headline: "Crossing VLANs needs Layer 3.",
-      body: "Inter-VLAN communication requires a Layer 3 device with an interface in each VLAN — a router (often subinterfaces) or a multilayer switch with SVIs.",
-      terms: [
-        {
-          id: "inter-vlan",
-          label: "Inter-VLAN routing",
-          tier: "basics",
-          shortDefinition:
-            "Forwarding between VLANs at Layer 3 — not possible with pure L2 switching alone.",
-        },
-      ],
-    },
-    {
-      id: "intervlan-check",
-      type: "checkpoint",
-      osiLayer: 3,
-      headline: "Quick check — inter-VLAN",
-      checkpointQuestionId: "vlans-q3",
-    },
-    {
-      id: "svi-teach",
-      type: "teach",
-      osiLayer: 3,
-      headline: "What is an SVI?",
-      body: "A Switch Virtual Interface is a virtual IP interface for a VLAN on a multilayer switch — interface vlan 10 with an IP address. It acts as the gateway for that VLAN.",
-      terms: [
-        {
-          id: "svi",
-          label: "SVI",
-          tier: "basics",
-          shortDefinition:
-            "Switch Virtual Interface — Layer 3 gateway IP for a VLAN on a multilayer switch.",
-        },
-      ],
-    },
-    {
-      id: "svi-check",
-      type: "checkpoint",
-      osiLayer: 3,
-      headline: "Quick check — SVI",
-      checkpointQuestionId: "vlans-q4",
-    },
-    {
-      id: "svi-up",
-      type: "teach",
-      osiLayer: 3,
-      headline: "SVI must be up.",
-      body: "Give the SVI an IP and no shutdown. At least one access or trunk port in that VLAN should be up, or the SVI may stay down. Shallow preview — labs will drill the details.",
-    },
-    {
-      id: "id-range-check",
-      type: "teach",
-      osiLayer: 2,
-      headline: "Remember the ID range.",
-      body: "Think 1–4094 for usable VLAN IDs on exams. Do not invent VLAN 0 as a normal access VLAN, and do not stretch to 65535.",
     },
     {
       id: "range-check",
@@ -219,54 +91,126 @@ export const VLANS_EXPERIENCE: TopicExperience = {
       checkpointQuestionId: "vlans-q5",
     },
     {
-      id: "show-vlan",
+      id: "vlan1",
       type: "teach",
       osiLayer: 2,
-      headline: "show vlan brief.",
-      body: "show vlan brief lists VLAN IDs, names, and which access ports belong to each VLAN. First verify command when a PC sits in the wrong segment.",
+      headline: "VLAN 1 is the factory default.",
+      body: "Out of the box, Cisco access ports sit in VLAN 1 until you move them. Best practice: put user data elsewhere — leave VLAN 1 alone for exams and tidy designs.",
     },
     {
-      id: "voice-light",
+      id: "vlan1-check",
+      type: "checkpoint",
+      osiLayer: 2,
+      headline: "Quick check — default VLAN",
+      checkpointQuestionId: "vlans-q2",
+    },
+    {
+      id: "access-ports",
       type: "teach",
       osiLayer: 2,
-      headline: "Voice VLAN — light touch.",
-      body: "IP phones often share a port with a PC: data VLAN for the PC, voice VLAN for tagged phone frames. Deep QoS and CDPv2 phone specifics come later.",
-      laterLearn: ["Voice VLAN QoS", "CDP phone detection"],
+      headline: "Access ports face PCs.",
+      body: "An access port carries one VLAN, usually untagged. switchport mode access then switchport access vlan 10 puts that wall jack in Sales. Hosts never see the VLAN number — the switch does.",
       terms: [
         {
-          id: "voice-vlan",
-          label: "Voice VLAN",
+          id: "access-port",
+          label: "Access port",
           tier: "basics",
           shortDefinition:
-            "Separate VLAN for IP phone traffic on the same physical port as a data PC.",
+            "Switch port for an end host — one VLAN, typically untagged frames.",
         },
       ],
     },
     {
-      id: "defer-trunk",
+      id: "guided-create",
       type: "teach",
       osiLayer: 2,
-      headline: "Trunks and native VLAN — next.",
-      body: "How multiple VLANs cross a switch-to-switch link, 802.1Q tags, native VLAN, and allowed lists belong in trunking. Do not dig into DTP here.",
-      laterLearn: ["802.1Q tags", "Native VLAN", "Allowed VLAN lists"],
+      headline: "Worked example — create the VLANs.",
+      body: "On the switch: vlan 10 name Sales, vlan 20 name Engineering. That only creates the containers — ports still need assigning or traffic stays in default habits.",
+      media: {
+        kind: "flow",
+        items: [
+          { icon: "layers", label: "vlan 10 Sales" },
+          { icon: "layers", label: "vlan 20 Eng" },
+        ],
+      },
+    },
+    {
+      id: "guided-assign",
+      type: "teach",
+      osiLayer: 2,
+      headline: "Worked example — assign access ports.",
+      body: "Sales PCs on Fa0/1–4: mode access, access vlan 10. Engineering on Fa0/5–8: access vlan 20. show vlan brief should list the ports under the right ID.",
+      studyTip: {
+        title: "Common miss",
+        body: "Creating the VLAN without switchport access vlan … leaves the PC in VLAN 1.",
+      },
+    },
+    {
+      id: "same-vlan-ok",
+      type: "teach",
+      osiLayer: 2,
+      headline: "Same VLAN = same Layer 2 world.",
+      body: "Two Sales PCs in VLAN 10 can ARP and talk at Layer 2 through the switch. Floods stay inside VLAN 10 — Engineering ports stay quiet.",
+    },
+    {
+      id: "cross-vlan-fail",
+      type: "misconception",
+      osiLayer: 2,
+      headline: "Different VLANs do not talk at Layer 2.",
+      body: "Sales PC (VLAN 10) cannot reach Engineering PC (VLAN 20) by MAC switching alone. You need a Layer 3 device with a foot in each VLAN — that is the next beat, not more switching.",
+    },
+    {
+      id: "need-l3",
+      type: "teach",
+      osiLayer: 3,
+      headline: "Inter-VLAN traffic needs Layer 3.",
+      body: "A router (or multilayer switch) must route between VLAN 10’s subnet and VLAN 20’s subnet. Layer 2 VLANs isolate; Layer 3 reconnects on purpose.",
+    },
+    {
+      id: "intervlan-check",
+      type: "checkpoint",
+      osiLayer: 3,
+      headline: "Quick check — inter-VLAN",
+      checkpointQuestionId: "vlans-q3",
+    },
+    {
+      id: "svi-light",
+      type: "teach",
+      osiLayer: 3,
+      headline: "SVI = the switch’s gateway IP for a VLAN.",
+      body: "On a multilayer switch, a Switch Virtual Interface is a virtual IP for a VLAN — think “gateway for VLAN 10.” Deep CLI and trunking for router-on-a-stick wait until after trunks.",
       terms: [
         {
-          id: "trunk",
-          label: "Trunk",
-          tier: "later",
-          shortDefinition: "Link that carries multiple VLANs — tagging details in the trunking lesson.",
-          laterTopicId: "trunking",
-          laterTopicLabel: "Trunking",
-          laterItems: ["802.1Q", "Native VLAN match", "DTP and explicit trunk mode"],
+          id: "svi",
+          label: "SVI",
+          tier: "basics",
+          shortDefinition:
+            "Switch Virtual Interface — Layer 3 gateway IP for a VLAN on a multilayer switch.",
         },
       ],
+      laterLearn: ["interface vlan CLI detail", "router-on-a-stick subinterfaces"],
+    },
+    {
+      id: "svi-check",
+      type: "checkpoint",
+      osiLayer: 3,
+      headline: "Quick check — SVI",
+      checkpointQuestionId: "vlans-q4",
+    },
+    {
+      id: "trunk-defer",
+      type: "teach",
+      osiLayer: 2,
+      headline: "Many VLANs on one uplink — next lesson.",
+      body: "Two switches each with Sales and Engineering need one cable that carries both VLANs. That uses tags on a trunk. Voice VLAN tagging waits until then too.",
+      laterLearn: ["802.1Q tags", "Native VLAN", "Voice VLAN"],
     },
     {
       id: "summary",
       type: "summary",
       osiLayer: 2,
-      headline: "VLANs covered.",
-      body: "You can explain broadcast domains, VLAN IDs, VLAN 1 default, access ports, shallow inter-VLAN needs (L3/SVI), and a light voice VLAN idea. Next: trunking.",
+      headline: "VLANs in one story.",
+      body: "Flat switch flood was the pain. VLANs carve broadcast domains. Access ports put hosts in one world. Cross-VLAN needs Layer 3. SVI is the multilayer gateway idea — trunks come next.",
     },
   ],
 };

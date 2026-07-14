@@ -114,33 +114,33 @@ const BY_TOPIC: Record<string, PrerequisiteRefresherItem[]> = {
     {
       id: "ethernet-l2",
       title: "Ethernet",
-      tip: "Switches forward Ethernet frames by MAC. Flooding, learning, and access vs trunk all sit on top of that Layer 2 picture.",
+      tip: "Switches forward Ethernet frames by MAC. Learning uses the source; unknown destinations flood other ports.",
       topicId: "ethernet",
     },
     {
       id: "collision-vs-broadcast",
       title: "Collision vs broadcast domains",
-      tip: "Each switch port is typically its own collision domain; a VLAN is still one broadcast domain until you segment further.",
+      tip: "Each full-duplex switch port is typically its own collision domain; a flat switch is still one broadcast domain until VLANs carve it.",
     },
   ],
   vlans: [
     {
       id: "switching",
       title: "Switching",
-      tip: "VLANs ride on switch MAC forwarding. Unknown unicasts still flood — but only inside their VLAN.",
+      tip: "VLANs exist because a flat switch floods broadcasts to every port. Learning and flooding still happen — but only inside each VLAN.",
       topicId: "switching",
     },
     {
       id: "l2-vs-l3",
       title: "Why Layer 3 between VLANs?",
-      tip: "Separate VLANs = separate broadcast domains. Hosts in different VLANs need a router/SVI to talk — Layer 2 alone cannot bridge them.",
+      tip: "Separate VLANs = separate broadcast domains. Hosts in different VLANs need a Layer 3 device (router/SVI) to talk.",
     },
   ],
   trunking: [
     {
       id: "vlans",
       title: "VLANs",
-      tip: "Trunks carry many VLANs on one link with 802.1Q tags. Access ports carry one VLAN to end hosts.",
+      tip: "Trunks carry many VLANs on one link with 802.1Q tags so the far switch knows which world each frame belongs to.",
       topicId: "vlans",
     },
     {
@@ -153,8 +153,14 @@ const BY_TOPIC: Record<string, PrerequisiteRefresherItem[]> = {
     {
       id: "switching-loops",
       title: "Switching",
-      tip: "STP exists because redundant switch links without it create Layer 2 loops and broadcast storms.",
+      tip: "STP exists because redundant switch links without it create Layer 2 loops and broadcast storms — frames have no IP-style TTL.",
       topicId: "switching",
+    },
+    {
+      id: "trunking-mesh",
+      title: "Trunking / redundant uplinks",
+      tip: "Extra trunks between switches are resilience — STP decides which forwarding paths stay active.",
+      topicId: "trunking",
     },
     {
       id: "portfast-edge",
