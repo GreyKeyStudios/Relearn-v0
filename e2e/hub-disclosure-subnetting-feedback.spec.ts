@@ -79,6 +79,21 @@ test.describe("hub disclosure + subnetting feedback", () => {
     ).toBeVisible();
   });
 
+  test("need a refresher appears for ethernet (NF expansion)", async ({ page }) => {
+    await seedCcnaFreshLearner(page);
+    await page.goto("/cert/ccna/lesson/ethernet");
+    await waitForHydration(page);
+    await page
+      .getByText(/Loading your progress/i)
+      .waitFor({ state: "hidden", timeout: 30_000 })
+      .catch(() => undefined);
+
+    const refresher = page.locator("details").filter({ hasText: /Need a refresher/i });
+    await expect(refresher).toBeVisible();
+    await refresher.locator("summary").click();
+    await expect(refresher.getByText(/OSI Data Link/i)).toBeVisible();
+  });
+
   test("subnetting quiz: richer teaching after incorrect answers", async ({ page }) => {
     test.setTimeout(120_000);
     await seedCcnaFreshLearner(page);
