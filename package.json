@@ -15,7 +15,8 @@
     "test:e2e:audit": "playwright test e2e/ccna-curriculum-audit.spec.ts",
     "audit:evidence": "tsx scripts/audit-evidence.ts",
     "audit:judge": "tsx scripts/audit-judge.ts",
-    "audit:chatgpt-export": "tsx scripts/audit-chatgpt-export.ts"
+    "audit:chatgpt-export": "tsx scripts/audit-chatgpt-export.ts",
+    "audit:ledger-append": "tsx scripts/audit-ledger-append.ts"
   },
   "dependencies": {
     "lucide-react": "^1.21.0",

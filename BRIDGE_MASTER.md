@@ -483,6 +483,7 @@ Full spec: [`docs/phase-5-ai-learning.md`](docs/phase-5-ai-learning.md)
 - Mobile-first simulator UX
 - Free external resources only (`cost: "free"`)
 - Browser / agentic testing: see [`docs/AGENTIC_TESTING.md`](docs/AGENTIC_TESTING.md)
+- Curriculum Review Board (critique → triage → human approve): see [`docs/CURRICULUM_REVIEW_BOARD.md`](docs/CURRICULUM_REVIEW_BOARD.md)
 
 ---
 

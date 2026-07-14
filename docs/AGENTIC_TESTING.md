@@ -6,23 +6,23 @@ Future persona label (docs only): `demo@greykeystudios.dev`.
 
 ## Sign-off pipeline (CCNA)
 
-Use this order before Michael marks Topic Complete:
+Policy source of truth: [`CURRICULUM_REVIEW_BOARD.md`](CURRICULUM_REVIEW_BOARD.md).
 
 ```text
-1. Playwright mechanical walk (every topic)
-       ↓
-2. Evidence capture + vision judge (optional but preferred)
-       ↓
-3. npm run audit:chatgpt-export  →  paste reports/ccna-chatgpt-triage.md into ChatGPT
-       ↓
-4. ChatGPT triage: IMPLEMENT / SKIP / DEFER per finding
-       ↓
-5. Implement only approved items (feature branch → PR → dev)
-       ↓
-6. Michael full-course walkthrough + sign-off on wave sheets
+Evidence → Mechanical QA → Vision Review → ChatGPT triage → Ledger → Implement Ship-Before → Scoreboard → Michael walkthrough → Topic Complete
 ```
 
-Agents do **not** auto-fix curriculum from judgments. ChatGPT and Michael decide.
+1. Mechanical walk (every topic) → `reports/ccna-ux-audit.md`
+2. Evidence + vision judge → `reports/ccna-evidence/` + `reports/ccna-judgment/`
+3. `npm run audit:chatgpt-export` → paste `reports/ccna-chatgpt-triage.md` into ChatGPT
+4. Triage each `findingId` as **Ship Before Sign-off** / **Improve Later** / **Intentional Design**
+5. Commit decisions into [`.cursor/plans/ccna-pedagogy-audits/review-board/decision-log.md`](../.cursor/plans/ccna-pedagogy-audits/review-board/decision-log.md)  
+   (`npm run audit:ledger-append -- path/to/reply.md` updates seeded rows)
+6. Implement **only** Ship Before Sign-off items (feature branch → PR → `dev`); set `prOrCommit` on the ledger
+7. Refresh [`.cursor/plans/ccna-pedagogy-audits/review-board/ccna-scoreboard.md`](../.cursor/plans/ccna-pedagogy-audits/review-board/ccna-scoreboard.md) blocker counts
+8. Michael full-course walkthrough → Topic Complete on wave sheets
+
+Agents do **not** auto-fix curriculum from judgments. The board proposes; humans decide.
 
 ### Commands (full course)
 
@@ -38,9 +38,12 @@ npm run audit:judge -- --all
 npm run audit:evidence
 npm run audit:judge -- --all-pilots
 
-# 3) ChatGPT paste dossier
+# 3) ChatGPT paste dossier (stamps findingIds when judgment JSON exists)
 npm run audit:chatgpt-export
 # → reports/ccna-chatgpt-triage.md (gitignored under reports/)
+
+# 4) Apply ChatGPT table into the committed decision ledger
+npm run audit:ledger-append -- path/to/chatgpt-reply.md
 ```
 
 `OPENAI_API_KEY` in `.env.local` is required for `audit:judge`. Full-course judge may use ~9 API calls per topic; `--all` raises the default call cap.
