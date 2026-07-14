@@ -1,6 +1,6 @@
 import type { TopicExperience } from "@/content/types";
 
-/** LES experience — Routing fundamentals (Wave 3 / Domain 3). */
+/** LES — Routing fundamentals: PC→GW→table anatomy → LPM → AD vs metric (Domain 3 rewrite). */
 export const ROUTING_FUNDAMENTALS_EXPERIENCE: TopicExperience = {
   anchor: { type: "tcp-ip-stack" },
   screens: [
@@ -8,13 +8,14 @@ export const ROUTING_FUNDAMENTALS_EXPERIENCE: TopicExperience = {
       id: "intro-why",
       type: "hero",
       tcpLayer: 2,
-      headline: "Routers move packets between networks.",
-      body: "Switches forward frames inside a LAN by MAC. When traffic must leave a subnet, a router looks at the destination IP and picks a next hop. That Layer 3 job is routing.",
+      headline: "Follow one packet off the LAN.",
+      body: "Switching kept frames inside one Layer 2 world. When PC-A must reach a different network, the packet needs a router. Today we watch destination IP — and the table that answers “where next?”",
       media: {
         kind: "icons",
         items: [
-          { icon: "server", label: "Router" },
-          { icon: "globe", label: "IP networks" },
+          { icon: "monitor", label: "PC-A" },
+          { icon: "server", label: "Gateway" },
+          { icon: "globe", label: "Remote net" },
         ],
       },
       terms: [
@@ -30,113 +31,87 @@ export const ROUTING_FUNDAMENTALS_EXPERIENCE: TopicExperience = {
           label: "Frame",
           tier: "basics",
           shortDefinition:
-            "Layer 2 container switches forward on a LAN — MAC addressed, not IP routed.",
+            "Layer 2 container on each hop’s LAN — rewritten each hop; destination IP inside stays the same.",
         },
         {
           id: "mac",
           label: "MAC address",
           tier: "basics",
           shortDefinition:
-            "Layer 2 hardware address used by switches on a LAN — not how routers choose inter-network paths.",
+            "Layer 2 address switches use on a LAN — not how routers choose inter-network paths.",
         },
       ],
     },
     {
-      id: "bridge-switching",
+      id: "path-story",
       type: "teach",
       tcpLayer: 2,
-      headline: "Layer 3 vs Layer 2 switch.",
-      body: "A Layer 2 switch bridges frames in a VLAN. A router (or L3 device) forwards IP packets between subnets. Different question: which MAC port vs which IP network next?",
-      terms: [
-        {
-          id: "router",
-          label: "Router",
-          tier: "basics",
-          shortDefinition:
-            "Device that forwards IP packets between networks using a routing table.",
-        },
-        {
-          id: "frame",
-          label: "Frame",
-          tier: "basics",
-          shortDefinition:
-            "Layer 2 PDU on the LAN — already introduced on the hero screen.",
-        },
-        {
-          id: "mac",
-          label: "MAC address",
-          tier: "basics",
-          shortDefinition:
-            "Hardware address used for L2 switch forwarding — not the Layer 3 path key.",
-        },
-      ],
-    },
-    {
-      id: "why-routers",
-      type: "teach",
-      tcpLayer: 2,
-      headline: "Why you need routers.",
-      body: "Broadcasts stay in a subnet. Different networks need a gateway that can rewrite the next-hop path — the router — so hosts in 10.1.1.0/24 can reach 10.2.2.0/24 or the Internet.",
-    },
-    {
-      id: "lookup-dest",
-      type: "teach",
-      tcpLayer: 2,
-      headline: "Destination IP lookup.",
-      body: "On each packet, the router reads the destination IP and searches its routing table for a matching prefix. The winning entry supplies the outgoing interface and/or next-hop IP.",
+      headline: "Worked path — PC to remote.",
+      body: "PC-A (10.1.1.10/24) wants 10.2.2.50. Same? No — different subnet. PC sends to its default gateway (10.1.1.1). The router reads destination IP 10.2.2.50 and looks up its routing table — not a MAC table.",
       media: {
         kind: "flow",
         items: [
-          { icon: "monitor", label: "Dest IP in" },
-          { icon: "server", label: "Table lookup" },
-          { icon: "globe", label: "Next hop out" },
+          { icon: "monitor", label: "10.1.1.10" },
+          { icon: "server", label: "GW 10.1.1.1" },
+          { icon: "globe", label: "10.2.2.50" },
         ],
       },
     },
     {
-      id: "lookup-check",
-      type: "checkpoint",
+      id: "l2-rebuild",
+      type: "misconception",
       tcpLayer: 2,
-      headline: "Quick check — routing decision",
-      checkpointQuestionId: "routing-fundamentals-q1",
+      headline: "Dest IP stays; MAC changes each hop.",
+      body: "Across routers, the destination IP stays 10.2.2.50 until delivery. Each hop strips the old Ethernet frame and builds a new one toward the next device. End-to-end MAC is a myth.",
     },
     {
-      id: "rib-teach",
+      id: "table-anatomy",
       type: "teach",
       tcpLayer: 2,
-      headline: "The routing table (RIB).",
-      body: "The Routing Information Base is the router’s map of known prefixes — connected, static, or learned from protocols. show ip route displays it with codes like C, S, and O.",
+      headline: "Meet one routing-table row.",
+      body: "Imagine: S 10.2.2.0/24 [1/0] via 10.0.0.2, Gig0/0. Prefix = where. via = next-hop who. AD/metric in brackets. Code S = static (C = connected, O = OSPF later).",
       terms: [
         {
-          id: "rib",
-          label: "RIB",
+          id: "routing-table",
+          label: "Routing table (RIB)",
           tier: "basics",
           shortDefinition:
-            "Routing Information Base — the routing table that stores known prefixes and how to reach them.",
+            "Router’s map of prefixes — which network, via whom, and how the entry was learned.",
         },
         {
-          id: "routing-table",
-          label: "Routing table",
+          id: "next-hop",
+          label: "Next-hop",
           tier: "basics",
           shortDefinition:
-            "Same idea as the RIB in everyday CCNA talk — prefix, next hop, AD, and metric.",
+            "Neighbor IP on a shared link that should receive packets for this prefix.",
+          example: "10.0.0.2",
         },
       ],
-      laterLearn: ["FIB / CEF forwarding details"],
+      studyTip: {
+        title: "show ip route",
+        body: "Each line answers: network?, how learned?, AD/metric?, next-hop?, exit interface?",
+      },
+    },
+    {
+      id: "table-check",
+      type: "checkpoint",
+      tcpLayer: 2,
+      headline: "Quick check — what drives routing",
+      checkpointQuestionId: "routing-fundamentals-q1",
     },
     {
       id: "connected",
       type: "teach",
       tcpLayer: 2,
       headline: "Connected routes appear automatically.",
-      body: "When an interface has an IP and is up/up, IOS installs that network as Connected (code C). No static line and no OSPF needed for the local wire.",
+      body: "When Gig0/0 has 10.1.1.1/24 and is up/up, IOS installs C 10.1.1.0/24 — connected. You did not type a static for the cable you plugged into.",
       terms: [
         {
-          id: "connected-route",
+          id: "connected",
           label: "Connected route",
           tier: "basics",
           shortDefinition:
-            "Route installed automatically for an active interface’s network — AD 0 on Cisco.",
+            "Automatically added for each active interface network (code C) — AD 0.",
         },
       ],
     },
@@ -148,24 +123,20 @@ export const ROUTING_FUNDAMENTALS_EXPERIENCE: TopicExperience = {
       checkpointQuestionId: "routing-fundamentals-q4",
     },
     {
-      id: "longest-prefix",
+      id: "lpm-work",
       type: "teach",
       tcpLayer: 2,
-      headline: "Longest prefix match.",
-      body: "If several routes match a destination, the most specific prefix wins — /24 beats /16 beats 0.0.0.0/0. Metric and AD do not override a longer match.",
+      headline: "Worked example — longest prefix.",
+      body: "Packet to 10.1.2.5. Table has 10.0.0.0/8, 10.1.0.0/16, 10.1.2.0/24, and 0.0.0.0/0. All could “match” loosely — /24 wins because it is most specific. AD and metric do not override a longer match.",
       terms: [
         {
-          id: "longest-prefix",
+          id: "lpm",
           label: "Longest prefix match",
           tier: "basics",
           shortDefinition:
-            "Among matching routes, the router chooses the prefix with the most matching bits.",
+            "Among matching routes, the most specific prefix wins (/24 beats /16 beats /0).",
         },
       ],
-      studyTip: {
-        title: "Exam tip",
-        body: "More specific first. Default route is the last resort.",
-      },
     },
     {
       id: "lpm-check",
@@ -175,36 +146,17 @@ export const ROUTING_FUNDAMENTALS_EXPERIENCE: TopicExperience = {
       checkpointQuestionId: "routing-fundamentals-q2",
     },
     {
-      id: "ad-concept",
-      type: "teach",
-      tcpLayer: 2,
-      headline: "Administrative distance (AD).",
-      body: "When two sources offer the same prefix length, AD picks the trusted source. Lower AD wins — connected 0, static 1, OSPF 110 are classic Cisco values.",
-      terms: [
-        {
-          id: "ad",
-          label: "Administrative distance",
-          tier: "basics",
-          shortDefinition:
-            "Trust ranking for route sources. Lower AD preferred when prefixes are equal length.",
-        },
-      ],
-      laterLearn: ["Full AD chart for every protocol"],
-    },
-    {
       id: "default-route",
       type: "teach",
       tcpLayer: 2,
-      headline: "Default route 0.0.0.0/0.",
-      body: "The default route matches every destination when nothing more specific exists — the gateway of last resort. Many edge routers use it toward an ISP.",
+      headline: "Default route = last resort.",
+      body: "0.0.0.0/0 matches only when nothing more specific exists — gateway of last resort toward an ISP or lab exit. Not the same as the host’s default gateway IP, though they often cooperate.",
       terms: [
         {
           id: "default-route",
           label: "Default route",
           tier: "basics",
-          shortDefinition:
-            "0.0.0.0/0 — catch-all route used only when no longer prefix matches.",
-          example: "0.0.0.0/0",
+          shortDefinition: "0.0.0.0/0 — catch-all when no longer prefix matches.",
         },
       ],
     },
@@ -212,22 +164,56 @@ export const ROUTING_FUNDAMENTALS_EXPERIENCE: TopicExperience = {
       id: "default-check",
       type: "checkpoint",
       tcpLayer: 2,
-      headline: "Quick check — default route",
+      headline: "Quick check — default notation",
       checkpointQuestionId: "routing-fundamentals-q3",
     },
     {
-      id: "ttl-hop",
+      id: "ad-vs-metric",
       type: "teach",
       tcpLayer: 2,
-      headline: "TTL counts hops.",
-      body: "Each router decrements Time To Live by 1. When TTL hits 0, the packet is dropped — that hop limit stops loops and powers traceroute.",
+      headline: "AD vs metric — different questions.",
+      body: "Same prefix length from two sources? Administrative distance picks the trusted source (connected 0, static 1, OSPF 110 — lower wins). Metric picks best path inside one source (OSPF cost, etc.).",
+      terms: [
+        {
+          id: "ad",
+          label: "Administrative distance",
+          tier: "basics",
+          shortDefinition:
+            "Trust ranking of route sources — used when equal-length prefixes compete.",
+        },
+        {
+          id: "metric",
+          label: "Metric",
+          tier: "basics",
+          shortDefinition:
+            "Path quality inside one protocol/source — not a substitute for longest-prefix match.",
+        },
+      ],
+      studyTip: {
+        title: "Order of decisions",
+        body: "1) Longest prefix. 2) If tie on length, lower AD source. 3) Then metric within that source.",
+      },
+    },
+    {
+      id: "ttl-cyber",
+      type: "teach",
+      tcpLayer: 2,
+      headline: "TTL — your cyber hook still holds.",
+      body: "Each router decrements Time To Live by 1. At 0 the packet dies (often an ICMP Time Exceeded reply). Traceroute uses that hop-by-hop countdown — same idea you met in cybersecurity.",
       terms: [
         {
           id: "ttl",
           label: "TTL",
           tier: "basics",
           shortDefinition:
-            "Time To Live — hop counter in the IP header, decremented by each router.",
+            "Hop limit in the IP header — decremented each router; 0 means drop.",
+        },
+        {
+          id: "icmp",
+          label: "ICMP",
+          tier: "basics",
+          shortDefinition:
+            "Internet Control Message Protocol — used for Time Exceeded and other network diagnostics.",
         },
       ],
     },
@@ -239,88 +225,11 @@ export const ROUTING_FUNDAMENTALS_EXPERIENCE: TopicExperience = {
       checkpointQuestionId: "routing-fundamentals-q5",
     },
     {
-      id: "control-vs-data",
-      type: "teach",
-      tcpLayer: 2,
-      headline: "Control plane vs data plane.",
-      body: "Control plane builds and maintains the routing table (static config or protocols). Data plane forwards packets using those answers. Light distinction only — not a deep CEF lesson.",
-      terms: [
-        {
-          id: "control-plane",
-          label: "Control plane",
-          tier: "basics",
-          shortDefinition: "Builds the routing table — static config or routing protocols.",
-        },
-        {
-          id: "data-plane",
-          label: "Data plane",
-          tier: "basics",
-          shortDefinition: "Forwards packets using the routes already installed.",
-        },
-      ],
-      laterLearn: ["CEF / FIB internals", "Process switching vs CEF"],
-    },
-    {
-      id: "mac-trap",
-      type: "misconception",
-      tcpLayer: 2,
-      headline: "Not a MAC table across subnets.",
-      body: "Routers do not forward by destination MAC for the whole path. Each hop rewrites Layer 2 for the next link; the destination IP stays the guide across networks.",
-      terms: [
-        {
-          id: "mac",
-          label: "MAC address",
-          tier: "basics",
-          shortDefinition: "Local link hardware address — rebuilt hop by hop, not used as the end-to-end path key.",
-        },
-      ],
-    },
-    {
-      id: "sources-preview",
-      type: "teach",
-      tcpLayer: 2,
-      headline: "How routes get into the table.",
-      body: "Connected install themselves. Static routes are typed by you. Dynamic protocols like OSPF learn and share. Next lessons: static routes, then OSPF basics.",
-      laterLearn: ["Static route syntax", "OSPF neighbor/adjacency"],
-      terms: [
-        {
-          id: "static",
-          label: "Static route",
-          tier: "later",
-          shortDefinition: "Manually configured path to a prefix.",
-          laterTopicId: "static-routes",
-          laterTopicLabel: "Static Routes",
-          laterItems: ["ip route syntax", "Floating static", "Default static"],
-        },
-        {
-          id: "ospf",
-          label: "OSPF",
-          tier: "later",
-          shortDefinition: "Link-state IGP that advertises topology and installs routes.",
-          laterTopicId: "ospf-basics",
-          laterTopicLabel: "OSPF Basics",
-          laterItems: ["Areas", "Hello / adjacency", "Cost metric"],
-        },
-      ],
-    },
-    {
-      id: "defer-depth",
-      type: "teach",
-      tcpLayer: 2,
-      headline: "What we defer.",
-      body: "Deep OSPF, EIGRP metrics, and CEF internals wait. Today you own lookup, connected routes, longest prefix, AD idea, defaults, and TTL hops.",
-      laterLearn: [
-        "OSPF in depth (next)",
-        "EIGRP deep dive",
-        "CEF / FIB detail",
-      ],
-    },
-    {
       id: "summary",
       type: "summary",
       tcpLayer: 2,
-      headline: "Routing fundamentals covered.",
-      body: "You can explain L3 vs L2, RIB lookup, connected routes, longest prefix, AD concept, 0.0.0.0/0, TTL, and control vs data plane. Next: static routes.",
+      headline: "Routing map in one story.",
+      body: "Off-LAN → gateway → destination IP lookup. Read a table row. Connected installs itself. Longest prefix first; AD then metric for ties. TTL counts hops. Next: you write static rows by hand.",
     },
   ],
 };

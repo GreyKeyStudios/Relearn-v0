@@ -172,20 +172,26 @@ const BY_TOPIC: Record<string, PrerequisiteRefresherItem[]> = {
     {
       id: "l2-vs-l3",
       title: "Switching vs routing",
-      tip: "Switches forward by MAC inside a broadcast domain. Routers forward by destination IP between networks.",
+      tip: "Switches forward by MAC inside a broadcast domain. Routers forward by destination IP between networks — follow the packet to the gateway first.",
       topicId: "switching",
+    },
+    {
+      id: "ipv4-gateway",
+      title: "IPv4 default gateway",
+      tip: "A host’s default gateway is the first router hop off its subnet — the same idea Routing Fundamentals expands into a table lookup.",
+      topicId: "ipv4-addressing",
     },
     {
       id: "longest-prefix",
       title: "Longest prefix match",
-      tip: "More specific routes win: /24 beats /16 beats 0.0.0.0/0. Metric and AD only break ties among equal prefixes.",
+      tip: "More specific routes win: /24 beats /16 beats 0.0.0.0/0. Metric and AD only break ties among equal-length prefixes.",
     },
   ],
   "static-routes": [
     {
       id: "routing-fundamentals",
       title: "Routing Fundamentals",
-      tip: "Statics are manually installed routes. Know AD and longest-prefix first — then floating defaults make sense.",
+      tip: "Statics are manually installed routes. Know table anatomy, AD, and longest-prefix first — then floating defaults make sense.",
       topicId: "routing-fundamentals",
     },
     {

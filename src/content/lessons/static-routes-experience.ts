@@ -1,6 +1,6 @@
 import type { TopicExperience } from "@/content/types";
 
-/** LES experience — Static routes (Wave 3 / Domain 3). */
+/** LES — Static routes: continue RF topology with typed routes (Domain 3 rewrite). */
 export const STATIC_ROUTES_EXPERIENCE: TopicExperience = {
   anchor: { type: "tcp-ip-stack" },
   screens: [
@@ -8,13 +8,14 @@ export const STATIC_ROUTES_EXPERIENCE: TopicExperience = {
       id: "intro-why",
       type: "hero",
       tcpLayer: 2,
-      headline: "You tell the router where to go.",
-      body: "Routing fundamentals explained lookup and longest prefix. Static routes are hand-written table entries — simple, predictable, and perfect for stubs and defaults toward an ISP.",
+      headline: "Write the missing map row.",
+      body: "Routing fundamentals showed how lookup works. Static routes are hand-typed rows in that table — S codes you install for stubs, defaults, and lab paths.",
       media: {
         kind: "icons",
         items: [
-          { icon: "server", label: "Router" },
+          { icon: "server", label: "R1" },
           { icon: "cable", label: "ip route" },
+          { icon: "globe", label: "Remote /24" },
         ],
       },
       terms: [
@@ -30,16 +31,23 @@ export const STATIC_ROUTES_EXPERIENCE: TopicExperience = {
           label: "Static route",
           tier: "basics",
           shortDefinition:
-            "Manually configured path: network, mask, and next-hop or exit interface.",
+            "Manually configured path: network, mask, and next-hop (or exit interface).",
         },
       ],
+    },
+    {
+      id: "continue-topo",
+      type: "teach",
+      tcpLayer: 2,
+      headline: "Same topology, missing prefix.",
+      body: "R1 knows its connected LAN. Remote 192.168.2.0/24 sits behind neighbor 10.0.0.2. Until you add a static (or run OSPF later), R1 has no idea how to reach that /24.",
     },
     {
       id: "why-static",
       type: "teach",
       tcpLayer: 2,
-      headline: "Why use static routes?",
-      body: "No neighbor chatter, tiny CPU cost, full admin control. Best for stub sites, lab paths, and a default toward the Internet — not for huge cores that change often.",
+      headline: "When statics fit.",
+      body: "No neighbor chatter, tiny CPU, full control — great for stub sites, lab links, and a default toward the ISP. Painful for huge cores that change every hour.",
     },
     {
       id: "stub-check",
@@ -52,29 +60,50 @@ export const STATIC_ROUTES_EXPERIENCE: TopicExperience = {
       id: "syntax",
       type: "teach",
       tcpLayer: 2,
-      headline: "ip route network mask next-hop.",
-      body: "Cisco syntax: ip route <network> <mask> <next-hop-ip>. Example: ip route 192.168.2.0 255.255.255.0 10.0.0.2 sends that /24 via neighbor 10.0.0.2.",
+      headline: "Worked example — add the static.",
+      body: "On R1: ip route 192.168.2.0 255.255.255.0 10.0.0.2. Order: destination network, mask, next-hop IP. show ip route now shows S 192.168.2.0/24 via 10.0.0.2.",
       terms: [
         {
           id: "next-hop",
           label: "Next-hop",
           tier: "basics",
           shortDefinition:
-            "IP address of the neighboring router that should receive packets for this prefix.",
+            "IP of the neighboring router that should receive packets for this prefix.",
           example: "10.0.0.2",
         },
       ],
-      studyTip: {
-        title: "Exam tip",
-        body: "Order: destination network, mask, then next-hop (or exit interface).",
+      media: {
+        kind: "flow",
+        items: [
+          { icon: "layers", label: "192.168.2.0/24" },
+          { icon: "server", label: "via 10.0.0.2" },
+        ],
       },
+    },
+    {
+      id: "ethernet-nh",
+      type: "teach",
+      tcpLayer: 2,
+      headline: "On Ethernet, prefer a next-hop IP.",
+      body: "Multi-access Ethernet: give a next-hop IP so R1 knows who to ARP for. Exit-interface-only statics on Ethernet can trigger messy recursive ARP — prefer via neighbor IP in this course.",
+      studyTip: {
+        title: "Picture it",
+        body: "Next-hop 10.0.0.2 = “ask that router on this shared link.”",
+      },
+    },
+    {
+      id: "nh-check",
+      type: "checkpoint",
+      tcpLayer: 2,
+      headline: "Quick check — multi-access next-hop",
+      checkpointQuestionId: "static-routes-q5",
     },
     {
       id: "default-static",
       type: "teach",
       tcpLayer: 2,
-      headline: "Default static route.",
-      body: "ip route 0.0.0.0 0.0.0.0 <next-hop> installs the gateway of last resort. Traffic with no better match exits toward that neighbor — common ISP handoff.",
+      headline: "Default static toward the ISP.",
+      body: "ip route 0.0.0.0 0.0.0.0 203.0.113.1 installs the gateway of last resort. Anything without a more specific match exits toward that neighbor.",
       terms: [
         {
           id: "default-route",
@@ -89,7 +118,7 @@ export const STATIC_ROUTES_EXPERIENCE: TopicExperience = {
       id: "default-check",
       type: "checkpoint",
       tcpLayer: 2,
-      headline: "Quick check — default config",
+      headline: "Quick check — default static",
       checkpointQuestionId: "static-routes-q3",
     },
     {
@@ -97,14 +126,14 @@ export const STATIC_ROUTES_EXPERIENCE: TopicExperience = {
       type: "teach",
       tcpLayer: 2,
       headline: "Static AD defaults to 1.",
-      body: "On Cisco IOS, a normal static route has administrative distance 1 — preferred over OSPF (110) but still loses to connected (0) for the same prefix.",
+      body: "Normal Cisco static AD is 1 — preferred over OSPF (110) for the same prefix length, still loses to connected (0). Floating backups raise AD on purpose.",
       terms: [
         {
           id: "ad",
           label: "Administrative distance",
           tier: "basics",
           shortDefinition:
-            "Trust score for a route source. Static default = 1 on Cisco.",
+            "Trust rank of the route source — lower wins among equal-length prefixes.",
         },
       ],
     },
@@ -119,147 +148,46 @@ export const STATIC_ROUTES_EXPERIENCE: TopicExperience = {
       id: "floating",
       type: "teach",
       tcpLayer: 2,
-      headline: "Floating static = higher AD.",
-      body: "Raise AD (for example 200) so the static stays out of the table until a better (lower AD) route disappears. Then it becomes the backup — a floating static.",
+      headline: "Floating static = intentional backup.",
+      body: "Primary: ip route 192.168.2.0 255.255.255.0 10.0.0.2. Backup: same network via 10.0.0.6 with AD 210. The backup stays idle until the primary leaves the table.",
       terms: [
         {
-          id: "floating-static",
+          id: "floating",
           label: "Floating static",
           tier: "basics",
           shortDefinition:
-            "Backup static with intentionally higher AD than the primary route.",
+            "Static with raised AD so it only installs when a better (lower AD) route disappears.",
         },
       ],
-      media: {
-        kind: "flow",
-        items: [
-          { icon: "server", label: "Primary (low AD)" },
-          { icon: "server", label: "Fails" },
-          { icon: "cable", label: "Floating installs" },
-        ],
-      },
     },
     {
       id: "floating-check",
       type: "checkpoint",
       tcpLayer: 2,
-      headline: "Quick check — floating static",
+      headline: "Quick check — floating idea",
       checkpointQuestionId: "static-routes-q2",
     },
     {
-      id: "nexthop-vs-exit",
-      type: "teach",
-      tcpLayer: 2,
-      headline: "Next-hop vs exit interface.",
-      body: "On Ethernet (multi-access), prefer a next-hop IP so the router knows who to ARP for. Exit-interface-only statics on Ethernet can cause messy recursive ARP behavior.",
-      terms: [
-        {
-          id: "exit-interface",
-          label: "Exit interface",
-          tier: "basics",
-          shortDefinition:
-            "Outgoing interface named in a static (e.g. GigabitEthernet0/0) instead of — or with — a next-hop.",
-        },
-      ],
-      laterLearn: ["Point-to-point serial exit-interface nuance"],
-    },
-    {
-      id: "nexthop-check",
-      type: "checkpoint",
-      tcpLayer: 2,
-      headline: "Quick check — Ethernet preference",
-      checkpointQuestionId: "static-routes-q5",
-    },
-    {
-      id: "recursive-light",
+      id: "recursion-light",
       type: "teach",
       tcpLayer: 2,
       headline: "Recursive lookup — light.",
-      body: "If the next-hop is not directly connected, the router looks up that next-hop IP via another route. If that second lookup fails, the static cannot be used.",
-      terms: [
-        {
-          id: "recursive",
-          label: "Recursive lookup",
-          tier: "basics",
-          shortDefinition:
-            "Extra routing-table search to resolve a next-hop that is not on a connected link.",
-        },
-      ],
-      laterLearn: ["Fully specified static (next-hop + exit interface)"],
+      body: "If the next-hop is not on a connected network, the router looks up that next-hop via another route. If that second lookup fails, the static cannot be used. Keep next-hops reachable.",
+      laterLearn: ["Recursive static pitfalls", "IP SLA / tracking"],
     },
     {
       id: "verify",
       type: "teach",
       tcpLayer: 2,
-      headline: "Verify with show ip route.",
-      body: "show ip route (or show ip route static) lists installed statics as code S. Confirm the prefix, next-hop, and that traffic can ping/traceroute the far network.",
-      studyTip: {
-        title: "CLI habit",
-        body: "Also: show running-config | section ip route. Remove with no ip route …",
-      },
-    },
-    {
-      id: "one-way-trap",
-      type: "misconception",
-      tcpLayer: 2,
-      headline: "Routes must work both ways.",
-      body: "A static on one router does not auto-create the return path. Missing reciprocal routes cause one-way pings — classic lab headache.",
-    },
-    {
-      id: "ipv6-light",
-      type: "teach",
-      tcpLayer: 2,
-      headline: "IPv6 static — light mention.",
-      body: "IPv6 uses ipv6 route <prefix/length> <next-hop>. Same idea as IPv4 statics; deep IPv6 addressing and OSPFv3 stay for later practice.",
-      laterLearn: ["Deep IPv6 static labs", "OSPFv3"],
-      terms: [
-        {
-          id: "ipv6-route",
-          label: "ipv6 route",
-          tier: "basics",
-          shortDefinition:
-            "Cisco command to install an IPv6 static route — prefix/length plus next-hop.",
-          example: "ipv6 route 2001:db8::/64 2001:db8:1::1",
-        },
-      ],
-    },
-    {
-      id: "defer-depth",
-      type: "teach",
-      tcpLayer: 2,
-      headline: "What we defer.",
-      body: "Null0 blackhole tricks for redistribution, advanced recursive edge cases, and heavy IPv6 static design wait. Today: syntax, default, AD 1, floating, next-hop on Ethernet, verify.",
-      laterLearn: [
-        "Null0 / summarization blackholes",
-        "Redistribution of statics",
-        "Deep IPv6 statics",
-      ],
-    },
-    {
-      id: "upcoming",
-      type: "teach",
-      tcpLayer: 2,
-      headline: "Dynamic next.",
-      body: "When many networks change often, static typing does not scale. OSPF will share topology automatically — next topic after you can write and verify statics.",
-      laterLearn: ["OSPF Basics"],
-      terms: [
-        {
-          id: "ospf",
-          label: "OSPF",
-          tier: "later",
-          shortDefinition: "Link-state IGP that learns routes without hand typing every prefix.",
-          laterTopicId: "ospf-basics",
-          laterTopicLabel: "OSPF Basics",
-          laterItems: ["Hello / adjacency", "Area 0", "Cost"],
-        },
-      ],
+      headline: "Verify the story.",
+      body: "show ip route — S entries present? ping / traceroute toward the remote. Check next-hop is reachable (connected or resolved). Wrong mask is a classic silent miss.",
     },
     {
       id: "summary",
       type: "summary",
       tcpLayer: 2,
-      headline: "Static routes covered.",
-      body: "You can configure ip route, defaults, AD 1 vs floating backups, prefer next-hop on Ethernet, explain light recursion, and verify with show ip route. Next: OSPF basics.",
+      headline: "Statics in one story.",
+      body: "Type network + mask + next-hop → S appears. Prefer Ethernet next-hop IP. Default 0/0 for last resort. AD 1 by default; raise AD for floating backups. Recursion needs a reachable next-hop.",
     },
   ],
 };

@@ -18,12 +18,12 @@ Topic Complete remains authoritative on wave sheets; this board tracks pipeline 
 | `ip-ranges` · IP Ranges | network-fundamentals | pass | yes | none | 0 | pending | NO |
 | `ipv6-basics` · IPv6 Basics | network-fundamentals | pass | yes | none | 0 | pending | NO |
 | `wireless-basics` · Wireless Basics | network-fundamentals | pass | yes | none | 0 | pending | NO |
-| `switching` · Switching | network-access | pass | yes | yes | 1 | fail — rewrite required | NO |
-| `vlans` · VLANs | network-access | pass | yes | yes | 1 | fail — rewrite required | NO |
-| `trunking` · Trunking | network-access | pass | yes | yes | 1 | fail — rewrite required | NO |
-| `stp` · STP | network-access | pass | yes | yes | 1 | fail — rewrite required | NO |
-| `routing-fundamentals` · Routing Fundamentals | ip-connectivity | pass | yes | yes | 1 | fail — rewrite required | NO |
-| `static-routes` · Static Routes | ip-connectivity | pass | yes | yes | 1 | fail — rewrite required | NO |
+| `switching` · Switching | network-access | pass | yes | yes | 1 | fail — rewrite required (#25 draft) | NO |
+| `vlans` · VLANs | network-access | pass | yes | yes | 1 | fail — rewrite required (#25 draft) | NO |
+| `trunking` · Trunking | network-access | pass | yes | yes | 1 | fail — rewrite required (#25 draft) | NO |
+| `stp` · STP | network-access | pass | yes | yes | 1 | fail — rewrite required (#25 draft) | NO |
+| `routing-fundamentals` · Routing Fundamentals | ip-connectivity | pass | yes | yes | 1 | fail — rewrite required (#26 draft) | NO |
+| `static-routes` · Static Routes | ip-connectivity | pass | yes | yes | 1 | fail — rewrite required (#26 draft) | NO |
 | `ospf-basics` · OSPF Basics | ip-connectivity | pass | yes | yes | 0 | pending (Wave 3) | NO |
 | `nat` · NAT | ip-connectivity | pass | yes | yes | 0 | pending (Wave 3) | NO |
 | `dhcp` · DHCP | ip-services | pass | yes | none | 0 | pending | NO |

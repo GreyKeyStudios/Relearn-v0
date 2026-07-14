@@ -4509,6 +4509,9 @@ show ip route codes: C connected, S static, O OSPF. When equal-length prefixes c
             "Routing vs switching decision at Layer 3 boundary",
             "Show ip route codes (C, S, O) interpretation",
           ],
+          estimatedStudyMinutes: 30,
+          difficulty: "medium",
+          prerequisites: ["ipv4-addressing", "ethernet", "switching"],
           quiz: [
             {
               id: "routing-fundamentals-q1",
@@ -4763,6 +4766,9 @@ IPv6 uses ipv6 route prefix/length next-hop — same idea; deep IPv6 static desi
             "Recursive lookup failure when next-hop is unreachable",
             "Static AD 1 vs connected 0 for the same prefix",
           ],
+          estimatedStudyMinutes: 30,
+          difficulty: "medium",
+          prerequisites: ["routing-fundamentals"],
           quiz: [
             {
               id: "static-routes-q1",
