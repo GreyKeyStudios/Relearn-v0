@@ -138,6 +138,8 @@ Before writing curriculum:
 | [`TYPE_B_MASTER.md`](TYPE_B_MASTER.md) | Skill-driven template spec |
 | [`TYPE_C_MASTER.md`](TYPE_C_MASTER.md) | Tool-driven template stub |
 | [`definition-of-done.md`](definition-of-done.md) | Topic complete gates (template variants) |
+| [`CURRICULUM_REVIEW_BOARD.md`](CURRICULUM_REVIEW_BOARD.md) | Critique pipeline, decision ledger, sign-off scoreboard |
+| [`AGENTIC_TESTING.md`](AGENTIC_TESTING.md) | Playwright / evidence / judge commands |
 | [`subject-onboarding-process.md`](subject-onboarding-process.md) | New subject checklist |
 | [`learning-experience-standard.md`](learning-experience-standard.md) | LES (all templates) |
 | [`bridge-learning-standard.md`](bridge-learning-standard.md) | BLS pedagogy (Type A primary) |
