@@ -215,6 +215,31 @@ const BY_TOPIC: Record<string, PrerequisiteRefresherItem[]> = {
       tip: "PAT/overload = many→one using ports. Static NAT = fixed one→one for servers that need a stable public face.",
     },
   ],
+  dhcp: [
+    {
+      id: "dora",
+      title: "DORA sequence",
+      tip: "Discover → Offer → Request → Acknowledge. First message is always Discover from the client.",
+    },
+    {
+      id: "ip-ranges",
+      title: "IP Ranges",
+      tip: "DHCP failure often shows up as 169.254.x.x (APIPA) — not a healthy RFC 1918 lease.",
+      topicId: "ip-ranges",
+    },
+  ],
+  dns: [
+    {
+      id: "a-vs-aaaa",
+      title: "A vs AAAA",
+      tip: "A = hostname → IPv4. AAAA = hostname → IPv6. CNAME aliases a name to another name.",
+    },
+    {
+      id: "port-53",
+      title: "Port 53",
+      tip: "Queries are usually UDP/53; large answers and zone transfers use TCP/53. Don't confuse with HTTP 80/443.",
+    },
+  ],
 };
 
 export function getPrerequisiteRefreshers(

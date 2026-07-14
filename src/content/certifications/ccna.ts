@@ -5639,7 +5639,8 @@ DHCPv6 uses similar concepts with ICMPv6 and DHCPv6 messages for IPv6 environmen
                 { id: "d", text: "TCP 25" },
               ],
               correctChoiceId: "b",
-              explanation: "DHCP runs over UDP with server on 67 and client on 68.",
+              explanation:
+                "DHCP uses UDP: server listens on 67, client on 68. It is not HTTP (80/443) or SMTP (25) — those are different services.",
               objectiveId: "CCNA-4.1",
               difficulty: "easy",
             },
@@ -5653,7 +5654,8 @@ DHCPv6 uses similar concepts with ICMPv6 and DHCPv6 messages for IPv6 environmen
                 { id: "d", text: "Request" },
               ],
               correctChoiceId: "c",
-              explanation: "Clients begin with a DHCP Discover broadcast.",
+              explanation:
+                "DORA starts with Discover (client broadcast looking for servers). Offer comes from the server; Request and ACK follow after an offer is chosen.",
               objectiveId: "CCNA-4.2",
               difficulty: "easy",
             },
@@ -5667,7 +5669,8 @@ DHCPv6 uses similar concepts with ICMPv6 and DHCPv6 messages for IPv6 environmen
                 { id: "d", text: "Creates VLANs" },
               ],
               correctChoiceId: "b",
-              explanation: "Helper address relays BOOTP/DHCP to a remote server IP.",
+              explanation:
+                "DHCP Discover is a broadcast and stops at the router. `ip helper-address` relays those UDP 67/68 packets as unicasts to a remote DHCP server — it is not NAT or OSPF.",
               objectiveId: "CCNA-4.1",
               difficulty: "easy",
             },
@@ -5681,7 +5684,8 @@ DHCPv6 uses similar concepts with ICMPv6 and DHCPv6 messages for IPv6 environmen
                 { id: "d", text: "224.0.0.1" },
               ],
               correctChoiceId: "b",
-              explanation: "APIPA assigns link-local 169.254.0.0/16 addresses.",
+              explanation:
+                "No DHCP lease → Windows self-assigns APIPA from 169.254.0.0/16 for local-link only. That is not private RFC 1918 (10.x) and not loopback (127).",
               objectiveId: "CCNA-4.2",
               difficulty: "easy",
             },
@@ -5695,7 +5699,8 @@ DHCPv6 uses similar concepts with ICMPv6 and DHCPv6 messages for IPv6 environmen
                 { id: "d", text: "SSID name" },
               ],
               correctChoiceId: "b",
-              explanation: "The scope is the pool of addresses the server can lease on a subnet.",
+              explanation:
+                "A scope is the pool (and options like gateway/DNS) the server leases on a subnet. It is not an OSPF, STP, or wireless setting.",
               objectiveId: "CCNA-4.1",
               difficulty: "medium",
             },
@@ -5902,7 +5907,8 @@ DNS security topics include DNSSEC (signing) and filtering malicious domains—h
                 { id: "d", text: "NS" },
               ],
               correctChoiceId: "b",
-              explanation: "A records hold IPv4 address mappings.",
+              explanation:
+                "An A record maps a hostname to an IPv4 address. AAAA is IPv6; MX is mail; CNAME is an alias; NS names the authoritative servers.",
               objectiveId: "CCNA-4.3",
               difficulty: "easy",
             },
@@ -5916,7 +5922,8 @@ DNS security topics include DNSSEC (signing) and filtering malicious domains—h
                 { id: "d", text: "22" },
               ],
               correctChoiceId: "c",
-              explanation: "DNS uses port 53 (UDP for queries, TCP for zone transfers and large responses).",
+              explanation:
+                "DNS uses port 53 — usually UDP for queries, TCP when responses are large or for zone transfers. 80/443 are HTTP(S); 22 is SSH.",
               objectiveId: "CCNA-4.4",
               difficulty: "easy",
             },
@@ -5930,7 +5937,8 @@ DNS security topics include DNSSEC (signing) and filtering malicious domains—h
                 { id: "d", text: "Reverse lookup" },
               ],
               correctChoiceId: "b",
-              explanation: "CNAME points one name to another canonical name.",
+              explanation:
+                "CNAME is an alias: www.example.com → example.com. MX is mail priority; AAAA is IPv6; PTR is reverse (IP→name).",
               objectiveId: "CCNA-4.3",
               difficulty: "easy",
             },
@@ -5944,7 +5952,8 @@ DNS security topics include DNSSEC (signing) and filtering malicious domains—h
                 { id: "d", text: "VLAN ID" },
               ],
               correctChoiceId: "b",
-              explanation: "Time To Live tells resolvers how long to cache the record.",
+              explanation:
+                "DNS TTL is how long resolvers may cache the answer (seconds). Lower TTL = faster updates; higher TTL = less query load. It is unrelated to IP TTL or OSPF cost.",
               objectiveId: "CCNA-4.4",
               difficulty: "easy",
             },
@@ -5958,7 +5967,8 @@ DNS security topics include DNSSEC (signing) and filtering malicious domains—h
                 { id: "d", text: "NAT translation" },
               ],
               correctChoiceId: "b",
-              explanation: "PTR records map IP addresses back to hostnames.",
+              explanation:
+                "PTR does reverse lookup: IP → hostname (common for mail reputation checks). MX does email routing; NAT is address translation, not DNS.",
               objectiveId: "CCNA-4.3",
               difficulty: "medium",
             },
