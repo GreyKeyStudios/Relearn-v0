@@ -7,10 +7,13 @@ import { waitForHydration } from "./helpers/seed";
 import { ALL_CHECKPOINTS, PILOT_TOPIC_IDS } from "../scripts/audit-judge/types";
 
 const topicFilter = process.env.AUDIT_EVIDENCE_TOPIC?.trim();
+const allTopics = process.env.AUDIT_EVIDENCE_ALL === "1";
 const pilots = listCcnaTopics().filter((t) =>
   topicFilter
     ? t.topicId === topicFilter
-    : (PILOT_TOPIC_IDS as readonly string[]).includes(t.topicId)
+    : allTopics
+      ? true
+      : (PILOT_TOPIC_IDS as readonly string[]).includes(t.topicId)
 );
 
 test.describe.configure({ mode: "serial" });

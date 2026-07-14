@@ -1,20 +1,26 @@
 /**
- * Capture CCNA evidence for judgment pilots.
- * Usage: npx tsx scripts/audit-evidence.ts --topic=subnetting
- *        npx tsx scripts/audit-evidence.ts
+ * Capture CCNA evidence for judgment.
+ * Usage:
+ *   npx tsx scripts/audit-evidence.ts --topic=subnetting
+ *   npx tsx scripts/audit-evidence.ts              # 3 pilots
+ *   npx tsx scripts/audit-evidence.ts --all        # every CCNA topic
  */
 import { spawnSync } from "node:child_process";
 
-function parseTopic(argv: string[]): string | undefined {
+function parseArgs(argv: string[]) {
+  let topic: string | undefined;
+  let all = false;
   for (const a of argv) {
-    if (a.startsWith("--topic=")) return a.slice("--topic=".length);
+    if (a === "--all") all = true;
+    else if (a.startsWith("--topic=")) topic = a.slice("--topic=".length);
   }
-  return undefined;
+  return { topic, all };
 }
 
-const topic = parseTopic(process.argv.slice(2));
+const { topic, all } = parseArgs(process.argv.slice(2));
 const env = { ...process.env };
 if (topic) env.AUDIT_EVIDENCE_TOPIC = topic;
+if (all) env.AUDIT_EVIDENCE_ALL = "1";
 
 const result = spawnSync(
   "npx",
