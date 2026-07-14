@@ -121,6 +121,33 @@ test.describe("hub disclosure + subnetting feedback", () => {
     await expect(page.getByText(/floods within the VLAN/i)).toBeVisible();
   });
 
+  test("need a refresher appears for ospf-basics (IP Connectivity)", async ({ page }) => {
+    await seedCcnaFreshLearner(page);
+    await page.goto("/cert/ccna/lesson/ospf-basics");
+    await waitForHydration(page);
+    await page
+      .getByText(/Loading your progress/i)
+      .waitFor({ state: "hidden", timeout: 30_000 })
+      .catch(() => undefined);
+
+    const refresher = page.locator("details").filter({ hasText: /Need a refresher/i });
+    await expect(refresher).toBeVisible();
+    await refresher.locator("summary").click();
+    await expect(refresher.getByText(/Area 0 is the backbone/i)).toBeVisible();
+  });
+
+  test("static-routes quiz teaches floating AD why", async ({ page }) => {
+    await seedCcnaFreshLearner(page);
+    await page.goto("/cert/ccna/quiz/static-routes");
+    await waitForHydration(page);
+    await expect(
+      page.getByText(/Administrative distance of a static route/i)
+    ).toBeVisible({ timeout: 15_000 });
+    await page.getByRole("button", { name: /^0$/ }).click();
+    await page.getByRole("button", { name: /Check Answer/i }).click();
+    await expect(page.getByText(/Default static AD is 1/i)).toBeVisible();
+  });
+
   test("subnetting quiz: richer teaching after incorrect answers", async ({ page }) => {
     test.setTimeout(120_000);
     await seedCcnaFreshLearner(page);

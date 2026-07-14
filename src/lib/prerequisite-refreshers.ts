@@ -162,6 +162,59 @@ const BY_TOPIC: Record<string, PrerequisiteRefresherItem[]> = {
       tip: "PortFast for host/access edges — not for trunks to other switches — so you speed up PCs without risking loops.",
     },
   ],
+  "routing-fundamentals": [
+    {
+      id: "l2-vs-l3",
+      title: "Switching vs routing",
+      tip: "Switches forward by MAC inside a broadcast domain. Routers forward by destination IP between networks.",
+      topicId: "switching",
+    },
+    {
+      id: "longest-prefix",
+      title: "Longest prefix match",
+      tip: "More specific routes win: /24 beats /16 beats 0.0.0.0/0. Metric and AD only break ties among equal prefixes.",
+    },
+  ],
+  "static-routes": [
+    {
+      id: "routing-fundamentals",
+      title: "Routing Fundamentals",
+      tip: "Statics are manually installed routes. Know AD and longest-prefix first — then floating defaults make sense.",
+      topicId: "routing-fundamentals",
+    },
+    {
+      id: "floating-ad",
+      title: "Floating static idea",
+      tip: "Raise AD above the primary route so the backup stays idle until the primary fails.",
+    },
+  ],
+  "ospf-basics": [
+    {
+      id: "routing-fundamentals",
+      title: "Routing Fundamentals",
+      tip: "OSPF is dynamic link-state routing — still chooses paths with longest prefix + best cost after AD.",
+      topicId: "routing-fundamentals",
+    },
+    {
+      id: "static-routes",
+      title: "Static Routes",
+      tip: "Contrast: statics are hand-built; OSPF floods topology and runs SPF. Area 0 is the backbone hub.",
+      topicId: "static-routes",
+    },
+  ],
+  nat: [
+    {
+      id: "private-vs-public",
+      title: "IPv4 Addressing",
+      tip: "NAT exists because RFC 1918 private space is not globally routable — you translate to scarce public IPs.",
+      topicId: "ipv4-addressing",
+    },
+    {
+      id: "pat-vs-static",
+      title: "PAT vs static NAT",
+      tip: "PAT/overload = many→one using ports. Static NAT = fixed one→one for servers that need a stable public face.",
+    },
+  ],
 };
 
 export function getPrerequisiteRefreshers(
