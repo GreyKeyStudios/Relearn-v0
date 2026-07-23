@@ -11,13 +11,15 @@ import { getCertification } from "@/lib/content-selectors";
 import { curriculumStepForTopic } from "@/lib/curriculum";
 import { getCoachRecommendationForSession } from "@/lib/coach-recommendation";
 import { getExamPaceSummary } from "@/lib/exam-pace";
-import { certSupportsObjectiveCoaching, coachingLevelLabel } from "@/lib/objective-support";
+import { certSupportsObjectiveCoaching } from "@/lib/objective-support";
+import { isSkillsTrack, trackSubtitle } from "@/lib/track-kind";
 import { ExamCountdownCard } from "@/components/planner/ExamCountdownCard";
 import { getCertProgressPercent } from "@/lib/progress-metrics";
 import { getCertMasteryPercent } from "@/lib/mastery";
 import { getWeakObjectivesFromState } from "@/lib/objective-mastery";
 import { WeakObjectivesCard } from "@/components/mastery/WeakObjectivesCard";
 import { StudyNowCard } from "@/components/planner/StudyNowCard";
+import { CfPlacementWizard } from "@/components/cf/CfPlacementWizard";
 import { useProgressStore } from "@/stores/progress-store";
 
 interface CertDetailPageProps {
@@ -61,11 +63,13 @@ export default function CertDetailPage({ params }: CertDetailPageProps) {
     <div>
       <PageHeader
         title={cert.shortName}
-        subtitle={`${cert.name} · ${coachingLevelLabel(certId)}`}
+        subtitle={trackSubtitle(cert)}
         backHref="/certifications"
       />
 
-      {examPace && <ExamCountdownCard pace={examPace} />}
+      {examPace && !isSkillsTrack(cert) && <ExamCountdownCard pace={examPace} />}
+
+      {certId === "computer-fundamentals" && <CfPlacementWizard />}
 
       {hasContent && (
         <StudyNowCard
@@ -94,7 +98,30 @@ export default function CertDetailPage({ params }: CertDetailPageProps) {
             <span>{cert.examSummary.format}</span>
           </div>
         )}
+        {isSkillsTrack(cert) && (
+          <div className="mt-4 rounded-lg border border-emerald-500/20 bg-emerald-500/5 px-3 py-2 text-xs text-zinc-400">
+            <p className="font-medium text-emerald-400/90">Skills track — not a vendor exam</p>
+            <p className="mt-1">
+              Pass: {cert.examSummary.passingScore}. Format: {cert.examSummary.format}.
+            </p>
+          </div>
+        )}
       </Card>
+
+      {certId === "ccna" && (
+        <Card className="mb-6 p-4">
+          <h2 className="text-sm font-semibold text-zinc-200">Study tools</h2>
+          <p className="mt-1 text-xs text-zinc-500">
+            External labs use Cisco Packet Tracer — install once, reuse across subnetting, VLANs, and routing topics.
+          </p>
+          <Link
+            href={`/cert/${certId}/tool/packet-tracer`}
+            className="mt-3 inline-block text-sm text-sky-400 hover:underline"
+          >
+            Packet Tracer getting-started guide →
+          </Link>
+        </Card>
+      )}
 
       {weakObjectives.length > 0 && (
         <WeakObjectivesCard objectives={weakObjectives} />

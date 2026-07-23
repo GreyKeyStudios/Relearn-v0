@@ -105,6 +105,22 @@ export function countCompletedCurriculumSteps(
   return done;
 }
 
+/** Next topic in canonical cert order (domain → topic), regardless of completion. */
+export function getNextTopicInPath(
+  cert: Certification,
+  currentTopicId: string
+): { topicId: string; topicName: string; href: string } | null {
+  const ordered = cert.domains.flatMap((d) => d.topics);
+  const idx = ordered.findIndex((t) => t.id === currentTopicId);
+  if (idx < 0 || idx >= ordered.length - 1) return null;
+  const next = ordered[idx + 1];
+  return {
+    topicId: next.id,
+    topicName: next.name,
+    href: `/cert/${cert.id}/lesson/${next.id}`,
+  };
+}
+
 /** Next step for a weak topic: incomplete assignment first, else lesson review. */
 export function curriculumStepForTopic(
   cert: Certification,

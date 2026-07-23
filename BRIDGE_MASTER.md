@@ -9,9 +9,14 @@ Bridge Study Companion is the **first implementation** of the broader **ReLearn*
 ## 0. Agent command block
 
 ```text
-Read BRIDGE_MASTER.md.
+Read docs/COURSE_ARCHITECTURE.md, then BRIDGE_MASTER.md.
+For Type B tracks: also read docs/TYPE_B_MASTER.md and the track architecture doc.
 For Phase 7 (Python): also read docs/python-learning-architecture.md.
-Execute only the agent ID assigned to you (M0, P3-*, P4-*, P7-*, etc.).
+For Git/GitHub (Type B reference): also read docs/git-github-learning-architecture.md.
+For Pathway F (Computer Fundamentals + A+): also read docs/computer-fundamentals-aplus-architecture.md.
+For Pathway V (VM Lab / Practice PC): also read docs/vm-lab-learning-architecture.md.
+For Pathway S (Sound Synthesis): also read docs/sound-synthesis-learning-architecture.md and docs/TYPE_C_MASTER.md.
+Execute only the agent ID assigned to you (M0, P3-*, P4-*, P7-*, F0, FContent-*, V0, etc.).
 Only edit files assigned to that agent.
 When finished, summarize: files changed, what works, blockers.
 ```
@@ -51,7 +56,12 @@ Plan → Architecture → Standards → Completion criteria → Delegate → Int
 | **Phase 4** | Complete | Mastery, adaptive review, study planner — see `.cursor/plans/phase_4_learning_intelligence.plan.md` |
 | **Phase 4.5** | Complete | Objective/domain mastery, difficulty tags, interactive case studies (CCNA pilot) |
 | **Phase 4.75** | Complete | Coach UX polish — Study Now card, weak objectives UX, planner tuning |
-| **Phase 5** | Planned | AI-assisted learning — Explain This Mistake first (never chat-first) |
+| **Phase 4.8** | Complete | Bridge Learning Standard, CCNA pedagogy sprint — see `docs/bridge-learning-standard.md` |
+| **Phase 4.9** | In progress | Learning Experience Standard (B+), ExperiencePlayer, **Git/GitHub Type B reference track (Modules 1–7)**, PowerShell Type B v1 — see `docs/COURSE_ARCHITECTURE.md`, `docs/TYPE_B_MASTER.md`, `docs/learning-experience-standard.md`, `docs/git-github-learning-architecture.md` |
+| **Pathway F** | In progress | Computer Fundamentals + CompTIA A+ (220-1201/1202) — architecture approved; CF first-pass live; A+ shell planned — see [`docs/computer-fundamentals-aplus-architecture.md`](docs/computer-fundamentals-aplus-architecture.md) |
+| **Pathway V** | Planned | **VM Lab Foundations** — learner installs **VirtualBox**; Linux/Windows guests for CMD & Bash; ReLearn does not host VMs — see [`docs/vm-lab-learning-architecture.md`](docs/vm-lab-learning-architecture.md) |
+| **Pathway S** | In progress | **Sound Synthesis** — Type C first-pass pilot (M0 + M1); FL Studio stock; Recreate / Interpret; Go Deeper + audio media schema — see [`docs/sound-synthesis-learning-architecture.md`](docs/sound-synthesis-learning-architecture.md) |
+| **Phase 5** | Planned | AI-assisted learning — multiple modes (Professor first); see [`docs/phase-5-ai-learning.md`](docs/phase-5-ai-learning.md) |
 | **Phase 6** | Planned | Native app (Capacitor/Expo after Phase 4 gates) |
 | **Phase 7** | Planned (blocked) | Python Foundations — Code Lab engine + curriculum informed by learner research |
 
@@ -67,9 +77,9 @@ Bridge Study Companion implements **Tier 1** today. Future subjects follow a tie
 
 | Tier | Name | Subjects | Bridge phase |
 |---|---|---|---|
-| **1** | IT Foundations | CCNA, Network+, Security+, CySA+, AWS CP, Azure, Linux+, ITIL | Phase 1–4.75 (complete) |
+| **1** | IT Foundations | CCNA, Network+, Security+, CySA+, AWS CP, Azure, Linux+, ITIL; **Computer Fundamentals** + **CompTIA A+** (Pathway F — see [`docs/computer-fundamentals-aplus-architecture.md`](docs/computer-fundamentals-aplus-architecture.md)) | Phase 1–4.75 (complete); Pathway F in progress |
 | **2** | IT Automation | Python Foundations | Phase 7 (planned, blocked) |
-| **3** | Applied Technology | APIs, Automation, DevOps, Cloud Projects | Phase 8+ (future) |
+| **3** | Applied Technology | Git/GitHub (Type B reference), PowerShell (Type B v1), **VM Lab Foundations** (sandbox for CMD/Bash/Linux), SQL, Bash, APIs, DevOps; Type C tool tracks (Excel, Wireshark, **Sound Synthesis**) | Phase 4.9+ / Phase 8+ / Pathway V / Pathway S |
 | **4** | ReLearn Labs | Robotics, IoT, Physical Computing | Future |
 
 ```text
@@ -81,7 +91,20 @@ Tier 4  ReLearn Labs        → robotics, IoT, physical computing
 
 **Key insight:** Tier 1 optimizes **recognition and recall**. Tier 2+ optimizes **construction and debugging**. Python is the first subject where learners write, break, fix, and build — not only understand.
 
-Full Python architecture: [`docs/python-learning-architecture.md`](docs/python-learning-architecture.md)
+Full Python architecture: [`docs/python-learning-architecture.md`](docs/python-learning-architecture.md)  
+Git/GitHub skills track (Path A): [`docs/git-github-learning-architecture.md`](docs/git-github-learning-architecture.md)
+
+### Reference tracks (course templates)
+
+Platform constitution: [`docs/COURSE_ARCHITECTURE.md`](docs/COURSE_ARCHITECTURE.md)
+
+| Template | Reference track | Master doc |
+|----------|-----------------|------------|
+| **A** — Concept | CCNA | BLS, CES, [`docs/definition-of-done.md`](docs/definition-of-done.md) |
+| **B** — Skill | Git & GitHub | [`docs/TYPE_B_MASTER.md`](docs/TYPE_B_MASTER.md) |
+| **C** — Tool | TBD (candidates: Wireshark, Excel, **Sound Synthesis** creative variant) | [`docs/TYPE_C_MASTER.md`](docs/TYPE_C_MASTER.md) |
+
+New platform patterns ship in the reference track first, then propagate. PowerShell is Type B v1 proof; Git is the canonical Type B reference. Sound Synthesis architecture: [`docs/sound-synthesis-learning-architecture.md`](docs/sound-synthesis-learning-architecture.md) (catalog: `planned-tracks.ts`).
 
 ---
 
@@ -248,6 +271,44 @@ M0 → P3-Platform → P3-UI + P3-CCNA (parallel) → P3-Verify
 
 Legacy Phase 1/2 agents (A0–A9, B0–B9) are complete. New work uses M0 / P3-* naming.
 
+### Phase 4.9 learning experience roster (CCNA pilot)
+
+```text
+M0 → P4.9-LXA (storyboard) + P4.8-Cognitive + P4.8-SME (audit) → P3-CCNA → P3-Verify → Michael walkthrough + reflection
+```
+
+| Agent | Owns |
+|---|---|
+| **P4.9-LXA** | `docs/learning-experience-standard.md`, `docs/reference-experiences.md`, experience storyboards |
+| **P4.8-Path** | `docs/ccna-learning-path.md`, audit path/prerequisite columns |
+| **P4.8-Cognitive** | Cognitive load audits per experience storyboard |
+| **P4.8-SME** | Accuracy / exam realism audits |
+| **P4.9-Platform** | `ExperiencePlayer`, `verify-experience.ts`, `experience` schema in `types.ts` |
+| **P3-CCNA** | `ccna.ts` experience content after audits |
+
+**Skills:** `.cursor/skills/p49-learning-experience-architect/` — LXA storyboard design. Legacy `.cursor/skills/p48-lesson-designer/` for BLS-only audits.
+
+**Standard:** [`docs/learning-experience-standard.md`](docs/learning-experience-standard.md) (LES-0–10). **Verify:** `npm run verify:curriculum -- --strict-experience`
+
+### Phase 4.8 pedagogy roster (CCNA pilot)
+
+```text
+M0 → P4.8-Path + P4.8-Lesson + P4.8-Cognitive + P4.8-SME (audit) → P3-CCNA → P3-Verify → Michael walkthrough + reflection
+```
+
+| Agent | Owns |
+|---|---|
+| **P4.8-Path** | `docs/ccna-learning-path.md`, audit path/prerequisite columns |
+| **P4.8-Lesson** | Teach-before-test audits, `docs/reference-lessons.md` |
+| **P4.8-Cognitive** | Cognitive load audits per topic |
+| **P4.8-SME** | Accuracy / exam realism audits |
+| **P4.8-Platform** | `lessonCheckpoints` in `types.ts`, `verify-pedagogy.ts`, `lesson-steps.ts` |
+| **P3-CCNA** | `ccna.ts` content fixes after audits |
+
+**Skills:** `.cursor/skills/p48-*` — one Cursor chat per reviewer role.
+
+**Standard:** [`docs/bridge-learning-standard.md`](docs/bridge-learning-standard.md) (10 rules). **Verify:** `npm run verify:curriculum -- --strict-pedagogy`
+
 ---
 
 ## 9. File ownership (content agents)
@@ -389,7 +450,23 @@ Future composite inputs (weights TBD):
 | Self-reported readiness (optional) | Learner sentiment |
 | Days until exam vs. plan pace | Time pressure |
 
-Type stub: `LearnerConfidenceScore` in [`src/types/readiness.ts`](src/types/readiness.ts). Phase 5e may use for coaching; no UI until signals are proven.
+Type stub: `LearnerConfidenceScore` in [`src/types/readiness.ts`](src/types/readiness.ts). Phase 5e may use for coaching; no UI until signals are proven. Professor Mode **confidence ratings** (1–5 after each answer) are a primary input — see [`docs/phase-5-ai-learning.md`](docs/phase-5-ai-learning.md).
+
+---
+
+## 13c. Phase 5 — AI learning modes (planned)
+
+Full spec: [`docs/phase-5-ai-learning.md`](docs/phase-5-ai-learning.md)
+
+**Modes:** Study · **Professor** · Socratic · Exam · Review · **Teaching** (graduation unlock) · Interview  
+
+**Professor Mode** = oral exam / office hours — assess reasoning, not recall. **Confidence rating** after each answer. **Professor's Notes** at session end (strengths, gaps, continue-or-revisit — no percentages).
+
+**Philosophy:** Learning is not complete until you can guide someone else. Teaching Mode is the deepest mastery check; best community explanations may become curriculum insights.
+
+**Learn from learners:** AI aggregates gaps and teaching-mode analogies → **proposes** curriculum updates → **human approval required** before merge. Contributors whose input ships get profile perks (badge, optional attribution, free-access period — TBD).
+
+**Build order:** Explain This Mistake → Professor Mode → Review Mode (mastery-backed) → Study Mode → Socratic / Exam / Teaching / Interview → curriculum feedback pipeline.
 
 ---
 
@@ -411,6 +488,8 @@ Type stub: `LearnerConfidenceScore` in [`src/types/readiness.ts`](src/types/read
 - Plausible quiz distractors with explanations
 - Mobile-first simulator UX
 - Free external resources only (`cost: "free"`)
+- Browser / agentic testing: see [`docs/AGENTIC_TESTING.md`](docs/AGENTIC_TESTING.md)
+- Curriculum Review Board (critique → triage → human approve): see [`docs/CURRICULUM_REVIEW_BOARD.md`](docs/CURRICULUM_REVIEW_BOARD.md)
 
 ---
 
@@ -431,6 +510,16 @@ Type stub: `LearnerConfidenceScore` in [`src/types/readiness.ts`](src/types/read
 - [ ] `npm run build` passes
 - [ ] Subnetting lesson renders CES + metadata bar
 - [ ] Study loop intact (lesson → quiz → sim auto-complete)
+
+### After Phase 4.8 (per CCNA domain wave)
+- [ ] Domain audit sheet complete (4 reviewers)
+- [ ] P3-CCNA fixes applied
+- [ ] Every topic passes [`docs/definition-of-done.md`](docs/definition-of-done.md)
+- [ ] Relocations logged in [`docs/ccna-deferral-manifest.md`](docs/ccna-deferral-manifest.md)
+- [ ] `npm run verify:curriculum -- --strict-ccna --strict-ccna-objectives --strict-pedagogy --strict-experience`
+- [ ] Michael full-flow learner walkthrough PASS (not lesson-only)
+- [ ] Reflection notes in `.cursor/plans/ccna-pedagogy-audits/reflections/`
+- [ ] Reference lesson `ccna:osi-model` approved before other topics compared to it
 
 ---
 
@@ -481,4 +570,4 @@ Every new ReLearn subject (Python, French, music theory, algebra, etc.) must com
 
 ---
 
-*Phase 1–4.75 complete. Measurement layer live on CCNA pilot; coach UX unified. Phase 5: AI-assisted learning (Explain This Mistake first). Phase 7: Python Foundations — planning complete, implementation blocked until learner research.*
+*Phase 1–4.75 complete. Phase 4.8 complete. Phase 4.9 in progress: Learning Experience Standard + OSI reference experience. Phase 5: AI-assisted learning. Phase 7: Python — blocked until learner research.*

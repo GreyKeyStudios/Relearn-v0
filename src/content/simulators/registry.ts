@@ -22,6 +22,7 @@ import {
   PortProtocolDrill,
   SubnetCidrDrill,
   TcpipLayerMap,
+  EthernetDeviceDrill,
   VlsmDrill,
 } from "@/components/simulators/core";
 import {
@@ -31,11 +32,13 @@ import {
   DhcpDoraDrill,
   DnsRecordDrill,
   Ipv6CompressDrill,
+  IpRangeDrill,
   NatTypeDrill,
   StaticRouteDrill,
   VlanTrunkDrill,
   WirelessStandardDrill,
 } from "@/components/simulators/network";
+import { CfFileFolderManager } from "@/components/simulators/fundamentals";
 
 export interface SimulatorRegistryEntry {
   id: string;
@@ -79,6 +82,12 @@ export const coreRegistry: SimulatorRegistryEntry[] = [
     name: "TCP/IP Model Map",
     component: TcpipLayerMap,
     topicIds: ["tcp-ip-model", "network-models"],
+  },
+  {
+    id: "ethernet-device-drill",
+    name: "Ethernet Device Layers",
+    component: EthernetDeviceDrill,
+    topicIds: ["ethernet"],
   },
   {
     id: "log-line-triage",
@@ -163,6 +172,12 @@ export const networkRegistry: SimulatorRegistryEntry[] = [
     topicIds: ["ethernet"],
   },
   {
+    id: "ip-range-drill",
+    name: "IPv4 Range Classifier",
+    component: IpRangeDrill,
+    topicIds: ["ip-ranges"],
+  },
+  {
     id: "ipv6-compress-drill",
     name: "IPv6 Compression Drill",
     component: Ipv6CompressDrill,
@@ -240,11 +255,26 @@ export const securityRegistry: SimulatorRegistryEntry[] = [
   },
 ];
 
+/** Pathway F — Computer Fundamentals simulators */
+export const fundamentalsRegistry: SimulatorRegistryEntry[] = [
+  {
+    id: "cf-file-folder-manager",
+    name: "File & Folder Manager",
+    component: CfFileFolderManager,
+    topicIds: [
+      "cf-file-explorer-basics",
+      "cf-files-copy-move-delete",
+      "cf-extensions-and-associations",
+    ],
+  },
+];
+
 /** Merged registry — BSim agents export partial arrays; B9 merges into SIMULATORS */
 export const SIMULATORS: SimulatorRegistryEntry[] = [
   ...coreRegistry,
   ...networkRegistry,
   ...securityRegistry,
+  ...fundamentalsRegistry,
 ];
 
 export function getSimulator(id: string): SimulatorRegistryEntry | undefined {

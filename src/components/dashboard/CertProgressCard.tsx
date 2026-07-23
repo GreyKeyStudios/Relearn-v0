@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/Card";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 import { getCertProgressPercent } from "@/lib/progress-metrics";
 import { getCertMasteryPercent } from "@/lib/mastery";
+import { isSkillsTrack } from "@/lib/track-kind";
 import { useProgressStore } from "@/stores/progress-store";
 
 interface CertProgressCardProps {
@@ -28,7 +29,9 @@ export function CertProgressCard({ cert }: CertProgressCardProps) {
         </div>
         <div className="min-w-0 flex-1">
           <p className="font-medium text-zinc-100">{cert.shortName}</p>
-          <p className="truncate text-xs text-zinc-500">{cert.vendor}</p>
+          <p className="truncate text-xs text-zinc-500">
+            {isSkillsTrack(cert) ? "ReLearn · Job skill" : cert.vendor}
+          </p>
           {hasContent ? (
             <>
               <ProgressBar value={progress} className="mt-2" />

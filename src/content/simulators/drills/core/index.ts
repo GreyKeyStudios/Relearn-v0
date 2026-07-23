@@ -3,6 +3,7 @@ export { VLSM_POOL } from "./vlsm";
 export { PORT_PROTOCOL_POOL } from "./port-protocol";
 export { OSI_LAYER_POOL } from "./osi-layer";
 export { TCPIP_LAYER_POOL } from "./tcpip-layer";
+export { ETHERNET_DEVICE_POOL } from "./ethernet-devices";
 export { LOG_LINE_POOL } from "./log-line";
 export { CRYPTO_POOL } from "./crypto";
 export { LINUX_CHMOD_POOL } from "./linux-chmod";

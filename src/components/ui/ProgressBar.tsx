@@ -8,14 +8,14 @@ export function ProgressBar({ value, className = "", showLabel = false }: Progre
   const clamped = Math.min(100, Math.max(0, value));
   return (
     <div className={`w-full ${className}`}>
-      <div className="h-2 overflow-hidden rounded-full bg-zinc-800">
+      <div className="h-1 overflow-hidden rounded-full bg-muted">
         <div
-          className="h-full rounded-full bg-emerald-500 transition-all duration-300"
+          className="h-full rounded-full bg-primary transition-all duration-500"
           style={{ width: `${clamped}%` }}
         />
       </div>
       {showLabel && (
-        <p className="mt-1 text-xs text-zinc-400">{clamped}% complete</p>
+        <p className="mt-1 text-xs text-muted-foreground">{clamped}% complete</p>
       )}
     </div>
   );

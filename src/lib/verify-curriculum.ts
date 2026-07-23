@@ -82,6 +82,11 @@ export function smokeTestPaths(): { path: string; ok: boolean; detail: string }[
   const secCrypto = getAssignment("security-plus", "crypto-matcher-drill");
   const secCert = getAssignment("security-plus", "cert-chain-drill");
 
+  const gitLab = getAssignment("git-github", "git-lab-spot-vc-problem");
+  const gitLocalLab = getAssignment("git-github", "git-lab-local-basics");
+  const gitCapstoneLab = getAssignment("git-github", "git-lab-capstone");
+  const psLab = getAssignment("powershell", "ps-lab-first-commands");
+
   return [
     {
       path: "/cert/ccna/lesson/subnetting",
@@ -122,6 +127,46 @@ export function smokeTestPaths(): { path: string; ok: boolean; detail: string }[
       path: "/cert/security-plus/assignment/cert-chain-drill",
       ok: !!secCert && secCert.assignment.simulatorId === "cert-chain-order",
       detail: "Security+ cert chain assignment",
+    },
+    {
+      path: "/cert/git-github/lesson/git-why-version-control",
+      ok: !!getAssignment("git-github", "git-lab-spot-vc-problem"),
+      detail: "Git/GitHub Module 1 lesson and lab resolve",
+    },
+    {
+      path: "/cert/git-github/assignment/git-lab-spot-vc-problem",
+      ok: !!gitLab && gitLab.assignment.type === "external-lab",
+      detail: "Git/GitHub spot-the-problem lab",
+    },
+    {
+      path: "/cert/git-github/lesson/git-history-and-diff",
+      ok: !!gitLocalLab,
+      detail: "Git/GitHub Module 2 lesson and local basics lab resolve",
+    },
+    {
+      path: "/cert/git-github/assignment/git-lab-local-basics",
+      ok: !!gitLocalLab && gitLocalLab.assignment.type === "external-lab",
+      detail: "Git/GitHub local basics lab",
+    },
+    {
+      path: "/cert/git-github/lesson/git-bridge-capstone",
+      ok: !!gitCapstoneLab,
+      detail: "Git/GitHub capstone lesson and lab resolve",
+    },
+    {
+      path: "/cert/git-github/assignment/git-lab-capstone",
+      ok: !!gitCapstoneLab && gitCapstoneLab.assignment.type === "external-lab",
+      detail: "Git/GitHub capstone lab",
+    },
+    {
+      path: "/cert/powershell/lesson/ps-why-the-shell",
+      ok: !!getAssignment("powershell", "ps-lab-first-commands"),
+      detail: "PowerShell Module 1 lesson and lab resolve",
+    },
+    {
+      path: "/cert/powershell/assignment/ps-lab-first-commands",
+      ok: !!psLab && psLab.assignment.type === "external-lab",
+      detail: "PowerShell first commands lab",
     },
   ];
 }

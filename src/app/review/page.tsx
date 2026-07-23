@@ -66,7 +66,7 @@ export default function ReviewPage() {
             {isEmpty && !coachRec && (
               <Link href="/certifications" className="mt-4 block">
                 <Button className="w-full" variant="secondary">
-                  Browse certifications
+                  Browse courses
                 </Button>
               </Link>
             )}

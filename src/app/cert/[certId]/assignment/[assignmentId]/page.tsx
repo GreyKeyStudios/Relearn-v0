@@ -2,9 +2,14 @@ import { notFound } from "next/navigation";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { AssignmentView } from "@/components/assignments/AssignmentView";
 import { getAssignment } from "@/lib/content-selectors";
+import { allAssignmentParams } from "@/lib/static-params";
 
 interface AssignmentPageProps {
   params: Promise<{ certId: string; assignmentId: string }>;
+}
+
+export function generateStaticParams() {
+  return allAssignmentParams();
 }
 
 export default async function AssignmentPage({ params }: AssignmentPageProps) {

@@ -1,9 +1,14 @@
 import { notFound } from "next/navigation";
 import { getDomain, getDomainQuestionBank } from "@/lib/content-selectors";
+import { allDomainReviewParams } from "@/lib/static-params";
 import { DomainReviewClient } from "./DomainReviewClient";
 
 interface DomainReviewPageProps {
   params: Promise<{ certId: string; domainId: string }>;
+}
+
+export function generateStaticParams() {
+  return allDomainReviewParams();
 }
 
 export default async function DomainReviewPage({ params }: DomainReviewPageProps) {

@@ -10,6 +10,7 @@ import { useStoreHydration } from "@/hooks/use-store-hydration";
 import { FlashcardCard } from "./FlashcardCard";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { TopicWhatsNext, type NextTopicInfo } from "@/components/topic/TopicWhatsNext";
 
 function shuffle<T>(array: T[]): T[] {
   const copy = [...array];
@@ -29,9 +30,10 @@ interface FlashcardDeckProps {
   certId: string;
   topic: Topic;
   cards: Flashcard[];
+  nextTopic?: NextTopicInfo | null;
 }
 
-export function FlashcardDeck({ certId, topic, cards }: FlashcardDeckProps) {
+export function FlashcardDeck({ certId, topic, cards, nextTopic = null }: FlashcardDeckProps) {
   const router = useRouter();
   const hydrated = useStoreHydration();
   const recordFlashcardSession = useProgressStore((s) => s.recordFlashcardSession);
@@ -136,12 +138,14 @@ export function FlashcardDeck({ certId, topic, cards }: FlashcardDeckProps) {
             </div>
           </div>
         </Card>
-        <Button
-          onClick={() => router.push(`/cert/${certId}/lesson/${topic.id}`)}
-          className="w-full"
-        >
-          Done
-        </Button>
+        <TopicWhatsNext
+          certId={certId}
+          topicId={topic.id}
+          topicName={topic.name}
+          nextTopic={nextTopic}
+          variant="flashcards"
+          onBackToTopic={() => router.push(`/cert/${certId}/lesson/${topic.id}`)}
+        />
       </div>
     );
   }

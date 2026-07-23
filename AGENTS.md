@@ -8,7 +8,9 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 # ReLearn v0 — agent rules
 
-**Read first:** [`BRIDGE_MASTER.md`](BRIDGE_MASTER.md) · [`CONTRIBUTING.md`](CONTRIBUTING.md)
+**Read first:** [`docs/COURSE_ARCHITECTURE.md`](docs/COURSE_ARCHITECTURE.md) · [`BRIDGE_MASTER.md`](BRIDGE_MASTER.md) · [`CONTRIBUTING.md`](CONTRIBUTING.md)
+
+For **Type B** tracks: also read [`docs/TYPE_B_MASTER.md`](docs/TYPE_B_MASTER.md) and the track architecture doc (e.g. [`docs/git-github-learning-architecture.md`](docs/git-github-learning-architecture.md)).
 
 ## Git workflow
 
@@ -21,8 +23,12 @@ This version has breaking changes — APIs, conventions, and file structure may 
 ```bash
 npm run build
 npm run verify:curriculum -- --strict-ccna --strict-ccna-objectives
+npm run verify:curriculum -- --strict-pedagogy   # Phase 4.8 BLS warnings
+npm run verify:curriculum -- --strict-experience # LES storyboard checks
 npx tsc --noEmit
 ```
+
+**Topic complete gate:** [`docs/definition-of-done.md`](docs/definition-of-done.md) — no topic graduates until all artifacts align. Relocations: [`docs/ccna-deferral-manifest.md`](docs/ccna-deferral-manifest.md).
 
 ## File ownership (summary)
 

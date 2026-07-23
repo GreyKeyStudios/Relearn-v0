@@ -23,6 +23,7 @@ import { activeCertsSupportObjectives } from "@/lib/objective-support";
 import { ExamCountdownCard } from "@/components/planner/ExamCountdownCard";
 import { StudyPlanSettings } from "@/components/planner/StudyPlanSettings";
 import { DailyPlanCard } from "@/components/planner/DailyPlanCard";
+import { ResetProgressCard } from "@/components/progress/ResetProgressCard";
 import { useProgressStore } from "@/stores/progress-store";
 import { Flame, Percent, BookOpen } from "lucide-react";
 
@@ -88,7 +89,7 @@ export default function ProgressPage() {
 
       <section className="mb-6">
         <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-zinc-400">
-          Per Certification
+          Per Course
         </h2>
         <div className="flex flex-col gap-3">
           {certs
@@ -168,6 +169,10 @@ export default function ProgressPage() {
           activities={recentActivity.filter((a) => a.type === "quiz")}
           limit={10}
         />
+      </section>
+
+      <section className="mt-8">
+        <ResetProgressCard />
       </section>
     </div>
   );

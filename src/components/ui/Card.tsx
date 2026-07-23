@@ -11,7 +11,7 @@ export function Card({ children, className = "", onClick }: CardProps) {
   return (
     <Component
       onClick={onClick}
-      className={`rounded-2xl border border-zinc-800 bg-zinc-900 p-4 text-left ${onClick ? "cursor-pointer transition-colors hover:border-zinc-700 hover:bg-zinc-800/80" : ""} ${className}`}
+      className={`rounded-lg border border-border bg-surface p-4 text-left ${onClick ? "cursor-pointer transition-colors hover:border-hairline hover:bg-surface-raised" : ""} ${className}`}
     >
       {children}
     </Component>

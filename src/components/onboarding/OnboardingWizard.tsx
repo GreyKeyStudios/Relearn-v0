@@ -5,6 +5,7 @@ import type { StudyPlanPreferences } from "@/types/mastery";
 import { DEFAULT_STUDY_PLAN } from "@/types/mastery";
 import { getAllCertifications } from "@/lib/content-selectors";
 import { coachingLevelLabel } from "@/lib/objective-support";
+import { isActiveTrack } from "@/lib/track-status";
 import { useProgressStore } from "@/stores/progress-store";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
@@ -15,8 +16,8 @@ type Step = (typeof STEPS)[number];
 
 export function OnboardingWizard() {
   const completeOnboarding = useProgressStore((s) => s.completeOnboarding);
-  const certs = getAllCertifications().filter((c) =>
-    c.domains.some((d) => d.topics.length > 0)
+  const certs = getAllCertifications().filter(
+    (c) => isActiveTrack(c) && c.domains.some((d) => d.topics.length > 0)
   );
 
   const [step, setStep] = useState<Step>("cert");
@@ -43,7 +44,7 @@ export function OnboardingWizard() {
         <div className="shrink-0 border-b border-zinc-800 px-5 pb-4 pt-5">
           <div className="mb-4 flex items-center gap-2 text-sky-400">
             <GraduationCap className="h-5 w-5" />
-            <span className="text-sm font-semibold">Welcome to Bridge Study Companion</span>
+            <span className="text-sm font-semibold">Welcome to ReLearn</span>
           </div>
 
           <div className="flex gap-1">
@@ -59,7 +60,7 @@ export function OnboardingWizard() {
         <div className="min-h-0 flex-1 overflow-y-auto px-5 py-4">
           {step === "cert" && (
             <>
-              <h2 className="text-lg font-semibold text-zinc-50">Which certification are you studying?</h2>
+              <h2 className="text-lg font-semibold text-zinc-50">Which course are you studying?</h2>
               <p className="mt-1 text-sm text-zinc-400">
                 We&apos;ll focus your study plan and recommendations on this track.
               </p>
@@ -76,7 +77,7 @@ export function OnboardingWizard() {
                     }`}
                   >
                     <p className="font-medium text-zinc-100">{cert.shortName}</p>
-                    <p className="text-xs text-zinc-500">{coachingLevelLabel(cert.id)}</p>
+                    <p className="text-xs text-zinc-500">{coachingLevelLabel(cert.id, cert)}</p>
                   </button>
                 ))}
               </div>
@@ -108,7 +109,10 @@ export function OnboardingWizard() {
             <>
               <h2 className="text-lg font-semibold text-zinc-50">When is your exam?</h2>
               <p className="mt-1 text-sm text-zinc-400">
-                Optional — we&apos;ll show a countdown and pace guidance if you add a date.
+                {selectedCertId &&
+                certs.find((c) => c.id === selectedCertId)?.vendor === "ReLearn"
+                  ? "Optional for skills tracks — skip if you are not preparing for a vendor exam."
+                  : "Optional — we'll show a countdown and pace guidance if you add a date."}
               </p>
               <label className="mt-4 block text-xs text-zinc-400">
                 Exam date (optional)

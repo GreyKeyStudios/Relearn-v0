@@ -3,6 +3,7 @@ export { VlsmDrill } from "./VlsmDrill";
 export { PortProtocolDrill } from "./PortProtocolDrill";
 export { OsiLayerSorter } from "./OsiLayerSorter";
 export { TcpipLayerMap } from "./TcpipLayerMap";
+export { EthernetDeviceDrill } from "./EthernetDeviceDrill";
 export { LogLineTriage } from "./LogLineTriage";
 export { CryptoMatcher } from "./CryptoMatcher";
 export { LinuxChmodDrill } from "./LinuxChmodDrill";

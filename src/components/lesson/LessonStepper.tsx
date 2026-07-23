@@ -18,8 +18,10 @@ interface LessonStepperProps {
   topicId: string;
   title: string;
   content: string;
-  /** Pool for inline checkpoints — bank questions preferred so graded quiz stays fresh. */
+  /** Quiz questions for inline checkpoints (last entries align with lesson wrap-up). */
   checkpointPool: QuizQuestion[];
+  /** Quiz question IDs per lesson step index (Phase 4.8) */
+  lessonCheckpointIds?: string[];
   onComplete: () => void;
 }
 
@@ -31,12 +33,13 @@ export function LessonStepper({
   title,
   content,
   checkpointPool,
+  lessonCheckpointIds,
   onComplete,
 }: LessonStepperProps) {
   const storageKey = lessonProgressStorageKey(certId, topicId);
   const steps = useMemo(
-    () => buildLessonSteps(content, checkpointPool),
-    [content, checkpointPool]
+    () => buildLessonSteps(content, checkpointPool, lessonCheckpointIds),
+    [content, checkpointPool, lessonCheckpointIds]
   );
 
   const [stepIndex, setStepIndex] = useState(0);
@@ -132,7 +135,7 @@ export function LessonStepper({
       {phase === "checkpoint" && current.checkpoint && (
         <LessonCheckpoint
           key={`${current.id}-${stepIndex}`}
-          question={current.checkpoint}
+          questions={[current.checkpoint]}
           stepNumber={stepIndex + 1}
           onContinue={advanceStep}
         />

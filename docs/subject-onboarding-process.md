@@ -6,6 +6,29 @@
 
 Every new subject — Python, French, music theory, algebra — must complete this process **before** content agents write curriculum or platform agents build new interaction types.
 
+**Read first:** [`COURSE_ARCHITECTURE.md`](COURSE_ARCHITECTURE.md) — platform constitution and template taxonomy.
+
+---
+
+## Step 0 — Template and reference track (required)
+
+Before the checklist below, answer:
+
+| Question | Required answer |
+|----------|-----------------|
+| **Which template?** | Type **A** (concept) · **B** (skill) · **C** (tool) · **D** (performance) |
+| **Which reference track?** | Copy patterns from the reference track for that template — do not invent pedagogy from scratch |
+| **Which master doc?** | A: BLS + CES · B: [`TYPE_B_MASTER.md`](TYPE_B_MASTER.md) · C: [`TYPE_C_MASTER.md`](TYPE_C_MASTER.md) · D: TBD |
+
+| Template | Reference track | Master doc |
+|----------|-----------------|------------|
+| A | CCNA | [`bridge-learning-standard.md`](bridge-learning-standard.md), [`definition-of-done.md`](definition-of-done.md) |
+| B | Git & GitHub | [`TYPE_B_MASTER.md`](TYPE_B_MASTER.md), [`git-github-learning-architecture.md`](git-github-learning-architecture.md) |
+| C | TBD | [`TYPE_C_MASTER.md`](TYPE_C_MASTER.md) |
+| D | TBD | TBD |
+
+**Linux+ is Type A.** Bash (future) is Type B — not a substitute for Linux+.
+
 ---
 
 ## Process overview
@@ -155,4 +178,4 @@ Before any subject moves from **Planned** to **In progress**:
 
 ---
 
-*See also: [`BRIDGE_MASTER.md`](../BRIDGE_MASTER.md) §18, [`python-learning-architecture.md`](python-learning-architecture.md)*
+*See also: [`COURSE_ARCHITECTURE.md`](COURSE_ARCHITECTURE.md), [`BRIDGE_MASTER.md`](../BRIDGE_MASTER.md) §18, [`python-learning-architecture.md`](python-learning-architecture.md)*
