@@ -57,6 +57,12 @@ export function AssignmentView({
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap gap-2">
         <Badge variant="default">{typeLabels[assignment.type]}</Badge>
+        {assignment.challengeKind === "recreate" && (
+          <Badge variant="info">Recreate</Badge>
+        )}
+        {assignment.challengeKind === "interpret" && (
+          <Badge variant="info">Interpret</Badge>
+        )}
         <Badge variant="default">
           <Clock className="mr-1 inline h-3 w-3" />~{assignment.estimatedMinutes} min
         </Badge>
@@ -72,12 +78,44 @@ export function AssignmentView({
         <p className="mb-1 text-xs text-zinc-500">
           {certShortName} · {topicName}
         </p>
+        {assignment.creativePrompt && (
+          <p className="mb-3 rounded-lg border border-violet-800/40 bg-violet-950/30 px-3 py-2 text-sm text-violet-200">
+            <span className="font-medium">Prompt: </span>
+            {assignment.creativePrompt}
+          </p>
+        )}
         {!caseStudy && (
           <div className="whitespace-pre-wrap text-sm leading-relaxed text-zinc-300">
             {assignment.instructions}
           </div>
         )}
       </Card>
+
+      {!caseStudy && (assignment.audibleTraitRubric?.length ?? 0) > 0 && (
+        <Card className="p-4">
+          <p className="mb-2 text-sm font-medium text-zinc-200">
+            Audible traits to match
+          </p>
+          <ul className="list-inside list-disc space-y-1.5 text-sm text-zinc-300">
+            {assignment.audibleTraitRubric!.map((trait) => (
+              <li key={trait}>{trait}</li>
+            ))}
+          </ul>
+        </Card>
+      )}
+
+      {!caseStudy && (assignment.reflectionRubric?.length ?? 0) > 0 && (
+        <Card className="p-4">
+          <p className="mb-2 text-sm font-medium text-zinc-200">
+            Design reflection
+          </p>
+          <ul className="list-inside list-disc space-y-1.5 text-sm text-zinc-300">
+            {assignment.reflectionRubric!.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </Card>
+      )}
 
       {caseStudy && (
         <CaseStudyEngine

@@ -148,6 +148,19 @@ LXA outputs **storyboards** (`experience.screens[]`), not prose paragraphs.
 npm run verify:curriculum -- --strict-experience
 ```
 
-Warns on: missing anchor, screen length caps, checkpoint before teach, jargon without `terms[]`, invalid `laterTopicId`, missing memory screen (OSI).
+Warns on: missing anchor, screen length caps, checkpoint before teach, jargon without `terms[]`, invalid `laterTopicId`, missing memory screen (OSI), audio/`audio-ab` path shape, Go Deeper lanes missing `flReconnect`.
 
 Reference experience: [`reference-experiences.md`](reference-experiences.md) — `ccna:osi-model`.
+
+---
+
+## Audio media (Sound Synthesis and future ear-training)
+
+Allowed `ExperienceMediaDef` kinds: `audio` (single clip) and `audio-ab` (A/B/C/D ladder).
+
+- Prefer on `teach` (also fine on `analogy` / `misconception`)
+- For ladders, set `predictPrompt` so learners predict before hearing
+- Soft-fail if the WAV is missing — do not block the lesson
+- Paths live under `/media/…` (e.g. `/media/sound-synthesis/m1/…`)
+
+**Go Deeper vs LES-11:** `laterLearn` / term tier `later` means *defer to another topic*. `Topic.goDeeper` means *optional depth now* (physics, math, DSP, history) and must include `flReconnect` — an audible or visible FL Studio next step. Do not overload `laterLearn` for Go Deeper.

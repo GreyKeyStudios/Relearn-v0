@@ -9,11 +9,13 @@ import { itilFoundation } from "./certifications/itil-foundation";
 import { linuxPlus } from "./certifications/linux-plus";
 import { networkPlus } from "./certifications/network-plus";
 import { securityPlus } from "./certifications/security-plus";
+import { soundSynthesis } from "./certifications/sound-synthesis";
 
 export const CERTIFICATIONS: Certification[] = [
   ccna,
   gitGithub,
   powershell,
+  soundSynthesis,
   securityPlus,
   networkPlus,
   cysaPlus,

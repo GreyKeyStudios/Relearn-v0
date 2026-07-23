@@ -10,11 +10,16 @@ import { Ipv6LeadingZeroStrip } from "@/components/lesson/Ipv6LeadingZeroStrip";
 import { Ipv6PrefixDiagram } from "@/components/lesson/Ipv6PrefixDiagram";
 import { Ipv6TypesTable } from "@/components/lesson/Ipv6TypesTable";
 import { SubnetPieDiagram } from "@/components/lesson/SubnetPieDiagram";
+import { ExperienceAudioPlayer } from "@/components/lesson/ExperienceAudioPlayer";
+import { ExperienceAudioAb } from "@/components/lesson/ExperienceAudioAb";
 import {
+  Activity,
   ArrowDown,
   Cable,
   Folder,
   Globe,
+  HardDrive,
+  Keyboard,
   Layers,
   Monitor,
   Network,
@@ -26,6 +31,7 @@ import {
 } from "lucide-react";
 
 const ICON_MAP: Record<string, LucideIcon> = {
+  activity: Activity,
   cable: Cable,
   monitor: Monitor,
   computer: Monitor,
@@ -38,6 +44,9 @@ const ICON_MAP: Record<string, LucideIcon> = {
   globe: Globe,
   folder: Folder,
   layers: Layers,
+  keyboard: Keyboard,
+  "hard-drive": HardDrive,
+  harddrive: HardDrive,
 };
 
 function MediaIcon({ name, label }: { name: string; label: string }) {
@@ -134,6 +143,22 @@ export function ExperienceMedia({ media, animate = true }: ExperienceMediaProps)
         showOverlap={media.showOverlap ?? true}
         animate={animate}
       />
+    );
+  }
+
+  if (media.kind === "audio") {
+    return (
+      <div className={enterClass}>
+        <ExperienceAudioPlayer media={media} animate={animate} />
+      </div>
+    );
+  }
+
+  if (media.kind === "audio-ab") {
+    return (
+      <div className={enterClass}>
+        <ExperienceAudioAb media={media} animate={animate} />
+      </div>
     );
   }
 

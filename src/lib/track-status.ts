@@ -11,7 +11,7 @@ import type { Certification } from "@/content/types";
  * Source of truth for intent is the project architecture docs; the mapping below
  * is validated against real content depth (immersive experiences per topic).
  */
-export type TrackStatus = "flagship" | "reference" | "skill" | "early";
+export type TrackStatus = "flagship" | "reference" | "skill" | "early" | "first-pass";
 
 export type TrackGroup = "active" | "early";
 
@@ -25,7 +25,7 @@ export interface TrackStatusMeta {
   group: TrackGroup;
   /** Sort order within the catalog (lower = higher priority). */
   order: number;
-  /** True when the track has a full, immersive, studyable curriculum. */
+  /** True when the track has a studyable curriculum (pilot or full). */
   live: boolean;
 }
 
@@ -33,6 +33,7 @@ const STATUS_BY_ID: Record<string, TrackStatus> = {
   ccna: "flagship",
   powershell: "reference",
   "git-github": "skill",
+  "sound-synthesis": "first-pass",
 };
 
 const META: Record<TrackStatus, Omit<TrackStatusMeta, "status">> = {
@@ -59,11 +60,18 @@ const META: Record<TrackStatus, Omit<TrackStatusMeta, "status">> = {
     order: 2,
     live: true,
   },
+  "first-pass": {
+    label: "In progress",
+    tagline: "Pilot curriculum live · polish in progress",
+    group: "active",
+    order: 3,
+    live: true,
+  },
   early: {
     label: "Early access",
     tagline: "Quizzes and flashcards live · lessons in progress",
     group: "early",
-    order: 3,
+    order: 4,
     live: false,
   },
 };

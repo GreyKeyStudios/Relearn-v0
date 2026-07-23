@@ -5,12 +5,25 @@ interface TopicDeepDiveProps {
   topic: Topic;
 }
 
+const GO_DEEPER_KIND_LABEL: Record<string, string> = {
+  physics: "Physics",
+  math: "Math",
+  dsp: "DSP",
+  electricity: "Electricity",
+  history: "History",
+  philosophy: "Philosophy",
+  code: "Code",
+};
+
 export function TopicDeepDive({ topic }: TopicDeepDiveProps) {
   const hasContent =
     topic.guidedExample ||
     (topic.commonMistakes?.length ?? 0) > 0 ||
     (topic.examTraps?.length ?? 0) > 0 ||
-    topic.realWorldScenario;
+    topic.realWorldScenario ||
+    (topic.whenThisFails?.length ?? 0) > 0 ||
+    !!topic.teacherReflectionPrompt ||
+    (topic.goDeeper?.length ?? 0) > 0;
 
   if (!hasContent) return null;
 
@@ -55,6 +68,20 @@ export function TopicDeepDive({ topic }: TopicDeepDiveProps) {
         </DisclosureSection>
       )}
 
+      {(topic.whenThisFails?.length ?? 0) > 0 && (
+        <DisclosureSection
+          title="When This Does Not Work"
+          titleClassName="text-orange-400"
+          className="border-orange-900/40"
+        >
+          <ul className="list-inside list-disc space-y-1.5 text-sm text-zinc-300">
+            {topic.whenThisFails!.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </DisclosureSection>
+      )}
+
       {topic.realWorldScenario && (
         <DisclosureSection
           title="Real-World Scenario"
@@ -65,6 +92,36 @@ export function TopicDeepDive({ topic }: TopicDeepDiveProps) {
           </p>
         </DisclosureSection>
       )}
+
+      {topic.teacherReflectionPrompt && (
+        <DisclosureSection
+          title="Talk it through"
+          titleClassName="text-violet-400"
+          className="border-violet-900/40"
+        >
+          <p className="text-sm leading-relaxed text-zinc-300">
+            {topic.teacherReflectionPrompt}
+          </p>
+        </DisclosureSection>
+      )}
+
+      {(topic.goDeeper?.length ?? 0) > 0 &&
+        topic.goDeeper!.map((lane) => (
+          <DisclosureSection
+            key={lane.id}
+            title={`Go Deeper · ${GO_DEEPER_KIND_LABEL[lane.kind] ?? lane.kind}: ${lane.title}`}
+            titleClassName="text-teal-400"
+            className="border-teal-900/40"
+          >
+            <p className="mb-3 whitespace-pre-wrap text-sm leading-relaxed text-zinc-300">
+              {lane.body}
+            </p>
+            <p className="rounded-lg border border-teal-800/50 bg-teal-950/40 px-3 py-2 text-sm text-teal-200">
+              <span className="font-medium">Try in FL Studio: </span>
+              {lane.flReconnect}
+            </p>
+          </DisclosureSection>
+        ))}
     </div>
   );
 }
