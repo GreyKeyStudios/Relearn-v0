@@ -214,6 +214,8 @@ export interface ExperienceScreen {
   gitWorkflowStep?: 1 | 2 | 3 | 4;
   /** PowerShell shell workflow anchor highlight (skills track) */
   powershellShellStep?: 1 | 2 | 3 | 4;
+  /** Computer stack layer 1=Hardware (bottom) through 4=You/User (top) */
+  computerStackLayer?: 1 | 2 | 3 | 4;
   /** Sound synthesis signal path 1=Source … 5=Hear */
   synthesisSignalPathStage?: 1 | 2 | 3 | 4 | 5;
 }
@@ -223,6 +225,8 @@ export type ExperienceAnchorType =
   | "tcp-ip-stack"
   | "git-workflow"
   | "powershell-shell"
+  /** Computer Fundamentals — User → Apps → OS → Hardware */
+  | "computer-stack"
   /** Sound Synthesis — Source → Shape → Filter → Amp → Hear */
   | "synthesis-signal-path";
 
@@ -262,7 +266,7 @@ export interface Topic {
   lightbulbMoment?: string;
   commonMistakes?: string[];
   examTraps?: string[];
-  /** Workplace traps for non-exam / skills tracks. Prefer over examTraps when appropriate. */
+  /** Workplace traps for non-exam tracks (Computer Fundamentals). Prefer over examTraps for CF. */
   realWorldTraps?: string[];
   realWorldScenario?: string;
   estimatedStudyMinutes?: number;
@@ -295,6 +299,32 @@ export interface GoDeeperLane {
   body: string;
   /** Required — audible or visible next step in FL Studio */
   flReconnect: string;
+}
+
+/** Pathway F — placement diagnostic result (Computer Fundamentals / A+ entry). */
+export type CfPlacementPath =
+  | "start-cf-beginning"
+  | "skip-to-files"
+  | "cf-partial-skip"
+  | "begin-aplus-with-refreshers";
+
+export interface CfPlacementResult {
+  path: CfPlacementPath;
+  /** Module or topic IDs the learner may skip */
+  skipTopicIds: string[];
+  /** Human-readable recommendation — respectful, never remedial */
+  recommendation: string;
+  /** Intent captured during placement */
+  intent?: "confidence" | "job" | "aplus" | "unsure";
+}
+
+/** Cross-track foundation referral when an A+ learner shows a CF gap. */
+export interface FoundationReferral {
+  fromCertId: string;
+  fromTopicId: string;
+  foundationCertId: "computer-fundamentals";
+  foundationTopicId: string;
+  tip: string;
 }
 
 export type TopicDifficulty = "easy" | "medium" | "hard";

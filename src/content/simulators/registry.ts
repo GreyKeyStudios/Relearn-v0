@@ -38,6 +38,7 @@ import {
   VlanTrunkDrill,
   WirelessStandardDrill,
 } from "@/components/simulators/network";
+import { CfFileFolderManager } from "@/components/simulators/fundamentals";
 
 export interface SimulatorRegistryEntry {
   id: string;
@@ -254,11 +255,26 @@ export const securityRegistry: SimulatorRegistryEntry[] = [
   },
 ];
 
+/** Pathway F — Computer Fundamentals simulators */
+export const fundamentalsRegistry: SimulatorRegistryEntry[] = [
+  {
+    id: "cf-file-folder-manager",
+    name: "File & Folder Manager",
+    component: CfFileFolderManager,
+    topicIds: [
+      "cf-file-explorer-basics",
+      "cf-files-copy-move-delete",
+      "cf-extensions-and-associations",
+    ],
+  },
+];
+
 /** Merged registry — BSim agents export partial arrays; B9 merges into SIMULATORS */
 export const SIMULATORS: SimulatorRegistryEntry[] = [
   ...coreRegistry,
   ...networkRegistry,
   ...securityRegistry,
+  ...fundamentalsRegistry,
 ];
 
 export function getSimulator(id: string): SimulatorRegistryEntry | undefined {

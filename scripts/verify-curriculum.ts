@@ -5,16 +5,20 @@ import {
 import {
   verifyAllCesWarnings,
   verifyCcnaCesWarnings,
+  verifyCertCesWarnings,
 } from "../src/lib/content-expansion";
 import { verifyCcnaObjectiveTags } from "../src/lib/verify-objectives";
 import { verifyCcnaPedagogyWarnings } from "../src/lib/verify-pedagogy";
 import { verifyCcnaExperienceWarnings } from "../src/lib/verify-experience";
+import { CERTIFICATIONS } from "../src/content/registry";
 
 const strictCcna = process.argv.includes("--strict-ccna");
 const strictAll = process.argv.includes("--strict-all");
 const strictCcnaObjectives = process.argv.includes("--strict-ccna-objectives");
 const strictPedagogy = process.argv.includes("--strict-pedagogy");
 const strictExperience = process.argv.includes("--strict-experience");
+const strictCf = process.argv.includes("--strict-cf");
+const strictAplus = process.argv.includes("--strict-aplus");
 
 const issues = verifyCurriculumLinks();
 const smoke = smokeTestPaths();
@@ -51,6 +55,49 @@ if (strictCcna || strictAll) {
     console.log(`Found ${cesWarnings.length} warning(s):`);
     for (const w of cesWarnings) {
       console.log(`  [${w.certId}] ${w.topicId}: ${w.message}`);
+    }
+  }
+}
+
+if (strictCf) {
+  const cf = CERTIFICATIONS.find((c) => c.id === "computer-fundamentals");
+  const cfWarnings = cf ? verifyCertCesWarnings(cf) : [];
+  console.log("\n=== Computer Fundamentals CES warnings (--strict-cf) ===");
+  if (cfWarnings.length === 0) {
+    console.log("No CF CES warnings");
+  } else {
+    console.log(`Found ${cfWarnings.length} warning(s):`);
+    for (const w of cfWarnings) {
+      console.log(`  [${w.certId}] ${w.topicId}: ${w.message}`);
+    }
+  }
+}
+
+if (strictAplus) {
+  const ap = CERTIFICATIONS.find((c) => c.id === "a-plus");
+  const apWarnings = ap ? verifyCertCesWarnings(ap) : [];
+  const emptyTopics =
+    ap?.domains.every((d) => d.topics.length === 0) ?? true;
+  console.log("\n=== CompTIA A+ CES warnings (--strict-aplus) ===");
+  if (emptyTopics) {
+    console.log("A+ shell has no topics yet — skip CES body checks (planned)");
+  } else if (apWarnings.length === 0) {
+    console.log("No A+ CES warnings");
+  } else {
+    console.log(`Found ${apWarnings.length} warning(s):`);
+    for (const w of apWarnings) {
+      console.log(`  [${w.certId}] ${w.topicId}: ${w.message}`);
+    }
+  }
+  for (const domain of ap?.domains ?? []) {
+    for (const topic of domain.topics) {
+      for (const obj of topic.objectives ?? []) {
+        if (!/^AP120[12]-\d+\.\d+$/.test(obj)) {
+          console.log(
+            `  [${topic.id}] objective "${obj}" should match AP1201-n.n or AP1202-n.n`
+          );
+        }
+      }
     }
   }
 }

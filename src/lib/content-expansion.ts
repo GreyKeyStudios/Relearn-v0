@@ -51,7 +51,8 @@ export function getContentExpansionLevel(topic: Topic): ContentExpansionLevel {
   const hasStandard =
     (topic.objectives?.length ?? 0) > 0 &&
     (topic.commonMistakes?.length ?? 0) >= 3 &&
-    (topic.examTraps?.length ?? 0) >= 3;
+    ((topic.examTraps?.length ?? 0) >= 3 ||
+      (topic.realWorldTraps?.length ?? 0) >= 3);
 
   if (!hasStandard) return "minimal";
 
@@ -96,11 +97,14 @@ export function verifyCertCesWarnings(cert: Certification): CesVerificationWarni
             message: "Missing commonMistakes (need 3+)",
           });
         }
-        if ((topic.examTraps?.length ?? 0) < 3) {
+        if (
+          (topic.examTraps?.length ?? 0) < 3 &&
+          (topic.realWorldTraps?.length ?? 0) < 3
+        ) {
           warnings.push({
             certId: cert.id,
             topicId: topic.id,
-            message: "Missing examTraps (need 3+)",
+            message: "Missing examTraps or realWorldTraps (need 3+)",
           });
         }
       }

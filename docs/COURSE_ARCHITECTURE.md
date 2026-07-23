@@ -46,15 +46,15 @@ ReLearn Engine
 |------|--------|-----------------|--------------|---------------|
 | **A** — Concept | Mental models, exam recall | **CCNA** | Learn → Practice → Review → Master | `ccna.ts`, Linux+, Security+, Network+ |
 | **B** — Skill | Syntax, commands, debugging | **Git** | Concept → Syntax → Try → **Break** → **Fix** → Quiz → Capstone | `git-github.ts`, `powershell.ts` (v1) |
-| **C** — Tool | Application workflows, projects | TBD (Wireshark or Excel) | Walkthrough → Task → Project → Rubric | External-lab pattern today |
-| **D** — Performance | Creation, speaking, playing | TBD (French or Music) | Listen → Perform → Reflect → Revise | Placeholder only |
+| **C** — Tool | Application workflows, projects | **VM Lab** (first tool/lab track) → then Wireshark/Excel | Walkthrough → Task → Project → Rubric | [`vm-lab-learning-architecture.md`](vm-lab-learning-architecture.md); external-lab pattern today |
 
-### Type A vs Linux+ vs Bash
+### Type A vs Linux+ vs Bash vs VM Lab
 
 - **CompTIA Linux+** is **Type A** — operating-system concepts, permissions, services, networking, plus cert-style recall. Not a command cheat sheet course.
 - **Bash** (future Type B track) is the **command language** for Linux shells — procedural, Break/Fix labs, pairs with Linux+ conceptually but uses the Type B template.
+- **VM Lab Foundations** is **Type C (+ B Break/Fix)** — owns the disposable Practice PC via **local VirtualBox** (learner install; ReLearn does not host VMs). Bash and Linux+ **consume** that lab; they do not replace it.
 
-Do not teach Linux+ as Type B or Bash as Type A.
+Do not teach Linux+ as Type B, Bash as Type A, or bury VM setup inside Bash Module 1.
 
 ---
 
@@ -66,7 +66,7 @@ Each template has **one reference track** where new platform patterns are proven
 |----------|-----------------|------|
 | A | CCNA | CES, LES, BLS, deferral manifest, Professor oral gate |
 | B | Git | TYPE_B_MASTER, Break/Fix labs, workflow LES anchor |
-| C | TBD | Project rubric, tool task UI |
+| C | **VM Lab Foundations** | Local VirtualBox install + guest snapshots/Break/Fix — see [`vm-lab-learning-architecture.md`](vm-lab-learning-architecture.md) |
 | D | TBD | Performance + feedback loop |
 
 **Rule:** Invent features in the reference track first. After owner walkthrough sign-off, propagate to sibling tracks.

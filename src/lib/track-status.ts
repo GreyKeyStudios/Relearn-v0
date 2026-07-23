@@ -1,19 +1,27 @@
-import type { Certification } from "@/content/types";
-
 /**
  * Track maturity tiers.
  *
- * ReLearn currently ships with one flagship experience (CCNA) plus a small set
- * of strong skill tracks. Most other subjects are still being built. These tiers
- * let the UI signal that reality honestly: completed tracks feel complete,
- * in-progress tracks feel intentional, and future tracks never look broken.
- *
- * Source of truth for intent is the project architecture docs; the mapping below
- * is validated against real content depth (immersive experiences per topic).
+ * Legacy tiers (flagship / reference / skill / early) remain for existing catalog.
+ * Pathway F adds an explicit content-maturity ladder so empty or partial tracks
+ * are never marketed as production-ready.
  */
-export type TrackStatus = "flagship" | "reference" | "skill" | "early" | "first-pass";
 
-export type TrackGroup = "active" | "early";
+import type { Certification } from "@/content/types";
+
+/** Legacy + Pathway F maturity ladder */
+export type TrackStatus =
+  | "flagship"
+  | "reference"
+  | "skill"
+  | "early"
+  | "planned"
+  | "first-pass"
+  | "internal-review"
+  | "learner-qa"
+  | "stable"
+  | "gold-standard";
+
+export type TrackGroup = "active" | "early" | "planned";
 
 export interface TrackStatusMeta {
   status: TrackStatus;
@@ -33,7 +41,10 @@ const STATUS_BY_ID: Record<string, TrackStatus> = {
   ccna: "flagship",
   powershell: "reference",
   "git-github": "skill",
+  /** Pathway F — full Module 1-8 track wired; bump again once learner QA completes */
+  "computer-fundamentals": "first-pass",
   "sound-synthesis": "first-pass",
+  "a-plus": "planned",
 };
 
 const META: Record<TrackStatus, Omit<TrackStatusMeta, "status">> = {
@@ -45,8 +56,6 @@ const META: Record<TrackStatus, Omit<TrackStatusMeta, "status">> = {
     live: true,
   },
   reference: {
-    // Internally this is the "reference implementation" tier (see architecture
-    // docs), but learners just see a hands-on job-skill track like Git.
     label: "Skill track",
     tagline: "Hands-on job skill curriculum",
     group: "active",
@@ -60,18 +69,53 @@ const META: Record<TrackStatus, Omit<TrackStatusMeta, "status">> = {
     order: 2,
     live: true,
   },
-  "first-pass": {
-    label: "In progress",
-    tagline: "Pilot curriculum live · polish in progress",
+  "gold-standard": {
+    label: "Gold standard",
+    tagline: "Fully aligned lesson-to-assessment quality",
+    group: "active",
+    order: 0,
+    live: true,
+  },
+  stable: {
+    label: "Ready",
+    tagline: "Production literacy or cert prep",
+    group: "active",
+    order: 2,
+    live: true,
+  },
+  "learner-qa": {
+    label: "Learner testing",
+    tagline: "Buddy / owner walkthrough in progress",
     group: "active",
     order: 3,
+    live: true,
+  },
+  "internal-review": {
+    label: "In review",
+    tagline: "Team QA before learner testing",
+    group: "active",
+    order: 4,
+    live: true,
+  },
+  "first-pass": {
+    label: "In progress",
+    tagline: "Full literacy track — QA and polish in progress",
+    group: "active",
+    order: 5,
     live: true,
   },
   early: {
     label: "Early access",
     tagline: "Quizzes and flashcards live · lessons in progress",
     group: "early",
-    order: 4,
+    order: 10,
+    live: false,
+  },
+  planned: {
+    label: "Coming soon",
+    tagline: "Architecture ready · content not studyable yet",
+    group: "planned",
+    order: 20,
     live: false,
   },
 };
@@ -89,6 +133,10 @@ export function isActiveTrack(cert: Certification): boolean {
   return getTrackStatusMeta(cert).group === "active";
 }
 
+export function isPlannedTrack(cert: Certification): boolean {
+  return getTrackStatusMeta(cert).group === "planned";
+}
+
 /** Sort certs by maturity tier, then by name. */
 export function sortByTrackStatus(certs: Certification[]): Certification[] {
   return [...certs].sort((a, b) => {
@@ -103,11 +151,13 @@ export function sortByTrackStatus(certs: Certification[]): Certification[] {
 export function groupTracksByStatus(certs: Certification[]): {
   active: Certification[];
   early: Certification[];
+  planned: Certification[];
 } {
   const sorted = sortByTrackStatus(certs);
   return {
-    active: sorted.filter((c) => isActiveTrack(c)),
-    early: sorted.filter((c) => !isActiveTrack(c)),
+    active: sorted.filter((c) => getTrackStatusMeta(c).group === "active"),
+    early: sorted.filter((c) => getTrackStatusMeta(c).group === "early"),
+    planned: sorted.filter((c) => getTrackStatusMeta(c).group === "planned"),
   };
 }
 
@@ -121,7 +171,11 @@ export function getPrimaryTrack(
 ): Certification | undefined {
   if (activeCertIds.length === 1) {
     const chosen = certs.find((c) => c.id === activeCertIds[0]);
-    if (chosen) return chosen;
+    if (chosen && getTrackStatusMeta(chosen).live) return chosen;
   }
-  return certs.find((c) => getTrackStatus(c) === "flagship") ?? certs[0];
+  return (
+    certs.find((c) => getTrackStatus(c) === "flagship") ??
+    certs.find((c) => isActiveTrack(c)) ??
+    certs[0]
+  );
 }

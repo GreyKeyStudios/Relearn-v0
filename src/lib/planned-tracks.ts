@@ -19,6 +19,15 @@ export interface PlannedTrack {
 /** Planned ReLearn tracks — no content file until the template graduates. */
 export const PLANNED_TRACKS: PlannedTrack[] = [
   {
+    id: "vm-lab",
+    shortName: "VM Lab",
+    name: "VM Lab Foundations",
+    template: "C",
+    kindLabel: "ReLearn · Lab skill",
+    tagline: "Install VirtualBox · safe Linux & Windows guests for CMD and Bash",
+    order: -1,
+  },
+  {
     id: "sql",
     shortName: "SQL",
     name: "SQL Foundations",
@@ -33,7 +42,7 @@ export const PLANNED_TRACKS: PlannedTrack[] = [
     name: "Bash Shell Basics",
     template: "B",
     kindLabel: "ReLearn · Job skill",
-    tagline: "Linux commands · pairs with Linux+ concepts",
+    tagline: "Linux commands · pairs with Linux+ concepts · needs VM Lab",
     order: 1,
   },
   {

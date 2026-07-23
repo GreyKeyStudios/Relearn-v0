@@ -13,8 +13,10 @@ Read docs/COURSE_ARCHITECTURE.md, then BRIDGE_MASTER.md.
 For Type B tracks: also read docs/TYPE_B_MASTER.md and the track architecture doc.
 For Phase 7 (Python): also read docs/python-learning-architecture.md.
 For Git/GitHub (Type B reference): also read docs/git-github-learning-architecture.md.
+For Pathway F (Computer Fundamentals + A+): also read docs/computer-fundamentals-aplus-architecture.md.
+For Pathway V (VM Lab / Practice PC): also read docs/vm-lab-learning-architecture.md.
 For Pathway S (Sound Synthesis): also read docs/sound-synthesis-learning-architecture.md and docs/TYPE_C_MASTER.md.
-Execute only the agent ID assigned to you (M0, P3-*, P4-*, P7-*, etc.).
+Execute only the agent ID assigned to you (M0, P3-*, P4-*, P7-*, F0, FContent-*, V0, etc.).
 Only edit files assigned to that agent.
 When finished, summarize: files changed, what works, blockers.
 ```
@@ -56,6 +58,8 @@ Plan → Architecture → Standards → Completion criteria → Delegate → Int
 | **Phase 4.75** | Complete | Coach UX polish — Study Now card, weak objectives UX, planner tuning |
 | **Phase 4.8** | Complete | Bridge Learning Standard, CCNA pedagogy sprint — see `docs/bridge-learning-standard.md` |
 | **Phase 4.9** | In progress | Learning Experience Standard (B+), ExperiencePlayer, **Git/GitHub Type B reference track (Modules 1–7)**, PowerShell Type B v1 — see `docs/COURSE_ARCHITECTURE.md`, `docs/TYPE_B_MASTER.md`, `docs/learning-experience-standard.md`, `docs/git-github-learning-architecture.md` |
+| **Pathway F** | In progress | Computer Fundamentals + CompTIA A+ (220-1201/1202) — architecture approved; CF first-pass live; A+ shell planned — see [`docs/computer-fundamentals-aplus-architecture.md`](docs/computer-fundamentals-aplus-architecture.md) |
+| **Pathway V** | Planned | **VM Lab Foundations** — learner installs **VirtualBox**; Linux/Windows guests for CMD & Bash; ReLearn does not host VMs — see [`docs/vm-lab-learning-architecture.md`](docs/vm-lab-learning-architecture.md) |
 | **Pathway S** | In progress | **Sound Synthesis** — Type C first-pass pilot (M0 + M1); FL Studio stock; Recreate / Interpret; Go Deeper + audio media schema — see [`docs/sound-synthesis-learning-architecture.md`](docs/sound-synthesis-learning-architecture.md) |
 | **Phase 5** | Planned | AI-assisted learning — multiple modes (Professor first); see [`docs/phase-5-ai-learning.md`](docs/phase-5-ai-learning.md) |
 | **Phase 6** | Planned | Native app (Capacitor/Expo after Phase 4 gates) |
@@ -73,9 +77,9 @@ Bridge Study Companion implements **Tier 1** today. Future subjects follow a tie
 
 | Tier | Name | Subjects | Bridge phase |
 |---|---|---|---|
-| **1** | IT Foundations | CCNA, Network+, Security+, CySA+, AWS CP, Azure, Linux+, ITIL | Phase 1–4.75 (complete) |
+| **1** | IT Foundations | CCNA, Network+, Security+, CySA+, AWS CP, Azure, Linux+, ITIL; **Computer Fundamentals** + **CompTIA A+** (Pathway F — see [`docs/computer-fundamentals-aplus-architecture.md`](docs/computer-fundamentals-aplus-architecture.md)) | Phase 1–4.75 (complete); Pathway F in progress |
 | **2** | IT Automation | Python Foundations | Phase 7 (planned, blocked) |
-| **3** | Applied Technology | Git/GitHub (Type B reference), PowerShell (Type B v1), SQL, Bash, APIs, DevOps; Type C tool tracks (Excel, Wireshark, **Sound Synthesis**) | Phase 4.9+ / Phase 8+ / Pathway S |
+| **3** | Applied Technology | Git/GitHub (Type B reference), PowerShell (Type B v1), **VM Lab Foundations** (sandbox for CMD/Bash/Linux), SQL, Bash, APIs, DevOps; Type C tool tracks (Excel, Wireshark, **Sound Synthesis**) | Phase 4.9+ / Phase 8+ / Pathway V / Pathway S |
 | **4** | ReLearn Labs | Robotics, IoT, Physical Computing | Future |
 
 ```text
@@ -100,7 +104,7 @@ Platform constitution: [`docs/COURSE_ARCHITECTURE.md`](docs/COURSE_ARCHITECTURE.
 | **B** — Skill | Git & GitHub | [`docs/TYPE_B_MASTER.md`](docs/TYPE_B_MASTER.md) |
 | **C** — Tool | TBD (candidates: Wireshark, Excel, **Sound Synthesis** creative variant) | [`docs/TYPE_C_MASTER.md`](docs/TYPE_C_MASTER.md) |
 
-New platform patterns ship in the reference track first, then propagate. PowerShell is Type B v1 proof; Git is the canonical Type B reference. Sound Synthesis: [`docs/sound-synthesis-learning-architecture.md`](docs/sound-synthesis-learning-architecture.md).
+New platform patterns ship in the reference track first, then propagate. PowerShell is Type B v1 proof; Git is the canonical Type B reference. Sound Synthesis architecture: [`docs/sound-synthesis-learning-architecture.md`](docs/sound-synthesis-learning-architecture.md) (catalog: `planned-tracks.ts`).
 
 ---
 

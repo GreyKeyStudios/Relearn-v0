@@ -20,6 +20,7 @@ export function TopicDeepDive({ topic }: TopicDeepDiveProps) {
     topic.guidedExample ||
     (topic.commonMistakes?.length ?? 0) > 0 ||
     (topic.examTraps?.length ?? 0) > 0 ||
+    (topic.realWorldTraps?.length ?? 0) > 0 ||
     topic.realWorldScenario ||
     (topic.whenThisFails?.length ?? 0) > 0 ||
     !!topic.teacherReflectionPrompt ||
@@ -62,6 +63,20 @@ export function TopicDeepDive({ topic }: TopicDeepDiveProps) {
         >
           <ul className="list-inside list-disc space-y-1.5 text-sm text-zinc-300">
             {topic.examTraps!.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </DisclosureSection>
+      )}
+
+      {(topic.realWorldTraps?.length ?? 0) > 0 && (
+        <DisclosureSection
+          title="Real-World Traps"
+          titleClassName="text-rose-400"
+          className="border-rose-900/40"
+        >
+          <ul className="list-inside list-disc space-y-1.5 text-sm text-zinc-300">
+            {topic.realWorldTraps!.map((item) => (
               <li key={item}>{item}</li>
             ))}
           </ul>
