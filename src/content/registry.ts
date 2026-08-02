@@ -12,6 +12,7 @@ import { linuxPlus } from "./certifications/linux-plus";
 import { networkPlus } from "./certifications/network-plus";
 import { securityPlus } from "./certifications/security-plus";
 import { soundSynthesis } from "./certifications/sound-synthesis";
+import { vmLab } from "./certifications/vm-lab";
 
 export const CERTIFICATIONS: Certification[] = [
   ccna,
@@ -19,6 +20,7 @@ export const CERTIFICATIONS: Certification[] = [
   gitGithub,
   powershell,
   soundSynthesis,
+  vmLab,
   aPlus,
   securityPlus,
   networkPlus,

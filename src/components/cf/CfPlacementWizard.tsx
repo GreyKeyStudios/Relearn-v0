@@ -25,6 +25,7 @@ const DEFAULT: CfPlacementAnswers = {
  */
 export function CfPlacementWizard() {
   const [answers, setAnswers] = useState<CfPlacementAnswers>(DEFAULT);
+  const [answered, setAnswered] = useState<Set<keyof CfPlacementAnswers>>(new Set());
   const [submitted, setSubmitted] = useState(false);
 
   const result = useMemo(
@@ -37,8 +38,19 @@ export function CfPlacementWizard() {
     value: CfPlacementAnswers[K]
   ) {
     setAnswers((a) => ({ ...a, [key]: value }));
+    setAnswered((current) => new Set(current).add(key));
     setSubmitted(false);
   }
+
+  const requiredAnswers: Array<keyof CfPlacementAnswers> = [
+    "canCreateFolder",
+    "wifiVsInternet",
+    "knowsCommonPorts",
+    "installedSoftware",
+    "usedTaskManager",
+    "workedWithTickets",
+  ];
+  const allQuestionsAnswered = requiredAnswers.every((key) => answered.has(key));
 
   return (
     <Card className="mb-6 border-zinc-800 bg-zinc-900/60 p-4">
@@ -51,32 +63,32 @@ export function CfPlacementWizard() {
       <ul className="mb-4 space-y-3 text-sm text-zinc-300">
         <YesNo
           label="Can you create a folder and find it again in File Explorer?"
-          value={answers.canCreateFolder}
+          value={answered.has("canCreateFolder") ? answers.canCreateFolder : undefined}
           onChange={(v) => toggle("canCreateFolder", v)}
         />
         <YesNo
           label="Do you know the difference between Wi-Fi and the Internet?"
-          value={answers.wifiVsInternet}
+          value={answered.has("wifiVsInternet") ? answers.wifiVsInternet : undefined}
           onChange={(v) => toggle("wifiVsInternet", v)}
         />
         <YesNo
           label="Can you recognize common ports (USB-C, HDMI, Ethernet) by sight?"
-          value={answers.knowsCommonPorts}
+          value={answered.has("knowsCommonPorts") ? answers.knowsCommonPorts : undefined}
           onChange={(v) => toggle("knowsCommonPorts", v)}
         />
         <YesNo
           label="Have you installed software on a Windows PC before?"
-          value={answers.installedSoftware}
+          value={answered.has("installedSoftware") ? answers.installedSoftware : undefined}
           onChange={(v) => toggle("installedSoftware", v)}
         />
         <YesNo
           label="Have you opened Task Manager before?"
-          value={answers.usedTaskManager}
+          value={answered.has("usedTaskManager") ? answers.usedTaskManager : undefined}
           onChange={(v) => toggle("usedTaskManager", v)}
         />
         <YesNo
           label="Have you worked with support tickets (written or read one)?"
-          value={answers.workedWithTickets}
+          value={answered.has("workedWithTickets") ? answers.workedWithTickets : undefined}
           onChange={(v) => toggle("workedWithTickets", v)}
         />
       </ul>
@@ -100,9 +112,16 @@ export function CfPlacementWizard() {
         </select>
       </label>
 
-      <Button type="button" onClick={() => setSubmitted(true)}>
+      <Button
+        type="button"
+        disabled={!allQuestionsAnswered}
+        onClick={() => setSubmitted(true)}
+      >
         Get recommendation
       </Button>
+      {!allQuestionsAnswered && (
+        <p className="mt-2 text-xs text-zinc-500">Answer all six questions to get a recommendation.</p>
+      )}
 
       {result && (
         <div className="mt-4 rounded-lg border border-sky-900/50 bg-sky-950/30 p-3 text-sm text-zinc-200">
@@ -150,7 +169,7 @@ function YesNo({
   onChange,
 }: {
   label: string;
-  value: boolean;
+  value: boolean | undefined;
   onChange: (v: boolean) => void;
 }) {
   return (
@@ -159,8 +178,9 @@ function YesNo({
       <div className="flex shrink-0 gap-2">
         <button
           type="button"
-          className={`rounded-md px-3 py-1 text-xs ${
-            value
+          aria-pressed={value === true}
+          className={`min-h-11 min-w-12 rounded-md px-3 py-2 text-sm ${
+            value === true
               ? "bg-sky-600 text-white"
               : "border border-zinc-700 text-zinc-400"
           }`}
@@ -170,8 +190,9 @@ function YesNo({
         </button>
         <button
           type="button"
-          className={`rounded-md px-3 py-1 text-xs ${
-            !value
+          aria-pressed={value === false}
+          className={`min-h-11 min-w-12 rounded-md px-3 py-2 text-sm ${
+            value === false
               ? "bg-zinc-700 text-white"
               : "border border-zinc-700 text-zinc-400"
           }`}

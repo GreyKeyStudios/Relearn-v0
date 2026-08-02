@@ -326,6 +326,20 @@ M0 → P4.8-Path + P4.8-Lesson + P4.8-Cognitive + P4.8-SME (audit) → P3-CCNA �
 
 Content agents must NOT touch: `types.ts`, `registry.ts`, `src/app/**`, `src/components/**`, `src/stores/**`, `src/lib/**` (except assigned), other cert files.
 
+### Ethical Hacking scaffolding (platform / planning)
+
+| Area | Path | Notes |
+|------|------|--------|
+| Architecture | `docs/ethical-hacking-architecture.md` | Audit, gaps, safe-simulation boundary |
+| Career path | `src/content/career-paths/` | Phase structure; not a CERTIFICATIONS shell yet |
+| Knowledge graph | `src/content/knowledge/` | Cross-track prerequisites / red-blue links |
+| Perspectives | `src/content/perspectives/` | Neutral / Red / Blue / Purple blocks |
+| Scenarios | `src/content/scenarios/` | Multi-phase career sims (synthetic only) |
+| Lab VM scaffold | `src/content/labs/`, `src/app/labs/`, `docs/relearn-lab-vm-plan.md` | Appliance UI/metadata only — no OVA |
+| VM Lab Foundations | `src/content/certifications/vm-lab.ts` | Build-it-yourself VirtualBox track (first-pass) |
+
+Do **not** implement real malware, credential theft, destructive payloads, or unauthorized attack tooling. See the safe-simulation boundary in the architecture doc. Do **not** ship fake Lab VM download buttons until an appliance exists.
+
 ---
 
 ## 10. Per-cert topic checklist (114 topics)

@@ -87,7 +87,13 @@ export default function SimulatorPage({ params, searchParams }: SimulatorPagePro
         onComplete={handleComplete}
       >
         {SimulatorComponent ? (
-          <SimulatorRunner Component={SimulatorComponent} />
+          <SimulatorRunner
+            Component={SimulatorComponent}
+            certId={certId}
+            topicId={topicId}
+            assignmentId={assignmentId}
+            simulatorId={simulatorId}
+          />
         ) : (
           <SimulatorPlaceholder />
         )}

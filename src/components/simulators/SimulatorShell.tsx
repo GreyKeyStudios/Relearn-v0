@@ -94,11 +94,27 @@ export function SimulatorShell({
 /** Routes simulator completion through SimulatorShell so the session summary appears. */
 export function SimulatorRunner({
   Component,
+  certId,
+  topicId,
+  assignmentId,
+  simulatorId,
 }: {
   Component: ComponentType<SimulatorComponentProps>;
+  certId: string;
+  topicId?: string;
+  assignmentId?: string;
+  simulatorId: string;
 }) {
   const onComplete = useSimulatorComplete();
-  return <Component onComplete={onComplete} />;
+  return (
+    <Component
+      onComplete={onComplete}
+      certId={certId}
+      topicId={topicId}
+      assignmentId={assignmentId}
+      simulatorId={simulatorId}
+    />
+  );
 }
 
 export function SimulatorPlaceholder() {

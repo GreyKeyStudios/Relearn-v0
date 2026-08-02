@@ -1,7 +1,7 @@
 # VM Lab Foundations — Learning Architecture
 
-**Status:** Approved direction (2026-07-20) — architecture only; content not started  
-**Updated:** 2026-07-20 — **local VirtualBox primary** (ReLearn does **not** host VMs)  
+**Status:** First-pass Modules 1–8 scaffolded in \`src/content/certifications/vm-lab.ts\`  
+**Updated:** 2026-08-01 — registered live track (\`first-pass\`); ReLearn still does **not** host VMs  
 **Tier:** ReLearn Tier 3 — Applied Technology (Professional Foundations)  
 **Track type:** Skills track — **hybrid Type B + Type C**  
 **Track ID:** `vm-lab`  
@@ -32,6 +32,15 @@ A+ virtualization + risky labs ────────────────�
 2. A **platform prerequisite** — the safe place other tracks point to for Break/Fix and command practice  
 
 Do **not** bury this inside Linux+ (Type A concepts) or Bash (Type B commands). Those tracks *consume* the lab; this track *owns* the lab workflow.
+
+### Shared folders policy
+
+| Context | Shared folders |
+|---------|----------------|
+| **Learning VM** (this course) | May enable briefly to teach host ↔ guest transfer, then **disable** |
+| **Official ReLearn Lab VM** (future appliance) | Host shares **normally disabled** for containment |
+
+Writable host shares let a compromised/misconfigured guest touch real host files — Module 7 and the capstone teach that distinction.
 
 ---
 
@@ -160,9 +169,9 @@ Success is **not** “ReLearn spun up a cloud desktop for me.”
 | Phase | Scope | Exit |
 |-------|-------|------|
 | **V0** | Architecture + planned catalog (this doc) | Coming soon card live |
-| **V1** | Modules 1–2 — why sandbox + **install VirtualBox** | Learner has VirtualBox running |
-| **V2** | Module 3 — Linux guest + clean snapshot | Bash track can require this |
-| **V3** | Modules 4–8 — Bash, Windows/CMD, snapshots, share, capstone | First-pass complete |
+| **V1** | Modules 1–2 — why sandbox + **install VirtualBox** | **Done (first-pass)** — `/cert/vm-lab` |
+| **V2** | Module 3 — Linux guest + clean snapshot | **Done (first-pass)** — \`vm-linux-guest-create\` |
+| **V3** | Modules 4–8 — Bash, Windows/CMD, snapshots, share, capstone | **Done (first-pass)** — deepen LES/polish next |
 | **V4** | Deep links from CF M3+, A+, PowerShell; VMware appendix | Stable |
 
 **Do not** block CF completion on VirtualBox. Link forward: “Install VM Lab when you are ready for shells.”

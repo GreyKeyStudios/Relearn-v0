@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/Badge";
 import { CaseStudyEngine } from "@/components/case-studies/CaseStudyEngine";
 import { assignmentKey } from "@/lib/ids";
 import { getCaseStudy } from "@/lib/case-study-selectors";
+import { getExternalToolGuide } from "@/content/external-tools/packet-tracer";
 import { useProgressStore } from "@/stores/progress-store";
 
 interface AssignmentViewProps {
@@ -30,6 +31,48 @@ const typeLabels: Record<Assignment["type"], string> = {
   "case-study": "Case study",
 };
 
+function AssignmentInstructions({ text }: { text: string }) {
+  return (
+    <div className="space-y-2 text-sm leading-relaxed text-zinc-300">
+      {text.split("\n").map((rawLine, index) => {
+        const line = rawLine.trim();
+        if (!line) return <div key={index} className="h-1" aria-hidden="true" />;
+
+        const heading = line.match(/^###\s+(.+)$/);
+        if (heading) {
+          return (
+            <h2 key={index} className="pt-2 text-base font-semibold text-zinc-100">
+              {heading[1]}
+            </h2>
+          );
+        }
+
+        const numbered = line.match(/^(\d+)\.\s+(.+)$/);
+        if (numbered) {
+          return (
+            <div key={index} className="grid grid-cols-[1.75rem_1fr] gap-2">
+              <span className="font-mono text-zinc-500">{numbered[1]}.</span>
+              <span>{numbered[2]}</span>
+            </div>
+          );
+        }
+
+        const bullet = line.match(/^[-*]\s+(.+)$/);
+        if (bullet) {
+          return (
+            <div key={index} className="grid grid-cols-[1rem_1fr] gap-2">
+              <span className="text-zinc-500" aria-hidden="true">•</span>
+              <span>{bullet[1]}</span>
+            </div>
+          );
+        }
+
+        return <p key={index}>{line}</p>;
+      })}
+    </div>
+  );
+}
+
 export function AssignmentView({
   certId,
   certShortName,
@@ -44,6 +87,9 @@ export function AssignmentView({
   const [checked, setChecked] = useState<Record<number, boolean>>({});
   const caseStudy =
     assignment.caseStudyId ? getCaseStudy(assignment.caseStudyId) : undefined;
+  const externalToolGuide = externalResource
+    ? getExternalToolGuide(externalResource.id)
+    : undefined;
 
   const allChecked =
     assignment.completionCriteria.length === 0 ||
@@ -85,9 +131,7 @@ export function AssignmentView({
           </p>
         )}
         {!caseStudy && (
-          <div className="whitespace-pre-wrap text-sm leading-relaxed text-zinc-300">
-            {assignment.instructions}
-          </div>
+          <AssignmentInstructions text={assignment.instructions} />
         )}
       </Card>
 
@@ -129,12 +173,12 @@ export function AssignmentView({
       {!caseStudy && externalResource && (
         <Card className="p-4">
           <p className="mb-2 text-sm font-medium text-zinc-200">{externalResource.name}</p>
-          {externalResource.id === "packet-tracer" && (
+          {externalToolGuide && (
             <Link
-              href={`/cert/${certId}/tool/packet-tracer`}
+              href={`/cert/${certId}/tool/${externalToolGuide.id}`}
               className="mb-3 block rounded-lg border border-emerald-500/20 bg-emerald-500/5 px-3 py-2 text-sm text-emerald-400 hover:bg-emerald-500/10"
             >
-              First time? Read the Packet Tracer getting-started guide →
+              First time? Read the {externalToolGuide.name} getting-started guide →
             </Link>
           )}
           {externalResource.installNotes && (

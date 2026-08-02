@@ -27,11 +27,11 @@ export const ccna: Certification = {
   shortName: "CCNA",
   vendor: "Cisco",
   overview:
-    "The CCNA validates your ability to install, configure, operate, and troubleshoot medium-sized routed and switched networks. It covers network fundamentals, IP connectivity, security basics, and automation.",
+    "A ReLearn pilot for the Cisco CCNA 200-301 v1.1 blueprint. Network Fundamentals is the teaching-quality reference; later domains remain in expansion and should not yet be treated as complete exam preparation.",
   examSummary: {
     questionCount: 100,
     durationMinutes: 120,
-    passingScore: "825/1000",
+    passingScore: "Cisco does not publish a fixed passing score",
     format: "Multiple choice, drag-and-drop, simulations",
   },
   domains: [
