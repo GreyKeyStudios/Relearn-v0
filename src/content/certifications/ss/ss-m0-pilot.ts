@@ -56,9 +56,12 @@ This track teaches concepts, not plugin tourism. Module 0 locks you to 3xOSC Ini
     commonMistakes: [
       "Thinking the synth invents sound without a speaker or headphones",
       "Skipping Wave Candy and guessing from memory of presets",
+      "Thinking air molecules travel all the way from the speaker to your ear instead of passing pressure between neighbors",
     ],
     realWorldTraps: [
       "YouTube tutorials jump to Serum — ignore them for Module 0",
+      "No sound may be a routing, mute, device, or volume problem rather than a synthesis problem",
+      "Start monitoring quietly; a correct patch can still be unsafe or painfully loud",
     ],
     quiz: [
       {
@@ -152,6 +155,16 @@ Habit: before every knob turn, predict pitch and loudness separately. If both ch
           "In 3xOSC, play a note, raise coarse pitch one octave, and count how the Wave Candy cycles densify.",
       },
     ],
+    commonMistakes: [
+      "Turning up channel volume when the goal is to raise pitch",
+      "Changing pitch and level together, then guessing which change caused what you heard",
+      "Treating amplitude and perceived loudness as perfectly identical in every listening situation",
+    ],
+    realWorldTraps: [
+      "A louder sound can seem brighter or better even when its frequency content is unchanged",
+      "A visualizer with the wrong time or gain scale can make an unchanged wave look different",
+      "Computer or interface volume changes listening level without changing the synth patch itself",
+    ],
     quiz: [
       {
         id: "ss-m0-frequency-amplitude-q1",
@@ -244,6 +257,16 @@ No presets. If a tutorial tells you to open Serum this week, close the tab.`,
           "Compare sine vs saw through a closing low-pass later in M1 — for now just A/B the raw shapes in 3xOSC.",
       },
     ],
+    commonMistakes: [
+      "Comparing waveforms at different pitches or levels and blaming the shape for every difference",
+      "Assuming every square, saw, or triangle sounds identical on every synthesizer",
+      "Memorizing waveform pictures without learning to recognize their audible character",
+    ],
+    realWorldTraps: [
+      "Factory oscillators may include unison, phase, oversampling, or shaping that makes textbook labels sound different",
+      "Stereo effects can disguise the dry waveform you are trying to identify",
+      "Noise is a useful source, but excessive level can mask pitched material and fatigue your ears",
+    ],
     quiz: [
       {
         id: "ss-m0-waveforms-q1",
@@ -334,6 +357,16 @@ Noise is the odd one out: energy without a clear pitch. Use it on purpose, not b
         flReconnect:
           "In 3xOSC, A/B sine vs saw at the same pitch and imagine the missing partials appearing when you switch to saw.",
       },
+    ],
+    commonMistakes: [
+      "Calling every frequency above the fundamental a harmonic even when it is not an integer multiple",
+      "Assuming a bright sound must be louder rather than richer in upper-frequency energy",
+      "Treating noise as useless because it has no stable musical pitch",
+    ],
+    realWorldTraps: [
+      "Analyzer peaks can include room, effect, or noise energy that is not part of the oscillator's harmonic series",
+      "Distortion can create new harmonics after the oscillator, so the final spectrum may not match the selected wave",
+      "Filtering a sine may produce little audible change because there are few upper harmonics to remove",
     ],
     quiz: [
       {
@@ -426,6 +459,16 @@ When teacher audio files arrive, they will live under /media/sound-synthesis/m0/
         flReconnect:
           "A/B sine vs saw twice: once with saw much louder, once level-matched. Notice how your preference flips.",
       },
+    ],
+    commonMistakes: [
+      "Choosing the louder comparison as the better or brighter sound",
+      "Watching the analyzer first and letting the picture replace careful listening",
+      "Changing waveform, pitch, level, and effects together instead of isolating one variable",
+    ],
+    realWorldTraps: [
+      "Wave Candy must be placed on the signal path you are actually hearing or its display will mislead you",
+      "Master effects and automatic gain changes can invalidate an otherwise careful A/B comparison",
+      "Ear fatigue reduces judgment; pause and lower the monitoring level when differences stop feeling clear",
     ],
     assignments: [
       {

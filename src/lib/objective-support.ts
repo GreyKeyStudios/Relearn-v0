@@ -2,7 +2,7 @@ import type { Certification } from "@/content/types";
 import { isSkillsTrack } from "@/lib/track-kind";
 
 /** Certs with objectiveId tags on quiz questions support objective-level coaching. */
-const OBJECTIVE_COACHING_CERT_IDS = new Set(["ccna"]);
+const OBJECTIVE_COACHING_CERT_IDS = new Set(["ccna", "a-plus"]);
 
 export function certSupportsObjectiveCoaching(certId: string): boolean {
   return OBJECTIVE_COACHING_CERT_IDS.has(certId);

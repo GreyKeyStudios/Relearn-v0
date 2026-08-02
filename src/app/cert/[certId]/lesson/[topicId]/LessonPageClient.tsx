@@ -31,6 +31,13 @@ import {
   clearLessonProgress,
 } from "@/lib/lesson-steps";
 import { TopicWhatsNext } from "@/components/topic/TopicWhatsNext";
+import { KnowledgeDna } from "@/components/knowledge/KnowledgeDna";
+import { PerspectiveToggle } from "@/components/lesson/PerspectiveToggle";
+import { VmReadinessRecord } from "@/components/labs/VmReadinessRecord";
+import { JourneyContinueCard } from "@/components/knowledge/JourneyContinueCard";
+import { getConnectiveTissue } from "@/content/perspectives/registry";
+import { getKnowledgeNodes } from "@/content/knowledge/nodes";
+import { buildKnowledgeDnaView } from "@/lib/knowledge-graph";
 
 interface LessonPageClientProps {
   certId: string;
@@ -103,6 +110,20 @@ export function LessonPageClient({
   }, [topic.quiz, topic.questionBank]);
 
   const showReferenceLesson = isComplete && lessonUnlocked && !usesStructuredDelivery;
+
+  const progressState = useProgressStore((s) => s);
+  const connective = useMemo(
+    () => getConnectiveTissue(certId, topicId),
+    [certId, topicId]
+  );
+  const knowledgeDna = useMemo(() => {
+    if (!connective) return null;
+    return buildKnowledgeDnaView(
+      getKnowledgeNodes(),
+      connective.knowledgeNodeId,
+      progressState
+    );
+  }, [connective, progressState]);
 
   const nextTopic = useMemo(
     () => getNextTopicInPath(cert, topicId),
@@ -244,6 +265,22 @@ export function LessonPageClient({
           <TopicDeepDive topic={topic} />
 
           <TopicCheatSheets topic={topic} />
+
+          {connective && (
+            <div className="mb-6 space-y-6">
+              <PerspectiveToggle perspectiveSet={connective.perspectiveSet} />
+              {knowledgeDna && <KnowledgeDna view={knowledgeDna} />}
+              {connective.journeyNext && (
+                <JourneyContinueCard next={connective.journeyNext} />
+              )}
+            </div>
+          )}
+
+          {certId === "vm-lab" && topicId === "vm-capstone-break-fix-note" && (
+            <div className="mb-6">
+              <VmReadinessRecord />
+            </div>
+          )}
 
           <ObjectiveMasteryList
             certId={certId}

@@ -1,13 +1,14 @@
 # Sound Synthesis — Learning Architecture
 
-**Status:** Phase 1–2 pilot live (first-pass) — M0 + M1 (8 topics); WAVs and later modules gated  
-**Updated:** 2026-07-23 — Phase 1 schema + Phase 2 M0/M1 pilot  
+**Status:** Phase 1–2 pilot live (first-pass) — M0 + M1 (8 topics); ReLearn Synth S1.3 focused-workspace foundation live; WAVs and later modules gated
+**Updated:** 2026-08-02 — lesson focus, protected references, bounded undo, and validated patch transfer live
 **Tier:** ReLearn Creative Production (Type C tool track; catalog alongside Tier 3 tool skills)  
 **Track type:** Skills track — **Type C (tool)** with Challenge A/B (**Recreate** / **Interpret** in learner UI)  
 **Track ID:** `sound-synthesis`  
 **Short name:** Synthesis  
 **Vendor (Path A):** `ReLearn`  
 **Practice DAW:** FL Studio (learner-owned; stock plugins only)  
+**Teaching instrument:** ReLearn Synth (in-browser; phased build)
 **Related:** [`TYPE_C_MASTER.md`](TYPE_C_MASTER.md) · [`COURSE_ARCHITECTURE.md`](COURSE_ARCHITECTURE.md) · [`subject-onboarding-process.md`](subject-onboarding-process.md) · [`phase-5-ai-learning.md`](phase-5-ai-learning.md) · [`definition-of-done.md`](definition-of-done.md)
 
 ---
@@ -27,9 +28,9 @@ Hear → Predict → Change one thing → Hear again → Name what happened
    Match audible traits         Justify design choices
 ```
 
-FL Studio is the **Practice DAW**, not the subject. Concepts transfer to any synth. We use stock plugins so learners never need Serum, Vital, or paid third-party suites.
+FL Studio is the **transfer and production environment**, not the subject. ReLearn Synth is the primary teaching instrument: it provides stable starting states, visible signal flow, safe output, and parameter-level checks. Concepts must transfer to any synth, so each method returns to FL Studio with stock plugins. Learners never need Serum, Vital, or paid third-party suites.
 
-**ReLearn does not host a DAW or audio engine.** Labs run on the learner’s machine inside FL Studio. Assignments are `external-lab` checklists (same pattern as Wireshark / Excel / VM Lab).
+**ReLearn Synth is not a DAW.** It is a browser-based instructional instrument. It teaches and checks synthesis concepts; FL Studio teaches real production workflow, including plugin loading, MIDI/audio routing, automation, saving, and rendering. Existing assignments remain valid external FL Studio labs while the teaching instrument is built.
 
 ---
 
@@ -57,7 +58,7 @@ This track is a **candidate creative Type C reference** once Michael signs the a
 | 3 | **Prerequisites (other tracks)?** | None required. Optional: basic computer literacy (CF). FL Studio installed (any modern edition with stock synths). Headphones or monitors strongly recommended. |
 | 4 | **How is success measured?** | Can **Recreate** (Challenge A) recognizable synth traits from a checklist; can **Interpret** (Challenge B) a creative prompt and justify every design choice; can identify common waveforms / filter / resonance by ear; capstone sound pack built from synthesis only. |
 | 5 | **Activity types** | LES lesson · ear-training quiz · flashcards · external-lab (Recreate / Interpret) · teacher audio demos (A/B/C/D ladder) · optional Go Deeper reading · module / track capstones |
-| 6 | **Lab / simulator types** | **External FL Studio labs** (primary). Future: in-app `audio` / `audio-ab` LES media (Platform). **No** student upload / grading UI in MVP. **No** in-app synth engine. Post-MVP: AI Listening (see below). |
+| 6 | **Lab / simulator types** | **ReLearn Synth exercises** for controlled audition, prediction, parameter inspection, and objective checks; **external FL Studio labs** for workflow transfer. In-app `audio` / `audio-ab` LES media remains useful. No automated creativity score; post-MVP AI Listening may provide non-authoritative feedback. |
 | 7 | **Different from certs** | Creation + ear craft, not recall. Loop: Hear → Predict → Patch → Recreate / Interpret. Dual assessment: craft vs imagination. |
 | 8 | **Engine mapping** | Reuse mastery, SRS, coach, planner, quiz, flashcards, assignments. Challenge A/B map to `Assignment` `external-lab` + `completionCriteria` + reflection prompts; learner-facing titles **Recreate** / **Interpret**. Planned (not built): `goDeeper`, `audio`/`audio-ab` media, AI Listening hooks under Phase 5. |
 | 9 | **Tier** | Creative Production / Type C catalog (alongside Tier 3 tool skills). Not Tier 1 cert. |
@@ -84,12 +85,99 @@ Success is **not** “watched tutorials” or “loaded presets.”
 
 ---
 
-## Runtime decision (locked)
+## Runtime decision (approved hybrid direction)
 
 | Priority | Runtime | Role |
 |----------|---------|------|
-| **1** | **FL Studio** (learner install) | Practice DAW — stock plugins only |
-| **2** | Other DAWs | Out of scope for v1 instructions (concepts transfer; screenshots are FL) |
+| **1** | **ReLearn Synth** (browser) | Primary teaching instrument — audition, predict, inspect, reset, compare, and objectively verify parameters |
+| **2** | **FL Studio** (learner install) | Transfer and production environment — stock plugins only |
+| **3** | Other DAWs | Out of scope for v1 instructions (concepts transfer; screenshots are FL) |
+
+### ReLearn Synth teaching contract
+
+The instrument must be understandable without prior synth or DAW experience and must provide:
+
+- explicit audio-start consent, a safe output limiter, conservative default gain, and a panic/mute control;
+- deterministic Init and lesson presets, reset, undo, A/B comparison, and shareable/saveable patch state;
+- a visible signal path and parameter highlighting controlled by the current lesson;
+- oscillator, mixer, filter/resonance, amplifier ADSR, LFO/modulation, oscilloscope, and spectrum views for the first subtractive release;
+- keyboard, pointer, and touch operation with accessible names, visible focus, non-color status cues, and reduced-motion support;
+- objective checks only where the target is measurable, such as waveform, frequency, envelope range, routing, modulation destination/depth, and approximate spectral shape;
+- self-evaluation and written justification for subjective targets such as mood, warmth, aggression, beauty, or creative fit;
+- clear messages for suspended audio, muted output, disconnected routing, clipping risk, unsupported browsers, and lost state.
+
+The instrument must never claim to grade creativity or prove that two sounds are perceptually identical. A passing parameter check proves the requested configuration, not artistic quality.
+
+### S1 delivered foundation
+
+The first registered teaching instrument is `relearn-synth-subtractive`, assigned from `ss-m1-signal-path`. It currently provides:
+
+- explicit user-started Web Audio with conservative gain, limiter, release-safe panic/mute, and actionable audio errors;
+- monophonic sine, triangle, saw, and square sources with pitch control;
+- low-pass cutoff/resonance and amplifier ADSR;
+- live oscilloscope and spectrum views with a reduced-motion static fallback;
+- deterministic Init and muted-pluck states in A/B slots, reset, versioned local persistence, and visible signal-path state;
+- a five-part objective muted-saw-pluck check that requires actual audition before completion;
+- pointer, touch, and keyboard controls with labeled ranges, visible values, non-color result text, and live status messaging.
+
+S1 intentionally does **not** include an LFO/modulation matrix, polyphony/MIDI keyboard, patch export/import, undo history, lesson-driven parameter locking/highlighting, audio recording/rendering, additional synthesis engines, or subjective/AI listening scores. Those remain explicit later increments.
+
+### S1.1 lesson-authored challenge layer
+
+S1.1 makes the instrument reusable across lessons instead of hard-coding one exercise into its UI:
+
+- the simulator route passes optional certification, topic, assignment, and simulator identity into registered components;
+- authored challenge definitions select the brief, A/B starting states, assessed parameters, target ranges, weak concepts, and parameter-specific coaching;
+- target controls are highlighted before checking and become explicitly met/adjust states afterward, with text as well as color;
+- challenge state is versioned and persisted separately so one lesson cannot overwrite another lesson's patch;
+- B is a guided comparison patch; learners may hear and inspect it, but must rebuild and complete the target in workspace A;
+- `ss-m1-signal-path` uses the muted-saw-pluck definition, while `ss-m1-filter-resonance` uses the same instrument with a resonant-dark-saw definition.
+
+This layer intentionally authors definitions in trusted course content. It does not accept arbitrary target expressions or executable grading logic from URLs or learner input.
+
+### S1.2 keyboard, modulation, and ADSR transfer
+
+S1.2 extends the subtractive instrument without changing its teaching contract:
+
+- an eight-note C3–C4 keyboard is operable by pointer, touch, Enter, or Space and announces the active note;
+- note buttons change oscillator pitch only while held, then return to the patch's authored base frequency;
+- a sine LFO can modulate filter cutoff or oscillator pitch with adjustable rate and depth;
+- filter modulation depth is capped relative to base cutoff, and pitch modulation is capped at one semitone;
+- patch persistence moves to version 2 and migrates valid version 1 learner patches without losing their original oscillator, filter, gain, or ADSR settings;
+- `ss-m1-adsr-envelope` adds a slow-pad challenge with four authored envelope targets and requires the learner to hear both the held and released note;
+- the existing signal-path and filter challenges automatically receive the playable keyboard and modulation controls while keeping independent state.
+
+S1.2 is still monophonic and intentionally does not request MIDI-device permission. Browser buttons teach note audition without creating a hardware or privacy dependency.
+
+### S1.3 focused workspace and patch portability
+
+S1.3 keeps the growing instrument teachable and makes learner work portable:
+
+- every challenge declares visible `oscillator`, `filter`, `envelope`, and/or `modulation` panels;
+- the default lesson view hides unrelated panels while preserving authored values, with a learner-controlled **Show all controls** exploration path;
+- guided patch B is read-only at the control layer and cannot be reset, undone, imported into, exported as learner work, or used for completion;
+- workspace A keeps at most 25 prior patch snapshots for bounded undo;
+- workspace A exports an inspectable `relearn-synth-patch` version 2 JSON envelope and imports only validated parameters;
+- import rejects empty, oversized, malformed, unsupported-version, incomplete, or out-of-range data and never evaluates code;
+- imported patches can be undone immediately;
+- the keyboard and patch-transfer interfaces are extracted from the main audio component into focused React components.
+
+Text portability is the S1.3 contract. File download/upload and shareable URLs remain deferred until their filename, browser-permission, and privacy behavior are specified.
+
+### Required learning transfer loop
+
+Each synthesis method follows:
+
+```text
+Hear in ReLearn Synth
+→ predict the change
+→ change one parameter
+→ inspect and explain the result
+→ complete an objective configuration check
+→ recreate the method in FL Studio
+→ troubleshoot one broken patch or routing state
+→ reflect on subjective choices
+```
 
 **Stock plugin priority list**
 
@@ -787,3 +875,17 @@ Still end with one cue when possible: play a silent Init, then one oscillator �
 - [`phase-5-ai-learning.md`](phase-5-ai-learning.md) — app-wide AI modes  
 - [`learning-experience-standard.md`](learning-experience-standard.md) — LES (when experiences are authored)  
 - [`BRIDGE_MASTER.md`](../BRIDGE_MASTER.md) — phase table / ownership  
+
+---
+
+## ReLearn Synth S1.4 — resilient learner workspace
+
+Status: implemented and verified.
+
+- Workspace A now has a bounded 25-step undo/redo history. A new edit after undo intentionally clears the abandoned redo branch.
+- Guided comparison B remains read-only; history controls cannot alter it.
+- Learners can download a versioned `.relearn-synth.json` patch and load one back for review before explicitly importing it.
+- Imported files are treated as data only, capped at 20 KB, parsed as JSON, and accepted only when every parameter is present and within the instrument's safe range.
+- The curriculum verifier now fails when a synth assignment lacks a challenge, a challenge points to a missing assignment, assessed controls are hidden, IDs collide, or targets exceed supported ranges.
+
+Polyphony remains deferred. The current monophonic design keeps oscillator, filter, envelope, and modulation cause-and-effect easy for a beginner to hear and inspect.

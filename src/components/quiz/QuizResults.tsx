@@ -18,12 +18,18 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { RotateCcw, BookOpen, Target } from "lucide-react";
 import { TopicWhatsNext, type NextTopicInfo } from "@/components/topic/TopicWhatsNext";
+import { getTopic } from "@/lib/content-selectors";
 
 export interface QuizRemediationProps {
   certId: string;
   topicId: string;
   lessonHref: string;
-  objectiveDrill?: { objectiveId: string; label: string; attemptCount: number } | null;
+  objectiveDrill?: {
+    objectiveId: string;
+    label: string;
+    attemptCount: number;
+    reviewTopicId?: string;
+  } | null;
 }
 
 interface QuizResultsProps {
@@ -59,6 +65,10 @@ export function QuizResults({
   }
 
   const objectiveDrill = remediation?.objectiveDrill;
+  const reviewTopicName =
+    remediation && objectiveDrill?.reviewTopicId
+      ? getTopic(remediation.certId, objectiveDrill.reviewTopicId)?.topic.name
+      : undefined;
   const showObjectiveDrill =
     objectiveDrill &&
     certSupportsObjectiveCoaching(remediation!.certId) &&
@@ -93,6 +103,16 @@ export function QuizResults({
                 <Button className="w-full" variant="secondary">
                   <Target className="mr-2 inline h-4 w-4" />
                   Practice objective: {objectiveDrill.label}
+                </Button>
+              </Link>
+            )}
+            {objectiveDrill?.reviewTopicId && hasMissed && (
+              <Link
+                href={`/cert/${remediation.certId}/lesson/${objectiveDrill.reviewTopicId}`}
+              >
+                <Button className="w-full" variant="secondary">
+                  <BookOpen className="mr-2 inline h-4 w-4" />
+                  Review weak area: {reviewTopicName ?? "teaching lesson"}
                 </Button>
               </Link>
             )}

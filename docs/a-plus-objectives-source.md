@@ -12,6 +12,7 @@
 | Exam codes | 220-1201, 220-1202 |
 | Objectives document version | **3.0** |
 | Retrieval date | **2026-07-15** |
+| Last live check | **2026-08-01** — CompTIA product page still lists V15 / 220-1201 & 220-1202 (launched 2025-03-25); no newer series announced on the product page. Re-open official PDFs before any objective renumbering PR. |
 | Core 1 PDF | https://assets.ctfassets.net/82ripq7fjls2/1oSdlyujpaX3GrM0rir6Ge/91afb2be72785281e8fb4c0d9a70c6f4/CompTIA-A-220-1201-Exam-Objectives-3.0.pdf |
 | Core 2 PDF | https://assets.ctfassets.net/82ripq7fjls2/6I8WL66IBa1AUovioDGrnM/f74a7eca336fd4e4c8e723a1f893086d/CompTIA-A-220-1202-Exam-Objectives-3.0.pdf |
 | Product page | https://www.comptia.org/en/certifications/a/core-1-and-2-v15/ |

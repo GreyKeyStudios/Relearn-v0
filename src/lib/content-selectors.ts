@@ -8,6 +8,10 @@ import type {
 } from "@/content/types";
 import { CERTIFICATIONS, getCertification } from "@/content/registry";
 import { getCcnaObjective, getCcnaObjectiveShortLabel } from "@/content/objectives/ccna";
+import {
+  getAplusObjective,
+  getAplusObjectiveShortLabel,
+} from "@/content/objectives/a-plus";
 
 export { getCertification };
 
@@ -105,12 +109,18 @@ export function getObjectiveLabel(certId: string, objectiveId: string): string {
   if (certId === "ccna") {
     return getCcnaObjectiveShortLabel(objectiveId);
   }
+  if (certId === "a-plus") {
+    return getAplusObjectiveShortLabel(objectiveId);
+  }
   return objectiveId;
 }
 
 export function getObjectiveText(certId: string, objectiveId: string): string {
   if (certId === "ccna") {
     return getCcnaObjective(objectiveId)?.text ?? objectiveId;
+  }
+  if (certId === "a-plus") {
+    return getAplusObjective(objectiveId)?.text ?? objectiveId;
   }
   return objectiveId;
 }

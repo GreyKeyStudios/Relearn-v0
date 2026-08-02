@@ -36,7 +36,7 @@ ReLearn Engine
                           └── Activities (lesson, quiz, lab, drill, Professor, …)
 ```
 
-**Career Paths** (future): compositions of existing tracks — e.g. Help Desk = Network+ + PowerShell + Git + Windows basics. No duplicated content; paths reference track IDs only. Not implemented in schema yet — document only.
+**Career Paths:** compositions of existing tracks — e.g. Help Desk = Network+ + PowerShell + Git + Windows basics. No duplicated content; paths reference track/topic IDs. First scaffold: **Ethical Hacking & Offensive Security** — see [`ethical-hacking-architecture.md`](ethical-hacking-architecture.md) and `src/content/career-paths/`.
 
 ---
 
@@ -144,3 +144,5 @@ Before writing curriculum:
 | [`learning-experience-standard.md`](learning-experience-standard.md) | LES (all templates) |
 | [`bridge-learning-standard.md`](bridge-learning-standard.md) | BLS pedagogy (Type A primary) |
 | [`git-github-learning-architecture.md`](git-github-learning-architecture.md) | Type B reference track map |
+| [`ethical-hacking-architecture.md`](ethical-hacking-architecture.md) | EH career path, knowledge DNA, safe simulation boundary |
+| [`relearn-lab-vm-plan.md`](relearn-lab-vm-plan.md) | Shared lab appliance, scenario packs, Phase A–E roadmap |

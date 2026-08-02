@@ -16,6 +16,38 @@ A learner can understand the material while assessments still test untaught cont
 
 **Domain complete** means every topic in that domain is topic complete, signed off by the project owner (Michael) after a full first-time learner walkthrough.
 
+## Track readiness and owner gate
+
+Topic completeness and track readiness are different decisions. Automated checks provide evidence; the product owner makes the final promotion decision.
+
+### Certification track
+
+A certification track may be promoted to **Ready** only when:
+
+1. every published exam objective is mapped to explicit teaching, assessment, and remediation;
+2. every topic passes its applicable template definition of done;
+3. representative performance-based tasks and cumulative timed exams test integration rather than isolated recall;
+4. no known content gap requires an unlisted outside course to answer an in-scope exam question;
+5. mobile, desktop, persistence, keyboard, and assistive-technology checks pass;
+6. a first-time learner walkthrough finds no hidden knowledge or unfair transitions; and
+7. Michael reviews the evidence and signs the promotion.
+
+Coverage does not promise a passing exam score. Marketing copy must describe preparation honestly and must not invent or imply a vendor passing score.
+
+### Skill track
+
+A skill track may be promoted to **Ready** only when a learner can complete the stated end-to-end outcome without reopening the course for ordinary steps. The learner may use the same references a competent worker normally uses, such as built-in help, official documentation, or a command reference, but must be able to:
+
+1. start from a realistic blank or broken state;
+2. choose and perform the workflow safely;
+3. recognize success and verify the result;
+4. diagnose and recover from representative mistakes;
+5. explain key choices in plain language;
+6. complete a capstone or residency independently; and
+7. receive Michael's final sign-off after learner evidence is reviewed.
+
+Creative work separates objective configuration from subjective judgment. ReLearn may automatically check measurable parameters and required process evidence; taste, expression, and artistic fit use reflection, rubric, comparison, and owner/teacher judgment rather than a false universal score.
+
 ---
 
 ## Two separate signals

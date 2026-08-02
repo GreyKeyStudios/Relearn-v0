@@ -44,13 +44,15 @@ const STATUS_BY_ID: Record<string, TrackStatus> = {
   /** Pathway F — full Module 1-8 track wired; bump again once learner QA completes */
   "computer-fundamentals": "first-pass",
   "sound-synthesis": "first-pass",
-  "a-plus": "planned",
+  "vm-lab": "first-pass",
+  /** All 220-1201/1202 objectives and domain integrations are first-pass; learner QA follows. */
+  "a-plus": "first-pass",
 };
 
 const META: Record<TrackStatus, Omit<TrackStatusMeta, "status">> = {
   flagship: {
-    label: "Flagship",
-    tagline: "The primary ReLearn curriculum",
+    label: "Flagship pilot",
+    tagline: "Reference curriculum · full-track expansion in progress",
     group: "active",
     order: 0,
     live: true,

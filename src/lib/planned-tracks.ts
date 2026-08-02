@@ -14,18 +14,31 @@ export interface PlannedTrack {
   tagline: string;
   /** Lower = higher in Coming soon list */
   order: number;
+  /** Optional overview page while content is still planned */
+  href?: string;
 }
 
 /** Planned ReLearn tracks — no content file until the template graduates. */
 export const PLANNED_TRACKS: PlannedTrack[] = [
   {
-    id: "vm-lab",
-    shortName: "VM Lab",
-    name: "VM Lab Foundations",
+    id: "ethical-hacking",
+    shortName: "Ethical Hacking",
+    name: "Ethical Hacking & Offensive Security",
+    template: "A",
+    kindLabel: "ReLearn · Career path",
+    tagline: "Foundations → red/blue/purple labs · safe simulations only",
+    order: -2,
+    href: "/career/ethical-hacking",
+  },
+  {
+    id: "relearn-lab-vm",
+    shortName: "Lab VM",
+    name: "ReLearn Lab VM",
     template: "C",
-    kindLabel: "ReLearn · Lab skill",
-    tagline: "Install VirtualBox · safe Linux & Windows guests for CMD and Bash",
-    order: -1,
+    kindLabel: "ReLearn · Lab appliance",
+    tagline: "One reusable appliance for scenario packs · not released yet",
+    order: 0,
+    href: "/labs/relearn-vm",
   },
   {
     id: "sql",
@@ -34,7 +47,7 @@ export const PLANNED_TRACKS: PlannedTrack[] = [
     template: "B",
     kindLabel: "ReLearn · Job skill",
     tagline: "SELECT, JOIN, and fix broken queries",
-    order: 0,
+    order: 1,
   },
   {
     id: "bash",

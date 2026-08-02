@@ -272,6 +272,8 @@ export interface Topic {
   estimatedStudyMinutes?: number;
   difficulty?: TopicDifficulty;
   prerequisites?: string[];
+  /** Optional Knowledge DNA node id — see src/content/knowledge/ */
+  knowledgeNodeId?: string;
   /** Phase 4.8 — quiz question IDs per lesson step index for inline checkpoints */
   lessonCheckpoints?: string[];
   /** Optional oral / teacher-mode reflection prompt (until Professor Mode AI) */

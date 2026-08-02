@@ -14,7 +14,7 @@ export function PageHeader({ title, subtitle, backHref, eyebrow }: PageHeaderPro
       {backHref && (
         <Link
           href={backHref}
-          className="mb-4 inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
+          className="mb-4 inline-flex min-h-11 items-center gap-1 rounded-md pr-3 text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
           <ArrowLeft className="h-4 w-4" />
           Back
