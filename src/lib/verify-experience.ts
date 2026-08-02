@@ -183,6 +183,71 @@ function verifyTopicExperience(
         });
       }
     }
+
+    if (screen.media?.kind === "audio") {
+      const src = screen.media.src ?? "";
+      if (!src.startsWith("/media/")) {
+        warnings.push({
+          certId,
+          topicId: topic.id,
+          message: `screen ${screen.id} audio.src should start with /media/`,
+        });
+      }
+      const stage = screen.media.stage;
+      if (
+        stage != null &&
+        !["baseline", "changed", "exaggerated", "musical"].includes(stage)
+      ) {
+        warnings.push({
+          certId,
+          topicId: topic.id,
+          message: `screen ${screen.id} audio.stage invalid: ${stage}`,
+        });
+      }
+    }
+
+    if (screen.media?.kind === "audio-ab") {
+      const clips = screen.media.clips ?? [];
+      if (clips.length < 2) {
+        warnings.push({
+          certId,
+          topicId: topic.id,
+          message: `screen ${screen.id} audio-ab needs at least 2 clips`,
+        });
+      }
+      for (const clip of clips) {
+        if (!clip.id || !clip.label || !clip.src) {
+          warnings.push({
+            certId,
+            topicId: topic.id,
+            message: `screen ${screen.id} audio-ab clip missing id/label/src`,
+          });
+        } else if (!clip.src.startsWith("/media/")) {
+          warnings.push({
+            certId,
+            topicId: topic.id,
+            message: `screen ${screen.id} audio-ab clip ${clip.id} src should start with /media/`,
+          });
+        }
+      }
+    }
+  }
+
+  for (const lane of topic.goDeeper ?? []) {
+    if (!lane.flReconnect?.trim()) {
+      warnings.push({
+        certId,
+        topicId: topic.id,
+        message: `goDeeper ${lane.id} missing flReconnect (must reconnect to FL Studio)`,
+      });
+    }
+    if (!lane.title?.trim() || !lane.body?.trim()) {
+      warnings.push({
+        certId,
+        topicId: topic.id,
+        message: `goDeeper ${lane.id} missing title or body`,
+      });
+    }
   }
 
   if (topic.id === "osi-model" && !hasMemory) {

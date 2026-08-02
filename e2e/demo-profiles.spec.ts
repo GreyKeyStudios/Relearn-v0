@@ -42,7 +42,7 @@ test.describe("demo profiles", () => {
     await gotoHydrated(page, "/");
     await expect(page.getByText("Welcome to ReLearn")).toBeVisible();
     await expect(
-      page.getByRole("heading", { name: /Which certification are you studying/i })
+      page.getByRole("heading", { name: /Which course are you studying/i })
     ).toBeVisible();
   });
 

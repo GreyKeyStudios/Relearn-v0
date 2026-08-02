@@ -2,6 +2,16 @@ import type { QuizQuestion, Topic } from "@/content/types";
 import type { QuizAnswer } from "@/types/progress";
 import type { ProgressState } from "@/types/progress";
 import { getCcnaObjectiveShortLabel } from "@/content/objectives/ccna";
+import { getAplusObjectiveShortLabel } from "@/content/objectives/a-plus";
+import { hardwareTopicForObjective } from "@/content/certifications/ap/ap-hardware-remediation";
+import { networkingTopicForObjective } from "@/content/certifications/ap/ap-networking-remediation";
+import { mobileTopicForObjective } from "@/content/certifications/ap/ap-mobile-remediation";
+import { virtCloudTopicForObjective } from "@/content/certifications/ap/ap-virt-cloud-remediation";
+import { troubleshootTopicForObjective } from "@/content/certifications/ap/ap-troubleshoot-remediation";
+import { osTopicForObjective } from "@/content/certifications/ap/ap-os-remediation";
+import { securityTopicForObjective } from "@/content/certifications/ap/ap-security-remediation";
+import { swTroubleshootTopicForObjective } from "@/content/certifications/ap/ap-sw-troubleshoot-remediation";
+import { opsTopicForObjective } from "@/content/certifications/ap/ap-ops-remediation";
 import { resolveQuestionObjectiveId } from "@/lib/objective-mastery";
 import { certSupportsObjectiveCoaching } from "@/lib/objective-support";
 import { topicKey } from "@/lib/ids";
@@ -10,6 +20,8 @@ export interface ObjectiveDrillSuggestion {
   objectiveId: string;
   label: string;
   attemptCount: number;
+  /** Optional topic id for weak-area routing (A+ Hardware map). */
+  reviewTopicId?: string;
 }
 
 /** Pick the weakest objective among missed questions for post-quiz remediation. */
@@ -51,11 +63,29 @@ export function suggestObjectiveDrill(
   if (!bestId) return null;
 
   const label =
-    certId === "ccna" ? getCcnaObjectiveShortLabel(bestId) : bestId.replace(/^CCNA-/, "");
+    certId === "ccna"
+      ? getCcnaObjectiveShortLabel(bestId)
+      : certId === "a-plus"
+        ? getAplusObjectiveShortLabel(bestId)
+        : bestId.replace(/^CCNA-/, "");
+
+  const reviewTopicId =
+    certId === "a-plus"
+      ? hardwareTopicForObjective(bestId) ??
+        networkingTopicForObjective(bestId) ??
+        mobileTopicForObjective(bestId) ??
+        virtCloudTopicForObjective(bestId) ??
+        troubleshootTopicForObjective(bestId) ??
+        osTopicForObjective(bestId) ??
+        securityTopicForObjective(bestId) ??
+        swTroubleshootTopicForObjective(bestId) ??
+        opsTopicForObjective(bestId)
+      : undefined;
 
   return {
     objectiveId: bestId,
     label,
     attemptCount: mastery?.objectiveAttempts?.[bestId] ?? 0,
+    reviewTopicId,
   };
 }

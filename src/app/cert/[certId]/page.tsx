@@ -19,6 +19,7 @@ import { getCertMasteryPercent } from "@/lib/mastery";
 import { getWeakObjectivesFromState } from "@/lib/objective-mastery";
 import { WeakObjectivesCard } from "@/components/mastery/WeakObjectivesCard";
 import { StudyNowCard } from "@/components/planner/StudyNowCard";
+import { CfPlacementWizard } from "@/components/cf/CfPlacementWizard";
 import { useProgressStore } from "@/stores/progress-store";
 
 interface CertDetailPageProps {
@@ -67,6 +68,8 @@ export default function CertDetailPage({ params }: CertDetailPageProps) {
       />
 
       {examPace && !isSkillsTrack(cert) && <ExamCountdownCard pace={examPace} />}
+
+      {certId === "computer-fundamentals" && <CfPlacementWizard />}
 
       {hasContent && (
         <StudyNowCard

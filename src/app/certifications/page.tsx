@@ -21,10 +21,14 @@ export default function CertificationsPage() {
     );
   }, [query]);
 
-  const planned = useMemo(() => filterPlannedTracks(query), [query]);
-  const { active, early } = groupTracksByStatus(filtered);
+  const plannedCatalog = useMemo(() => filterPlannedTracks(query), [query]);
+  const { active, early, planned: plannedCerts } = groupTracksByStatus(filtered);
 
-  const nothingMatches = active.length === 0 && early.length === 0 && planned.length === 0;
+  const nothingMatches =
+    active.length === 0 &&
+    early.length === 0 &&
+    plannedCerts.length === 0 &&
+    plannedCatalog.length === 0;
 
   return (
     <div>
@@ -72,17 +76,22 @@ export default function CertificationsPage() {
         </section>
       )}
 
-      {planned.length > 0 && (
+      {(plannedCerts.length > 0 || plannedCatalog.length > 0) && (
         <section className="mb-10 border-t border-hairline pt-6">
           <div className="mb-1 flex items-baseline justify-between">
             <h2 className="eyebrow">Coming soon</h2>
-            <span className="text-xs text-faint">{planned.length} planned</span>
+            <span className="text-xs text-faint">
+              {plannedCerts.length + plannedCatalog.length} planned
+            </span>
           </div>
           <p className="mb-3 text-xs text-muted-foreground">
-            On the roadmap after Git proves the skill-track template — not open for study yet.
+            Architecture ready — not marketed as studyable until content maturity allows.
           </p>
           <div className="divide-y divide-hairline">
-            {planned.map((track) => (
+            {plannedCerts.map((cert) => (
+              <TrackCard key={cert.id} cert={cert} />
+            ))}
+            {plannedCatalog.map((track) => (
               <PlannedTrackRow key={track.id} track={track} />
             ))}
           </div>

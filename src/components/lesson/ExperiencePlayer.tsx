@@ -6,6 +6,8 @@ import { lessonProgressStorageKey } from "@/lib/lesson-steps";
 import { LessonCheckpoint } from "@/components/lesson/LessonCheckpoint";
 import { GitWorkflowDiagram } from "@/components/lesson/GitWorkflowDiagram";
 import { PowerShellShellDiagram } from "@/components/lesson/PowerShellShellDiagram";
+import { ComputerStackDiagram } from "@/components/lesson/ComputerStackDiagram";
+import { SynthesisSignalPathDiagram } from "@/components/lesson/SynthesisSignalPathDiagram";
 import { OsiStackDiagram } from "@/components/lesson/OsiStackDiagram";
 import { TcpIpStackDiagram } from "@/components/lesson/TcpIpStackDiagram";
 import { StudyTipCard } from "@/components/lesson/StudyTipCard";
@@ -102,6 +104,14 @@ export function ExperiencePlayer({
   const powershellShellStep =
     anchorType === "powershell-shell" ? current?.powershellShellStep : undefined;
 
+  const computerStackLayer =
+    anchorType === "computer-stack" ? current?.computerStackLayer : undefined;
+
+  const synthesisSignalPathStage =
+    anchorType === "synthesis-signal-path"
+      ? current?.synthesisSignalPathStage
+      : undefined;
+
   const subnetHighlightPrefix = useMemo(() => {
     if (topicId !== "subnetting") return undefined;
     const media = current?.media;
@@ -194,6 +204,19 @@ export function ExperiencePlayer({
       {anchorType === "powershell-shell" && (
         <div className="shrink-0">
           <PowerShellShellDiagram highlightStep={powershellShellStep} compact />
+        </div>
+      )}
+      {anchorType === "computer-stack" && (
+        <div className="shrink-0">
+          <ComputerStackDiagram highlightLayer={computerStackLayer} compact />
+        </div>
+      )}
+      {anchorType === "synthesis-signal-path" && (
+        <div className="shrink-0">
+          <SynthesisSignalPathDiagram
+            highlightStage={synthesisSignalPathStage}
+            compact
+          />
         </div>
       )}
 

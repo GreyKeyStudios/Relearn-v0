@@ -38,7 +38,14 @@ function mediaKey(media: ExperienceMediaDef): string {
 }
 
 function toCheatSheet(media: ExperienceMediaDef): CheatSheetItem | null {
-  if (media.kind === "icons" || media.kind === "flow") return null;
+  if (
+    media.kind === "icons" ||
+    media.kind === "flow" ||
+    media.kind === "audio" ||
+    media.kind === "audio-ab"
+  ) {
+    return null;
+  }
   const title = TITLE_BY_KIND[media.kind] ?? "Diagram";
   return { id: mediaKey(media), title, media };
 }

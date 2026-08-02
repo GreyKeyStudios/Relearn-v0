@@ -38,6 +38,8 @@ import {
   VlanTrunkDrill,
   WirelessStandardDrill,
 } from "@/components/simulators/network";
+import { CfFileFolderManager } from "@/components/simulators/fundamentals";
+import { RelearnSynth } from "@/components/simulators/synthesis";
 
 export interface SimulatorRegistryEntry {
   id: string;
@@ -48,6 +50,10 @@ export interface SimulatorRegistryEntry {
 
 export interface SimulatorComponentProps {
   onComplete: (result: SimulatorResult) => void;
+  certId?: string;
+  topicId?: string;
+  assignmentId?: string;
+  simulatorId?: string;
 }
 
 /** BSim-Core populates this */
@@ -168,7 +174,7 @@ export const networkRegistry: SimulatorRegistryEntry[] = [
     id: "cable-type-drill",
     name: "Cabling & Connector ID",
     component: CableTypeDrill,
-    topicIds: ["ethernet"],
+    topicIds: ["ethernet", "ap-cables-connectors"],
   },
   {
     id: "ip-range-drill",
@@ -254,11 +260,37 @@ export const securityRegistry: SimulatorRegistryEntry[] = [
   },
 ];
 
+/** Pathway F — Computer Fundamentals simulators */
+export const fundamentalsRegistry: SimulatorRegistryEntry[] = [
+  {
+    id: "cf-file-folder-manager",
+    name: "File & Folder Manager",
+    component: CfFileFolderManager,
+    topicIds: [
+      "cf-file-explorer-basics",
+      "cf-files-copy-move-delete",
+      "cf-extensions-and-associations",
+    ],
+  },
+];
+
+/** Sound Synthesis — browser teaching instrument */
+export const synthesisRegistry: SimulatorRegistryEntry[] = [
+  {
+    id: "relearn-synth-subtractive",
+    name: "ReLearn Synth — Subtractive Lab",
+    component: RelearnSynth,
+    topicIds: ["ss-m1-signal-path", "ss-m1-filter-resonance", "ss-m1-adsr-envelope"],
+  },
+];
+
 /** Merged registry — BSim agents export partial arrays; B9 merges into SIMULATORS */
 export const SIMULATORS: SimulatorRegistryEntry[] = [
   ...coreRegistry,
   ...networkRegistry,
   ...securityRegistry,
+  ...fundamentalsRegistry,
+  ...synthesisRegistry,
 ];
 
 export function getSimulator(id: string): SimulatorRegistryEntry | undefined {

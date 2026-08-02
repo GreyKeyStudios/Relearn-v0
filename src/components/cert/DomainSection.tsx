@@ -63,9 +63,15 @@ export function DomainSection({ cert }: DomainSectionProps) {
   const completedLessons = useProgressStore((s) => s.completedLessons);
   const weakTopics = useProgressStore((s) => s.weakTopics);
   const progressState = useProgressStore((s) => s);
-  const [expanded, setExpanded] = useState<Record<string, boolean>>(() =>
-    Object.fromEntries(cert.domains.map((d) => [d.id, true]))
-  );
+  const [expanded, setExpanded] = useState<Record<string, boolean>>(() => {
+    const firstIncomplete = cert.domains.find((domain) =>
+      domain.topics.some((topic) => !completedLessons[topicKey(cert.id, topic.id)])
+    );
+    const focusedDomainId = firstIncomplete?.id ?? cert.domains[0]?.id;
+    return Object.fromEntries(
+      cert.domains.map((domain) => [domain.id, domain.id === focusedDomainId])
+    );
+  });
 
   return (
     <div className="flex flex-col gap-4">
@@ -78,6 +84,8 @@ export function DomainSection({ cert }: DomainSectionProps) {
           <div className="mb-2 flex items-center justify-between gap-2">
             <button
               type="button"
+              aria-expanded={!!expanded[domain.id]}
+              aria-controls={`domain-topics-${domain.id}`}
               onClick={() =>
                 setExpanded((e) => ({ ...e, [domain.id]: !e[domain.id] }))
               }
@@ -96,17 +104,9 @@ export function DomainSection({ cert }: DomainSectionProps) {
                 topicCount={domain.topics.length}
               />
             </button>
-            {bankCount > 0 && (
-              <Link href={`/cert/${cert.id}/domain-review/${domain.id}`}>
-                <Button variant="ghost" className="min-h-10 shrink-0 px-3 py-1 text-xs">
-                  <Library className="mr-1 inline h-3 w-3" />
-                  Review ({bankCount})
-                </Button>
-              </Link>
-            )}
           </div>
           {expanded[domain.id] && (
-            <div className="flex flex-col gap-2">
+            <div id={`domain-topics-${domain.id}`} className="flex flex-col gap-2">
               {domain.topics.map((topic) => {
                 const key = topicKey(cert.id, topic.id);
                 const mastery = getTopicMastery(progressState, cert.id, topic.id);
@@ -122,6 +122,14 @@ export function DomainSection({ cert }: DomainSectionProps) {
                   />
                 );
               })}
+              {bankCount > 0 && (
+                <Link href={`/cert/${cert.id}/domain-review/${domain.id}`}>
+                  <Button variant="ghost" className="min-h-11 w-full px-3 py-2 text-xs">
+                    <Library className="mr-1 inline h-3 w-3" />
+                    Review this module ({bankCount} questions)
+                  </Button>
+                </Link>
+              )}
             </div>
           )}
         </div>

@@ -3,13 +3,15 @@
 **Version:** 0.1 (stub)  
 **Owner:** M0  
 **Parent:** [`COURSE_ARCHITECTURE.md`](COURSE_ARCHITECTURE.md)  
-**Reference track:** TBD — likely **Wireshark** (network troubleshooting) or **Excel** (IT reporting)
+**Reference track:** TBD — candidates: **Wireshark** (network troubleshooting), **Excel** (IT reporting), or **Sound Synthesis** (creative Type C variant)
 
 ---
 
 ## Status
 
 This document is a **placeholder** so Type C subjects do not inherit Type B command-drill patterns by mistake. Expand when the first Type C track enters active development (product Phase 3).
+
+**Creative Type C candidate:** [`sound-synthesis-learning-architecture.md`](sound-synthesis-learning-architecture.md) — FL Studio labs, Challenge A (objective recreation) + Challenge B (subjective design), optional Go Deeper lanes. Not Break/Fix. Track id `sound-synthesis` (first-pass pilot registered).
 
 ---
 
@@ -84,3 +86,4 @@ Document choice in `BRIDGE_MASTER.md` §Reference tracks when assigned.
 - [`COURSE_ARCHITECTURE.md`](COURSE_ARCHITECTURE.md) — template taxonomy
 - [`definition-of-done.md`](definition-of-done.md) — Type C variant (stub)
 - [`subject-onboarding-process.md`](subject-onboarding-process.md) — Step 0 template selection
+- [`sound-synthesis-learning-architecture.md`](sound-synthesis-learning-architecture.md) — creative Type C candidate (FL Studio)

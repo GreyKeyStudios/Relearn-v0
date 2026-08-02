@@ -48,7 +48,11 @@ export async function auditLessonPage(
   const checks: AuditCheck[] = [];
   const notes: string[] = [];
 
-  const title = page.getByRole("heading", { name: topic.topicName, exact: true });
+  const title = page.getByRole("heading", {
+    name: topic.topicName,
+    exact: true,
+    level: 1,
+  });
   const titleVisible = await title.isVisible().catch(() => false);
   checks.push({
     id: "lesson-title",

@@ -50,7 +50,8 @@ export default function DashboardPage() {
   const accuracy = getQuizAccuracy(quizAttempts);
   const activeCertIds = progressState.studyPlan.activeCertIds;
 
-  const { active: activeTracks, early: earlyTracks } = groupTracksByStatus(certs);
+  const { active: activeTracks, early: earlyTracks, planned: plannedCerts } =
+    groupTracksByStatus(certs);
 
   const rawPlan = hydrated ? buildDailyPlan(progressState, certs) : null;
   const plan =
@@ -204,7 +205,7 @@ export default function DashboardPage() {
         </section>
       )}
 
-      {(earlyTracks.length > 0 || PLANNED_TRACKS.length > 0) && (
+      {(earlyTracks.length > 0 || plannedCerts.length > 0 || PLANNED_TRACKS.length > 0) && (
         <Link
           href="/certifications"
           className="group mb-10 flex items-center justify-between gap-3 border-t border-hairline pt-6"
@@ -215,12 +216,12 @@ export default function DashboardPage() {
               {earlyTracks.length > 0 && (
                 <>
                   {earlyTracks.length} early access
-                  {PLANNED_TRACKS.length > 0 ? " · " : ""}
+                  {plannedCerts.length > 0 || PLANNED_TRACKS.length > 0 ? " · " : ""}
                 </>
               )}
-              {PLANNED_TRACKS.length > 0 && (
+              {(plannedCerts.length > 0 || PLANNED_TRACKS.length > 0) && (
                 <>
-                  {PLANNED_TRACKS.length} coming soon
+                  {plannedCerts.length + PLANNED_TRACKS.length} coming soon
                 </>
               )}
               {" — "}

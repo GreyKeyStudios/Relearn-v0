@@ -116,6 +116,44 @@ export interface WifiChannelDialMediaDef {
   showOverlap?: boolean;
 }
 
+/** Teacher audio demo stage — matches sound-synthesis naming (a-baseline … d-musical). */
+export type AudioDemoStage =
+  | "baseline"
+  | "changed"
+  | "exaggerated"
+  | "musical";
+
+/** Single teacher-rendered clip in LES. Soft-fail if file missing. */
+export interface ExperienceAudioMediaDef {
+  kind: "audio";
+  /** Public URL path, e.g. "/media/sound-synthesis/m1/m1-filter-resonance-a-baseline.wav" */
+  src: string;
+  caption?: string;
+  label?: string;
+  conceptId?: string;
+  stage?: AudioDemoStage;
+  plugin?: string;
+  sampleRate?: number;
+  loudnessMatched?: boolean;
+}
+
+export interface ExperienceAudioAbClip {
+  id: string;
+  label: string;
+  src: string;
+  stage?: AudioDemoStage;
+}
+
+/** A/B(/C/D) teacher demo ladder — predict-before-hear when predictPrompt is set. */
+export interface ExperienceAudioAbMediaDef {
+  kind: "audio-ab";
+  clips: ExperienceAudioAbClip[];
+  predictPrompt?: string;
+  conceptId?: string;
+  plugin?: string;
+  loudnessMatched?: boolean;
+}
+
 export type ExperienceMediaDef =
   | ExperienceIconsMediaDef
   | ExperienceFlowMediaDef
@@ -127,7 +165,9 @@ export type ExperienceMediaDef =
   | Ipv4Ipv6CompareMediaDef
   | Ipv6LeadingZeroMediaDef
   | WirelessRecallTableMediaDef
-  | WifiChannelDialMediaDef;
+  | WifiChannelDialMediaDef
+  | ExperienceAudioMediaDef
+  | ExperienceAudioAbMediaDef;
 
 export interface DeferredTerm {
   term: string;
@@ -174,13 +214,21 @@ export interface ExperienceScreen {
   gitWorkflowStep?: 1 | 2 | 3 | 4;
   /** PowerShell shell workflow anchor highlight (skills track) */
   powershellShellStep?: 1 | 2 | 3 | 4;
+  /** Computer stack layer 1=Hardware (bottom) through 4=You/User (top) */
+  computerStackLayer?: 1 | 2 | 3 | 4;
+  /** Sound synthesis signal path 1=Source … 5=Hear */
+  synthesisSignalPathStage?: 1 | 2 | 3 | 4 | 5;
 }
 
 export type ExperienceAnchorType =
   | "osi-stack"
   | "tcp-ip-stack"
   | "git-workflow"
-  | "powershell-shell";
+  | "powershell-shell"
+  /** Computer Fundamentals — User → Apps → OS → Hardware */
+  | "computer-stack"
+  /** Sound Synthesis — Source → Shape → Filter → Amp → Hear */
+  | "synthesis-signal-path";
 
 export interface TopicExperience {
   anchor: { type: ExperienceAnchorType };
@@ -218,12 +266,67 @@ export interface Topic {
   lightbulbMoment?: string;
   commonMistakes?: string[];
   examTraps?: string[];
+  /** Workplace traps for non-exam tracks (Computer Fundamentals). Prefer over examTraps for CF. */
+  realWorldTraps?: string[];
   realWorldScenario?: string;
   estimatedStudyMinutes?: number;
   difficulty?: TopicDifficulty;
   prerequisites?: string[];
+  /** Optional Knowledge DNA node id — see src/content/knowledge/ */
+  knowledgeNodeId?: string;
   /** Phase 4.8 — quiz question IDs per lesson step index for inline checkpoints */
   lessonCheckpoints?: string[];
+  /** Optional oral / teacher-mode reflection prompt (until Professor Mode AI) */
+  teacherReflectionPrompt?: string;
+  /** Optional STEM / history depth — never required; each lane must reconnect to FL Studio */
+  goDeeper?: GoDeeperLane[];
+  /** When this procedure fails — practical recovery steps */
+  whenThisFails?: string[];
+}
+
+/** Optional depth lane (Sound Synthesis Go Deeper — curiosity only). */
+export type GoDeeperKind =
+  | "physics"
+  | "math"
+  | "dsp"
+  | "electricity"
+  | "history"
+  | "philosophy"
+  | "code";
+
+export interface GoDeeperLane {
+  id: string;
+  title: string;
+  kind: GoDeeperKind;
+  body: string;
+  /** Required — audible or visible next step in FL Studio */
+  flReconnect: string;
+}
+
+/** Pathway F — placement diagnostic result (Computer Fundamentals / A+ entry). */
+export type CfPlacementPath =
+  | "start-cf-beginning"
+  | "skip-to-files"
+  | "cf-partial-skip"
+  | "begin-aplus-with-refreshers";
+
+export interface CfPlacementResult {
+  path: CfPlacementPath;
+  /** Module or topic IDs the learner may skip */
+  skipTopicIds: string[];
+  /** Human-readable recommendation — respectful, never remedial */
+  recommendation: string;
+  /** Intent captured during placement */
+  intent?: "confidence" | "job" | "aplus" | "unsure";
+}
+
+/** Cross-track foundation referral when an A+ learner shows a CF gap. */
+export interface FoundationReferral {
+  fromCertId: string;
+  fromTopicId: string;
+  foundationCertId: "computer-fundamentals";
+  foundationTopicId: string;
+  tip: string;
 }
 
 export type TopicDifficulty = "easy" | "medium" | "hard";
@@ -287,6 +390,16 @@ export interface Assignment {
   completionCriteria: string[];
   relatedTopicIds: string[];
   order: number;
+  /** Sound Synthesis — Recreate (craft) vs Interpret (imagination) */
+  challengeKind?: "recreate" | "interpret";
+  /** Recreate — teacher reference clip id / path */
+  referenceAudioId?: string;
+  /** Recreate — audible-trait checklist */
+  audibleTraitRubric?: string[];
+  /** Interpret — creative prompt */
+  creativePrompt?: string;
+  /** Interpret — reflection checklist */
+  reflectionRubric?: string[];
 }
 
 export interface CaseStudyChoice {
