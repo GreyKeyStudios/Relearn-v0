@@ -10,6 +10,8 @@
 | --- | --- |
 | [`BATCH_REPORT.md`](./BATCH_REPORT.md) | Why each objective was selected + remaining work |
 | [`ADVERSARIAL_REVIEW.md`](./ADVERSARIAL_REVIEW.md) | Per-unit dispositions + defect fixes (PR #34) |
+| [`VERTICAL_SLICE_REPORT.md`](./VERTICAL_SLICE_REPORT.md) | Learner-facing 1.3 + 5.2 vertical slices |
+| [`OWNER_WALKTHROUGH_CHECKLIST.md`](./OWNER_WALKTHROUGH_CHECKLIST.md) | Michael walkthrough gate |
 | [`batch1.manifest.json`](./batch1.manifest.json) | Machine-readable unit index |
 | `src/content/production/batches/ccna-v20-batch1/` | Specs (atomics, lessons, quizzes, sims, misconceptions) |
 
