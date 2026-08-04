@@ -20,6 +20,10 @@ import { DNS_EXPERIENCE } from "@/content/lessons/dns-experience";
 import { ACLS_EXPERIENCE } from "@/content/lessons/acls-experience";
 import { NETWORK_SECURITY_EXPERIENCE } from "@/content/lessons/network-security-experience";
 import { AUTOMATION_BASICS_EXPERIENCE } from "@/content/lessons/automation-basics-experience";
+import {
+  AI_PROMPTS_NETOPS_V20_TOPIC,
+  IPV4_TROUBLESHOOT_V20_TOPIC,
+} from "@/content/certifications/ccna/v20-vertical-slices";
 
 export const ccna: Certification = {
   id: "ccna",
@@ -27,7 +31,7 @@ export const ccna: Certification = {
   shortName: "CCNA",
   vendor: "Cisco",
   overview:
-    "A ReLearn pilot for the Cisco CCNA 200-301 v1.1 blueprint. Network Fundamentals is the teaching-quality reference; later domains remain in expansion and should not yet be treated as complete exam preparation.",
+    "A ReLearn pilot for Cisco CCNA 200-301. Default catalog follows the v1.1 pathway; select the v2.0 pathway for official v2.0 elevations (vertical slices). Shared foundation topics keep pilot progress keys — v2.0 objective IDs are never awarded silently from v1.1 progress.",
   examSummary: {
     questionCount: 100,
     durationMinutes: 120,
@@ -2640,6 +2644,7 @@ Skip legacy class A/B/C labels for exam day. Focus on the purpose of each range 
           ],
 
         },
+        IPV4_TROUBLESHOOT_V20_TOPIC,
         {
           id: "ipv6-basics",
           name: "IPv6 Basics",
@@ -6964,6 +6969,7 @@ Defer DNA Center product deep dives, YANG model authoring, and Python Netmiko sc
           ],
         
         },
+        AI_PROMPTS_NETOPS_V20_TOPIC,
       ],
     },
   ],

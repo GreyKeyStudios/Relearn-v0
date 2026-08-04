@@ -27,6 +27,7 @@ import type { StudyPlanPreferences } from "@/types/mastery";
 import { DEFAULT_STUDY_PLAN } from "@/types/mastery";
 import type {
   Activity,
+  CcnaPathwayPreferenceState,
   FlashcardInProgress,
   FlashcardSession,
   ProgressState,
@@ -54,6 +55,7 @@ interface ProgressActions {
   recordCaseStudyAttempt: (attempt: CaseStudyAttempt, caseStudyTitle: string) => void;
   updateStudyPlan: (prefs: Partial<StudyPlanPreferences>) => void;
   completeOnboarding: (prefs: StudyPlanPreferences) => void;
+  setCcnaPathwayPreference: (prefs: Partial<CcnaPathwayPreferenceState>) => void;
   saveQuizProgress: (progress: QuizInProgress) => void;
   clearQuizProgress: () => void;
   saveFlashcardProgress: (progress: FlashcardInProgress) => void;
@@ -81,6 +83,10 @@ const initialState: ProgressState = {
   onboardingComplete: false,
   questionStats: {},
   caseStudyAttempts: [],
+  ccnaPathwayPreference: {
+    intendedExamDate: null,
+    preferredObjectivesVersion: null,
+  },
 };
 
 function addActivity(
@@ -359,6 +365,23 @@ export const useProgressStore = create<ProgressStore>()(
         });
       },
 
+      setCcnaPathwayPreference: (prefs) => {
+        set((state) => ({
+          ...state,
+          ccnaPathwayPreference: {
+            intendedExamDate:
+              prefs.intendedExamDate !== undefined
+                ? prefs.intendedExamDate
+                : (state.ccnaPathwayPreference?.intendedExamDate ?? null),
+            preferredObjectivesVersion:
+              prefs.preferredObjectivesVersion !== undefined
+                ? prefs.preferredObjectivesVersion
+                : (state.ccnaPathwayPreference?.preferredObjectivesVersion ??
+                  null),
+          },
+        }));
+      },
+
       recordCaseStudyAttempt: (attempt, caseStudyTitle) => {
         set((state) => {
           const topicKeyStr = topicKey(attempt.certId, attempt.topicId);
@@ -450,6 +473,7 @@ export const useProgressStore = create<ProgressStore>()(
         onboardingComplete: state.onboardingComplete,
         questionStats: state.questionStats,
         caseStudyAttempts: state.caseStudyAttempts,
+        ccnaPathwayPreference: state.ccnaPathwayPreference,
       }),
       skipHydration: true,
       version: PROGRESS_STORAGE_VERSION,

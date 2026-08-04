@@ -15,7 +15,11 @@ import {
   getTopicMastery,
 } from "@/lib/mastery";
 import { CheckCircle2, AlertTriangle, Circle, Library } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import {
+  filterCertificationForCcnaPathway,
+  resolveEffectiveCcnaPathway,
+} from "@/lib/ccna-version-pathway";
 
 interface DomainSectionProps {
   cert: Certification;
@@ -48,6 +52,9 @@ function TopicRow({
       <Card className="flex items-center gap-3 py-3">
         <Icon className={`h-5 w-5 shrink-0 ${iconColor}`} />
         <span className="flex-1 text-sm text-zinc-200">{topic.name}</span>
+        {topic.pathwayBadge && (
+          <Badge variant="default">{topic.pathwayBadge}</Badge>
+        )}
         <MasteryBadge level={masteryLevel} score={masteryScore} showScore />
         {isWeak && <Badge variant="warning">Weak</Badge>}
       </Card>
@@ -63,19 +70,25 @@ export function DomainSection({ cert }: DomainSectionProps) {
   const completedLessons = useProgressStore((s) => s.completedLessons);
   const weakTopics = useProgressStore((s) => s.weakTopics);
   const progressState = useProgressStore((s) => s);
+  const pathwayPreference = useProgressStore((s) => s.ccnaPathwayPreference);
+  const visibleCert = useMemo(() => {
+    if (cert.id !== "ccna") return cert;
+    const pathway = resolveEffectiveCcnaPathway(pathwayPreference ?? null);
+    return filterCertificationForCcnaPathway(cert, pathway);
+  }, [cert, pathwayPreference]);
   const [expanded, setExpanded] = useState<Record<string, boolean>>(() => {
-    const firstIncomplete = cert.domains.find((domain) =>
+    const firstIncomplete = visibleCert.domains.find((domain) =>
       domain.topics.some((topic) => !completedLessons[topicKey(cert.id, topic.id)])
     );
-    const focusedDomainId = firstIncomplete?.id ?? cert.domains[0]?.id;
+    const focusedDomainId = firstIncomplete?.id ?? visibleCert.domains[0]?.id;
     return Object.fromEntries(
-      cert.domains.map((domain) => [domain.id, domain.id === focusedDomainId])
+      visibleCert.domains.map((domain) => [domain.id, domain.id === focusedDomainId])
     );
   });
 
   return (
-    <div className="flex flex-col gap-4">
-      {cert.domains.map((domain) => {
+    <div className="flex flex-col gap-4" data-testid="domain-section">
+      {visibleCert.domains.map((domain) => {
         const bankCount = domainQuestionCount(domain);
         const avgScore = getDomainAverageScore(cert, domain.id, progressState);
         const proficientPct = getDomainMasteryPercent(cert, domain.id, progressState);

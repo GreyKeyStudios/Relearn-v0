@@ -45,6 +45,7 @@ export function listSimulatorSpecs(): SimulatorSpec[] {
       status: live ? ("live" as const) : ("spec-only" as const),
     } satisfies SimulatorSpec;
   });
-  // Batch-1 CCNA v2.0 simulators remain spec-only until implemented.
+  // Batch-1: ipv4-troubleshoot + ai-prompts elevated in vertical-slice PR;
+  // remaining batch-1 simspecs stay spec-only.
   return [...fromSeeds, ...CCNA_V20_BATCH1_SIMULATORS];
 }

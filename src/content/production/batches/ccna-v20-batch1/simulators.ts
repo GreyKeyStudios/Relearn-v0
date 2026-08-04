@@ -10,7 +10,8 @@ export const CCNA_V20_BATCH1_SIMULATORS: SimulatorSpec[] = [
   {
     id: "simspec-ccna-v20-ipv4-troubleshoot",
     name: "IPv4 addressing/subnetting troubleshoot drill",
-    status: "spec-only",
+    status: "live",
+    liveSimulatorId: "ipv4-troubleshoot-drill",
     learningGoals: [
       "Distinguish public vs private IPv4 assignment faults",
       "Troubleshoot mask/gateway mismatches beyond CIDR calculation",
@@ -153,7 +154,8 @@ export const CCNA_V20_BATCH1_SIMULATORS: SimulatorSpec[] = [
   {
     id: "simspec-ccna-v20-ai-prompts",
     name: "Generative AI prompt selection for network operations",
-    status: "spec-only",
+    status: "live",
+    liveSimulatorId: "ai-prompts-netops-drill",
     learningGoals: [
       "Select network-operations prompts that include data classification, output format, persona, and instructions",
       "Reject prompts that mishandle sensitive Cisco/network data",
