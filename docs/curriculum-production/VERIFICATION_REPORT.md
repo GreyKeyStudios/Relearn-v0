@@ -57,4 +57,8 @@ See [`CONTENT_BATCH_SEQUENCE.md`](CONTENT_BATCH_SEQUENCE.md) — provenance hard
 
 ## Diaspora Atlas PR #2
 
-The original architecture prompt was executed in the wrong repository. This PR is the native ReLearn landing. After merge (or once this draft is accepted as the transfer vehicle), close Diaspora Atlas PR #2 **without merging**.
+The original architecture prompt was executed in the wrong repository. This PR is the native ReLearn landing.
+
+**Close status:** This agent could not access `GreyKeyStudios/diaspora-atlas-app` (repository not visible to the ReLearn GitHub token / returns 404). Please close Diaspora Atlas PR #2 **without merging** from an account that has access now that the native ReLearn PR exists:
+
+https://github.com/GreyKeyStudios/Relearn-v0/pull/31
