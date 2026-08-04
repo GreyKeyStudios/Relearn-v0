@@ -30,7 +30,14 @@ import {
   CCNA_V20_FIRST_TEST_DATE,
   resolveActiveCcnaVersion,
 } from "@/content/production/ccna-transition/dates";
-import { listCcnaV20ParentObjectives } from "@/content/production/objectives/ccna-200-301-v2.0";
+import {
+  getCcnaV20OfficialLine,
+  listCcnaV20ParentObjectives,
+} from "@/content/production/objectives/ccna-200-301-v2.0";
+import {
+  assertCcnaV20Batch1Integrity,
+  CCNA_V20_BATCH1,
+} from "@/content/production/batches/ccna-v20-batch1";
 import type { ProductionValidationIssue } from "@/content/production/types";
 
 /** UTC calendar date-of-record (YYYY-MM-DD). Not a local wall-clock timestamp. */
@@ -604,6 +611,47 @@ export function validateCcnaV11Ingestion(): ProductionValidationIssue[] {
   return issues;
 }
 
+export function validateCcnaV20Batch1(): ProductionValidationIssue[] {
+  const issues: ProductionValidationIssue[] = [];
+  for (const err of assertCcnaV20Batch1Integrity()) {
+    issues.push({
+      code: "ccna-v20-batch1-integrity",
+      severity: "error",
+      trackId: "ccna",
+      message: err,
+    });
+  }
+  if (CCNA_V20_BATCH1.selectedOfficialNumbers.length > 8) {
+    issues.push({
+      code: "ccna-v20-batch1-size",
+      severity: "error",
+      trackId: "ccna",
+      message: "Batch-1 must select at most 8 official v2.0 parents",
+    });
+  }
+  for (const num of CCNA_V20_BATCH1.selectedOfficialNumbers) {
+    const line = getCcnaV20OfficialLine(num);
+    if (!line || line.depth !== 1) {
+      issues.push({
+        code: "ccna-v20-batch1-objective",
+        severity: "error",
+        trackId: "ccna",
+        entityId: num,
+        message: `Batch-1 selection ${num} is not an official v2.0 parent`,
+      });
+    }
+  }
+  // Guard: batch must not rewrite live CCNA progress keys.
+  issues.push({
+    code: "ccna-v20-batch1-progress-policy",
+    severity: "info",
+    trackId: "ccna",
+    message:
+      "Batch-1 is specification-only; live pilot CCNA-* progress keys and v1.1 lessons remain authoritative until an elevation ticket",
+  });
+  return issues;
+}
+
 export function runAllProductionValidators(): ProductionValidationIssue[] {
   const issues: ProductionValidationIssue[] = [];
 
@@ -611,6 +659,7 @@ export function runAllProductionValidators(): ProductionValidationIssue[] {
   issues.push(...validateMissingSourceRecords());
   issues.push(...validateBlueprintObjectiveHonesty());
   issues.push(...validateCcnaV11Ingestion());
+  issues.push(...validateCcnaV20Batch1());
   issues.push(...validateUncoveredObjectives());
 
   for (const cert of CERTIFICATIONS) {

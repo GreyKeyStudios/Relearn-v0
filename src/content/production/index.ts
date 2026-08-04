@@ -52,3 +52,9 @@ export {
   PRODUCTION_REMEDIATIONS,
 } from "./misconceptions/catalog";
 export { listSimulatorSpecs } from "./simulators/catalog";
+export {
+  CCNA_V20_BATCH1,
+  CCNA_V20_BATCH1_SELECTION,
+  CCNA_V20_BATCH1_DEFERRED,
+  assertCcnaV20Batch1Integrity,
+} from "./batches/ccna-v20-batch1";

@@ -5,6 +5,10 @@
  */
 
 import type { MisconceptionRecord, RemediationActivity } from "../types";
+import {
+  CCNA_V20_BATCH1_MISCONCEPTIONS,
+  CCNA_V20_BATCH1_REMEDIATIONS,
+} from "../batches/ccna-v20-batch1";
 
 export const PRODUCTION_MISCONCEPTIONS: MisconceptionRecord[] = [
   {
@@ -37,6 +41,7 @@ export const PRODUCTION_MISCONCEPTIONS: MisconceptionRecord[] = [
     remediationActivityIds: ["rem-osi-encapsulation-walkthrough"],
     relatedAtomicIds: ["alo-ccna-osi-model"],
   },
+  ...CCNA_V20_BATCH1_MISCONCEPTIONS,
 ];
 
 export const PRODUCTION_REMEDIATIONS: RemediationActivity[] = [
@@ -60,4 +65,5 @@ export const PRODUCTION_REMEDIATIONS: RemediationActivity[] = [
     atomicObjectiveIds: ["alo-ccna-osi-model"],
     estimatedMinutes: 12,
   },
+  ...CCNA_V20_BATCH1_REMEDIATIONS,
 ];
