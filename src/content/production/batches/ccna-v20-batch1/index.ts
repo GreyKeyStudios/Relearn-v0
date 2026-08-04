@@ -6,6 +6,7 @@
  */
 
 import type { ContentProductionBatch } from "../../types";
+import { getCcnaV20OfficialLine } from "../../objectives/ccna-200-301-v2.0";
 import {
   CCNA_V20_BATCH1_DEFERRED,
   CCNA_V20_BATCH1_SELECTION,
@@ -87,11 +88,47 @@ export function assertCcnaV20Batch1Integrity(): string[] {
       errors.push(`${unit.officialNumber} not in selection list`);
     }
 
+    const official = getCcnaV20OfficialLine(unit.officialNumber);
+    if (!official) {
+      errors.push(`${unit.officialNumber}: missing from v2.0 registry`);
+    } else {
+      if (unit.officialText !== official.text) {
+        errors.push(
+          `${unit.officialNumber}: officialText drifts from registry`
+        );
+      }
+      const parent = unit.atomicObjectives.find(
+        (a) => a.id === `alo-ccna-v2.0-${unit.officialNumber}`
+      );
+      if (parent && parent.statement !== official.text) {
+        errors.push(
+          `${unit.officialNumber}: parent atomic statement drifts from registry`
+        );
+      }
+    }
+
     for (const a of unit.atomicObjectives) {
       for (const eid of a.examObjectiveIds ?? []) {
         if (!eid.startsWith("200-301-v2.0/")) {
           errors.push(`${a.id}: examObjectiveId not v2.0 namespaced`);
         }
+      }
+      if (/configure\s*\/\s*verify/i.test(a.statement)) {
+        errors.push(
+          `${a.id}: invents Configure/verify when official verbs must stay distinct`
+        );
+      }
+      if (a.prerequisiteAtomicIds?.includes("alo-ccna-subnetting")) {
+        errors.push(`${a.id}: phantom prereq alo-ccna-subnetting`);
+      }
+    }
+
+    for (const edge of unit.prerequisiteEdges) {
+      const ids = [edge.from.id, edge.to.id];
+      if (ids.includes("alo-ccna-subnetting")) {
+        errors.push(
+          `${unit.officialNumber}: phantom prereq edge alo-ccna-subnetting`
+        );
       }
     }
 

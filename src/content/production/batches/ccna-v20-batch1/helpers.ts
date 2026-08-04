@@ -1,19 +1,32 @@
 import type {
   AtomicLearningObjective,
   DiagnosticItemSpec,
+  ExampleSpec,
   ExplanationBundle,
   FlashcardSpec,
   LessonProductionSpec,
   MasteryRequirementSpec,
+  PrereqEdge,
   QuizItemSpec,
 } from "../../types";
 import { PRODUCTION_MASTERY_REQUIREMENTS } from "../../mastery-compatibility";
-import { ccnaV20ObjectiveId } from "../../objectives/ccna-200-301-v2.0";
+import {
+  ccnaV20ObjectiveId,
+  getCcnaV20OfficialLine,
+} from "../../objectives/ccna-200-301-v2.0";
 
 export const BATCH1_SOURCE_IDS = [
   "src-cisco-ccna-200-301-v2.0",
   "src-cisco-ccna-200-301-v1.1",
 ] as const;
+
+export function officialTextFor(number: string): string {
+  const line = getCcnaV20OfficialLine(number);
+  if (!line) {
+    throw new Error(`Missing official CCNA v2.0 line for ${number}`);
+  }
+  return line.text;
+}
 
 export function masteryEvidence(): MasteryRequirementSpec {
   return {
@@ -53,16 +66,16 @@ export function teachingAtomic(input: {
   };
 }
 
+/** Parent atomic statement is always the exact official registry text. */
 export function parentAtomic(input: {
   number: string;
-  statement: string;
   verb: AtomicLearningObjective["verb"];
   prereqs?: string[];
 }): AtomicLearningObjective {
   return {
     id: parentAtomicId(input.number),
     conceptId: `concept-ccna-v2.0-${input.number}`,
-    statement: input.statement,
+    statement: officialTextFor(input.number),
     verb: input.verb,
     difficulty: "medium",
     cognitiveLoad: "moderate",
@@ -71,6 +84,38 @@ export function parentAtomic(input: {
     examObjectiveIds: [ccnaV20ObjectiveId(input.number)],
     prerequisiteAtomicIds: input.prereqs ?? [],
     sourceIds: [...BATCH1_SOURCE_IDS],
+  };
+}
+
+export function atomicEdge(
+  id: string,
+  fromId: string,
+  toId: string,
+  rationale: string
+): PrereqEdge {
+  return {
+    id,
+    from: { kind: "atomic", id: fromId },
+    to: { kind: "atomic", id: toId },
+    strength: "required",
+    rationale,
+  };
+}
+
+/** Soft dependency on a live CCNA topic that already teaches foundation skills. */
+export function liveTopicEdge(input: {
+  id: string;
+  topicId: string;
+  toAtomicId: string;
+  rationale: string;
+  strength?: PrereqEdge["strength"];
+}): PrereqEdge {
+  return {
+    id: input.id,
+    from: { kind: "live-topic", id: input.topicId, liveTrackId: "ccna" },
+    to: { kind: "atomic", id: input.toAtomicId },
+    strength: input.strength ?? "recommended",
+    rationale: input.rationale,
   };
 }
 
@@ -86,6 +131,7 @@ export function lessonSpec(input: {
   misconceptionIds: string[];
   remediationIds: string[];
   simulatorIds: string[];
+  examples?: ExampleSpec[];
   cognitiveLoad?: LessonProductionSpec["cognitiveLoad"];
   minutes?: number;
 }): LessonProductionSpec {
@@ -96,13 +142,13 @@ export function lessonSpec(input: {
     title: input.title,
     atomicObjectiveIds: input.atomics,
     explanations: input.explanations,
-    examples: [
+    examples: input.examples ?? [
       {
         id: `ex-ccna-v2.0-${input.number}-primary`,
         title: `${input.title} — worked scenario`,
         layer: "practical",
         steps: [
-          "Restate the symptom in official-verb terms (troubleshoot/configure/select).",
+          "Restate the symptom using the official verb (troubleshoot/configure/select).",
           "Gather only evidence named by the official objective.",
           "Choose the next action that matches the official scope — do not invent exam topics.",
         ],

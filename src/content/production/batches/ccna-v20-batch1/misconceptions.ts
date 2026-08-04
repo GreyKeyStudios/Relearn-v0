@@ -46,7 +46,11 @@ export const CCNA_V20_BATCH1_MISCONCEPTIONS: MisconceptionRecord[] = [
       "Never checks ip helper-address / relay config",
     ],
     remediationActivityIds: ["rem-v20-dhcp-relay-path"],
-    relatedAtomicIds: ["alo-ccna-v2.0-1.7", "alo-ccna-v2.0-1.7-relay"],
+    relatedAtomicIds: [
+      "alo-ccna-v2.0-1.7",
+      "alo-ccna-v2.0-1.7-client",
+      "alo-ccna-v2.0-1.7-relay",
+    ],
     sourceIds: ["src-cisco-ccna-200-301-v2.0"],
   },
   {
@@ -55,13 +59,17 @@ export const CCNA_V20_BATCH1_MISCONCEPTIONS: MisconceptionRecord[] = [
     whyItAppears:
       "Ping is treated as a complete network health certificate.",
     correction:
-      "Ping proves basic reachability for that probe; v2.0 2.4 still requires correlating show commands, logs, traceroute, and packet capture for device/path faults.",
+      "Ping proves basic reachability for that probe; v2.0 2.4 still requires correlating show commands (including show logs), extended ping, trace route, and packet capture for connectivity and device-operations faults.",
     diagnosticSignals: [
       "Stops troubleshooting after one successful ping",
-      "Ignores asymmetric paths or intermittent interface errors",
+      "Ignores asymmetric paths or intermittent interface errors in show logs",
     ],
     remediationActivityIds: ["rem-v20-l2l3-evidence-ladder"],
-    relatedAtomicIds: ["alo-ccna-v2.0-2.4", "alo-ccna-v2.0-2.4-evidence"],
+    relatedAtomicIds: [
+      "alo-ccna-v2.0-2.4",
+      "alo-ccna-v2.0-2.4-evidence",
+      "alo-ccna-v2.0-2.4-device-ops",
+    ],
     sourceIds: ["src-cisco-ccna-200-301-v2.0"],
   },
   {
@@ -75,7 +83,11 @@ export const CCNA_V20_BATCH1_MISCONCEPTIONS: MisconceptionRecord[] = [
       "Adds BPDU filter to v2.0 lab checklists without source",
     ],
     remediationActivityIds: ["rem-v20-stp-guard-scope"],
-    relatedAtomicIds: ["alo-ccna-v2.0-2.5", "alo-ccna-v2.0-2.5-guards"],
+    relatedAtomicIds: [
+      "alo-ccna-v2.0-2.5",
+      "alo-ccna-v2.0-2.5-portfast",
+      "alo-ccna-v2.0-2.5-guards",
+    ],
     sourceIds: ["src-cisco-ccna-200-301-v2.0"],
   },
   {
@@ -103,22 +115,32 @@ export const CCNA_V20_BATCH1_MISCONCEPTIONS: MisconceptionRecord[] = [
       "Applies IPv4 network statements thinking they enable IPv6 OSPF",
     ],
     remediationActivityIds: ["rem-v20-ospfv2-vs-v3"],
-    relatedAtomicIds: ["alo-ccna-v2.0-3.3", "alo-ccna-v2.0-3.3-ospfv3"],
+    relatedAtomicIds: [
+      "alo-ccna-v2.0-3.3",
+      "alo-ccna-v2.0-3.3-ospfv2",
+      "alo-ccna-v2.0-3.3-ospfv3",
+    ],
     sourceIds: ["src-cisco-ccna-200-301-v2.0"],
   },
   {
     id: "misc-v20-ai-prompt-no-structure",
-    statement: "Any natural-language question is a good generative-AI prompt for network ops.",
+    statement:
+      "Any natural-language question (or generic LLM tip) is a good generative-AI prompt for network ops.",
     whyItAppears:
-      "Chat habits transfer into exam-style AI assistance tasks.",
+      "Chat habits and generic prompt-engineering advice transfer into exam-style AI assistance tasks.",
     correction:
-      "v2.0 5.2 requires selecting prompts that consider data classification, output format, persona, and instructions — unstructured chat is not sufficient.",
+      "v2.0 5.2 requires selecting prompts for network operations that consider data classification, output format, persona, and instructions — unstructured chat or temperature/top-k trivia is not sufficient.",
     diagnosticSignals: [
       "Chooses prompts that paste secrets without classification care",
       "Omits output format / persona constraints",
+      "Selects generic LLM-tuning advice instead of a network-ops prompt",
     ],
     remediationActivityIds: ["rem-v20-prompt-components"],
-    relatedAtomicIds: ["alo-ccna-v2.0-5.2", "alo-ccna-v2.0-5.2-components"],
+    relatedAtomicIds: [
+      "alo-ccna-v2.0-5.2",
+      "alo-ccna-v2.0-5.2-components",
+      "alo-ccna-v2.0-5.2-safe",
+    ],
     sourceIds: ["src-cisco-ccna-200-301-v2.0"],
   },
 ];
@@ -159,9 +181,13 @@ export const CCNA_V20_BATCH1_REMEDIATIONS: RemediationActivity[] = [
     title: "L2/L3 evidence ladder",
     kind: "worked-example",
     instructions:
-      "For one fault ticket, collect show interface/logs, ping/extended ping, traceroute, and a capture note. Rank which evidence ruled the fault in/out.",
+      "For one fault ticket, collect show interface/logs, ping/extended ping, trace route, and a capture note. Rank which evidence ruled the fault in/out. Do not stop after a single successful ping.",
     targetMisconceptionIds: ["misc-v20-ping-success-means-l2-healthy"],
-    atomicObjectiveIds: ["alo-ccna-v2.0-2.4", "alo-ccna-v2.0-2.4-evidence"],
+    atomicObjectiveIds: [
+      "alo-ccna-v2.0-2.4",
+      "alo-ccna-v2.0-2.4-device-ops",
+      "alo-ccna-v2.0-2.4-evidence",
+    ],
     estimatedMinutes: 15,
   },
   {
@@ -169,9 +195,13 @@ export const CCNA_V20_BATCH1_REMEDIATIONS: RemediationActivity[] = [
     title: "v2.0 STP guard scope",
     kind: "re-teach",
     instructions:
-      "List v2.0 2.5.d features from the official PDF only. Cross out any v1.1-only items (e.g., BPDU filter) from your personal checklist.",
+      "List v2.0 2.5.d features from the official PDF only. Cross out any v1.1-only items (e.g., BPDU filter) from your personal checklist. Keep PortFast as 2.5.c, separate from guards.",
     targetMisconceptionIds: ["misc-v20-bpdu-filter-still-required"],
-    atomicObjectiveIds: ["alo-ccna-v2.0-2.5", "alo-ccna-v2.0-2.5-guards"],
+    atomicObjectiveIds: [
+      "alo-ccna-v2.0-2.5",
+      "alo-ccna-v2.0-2.5-portfast",
+      "alo-ccna-v2.0-2.5-guards",
+    ],
     estimatedMinutes: 8,
   },
   {
@@ -189,19 +219,27 @@ export const CCNA_V20_BATCH1_REMEDIATIONS: RemediationActivity[] = [
     title: "OSPFv2 vs OSPFv3 neighbor checklist",
     kind: "worked-example",
     instructions:
-      "Side-by-side: enable single-area OSPFv2 on IPv4 and OSPFv3 on IPv6. Confirm neighbors without configuring authentication (out of scope).",
+      "Side-by-side: enable single-area OSPFv2 on IPv4 and OSPFv3 on IPv6 to the same depth (adjacency excluding authentication, point-to-point, broadcast DR/BDR, router ID). Do not treat IPv4 network statements as sufficient for IPv6.",
     targetMisconceptionIds: ["misc-v20-ospfv3-same-as-v2-commands"],
-    atomicObjectiveIds: ["alo-ccna-v2.0-3.3", "alo-ccna-v2.0-3.3-ospfv3"],
+    atomicObjectiveIds: [
+      "alo-ccna-v2.0-3.3",
+      "alo-ccna-v2.0-3.3-ospfv2",
+      "alo-ccna-v2.0-3.3-ospfv3",
+    ],
     estimatedMinutes: 15,
   },
   {
     id: "rem-v20-prompt-components",
-    title: "Prompt component cards",
+    title: "Network-ops prompt component cards",
     kind: "drill",
     instructions:
-      "Rewrite a weak ops question into a prompt that states data classification, output format, persona, and instructions. Reject prompts that leak secrets.",
+      "Rewrite a weak Cisco network-ops question (e.g., interface CRC triage or ACL review) into a prompt that states data classification, output format, persona, and instructions. Reject prompts that leak secrets or answer with generic LLM-tuning advice.",
     targetMisconceptionIds: ["misc-v20-ai-prompt-no-structure"],
-    atomicObjectiveIds: ["alo-ccna-v2.0-5.2", "alo-ccna-v2.0-5.2-components"],
+    atomicObjectiveIds: [
+      "alo-ccna-v2.0-5.2",
+      "alo-ccna-v2.0-5.2-components",
+      "alo-ccna-v2.0-5.2-safe",
+    ],
     estimatedMinutes: 10,
   },
 ];

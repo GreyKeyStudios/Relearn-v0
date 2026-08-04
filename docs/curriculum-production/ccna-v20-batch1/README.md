@@ -9,6 +9,7 @@
 | Path | Role |
 | --- | --- |
 | [`BATCH_REPORT.md`](./BATCH_REPORT.md) | Why each objective was selected + remaining work |
+| [`ADVERSARIAL_REVIEW.md`](./ADVERSARIAL_REVIEW.md) | Per-unit dispositions + defect fixes (PR #34) |
 | [`batch1.manifest.json`](./batch1.manifest.json) | Machine-readable unit index |
 | `src/content/production/batches/ccna-v20-batch1/` | Specs (atomics, lessons, quizzes, sims, misconceptions) |
 
