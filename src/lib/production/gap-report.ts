@@ -8,6 +8,7 @@ import { getContentExpansionLevel } from "@/lib/content-expansion";
 import { isSkillsTrack } from "@/lib/track-kind";
 import { PLANNED_TRACKS } from "@/lib/planned-tracks";
 import {
+  CERT_TRACKS_NEEDING_LIVE_OBJECTIVE_REMAP,
   CERT_TRACKS_NEEDING_OBJECTIVE_LINES,
   getExamBlueprint,
 } from "@/content/production/exam-blueprints";
@@ -236,6 +237,7 @@ export function buildFullGapReport(): {
   futureSubjects: TrackGapSummary[];
   certsNeedingBlueprint: string[];
   certsNeedingObjectiveLines: string[];
+  certsNeedingLiveObjectiveRemap: string[];
   totals: {
     liveTracks: number;
     liveTopics: number;
@@ -256,6 +258,7 @@ export function buildFullGapReport(): {
       .filter((t) => t.kind === "certification" && t.missingSourceBlueprint)
       .map((t) => t.trackId),
     certsNeedingObjectiveLines: [...CERT_TRACKS_NEEDING_OBJECTIVE_LINES],
+    certsNeedingLiveObjectiveRemap: [...CERT_TRACKS_NEEDING_LIVE_OBJECTIVE_REMAP],
     totals: {
       liveTracks: liveTracks.length,
       liveTopics: liveTracks.reduce((s, t) => s + t.topicCount, 0),
@@ -289,6 +292,9 @@ export function formatGapReportMarkdown(
   );
   lines.push(
     `- Certification tracks needing official objective-line mapping: ${report.certsNeedingObjectiveLines.join(", ") || "(none)"}`
+  );
+  lines.push(
+    `- Certification tracks needing live tag remap onto official IDs: ${report.certsNeedingLiveObjectiveRemap.join(", ") || "(none)"}`
   );
   lines.push("");
   lines.push("## Live tracks");

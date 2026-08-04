@@ -2,17 +2,23 @@
  * Exam blueprint registry — maps certification tracks to official (or
  * explicitly flagged pilot) objective versions.
  *
- * Domain weights and exam codes come from first-party pages retrieved via Exa
- * on 2026-08-04. Objective line-items are only listed when we have an honest
- * registry (A+) or an explicitly flagged internal pilot (CCNA).
+ * CCNA uses the ingested official 200-301 v1.1 PDF lines. Live Path A content
+ * still tags pilot `CCNA-*` IDs; coverage is computed through the alias mapping
+ * layer (see mappings/ccna-pilot-to-v1.1.ts). Do not mix v2.0.
  */
 
 import { APLUS_OBJECTIVES } from "@/content/objectives/a-plus";
-import { CCNA_OBJECTIVES } from "@/content/objectives/ccna";
 import { aPlus } from "@/content/certifications/a-plus";
-import { ccna } from "@/content/certifications/ccna";
 import type { Certification } from "@/content/types";
 import type { ExamBlueprint, ExamBlueprintDomain } from "../types";
+import {
+  CCNA_V11_PDF_SHA256,
+  CCNA_V11_PDF_URL,
+  CCNA_V11_RETRIEVED_AT,
+  listCcnaV11OfficialLines,
+  listCcnaV11ParentObjectives,
+} from "../objectives/ccna-200-301-v1.1";
+import { liveTopicsCoveringOfficialId } from "../mappings/ccna-pilot-to-v1.1";
 
 const RETRIEVED = "2026-08-04";
 
@@ -43,59 +49,76 @@ function domainOnly(
 }
 
 function buildCcnaBlueprint(): ExamBlueprint {
-  const coverage = topicCoverageForObjectives(
-    ccna,
-    CCNA_OBJECTIVES.map((o) => o.id)
-  );
+  const parents = listCcnaV11ParentObjectives();
   const byDomain = new Map<string, ExamBlueprintDomain>();
-  // Official v1.1 domain weights (Cisco Learning Network, Exa 2026-08-04)
-  const weights: Record<string, { name: string; weight: number }> = {
-    "network-fundamentals": { name: "Network Fundamentals", weight: 20 },
-    "network-access": { name: "Network Access", weight: 20 },
-    "ip-connectivity": { name: "IP Connectivity", weight: 25 },
-    "ip-services": { name: "IP Services", weight: 10 },
-    "security-fundamentals": { name: "Security Fundamentals", weight: 15 },
-    automation: { name: "Automation and Programmability", weight: 10 },
+  const domainMeta: Record<
+    string,
+    { slug: string; name: string; weight: number }
+  > = {
+    "1.0": {
+      slug: "network-fundamentals",
+      name: "Network Fundamentals",
+      weight: 20,
+    },
+    "2.0": { slug: "network-access", name: "Network Access", weight: 20 },
+    "3.0": { slug: "ip-connectivity", name: "IP Connectivity", weight: 25 },
+    "4.0": { slug: "ip-services", name: "IP Services", weight: 10 },
+    "5.0": {
+      slug: "security-fundamentals",
+      name: "Security Fundamentals",
+      weight: 15,
+    },
+    "6.0": {
+      slug: "automation",
+      name: "Automation and Programmability",
+      weight: 10,
+    },
   };
-  for (const obj of CCNA_OBJECTIVES) {
-    let domain = byDomain.get(obj.domain);
+
+  for (const obj of parents) {
+    const meta = domainMeta[obj.domainNumber];
+    const domainId = meta?.slug ?? obj.domainNumber;
+    let domain = byDomain.get(domainId);
     if (!domain) {
-      const meta = weights[obj.domain];
       domain = {
-        id: obj.domain,
-        name: meta?.name ?? obj.domain,
-        weightPercent: meta?.weight,
+        id: domainId,
+        name: meta?.name ?? obj.domainName,
+        weightPercent: meta?.weight ?? obj.domainWeightPercent,
         objectives: [],
       };
-      byDomain.set(obj.domain, domain);
+      byDomain.set(domainId, domain);
     }
     domain.objectives.push({
       id: obj.id,
       text: obj.text,
-      coveredByTopicIds: coverage.get(obj.id) ?? [],
+      // Coverage via pilot-alias mapping — live tags are still CCNA-* pilot IDs.
+      coveredByTopicIds: liveTopicsCoveringOfficialId(obj.id),
       freshness: "versioned",
     });
   }
+
+  const lineCount = listCcnaV11OfficialLines().length;
   return {
     id: "blueprint-ccna-200-301-v1.1",
     trackId: "ccna",
     vendor: "Cisco",
     examName: "CCNA",
     examCodes: ["200-301"],
-    objectivesVersion: "v1.1 (pilot objective IDs still attached)",
-    retrievedAt: RETRIEVED,
+    objectivesVersion: "v1.1",
+    retrievedAt: CCNA_V11_RETRIEVED_AT,
     lastCheckedAt: RETRIEVED,
     sourceIds: ["src-cisco-ccna-200-301-v1.1", "src-ccna-objectives-pilot"],
     domains: [...byDomain.values()],
-    confidence: "needs-retrieval",
+    confidence: "verified",
     mixedVersionWarning:
-      "Official exam is 200-301 CCNA v1.1 (Cisco Learning Network, retrieved 2026-08-04). " +
-      "Objective rows below still use the internal pilot catalog (src/content/objectives/ccna.ts), " +
-      "which does not match v1.1 numbering one-for-one. Remap in a dedicated batch; do not invent IDs here.",
+      "Blueprint rows use official 200-301 v1.1 IDs (`200-301-v1.1/<number>`). " +
+      "Live Path A topics/quizzes still tag pilot `CCNA-*` IDs; progress keys must keep using pilot IDs. " +
+      "Coverage is computed through the alias mapping in mappings/ccna-pilot-to-v1.1.ts. " +
+      "Do not mix v2.0 objectives into this blueprint.",
     notes:
-      "Domain weights verified from first-party page. Official PDF: " +
-      "https://learningcontent.cisco.com/documents/marketing/exam-topics/200-301-CCNA-v1.1.pdf. " +
-      "v1.1 last test date 2027-02-02; v2.0 begins 2027-02-03.",
+      `Official PDF ingested (${lineCount} numbered lines including sub-bullets). ` +
+      `PDF: ${CCNA_V11_PDF_URL}. SHA-256: ${CCNA_V11_PDF_SHA256}. ` +
+      "v1.1 last test date 2027-02-02; v2.0 begins 2027-02-03 (future-review only — not in this blueprint).",
   };
 }
 
@@ -341,7 +364,7 @@ export function listExamBlueprints(): ExamBlueprint[] {
  * (domain blueprint may exist with empty objectives[]).
  */
 export const CERT_TRACKS_NEEDING_OBJECTIVE_LINES = [
-  "ccna", // pilot IDs present but not official v1.1 lines
+  // CCNA official v1.1 lines are ingested; live content still uses pilot aliases.
   "security-plus",
   "network-plus",
   "cysa-plus",
@@ -350,6 +373,9 @@ export const CERT_TRACKS_NEEDING_OBJECTIVE_LINES = [
   "linux-plus",
   "itil-foundation",
 ] as const;
+
+/** Tracks whose live tags still need an explicit content remap onto official IDs. */
+export const CERT_TRACKS_NEEDING_LIVE_OBJECTIVE_REMAP = ["ccna"] as const;
 
 /** @deprecated use CERT_TRACKS_NEEDING_OBJECTIVE_LINES */
 export const CERT_TRACKS_NEEDING_BLUEPRINT = CERT_TRACKS_NEEDING_OBJECTIVE_LINES;

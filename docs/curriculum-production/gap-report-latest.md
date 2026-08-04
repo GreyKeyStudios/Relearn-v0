@@ -1,15 +1,16 @@
 # ReLearn Curriculum Gap Report
 
-Generated: 2026-08-04T04:25:09.911Z
+Generated: 2026-08-04T04:37:46.144Z
 
 ## Totals
 
 - Live tracks: 14
 - Live topics: 286
 - Full CES topics: 182
-- Uncovered blueprint objectives: 2
+- Uncovered blueprint objectives: 21
 - Certification tracks still needing blueprints: (none)
-- Certification tracks needing official objective-line mapping: ccna, security-plus, network-plus, cysa-plus, aws-cloud-practitioner, azure-fundamentals, linux-plus, itil-foundation
+- Certification tracks needing official objective-line mapping: security-plus, network-plus, cysa-plus, aws-cloud-practitioner, azure-fundamentals, linux-plus, itil-foundation
+- Certification tracks needing live tag remap onto official IDs: ccna
 
 ## Live tracks
 
@@ -23,9 +24,8 @@ Generated: 2026-08-04T04:25:09.911Z
 - Questions missing objectiveId / difficulty / explanation: 0 / 0 / 0
 - Invalid correctChoiceId: 0; duplicate question ids: 0; broken prereqs: 0
 - Missing exam blueprint: no
-- Uncovered objectives (sample): CCNA-2.1, CCNA-2.2
-- Note: Blueprint exists but needs first-party retrieval before official-alignment claims.
-- Note: mixedVersionWarning: Official exam is 200-301 CCNA v1.1 (Cisco Learning Network, retrieved 2026-08-04). Objective rows below still use the internal pilot catalog (src/content/objectives/ccna.ts), which does not match v1.1 numbering one-for-one. Remap in a dedicated batch; do not invent IDs here.
+- Uncovered objectives (sample): 200-301-v1.1/1.12, 200-301-v1.1/1.13, 200-301-v1.1/2.1, 200-301-v1.1/2.2, 200-301-v1.1/2.8, 200-301-v1.1/3.5, 200-301-v1.1/4.5, 200-301-v1.1/4.7, 200-301-v1.1/4.8, 200-301-v1.1/4.9, 200-301-v1.1/5.2, 200-301-v1.1/5.3 (+9 more)
+- Note: mixedVersionWarning: Blueprint rows use official 200-301 v1.1 IDs (`200-301-v1.1/<number>`). Live Path A topics/quizzes still tag pilot `CCNA-*` IDs; progress keys must keep using pilot IDs. Coverage is computed through the alias mapping in mappings/ccna-pilot-to-v1.1.ts. Do not mix v2.0 objectives into this blueprint.
 
 ### Computer Fundamentals (`computer-fundamentals`) — skills
 

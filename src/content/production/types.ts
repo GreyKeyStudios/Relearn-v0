@@ -383,6 +383,57 @@ export interface ExamBlueprintObjective {
 }
 
 /**
+ * How a live/pilot objective ID relates to an official exam-objectives line.
+ * Used by migration layers — never silently rename persisted pilot IDs.
+ */
+export type PilotMappingStatus =
+  | "exact match"
+  | "partial match"
+  | "combines multiple official objectives"
+  | "narrower than official objective"
+  | "broader than official objective"
+  | "obsolete"
+  | "unable to map";
+
+/** One numbered line (parent or sub-bullet) from an official exam-topics document. */
+export interface OfficialExamObjectiveLine {
+  /** Stable production id, e.g. `200-301-v1.1/1.1` */
+  id: string;
+  examCode: string;
+  objectivesVersion: string;
+  /** Cisco numbering as published, e.g. `1.1` or `1.1.a` */
+  number: string;
+  text: string;
+  domainNumber: string;
+  domainName: string;
+  domainWeightPercent: number;
+  /** Parent objective number when this is a sub-bullet */
+  parentNumber?: string;
+  /** 1 = parent objective, 2 = sub-bullet */
+  depth: 1 | 2;
+  /** 1-based page in the official PDF */
+  pdfPage: number;
+  sourceId: string;
+}
+
+export interface PilotOfficialMappingEntry {
+  pilotId: string;
+  pilotText: string;
+  status: PilotMappingStatus;
+  /** Official production ids (may be empty when unable to map) */
+  officialIds: string[];
+  /** Official numbers for human tables */
+  officialNumbers: string[];
+  notes: string;
+  /**
+   * Live topic ids currently tagging this pilot ID.
+   * Progress/quiz tags keep using `pilotId` until an explicit content remap batch.
+   */
+  liveTopicIds: string[];
+  liveQuestionCount: number;
+}
+
+/**
  * Assessment / mastery requirements for production content.
  * Must stay compatible with `src/lib/mastery-thresholds.ts` and SRS intervals.
  */

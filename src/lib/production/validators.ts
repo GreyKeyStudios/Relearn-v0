@@ -19,6 +19,11 @@ import {
   validateBrokenPrerequisiteLinks,
 } from "@/content/production/prerequisites/graph";
 import { listAllSubjects } from "@/content/production/hierarchy";
+import {
+  CCNA_V11_OFFICIAL_LINES,
+  listCcnaV11ParentObjectives,
+} from "@/content/production/objectives/ccna-200-301-v1.1";
+import { assertCcnaPilotMappingComplete } from "@/content/production/mappings/ccna-pilot-to-v1.1";
 import type { ProductionValidationIssue } from "@/content/production/types";
 
 /** UTC calendar date-of-record (YYYY-MM-DD). Not a local wall-clock timestamp. */
@@ -441,12 +446,66 @@ export function validateProductionRegistry(): ProductionValidationIssue[] {
   return issues;
 }
 
+export function validateCcnaV11Ingestion(): ProductionValidationIssue[] {
+  const issues: ProductionValidationIssue[] = [];
+  const parents = listCcnaV11ParentObjectives();
+  if (parents.length !== 53) {
+    // 13+9+5+9+10+7 = 53 parent objectives in v1.1 PDF
+    issues.push({
+      code: "ccna-v11-parent-count",
+      severity: "error",
+      trackId: "ccna",
+      message: `Expected 53 official v1.1 parent objectives, found ${parents.length}`,
+    });
+  }
+  if (CCNA_V11_OFFICIAL_LINES.length < 53) {
+    issues.push({
+      code: "ccna-v11-line-count",
+      severity: "error",
+      trackId: "ccna",
+      message: `Official line registry too small (${CCNA_V11_OFFICIAL_LINES.length})`,
+    });
+  }
+  const numbers = new Set<string>();
+  for (const line of CCNA_V11_OFFICIAL_LINES) {
+    if (numbers.has(line.number)) {
+      issues.push({
+        code: "ccna-v11-duplicate-number",
+        severity: "error",
+        trackId: "ccna",
+        entityId: line.id,
+        message: `Duplicate official number ${line.number}`,
+      });
+    }
+    numbers.add(line.number);
+    if (line.objectivesVersion !== "v1.1" || line.examCode !== "200-301") {
+      issues.push({
+        code: "ccna-version-mix",
+        severity: "error",
+        trackId: "ccna",
+        entityId: line.id,
+        message: "Non-v1.1 / non-200-301 line found in v1.1 registry",
+      });
+    }
+  }
+  for (const err of assertCcnaPilotMappingComplete()) {
+    issues.push({
+      code: "ccna-pilot-mapping",
+      severity: "error",
+      trackId: "ccna",
+      message: err,
+    });
+  }
+  return issues;
+}
+
 export function runAllProductionValidators(): ProductionValidationIssue[] {
   const issues: ProductionValidationIssue[] = [];
 
   issues.push(...validateProductionRegistry());
   issues.push(...validateMissingSourceRecords());
   issues.push(...validateBlueprintObjectiveHonesty());
+  issues.push(...validateCcnaV11Ingestion());
   issues.push(...validateUncoveredObjectives());
 
   for (const cert of CERTIFICATIONS) {
