@@ -77,6 +77,19 @@
 
 ---
 
-## Verification suite (post-fix)
+## Verification suite (post-fix) — all passed
 
-Recorded after rerun — see PR #33 checks.
+| Check | Result |
+| --- | --- |
+| Merged onto latest `dev` (PR #32) without duplicating v1.1 registry | OK |
+| `npm run curriculum:ccna-transition-report` | OK |
+| `npm run verify:production` | OK (0 errors) |
+| `npm run curriculum:gap-report` | OK |
+| `verify:curriculum --strict-ccna --strict-ccna-objectives` | OK |
+| `verify:curriculum --strict-pedagogy` | OK |
+| `verify:curriculum --strict-experience` | OK |
+| `npx tsc --noEmit` | OK |
+| `npm run build` | OK |
+| Playwright `learner-loop` + `ccna-curriculum-audit` | 23 passed |
+
+**Do not merge** — draft/open for human review of transition classifications.
