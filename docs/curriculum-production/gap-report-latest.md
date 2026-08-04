@@ -1,6 +1,6 @@
 # ReLearn Curriculum Gap Report
 
-Generated: 2026-08-04T04:37:46.144Z
+Generated: 2026-08-04T04:47:56.360Z
 
 ## Totals
 
@@ -25,7 +25,7 @@ Generated: 2026-08-04T04:37:46.144Z
 - Invalid correctChoiceId: 0; duplicate question ids: 0; broken prereqs: 0
 - Missing exam blueprint: no
 - Uncovered objectives (sample): 200-301-v1.1/1.12, 200-301-v1.1/1.13, 200-301-v1.1/2.1, 200-301-v1.1/2.2, 200-301-v1.1/2.8, 200-301-v1.1/3.5, 200-301-v1.1/4.5, 200-301-v1.1/4.7, 200-301-v1.1/4.8, 200-301-v1.1/4.9, 200-301-v1.1/5.2, 200-301-v1.1/5.3 (+9 more)
-- Note: mixedVersionWarning: Blueprint rows use official 200-301 v1.1 IDs (`200-301-v1.1/<number>`). Live Path A topics/quizzes still tag pilot `CCNA-*` IDs; progress keys must keep using pilot IDs. Coverage is computed through the alias mapping in mappings/ccna-pilot-to-v1.1.ts. Do not mix v2.0 objectives into this blueprint.
+- Note: mixedVersionWarning: Blueprint rows use official 200-301 v1.1 IDs (`200-301-v1.1/<number>`). Live Path A topics/quizzes still tag pilot `CCNA-*` IDs; progress keys must keep using pilot IDs. A separate v2.0 blueprint exists — do not mix IDs. Coverage via mappings/ccna-pilot-to-v1.1.ts.
 
 ### Computer Fundamentals (`computer-fundamentals`) — skills
 
