@@ -28,7 +28,7 @@ export function clearAllLearnerStorage(): void {
 }
 
 /** Bump when persisted shape changes; must match persist `version` in progress-store */
-export const PROGRESS_STORAGE_VERSION = 3;
+export const PROGRESS_STORAGE_VERSION = 4;
 
 function normalizeTopicMastery(
   topicMastery: Record<string, TopicMastery>
@@ -78,6 +78,10 @@ export function migrateProgressState(
     questionStats: state.questionStats ?? {},
     caseStudyAttempts: state.caseStudyAttempts ?? [],
     confidenceScores: state.confidenceScores,
+    ccnaPathwayPreference: state.ccnaPathwayPreference ?? {
+      intendedExamDate: null,
+      preferredObjectivesVersion: null,
+    },
   };
 }
 

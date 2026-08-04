@@ -1,6 +1,7 @@
 "use client";
 
 import type { QuizQuestion } from "@/content/types";
+import { getCcnaV20RemediationCopy } from "@/content/certifications/ccna/v20-remediation-copy";
 
 interface QuestionCardProps {
   question: QuizQuestion;
@@ -19,6 +20,15 @@ export function QuestionCard({
   onSelect,
   showResult = false,
 }: QuestionCardProps) {
+  const misconceptionHit =
+    showResult &&
+    selectedChoiceId != null &&
+    selectedChoiceId !== question.correctChoiceId &&
+    (question.misconceptionChoiceIds?.includes(selectedChoiceId) ?? false);
+  const remediation = misconceptionHit
+    ? getCcnaV20RemediationCopy(question.remediationActivityId)
+    : undefined;
+
   return (
     <div className="flex flex-col gap-4">
       <p className="text-xs text-zinc-500">
@@ -54,6 +64,18 @@ export function QuestionCard({
         <div className="rounded-xl border border-zinc-700 bg-zinc-800/50 p-4">
           <p className="text-xs font-medium text-sky-400">Explanation</p>
           <p className="mt-1 text-sm text-zinc-300">{question.explanation}</p>
+          {remediation && (
+            <div
+              className="mt-3 rounded-lg border border-amber-500/30 bg-amber-500/10 p-3"
+              data-testid="diagnostic-remediation"
+              data-remediation-id={question.remediationActivityId}
+            >
+              <p className="text-xs font-medium text-amber-300">
+                Misconception remediation — {remediation.title}
+              </p>
+              <p className="mt-1 text-sm text-zinc-300">{remediation.body}</p>
+            </div>
+          )}
         </div>
       )}
     </div>

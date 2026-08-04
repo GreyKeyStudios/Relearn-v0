@@ -139,8 +139,12 @@ npm run build
 npm run verify:curriculum
 npm run verify:curriculum -- --strict-ccna   # CES warnings for CCNA
 npm run verify:curriculum -- --strict-all     # CES warnings for all certs
+npm run verify:production                    # production schemas / QC / mastery contract
+npm run curriculum:gap-report                # per-track gap report (+ docs write)
 npx tsc --noEmit
 ```
+
+Curriculum production architecture (parallel authoring layer): [`docs/curriculum-production/README.md`](docs/curriculum-production/README.md).
 
 ---
 

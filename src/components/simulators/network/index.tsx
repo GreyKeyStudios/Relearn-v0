@@ -57,3 +57,6 @@ export function IpRangeDrill({ onComplete }: SimulatorComponentProps) {
 export function BinaryIpConverterDrill({ onComplete }: SimulatorComponentProps) {
   return <ChoiceDrillRunner pool={BINARY_IP_POOL} onComplete={onComplete} minItems={5} maxItems={7} />;
 }
+
+export { Ipv4TroubleshootDrill } from "./Ipv4TroubleshootDrill";
+export { AiPromptsNetopsDrill } from "./AiPromptsNetopsDrill";

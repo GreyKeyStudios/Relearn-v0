@@ -141,6 +141,7 @@ Before writing curriculum:
 | [`CURRICULUM_REVIEW_BOARD.md`](CURRICULUM_REVIEW_BOARD.md) | Critique pipeline, decision ledger, sign-off scoreboard |
 | [`AGENTIC_TESTING.md`](AGENTIC_TESTING.md) | Playwright / evidence / judge commands |
 | [`subject-onboarding-process.md`](subject-onboarding-process.md) | New subject checklist |
+| [`curriculum-production/README.md`](curriculum-production/README.md) | Production schemas, sources, validators, gap report, research guide |
 | [`learning-experience-standard.md`](learning-experience-standard.md) | LES (all templates) |
 | [`bridge-learning-standard.md`](bridge-learning-standard.md) | BLS pedagogy (Type A primary) |
 | [`git-github-learning-architecture.md`](git-github-learning-architecture.md) | Type B reference track map |

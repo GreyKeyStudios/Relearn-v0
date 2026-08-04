@@ -1,4 +1,5 @@
 import type { ExamObjective } from "@/content/types";
+import { getCcnaV20OfficialLine } from "@/content/production/objectives/ccna-200-301-v2.0";
 
 /** CCNA exam objectives — pilot catalog for objective-level mastery */
 export const CCNA_OBJECTIVES: ExamObjective[] = [
@@ -47,13 +48,30 @@ export const CCNA_OBJECTIVES: ExamObjective[] = [
 const byId = new Map(CCNA_OBJECTIVES.map((o) => [o.id, o]));
 
 export function getCcnaObjective(id: string): ExamObjective | undefined {
-  return byId.get(id);
+  const pilot = byId.get(id);
+  if (pilot) return pilot;
+  if (id.startsWith("200-301-v2.0/")) {
+    const number = id.slice("200-301-v2.0/".length);
+    const line = getCcnaV20OfficialLine(number);
+    if (!line) return undefined;
+    return {
+      id,
+      domain: line.domainName,
+      text: line.text,
+    };
+  }
+  return undefined;
 }
 
 export function getCcnaObjectiveShortLabel(id: string): string {
-  const obj = byId.get(id);
-  if (!obj) return id.replace("CCNA-", "");
-  const num = id.replace("CCNA-", "");
+  const obj = getCcnaObjective(id);
+  if (!obj) {
+    if (id.startsWith("200-301-v2.0/")) return id.replace("200-301-v2.0/", "v2.0 ");
+    return id.replace("CCNA-", "");
+  }
+  const num = id.startsWith("200-301-v2.0/")
+    ? `v2.0 ${id.replace("200-301-v2.0/", "")}`
+    : id.replace("CCNA-", "");
   const short = obj.text.length > 42 ? obj.text.slice(0, 39) + "…" : obj.text;
   return `${num} ${short}`;
 }
