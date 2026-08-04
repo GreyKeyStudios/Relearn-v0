@@ -164,7 +164,8 @@ function buildSecurityPlusBlueprint(): ExamBlueprint {
     confidence: "needs-retrieval",
     notes:
       "Domain weights from CompTIA Security+ product page (Exa 2026-08-04). " +
-      "Objective-line PDF not yet mapped into topic.objectives — next batch.",
+      "objectives[] empty on purpose — product-page weights are NOT a complete objective mapping. " +
+      "SY0-701 retirement ~2026 is CompTIA's ESTIMATE only.",
   };
 }
 
@@ -188,7 +189,8 @@ function buildNetworkPlusBlueprint(): ExamBlueprint {
     ],
     confidence: "needs-retrieval",
     notes:
-      "Domain weights from CompTIA Network+ product page (Exa 2026-08-04). N10-008 is retired.",
+      "Domain weights from CompTIA Network+ product page (Exa 2026-08-04). N10-008 is retired. " +
+      "objectives[] empty on purpose — domain weights are not a complete objective mapping.",
   };
 }
 
@@ -199,7 +201,7 @@ function buildCysaPlusBlueprint(): ExamBlueprint {
     vendor: "CompTIA",
     examName: "CompTIA CySA+",
     examCodes: ["CS0-003"],
-    objectivesVersion: "V3 / Objectives 3.0",
+    objectivesVersion: "V3 / CS0-003 (retiring)",
     retrievedAt: RETRIEVED,
     lastCheckedAt: RETRIEVED,
     sourceIds: ["src-cysa-plus-cs0-003"],
@@ -210,9 +212,12 @@ function buildCysaPlusBlueprint(): ExamBlueprint {
       domainOnly("4.0", "Reporting and Communication", 17),
     ],
     confidence: "needs-retrieval",
+    mixedVersionWarning:
+      "This blueprint is CS0-003 only. CompTIA CS0-004 (V4) launched 2026-06-23 and is intentionally " +
+      "NOT registered here — create a separate blueprint after official V4 objectives PDF ingestion.",
     notes:
-      "Domain weights from CompTIA CySA+ materials (Exa 2026-08-04). " +
-      "English exam retires 2026-12-22 — prioritize successor mapping.",
+      "Domain weights from CompTIA CySA+ V3 product page (Exa 2026-08-04) — not a full objectives PDF. " +
+      "English retires 2026-12-22; JP/PT/ES retire 2027-03-23. objectives[] intentionally empty until PDF mapping.",
   };
 }
 
@@ -292,24 +297,19 @@ function buildItilBlueprint(): ExamBlueprint {
     vendor: "PeopleCert / AXELOS",
     examName: "ITIL 4 Foundation",
     examCodes: ["ITIL4-Foundation"],
-    objectivesVersion: "ITIL 4 Foundation",
+    objectivesVersion: "ITIL 4 Foundation (syllabus not fully inspected)",
     retrievedAt: RETRIEVED,
     lastCheckedAt: RETRIEVED,
     sourceIds: ["src-itil4-foundation-peoplecert"],
-    domains: [
-      domainOnly("1", "Key concepts of service management"),
-      domainOnly("2", "ITIL guiding principles"),
-      domainOnly("3", "Four dimensions of service management"),
-      domainOnly("4", "Service value system"),
-      domainOnly("5", "Service value chain"),
-      domainOnly("6", "ITIL practices (purpose/key terms)"),
-      domainOnly("7", "ITIL practices (detailed)"),
-    ],
+    // Intentionally empty: PeopleCert product page is not a fully inspected official syllabus.
+    // Do not reconstruct numbered domains from third-party study guides.
+    domains: [],
     confidence: "needs-retrieval",
     notes:
-      "Domain titles summarized from commonly published syllabus structure; " +
-      "confirm against official PeopleCert/AXELOS syllabus before objective tagging. " +
-      "Exam: 40 questions, 65% pass (PeopleCert page, Exa 2026-08-04).",
+      "Exam logistics confirmed from PeopleCert page (Exa 2026-08-04): 40 questions, 60 minutes, " +
+      "closed book, 65% pass. Official syllabus/handbook learning-outcome structure was NOT fully inspected — " +
+      "domains[] and objectives[] left empty until that document is retrieved. " +
+      "A first-party product page is not equivalent to a complete objectives/syllabus document.",
   };
 }
 

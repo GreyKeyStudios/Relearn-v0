@@ -1,6 +1,6 @@
 # ReLearn Curriculum Gap Report
 
-Generated: 2026-08-04T04:12:27.904Z
+Generated: 2026-08-04T04:25:09.911Z
 
 ## Totals
 
@@ -25,6 +25,7 @@ Generated: 2026-08-04T04:12:27.904Z
 - Missing exam blueprint: no
 - Uncovered objectives (sample): CCNA-2.1, CCNA-2.2
 - Note: Blueprint exists but needs first-party retrieval before official-alignment claims.
+- Note: mixedVersionWarning: Official exam is 200-301 CCNA v1.1 (Cisco Learning Network, retrieved 2026-08-04). Objective rows below still use the internal pilot catalog (src/content/objectives/ccna.ts), which does not match v1.1 numbering one-for-one. Remap in a dedicated batch; do not invent IDs here.
 
 ### Computer Fundamentals (`computer-fundamentals`) — skills
 
@@ -105,6 +106,7 @@ Generated: 2026-08-04T04:12:27.904Z
 - Invalid correctChoiceId: 0; duplicate question ids: 0; broken prereqs: 0
 - Missing exam blueprint: no
 - Note: Blueprint exists but needs first-party retrieval before official-alignment claims.
+- Note: Blueprint has domain weights only (objectives[] empty) — not a complete objective mapping.
 - Note: No LES experiences authored yet for this track.
 
 ### CompTIA Network+ (`network-plus`) — certification
@@ -118,6 +120,7 @@ Generated: 2026-08-04T04:12:27.904Z
 - Invalid correctChoiceId: 0; duplicate question ids: 0; broken prereqs: 0
 - Missing exam blueprint: no
 - Note: Blueprint exists but needs first-party retrieval before official-alignment claims.
+- Note: Blueprint has domain weights only (objectives[] empty) — not a complete objective mapping.
 - Note: No LES experiences authored yet for this track.
 
 ### CompTIA Cybersecurity Analyst (`cysa-plus`) — certification
@@ -131,6 +134,8 @@ Generated: 2026-08-04T04:12:27.904Z
 - Invalid correctChoiceId: 0; duplicate question ids: 0; broken prereqs: 0
 - Missing exam blueprint: no
 - Note: Blueprint exists but needs first-party retrieval before official-alignment claims.
+- Note: Blueprint has domain weights only (objectives[] empty) — not a complete objective mapping.
+- Note: mixedVersionWarning: This blueprint is CS0-003 only. CompTIA CS0-004 (V4) launched 2026-06-23 and is intentionally NOT registered here — create a separate blueprint after official V4 objectives PDF ingestion.
 - Note: No LES experiences authored yet for this track.
 
 ### AWS Certified Cloud Practitioner (`aws-cloud-practitioner`) — certification
@@ -144,6 +149,7 @@ Generated: 2026-08-04T04:12:27.904Z
 - Invalid correctChoiceId: 0; duplicate question ids: 0; broken prereqs: 0
 - Missing exam blueprint: no
 - Note: Blueprint exists but needs first-party retrieval before official-alignment claims.
+- Note: Blueprint has domain weights only (objectives[] empty) — not a complete objective mapping.
 - Note: No LES experiences authored yet for this track.
 
 ### Microsoft Azure Fundamentals (`azure-fundamentals`) — certification
@@ -157,6 +163,7 @@ Generated: 2026-08-04T04:12:27.904Z
 - Invalid correctChoiceId: 0; duplicate question ids: 0; broken prereqs: 0
 - Missing exam blueprint: no
 - Note: Blueprint exists but needs first-party retrieval before official-alignment claims.
+- Note: Blueprint has domain weights only (objectives[] empty) — not a complete objective mapping.
 - Note: No LES experiences authored yet for this track.
 
 ### CompTIA Linux+ (`linux-plus`) — certification
@@ -170,6 +177,7 @@ Generated: 2026-08-04T04:12:27.904Z
 - Invalid correctChoiceId: 0; duplicate question ids: 0; broken prereqs: 0
 - Missing exam blueprint: no
 - Note: Blueprint exists but needs first-party retrieval before official-alignment claims.
+- Note: Blueprint has domain weights only (objectives[] empty) — not a complete objective mapping.
 - Note: No LES experiences authored yet for this track.
 
 ### ITIL 4 Foundation (`itil-foundation`) — certification
@@ -183,6 +191,7 @@ Generated: 2026-08-04T04:12:27.904Z
 - Invalid correctChoiceId: 0; duplicate question ids: 0; broken prereqs: 0
 - Missing exam blueprint: no
 - Note: Blueprint exists but needs first-party retrieval before official-alignment claims.
+- Note: Blueprint has no domains — official syllabus/objectives structure not fully inspected.
 - Note: No LES experiences authored yet for this track.
 
 ## Planned tracks

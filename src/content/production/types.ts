@@ -77,15 +77,26 @@ export interface SourceRecord {
   url?: string;
   /** Document or exam version string when applicable */
   version?: string;
-  /** ISO date YYYY-MM-DD when the source was retrieved */
+  /**
+   * UTC calendar date (YYYY-MM-DD) when the source was retrieved.
+   * Date-of-record only — not a local wall-clock timestamp. Compare as strings
+   * or at noon UTC (`T12:00:00Z`) to avoid timezone day-shift.
+   */
   retrievedAt?: string;
-  /** ISO date of last live check */
+  /**
+   * UTC calendar date (YYYY-MM-DD) of the last live check.
+   * Same semantics as `retrievedAt`.
+   */
   lastCheckedAt?: string;
   confidence: SourceConfidence;
   notes?: string;
   /** Explicit flag when mixing versions is unavoidable */
   mixedVersionWarning?: string;
-  /** ISO date by which this source/fact must be re-checked */
+  /**
+   * UTC calendar date (YYYY-MM-DD) by which this source/fact must be re-checked.
+   * Estimated retirements must say "estimated" in notes/futureReviewReason —
+   * never present them as officially confirmed cutover dates.
+   */
   reviewBy?: string;
   /** Why a future review is required */
   futureReviewReason?: string;
@@ -322,7 +333,10 @@ export interface LessonProductionSpec {
   estimatedStudyMinutes?: number;
 }
 
-/** Maps a track to one official exam blueprint version. */
+/**
+ * Maps a track to one official exam blueprint version.
+ * One blueprint = one exam version. Never silently attach v2 objectives to a v1 track.
+ */
 export interface ExamBlueprint {
   id: string;
   trackId: string;
@@ -331,9 +345,16 @@ export interface ExamBlueprint {
   examCodes: string[];
   /** Document version from first-party objectives */
   objectivesVersion: string;
+  /** UTC calendar date YYYY-MM-DD (date-of-record) */
   retrievedAt: string;
+  /** UTC calendar date YYYY-MM-DD (date-of-record) */
   lastCheckedAt?: string;
   sourceIds: string[];
+  /**
+   * Domain entries may carry weights with `objectives: []`.
+   * Empty objective arrays mean "not yet mapped" — never treat weights as a
+   * complete objectives document.
+   */
   domains: ExamBlueprintDomain[];
   /** Set when any objective text mixes versions */
   mixedVersionWarning?: string;
@@ -344,7 +365,12 @@ export interface ExamBlueprint {
 export interface ExamBlueprintDomain {
   id: string;
   name: string;
+  /** Exam weight percent when published as a single number (not a range). */
   weightPercent?: number;
+  /**
+   * Official objective line items. Empty until a PDF/line mapping batch.
+   * Domain weights alone are NOT a substitute for this array.
+   */
   objectives: ExamBlueprintObjective[];
 }
 

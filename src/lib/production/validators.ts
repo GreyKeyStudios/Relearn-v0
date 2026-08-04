@@ -21,8 +21,18 @@ import {
 import { listAllSubjects } from "@/content/production/hierarchy";
 import type { ProductionValidationIssue } from "@/content/production/types";
 
+/** UTC calendar date-of-record (YYYY-MM-DD). Not a local wall-clock timestamp. */
+const ISO_CALENDAR_DATE = /^\d{4}-\d{2}-\d{2}$/;
+
 function allQuestions(topic: Topic): QuizQuestion[] {
   return [...topic.quiz, ...(topic.questionBank ?? [])];
+}
+
+function isIsoCalendarDate(value: string | undefined): boolean {
+  if (!value) return true;
+  if (!ISO_CALENDAR_DATE.test(value)) return false;
+  const t = Date.parse(`${value}T12:00:00Z`);
+  return !Number.isNaN(t);
 }
 
 export function validateDuplicateIds(
@@ -207,6 +217,24 @@ export function validateMissingSourceRecords(): ProductionValidationIssue[] {
         message: blueprint.mixedVersionWarning,
       });
     }
+    if (!isIsoCalendarDate(blueprint.retrievedAt)) {
+      issues.push({
+        code: "invalid-calendar-date",
+        severity: "error",
+        trackId: blueprint.trackId,
+        entityId: blueprint.id,
+        message: `Blueprint retrievedAt must be UTC calendar YYYY-MM-DD, got "${blueprint.retrievedAt}"`,
+      });
+    }
+    if (!isIsoCalendarDate(blueprint.lastCheckedAt)) {
+      issues.push({
+        code: "invalid-calendar-date",
+        severity: "error",
+        trackId: blueprint.trackId,
+        entityId: blueprint.id,
+        message: `Blueprint lastCheckedAt must be UTC calendar YYYY-MM-DD, got "${blueprint.lastCheckedAt}"`,
+      });
+    }
   }
 
   for (const subject of listAllSubjects()) {
@@ -222,6 +250,42 @@ export function validateMissingSourceRecords(): ProductionValidationIssue[] {
     }
   }
 
+  return issues;
+}
+
+/**
+ * Domain weights / empty objective arrays must not be mistaken for complete mappings.
+ * Also catches blueprints that deferred all structure pending syllabus inspection.
+ */
+export function validateBlueprintObjectiveHonesty(): ProductionValidationIssue[] {
+  const issues: ProductionValidationIssue[] = [];
+  for (const blueprint of listExamBlueprints()) {
+    const objectiveCount = blueprint.domains.reduce(
+      (sum, d) => sum + d.objectives.length,
+      0
+    );
+    if (blueprint.domains.length === 0) {
+      issues.push({
+        code: "blueprint-structure-incomplete",
+        severity: "warning",
+        trackId: blueprint.trackId,
+        entityId: blueprint.id,
+        message:
+          "Blueprint has no domains — official syllabus/objectives structure not fully inspected yet",
+      });
+      continue;
+    }
+    if (objectiveCount === 0) {
+      issues.push({
+        code: "domain-weights-only",
+        severity: "warning",
+        trackId: blueprint.trackId,
+        entityId: blueprint.id,
+        message:
+          "Blueprint has domains/weights but empty objectives[] — domain weights are not a complete objective mapping",
+      });
+    }
+  }
   return issues;
 }
 
@@ -325,9 +389,40 @@ export function validateProductionRegistry(): ProductionValidationIssue[] {
         message: `Source has futureReviewReason but no reviewBy date`,
       });
     }
+    for (const [field, value] of [
+      ["retrievedAt", source.retrievedAt],
+      ["lastCheckedAt", source.lastCheckedAt],
+      ["reviewBy", source.reviewBy],
+    ] as const) {
+      if (value != null && !isIsoCalendarDate(value)) {
+        issues.push({
+          code: "invalid-calendar-date",
+          severity: "error",
+          entityId: source.id,
+          message: `Source ${field} must be UTC calendar YYYY-MM-DD, got "${value}"`,
+        });
+      }
+    }
+    if (source.mixedVersionWarning) {
+      issues.push({
+        code: "mixed-exam-version",
+        severity: "warning",
+        entityId: source.id,
+        message: source.mixedVersionWarning,
+      });
+    }
   }
 
   for (const flag of listFutureReviewFlags()) {
+    if (!isIsoCalendarDate(flag.reviewBy)) {
+      issues.push({
+        code: "invalid-calendar-date",
+        severity: "error",
+        trackId: flag.subject,
+        entityId: flag.id,
+        message: `FutureReviewFlag reviewBy must be UTC calendar YYYY-MM-DD, got "${flag.reviewBy}"`,
+      });
+    }
     const severity =
       flag.severity === "critical"
         ? "warning"
@@ -351,6 +446,7 @@ export function runAllProductionValidators(): ProductionValidationIssue[] {
 
   issues.push(...validateProductionRegistry());
   issues.push(...validateMissingSourceRecords());
+  issues.push(...validateBlueprintObjectiveHonesty());
   issues.push(...validateUncoveredObjectives());
 
   for (const cert of CERTIFICATIONS) {

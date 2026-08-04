@@ -10,11 +10,11 @@ import {
   SRS_PASS_PERCENT,
   WEAK_CLEAR_PERCENT,
 } from "@/lib/mastery-thresholds";
-import { scoreToLevel } from "@/lib/mastery";
+import { scoreToLevel, SRS_INTERVALS } from "@/lib/mastery";
 import type { MasteryRequirementSpec } from "./types";
 
-/** Must match `SRS_INTERVALS` in `src/lib/mastery.ts`. */
-export const PRODUCTION_SRS_INTERVALS = [1, 3, 7, 14, 30] as const;
+/** Re-export of live SRS ladder — never maintain a divergent copy. */
+export const PRODUCTION_SRS_INTERVALS = SRS_INTERVALS;
 
 export const PRODUCTION_MASTERY_REQUIREMENTS: MasteryRequirementSpec = {
   quizPassPercent: QUIZ_PASS_PERCENT,
@@ -41,28 +41,35 @@ export function assertMasteryCompatibility(): string[] {
   const errors: string[] = [];
   const req = PRODUCTION_MASTERY_REQUIREMENTS;
 
-  if (req.quizPassPercent !== 70) {
-    errors.push(`quizPassPercent expected 70, got ${req.quizPassPercent}`);
-  }
-  if (req.srsAdvancePercent !== 80) {
-    errors.push(`srsAdvancePercent expected 80, got ${req.srsAdvancePercent}`);
-  }
-  if (req.weakClearPercent !== 90) {
-    errors.push(`weakClearPercent expected 90, got ${req.weakClearPercent}`);
-  }
-  if (req.objectiveWeakPercent !== 70) {
+  if (req.quizPassPercent !== QUIZ_PASS_PERCENT) {
     errors.push(
-      `objectiveWeakPercent expected 70, got ${req.objectiveWeakPercent}`
+      `quizPassPercent expected ${QUIZ_PASS_PERCENT}, got ${req.quizPassPercent}`
     );
   }
-  if (req.objectiveMinAttempts !== 3) {
+  if (req.srsAdvancePercent !== SRS_PASS_PERCENT) {
     errors.push(
-      `objectiveMinAttempts expected 3, got ${req.objectiveMinAttempts}`
+      `srsAdvancePercent expected ${SRS_PASS_PERCENT}, got ${req.srsAdvancePercent}`
     );
   }
-  if (req.srsIntervalDays.join(",") !== "1,3,7,14,30") {
+  if (req.weakClearPercent !== WEAK_CLEAR_PERCENT) {
     errors.push(
-      `srsIntervalDays expected 1,3,7,14,30 got ${req.srsIntervalDays.join(",")}`
+      `weakClearPercent expected ${WEAK_CLEAR_PERCENT}, got ${req.weakClearPercent}`
+    );
+  }
+  if (req.objectiveWeakPercent !== OBJECTIVE_WEAK_PERCENT) {
+    errors.push(
+      `objectiveWeakPercent expected ${OBJECTIVE_WEAK_PERCENT}, got ${req.objectiveWeakPercent}`
+    );
+  }
+  if (req.objectiveMinAttempts !== OBJECTIVE_MIN_ATTEMPTS) {
+    errors.push(
+      `objectiveMinAttempts expected ${OBJECTIVE_MIN_ATTEMPTS}, got ${req.objectiveMinAttempts}`
+    );
+  }
+  const liveSrs = SRS_INTERVALS.join(",");
+  if (req.srsIntervalDays.join(",") !== liveSrs) {
+    errors.push(
+      `srsIntervalDays expected ${liveSrs} (live SRS_INTERVALS), got ${req.srsIntervalDays.join(",")}`
     );
   }
 

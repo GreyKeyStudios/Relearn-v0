@@ -2,12 +2,13 @@
 
 **Branch:** `cursor/curriculum-production-architecture-b6be`  
 **Base:** `dev`  
-**Date:** 2026-08-04
+**Date:** 2026-08-04  
+**Adversarial review:** see [`ADVERSARIAL_REVIEW.md`](ADVERSARIAL_REVIEW.md)
 
 ## Scope
 
 Native ReLearn implementation of the curriculum production system (schemas, prerequisite graphs, exam blueprints, sources, freshness, validators, gap report, templates, agent research guide).  
-**No mass lesson production.** Live Path A runtime types, mastery scoring, and SRS intervals were not changed.
+**No mass lesson production.** Live Path A runtime types, mastery scoring, and SRS intervals were not changed (SRS_INTERVALS was exported for drift detection only).
 
 ## Commands run
 

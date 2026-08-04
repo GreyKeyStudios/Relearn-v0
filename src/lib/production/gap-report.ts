@@ -112,6 +112,24 @@ export function buildTrackGapSummary(cert: Certification): TrackGapSummary {
       "Blueprint exists but needs first-party retrieval before official-alignment claims."
     );
   }
+  if (blueprint) {
+    const objectiveCount = blueprint.domains.reduce(
+      (sum, d) => sum + d.objectives.length,
+      0
+    );
+    if (blueprint.domains.length === 0) {
+      notes.push(
+        "Blueprint has no domains — official syllabus/objectives structure not fully inspected."
+      );
+    } else if (objectiveCount === 0) {
+      notes.push(
+        "Blueprint has domain weights only (objectives[] empty) — not a complete objective mapping."
+      );
+    }
+    if (blueprint.mixedVersionWarning) {
+      notes.push(`mixedVersionWarning: ${blueprint.mixedVersionWarning}`);
+    }
+  }
   if (topicsMinimalCes > topics.length / 2) {
     notes.push("Majority of topics are still CES minimal — prioritize expansion batches.");
   }

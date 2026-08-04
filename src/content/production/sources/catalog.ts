@@ -74,7 +74,7 @@ export const PRODUCTION_SOURCES: SourceRecord[] = [
   {
     id: "src-security-plus-sy0-701",
     title: "CompTIA Security+ (V7) — SY0-701 product page",
-    kind: "official-exam-objectives",
+    kind: "official-vendor-docs",
     publisher: "CompTIA",
     version: "V7 / SY0-701",
     url: "https://www.comptia.org/en/certifications/security/",
@@ -83,19 +83,20 @@ export const PRODUCTION_SOURCES: SourceRecord[] = [
     confidence: "verified",
     retrievalMethod: "exa",
     notes:
-      "Domain summary weights from CompTIA product page: General Security Concepts 12%; " +
-      "Threats, Vulnerabilities, and Mitigations 22%; Security Architecture 18%; " +
-      "Security Operations 28%; Security Program Management and Oversight 20%. " +
-      "Launch 2023-11-07; retirement usually ~3 years after launch (estimated 2026). " +
-      "Full objective-line PDF not ingested into ReLearn registry yet — download official objectives before remapping topic tags.",
+      "First-party product page (NOT a complete objectives PDF). Domain summary weights only: " +
+      "General Security Concepts 12%; Threats, Vulnerabilities, and Mitigations 22%; " +
+      "Security Architecture 18%; Security Operations 28%; Security Program Management and Oversight 20%. " +
+      "Launch 2023-11-07. CompTIA wording: retirement usually three years after launch (estimated 2026) — " +
+      "this is an ESTIMATE, not an officially confirmed cutover date. " +
+      "Full objective-line PDF not ingested — download official objectives before remapping topic tags.",
     reviewBy: "2026-10-01",
     futureReviewReason:
-      "Estimated retirement ~2026 — confirm successor exam code before Security+ content expansion batches.",
+      "Confirm exact SY0-701 retirement / successor exam code (estimate only today) before Security+ expansion batches.",
   },
   {
     id: "src-network-plus-n10-009",
     title: "CompTIA Network+ (V9) — N10-009 product page",
-    kind: "official-exam-objectives",
+    kind: "official-vendor-docs",
     publisher: "CompTIA",
     version: "V9 / N10-009",
     url: "https://www.comptia.org/en/certifications/network/",
@@ -104,30 +105,61 @@ export const PRODUCTION_SOURCES: SourceRecord[] = [
     confidence: "verified",
     retrievalMethod: "exa",
     notes:
-      "Domain summary weights: Networking Concepts 23%; Network Implementation 20%; " +
-      "Network Operations 19%; Network Security 14%; Network Troubleshooting 24%. " +
-      "Launch 2024-06-20; N10-008 retired. Full objective-line PDF mapping deferred.",
+      "First-party product page (NOT a complete objectives PDF). Domain summary weights only: " +
+      "Networking Concepts 23%; Network Implementation 20%; Network Operations 19%; " +
+      "Network Security 14%; Network Troubleshooting 24%. " +
+      "Launch 2024-06-20; N10-008 retired. CompTIA wording also lists retirement usually ~3 years " +
+      "(estimated 2027) — estimate only. Full objective-line PDF mapping deferred.",
     reviewBy: "2027-01-01",
     futureReviewReason: "Confirm no V10 announcement; keep curriculum on N10-009 only.",
   },
   {
     id: "src-cysa-plus-cs0-003",
-    title: "CompTIA CySA+ (V3) — CS0-003 objectives / product page",
-    kind: "official-exam-objectives",
+    title: "CompTIA CySA+ (V3) — CS0-003 product page (retiring)",
+    kind: "official-vendor-docs",
     publisher: "CompTIA",
-    version: "V3 / CS0-003 / Objectives 3.0",
+    version: "V3 / CS0-003",
     url: "https://www.comptia.org/en/certifications/cybersecurity-analyst/v3/",
     retrievedAt: RETRIEVED,
     lastCheckedAt: RETRIEVED,
     confidence: "verified",
     retrievalMethod: "exa",
     notes:
-      "Domain weights from objectives PDF / product summary: Security Operations 33%; " +
-      "Vulnerability Management 30%; Incident Response and Management 20%; Reporting and Communication 17%. " +
-      "English V3 retiring 2026-12-22 (Japanese/Portuguese/Spanish 2027-03-16 per CompTIA V3 page).",
+      "First-party V3 product page (NOT a complete objectives PDF). Domain summary weights: " +
+      "Security Operations 33%; Vulnerability Management 30%; Incident Response and Management 20%; " +
+      "Reporting and Communication 17%. " +
+      "Confirmed retirement: English 2026-12-22; Japanese/Portuguese/Spanish 2027-03-23 " +
+      "(adversarial re-check of CompTIA V3 page on 2026-08-04). " +
+      "Successor CS0-004 (V4) already launched 2026-06-23 — see src-cysa-plus-cs0-004. " +
+      "Do not mix CS0-003 and CS0-004 unmarked.",
+    mixedVersionWarning:
+      "ReLearn CySA+ blueprint currently targets retiring CS0-003 while CompTIA already ships CS0-004 (V4). " +
+      "Keep versions isolated until a dedicated cutover batch.",
     reviewBy: "2026-11-01",
     futureReviewReason:
-      "CS0-003 English retirement 2026-12-22 — map successor blueprint before continuing CySA+ expansion.",
+      "CS0-003 English retirement 2026-12-22 — ingest CS0-004 objectives and cut over before that date.",
+  },
+  {
+    id: "src-cysa-plus-cs0-004",
+    title: "CompTIA CySA+ (V4) — CS0-004 product page",
+    kind: "official-vendor-docs",
+    publisher: "CompTIA",
+    version: "V4 / CS0-004",
+    url: "https://www.comptia.org/en/certifications/cybersecurity-analyst/v4/",
+    retrievedAt: RETRIEVED,
+    lastCheckedAt: RETRIEVED,
+    confidence: "needs-retrieval",
+    retrievalMethod: "exa",
+    notes:
+      "Successor exam page confirmed via Exa 2026-08-04. Launch 2026-06-23; exam code CS0-004. " +
+      "Product-page domain summary exists (e.g. Security Operations 34%) but full objectives PDF " +
+      "was not ingested and no V4 ExamBlueprint is registered yet — do not invent objective lines. " +
+      "A first-party product page is not a complete objectives document.",
+    mixedVersionWarning:
+      "Do not attach CS0-004 facts to the CS0-003 blueprint. Create a separate blueprint when PDF mapping lands.",
+    reviewBy: "2026-11-01",
+    futureReviewReason:
+      "Download official CS0-004 objectives PDF and author a version-isolated blueprint before CS0-003 English retirement.",
   },
   {
     id: "src-linux-plus-xk0-005",
@@ -158,10 +190,11 @@ export const PRODUCTION_SOURCES: SourceRecord[] = [
     confidence: "verified",
     retrievalMethod: "exa",
     notes:
-      "Domains: Cloud Concepts 24%; Security and Compliance 30%; Cloud Technology and Services 34%; " +
-      "Billing, Pricing, and Support 12%. Passing scaled score 700. " +
+      "Official exam guide PDF (first-party). Domains: Cloud Concepts 24%; Security and Compliance 30%; " +
+      "Cloud Technology and Services 34%; Billing, Pricing, and Support 12%. Passing scaled score 700. " +
       "Product page: https://aws.amazon.com/certification/certified-cloud-practitioner/. " +
-      "Indonesian language variant retires after 2026-07-16 (exam still offered in other languages).",
+      "Indonesian language variant end-of-support notice: retired after 2026-07-16 " +
+      "(as of 2026-08-04 that window has passed; exam remains offered in other languages).",
     reviewBy: "2026-12-01",
     futureReviewReason: "Watch for CLF-C03 or exam-guide revision.",
   },
@@ -186,7 +219,7 @@ export const PRODUCTION_SOURCES: SourceRecord[] = [
   {
     id: "src-itil4-foundation-peoplecert",
     title: "ITIL 4 Foundation — PeopleCert certification page",
-    kind: "official-exam-objectives",
+    kind: "official-vendor-docs",
     publisher: "PeopleCert / AXELOS",
     version: "ITIL 4 Foundation",
     url: "https://www.peoplecert.org/browse-certifications/it-governance-and-service-management/ITIL-1/itil-4-foundation-2565",
@@ -195,11 +228,15 @@ export const PRODUCTION_SOURCES: SourceRecord[] = [
     confidence: "needs-retrieval",
     retrievalMethod: "exa",
     notes:
-      "Official certification page confirms closed-book exam, 40 questions, 65% pass. " +
-      "Detailed syllabus learning outcomes should come from the official ITIL 4 Foundation syllabus / handbook — " +
-      "do not treat third-party syllabus PDFs as first-party without cross-check.",
+      "First-party certification/marketing page — NOT a fully inspected official syllabus. " +
+      "Confirmed exam logistics only: closed book, 40 multiple-choice questions, 60 minutes, 65% pass. " +
+      "Page lists high-level 'What will you learn' topics (service management concepts, SVS, four dimensions, " +
+      "guiding principles, service value chain, practices, etc.) but these are not numbered learning-outcome codes. " +
+      "Do not treat third-party syllabus PDFs or reconstructed domain lists as official until the PeopleCert/AXELOS " +
+      "syllabus/handbook is fully inspected.",
     reviewBy: "2026-11-01",
-    futureReviewReason: "Obtain/confirm official syllabus document version from PeopleCert/AXELOS.",
+    futureReviewReason:
+      "Obtain and fully inspect the official ITIL 4 Foundation syllabus/handbook before authoring objective mappings.",
   },
 
   // ── Academic / standards / government sources ──────────────────────────
@@ -239,13 +276,13 @@ export const PRODUCTION_SOURCES: SourceRecord[] = [
     version: "BCP 5 / February 1996",
     url: "https://www.rfc-editor.org/rfc/rfc1918",
     retrievedAt: RETRIEVED,
-    confidence: "needs-retrieval",
+    lastCheckedAt: RETRIEVED,
+    confidence: "verified",
     retrievalMethod: "exa",
     notes:
-      "Canonical private IPv4 ranges. Marked needs-retrieval until a full Exa fetch of this URL is stored in a research batch; " +
-      "URL and identity are well-established standards-track references.",
-    reviewBy: "2026-09-01",
-    futureReviewReason: "Fetch full RFC text on next research pass and confirm no status change.",
+      "Complete inspected standard (BCP 5). Full RFC text retrieved via Exa from rfc-editor.org on 2026-08-04 " +
+      "(status Best Current Practice; obsoletes 1627/1597). Prefer for private IPv4 addressing facts. " +
+      "Cite later RFCs when teaching features they update.",
   },
   {
     id: "src-nist-sp800-53r5",
@@ -255,13 +292,18 @@ export const PRODUCTION_SOURCES: SourceRecord[] = [
     version: "Rev. 5",
     url: "https://csrc.nist.gov/pubs/sp/800/53/r5/final",
     retrievedAt: RETRIEVED,
+    lastCheckedAt: RETRIEVED,
     confidence: "needs-retrieval",
     retrievalMethod: "exa",
     notes:
-      "Government standards source for security-control vocabulary. " +
-      "Initial Exa fetch hit a redirect from an older detail URL — use the pubs path above and re-fetch full text before quoting controls.",
+      "METADATA-ONLY / PARTIAL retrieval — not a complete inspected standard. " +
+      "Adversarial Exa re-fetch of the pubs landing page (2026-08-04) returned confusing status copy " +
+      "('Withdrawn on December 10, 2020. Superseded by SP 800-53 Rev. 5') and 'Publication: No Download Available'. " +
+      "Control-family names appeared in page metadata, but the authoritative PDF was not obtained. " +
+      "Do not quote control IDs or claim full SP 800-53 alignment until the official PDF is downloaded and inspected.",
     reviewBy: "2026-09-15",
-    futureReviewReason: "Confirm Rev. 5 / update status and download authoritative PDF before citing control IDs.",
+    futureReviewReason:
+      "Download authoritative SP 800-53 Rev. 5 PDF (and any errata) before citing control IDs; keep confidence needs-retrieval until then.",
   },
 
   // ── Internal ReLearn architecture sources ───────────────────────────────
@@ -365,19 +407,32 @@ export const FUTURE_REVIEW_FLAGS: FutureReviewFlag[] = [
   {
     id: "review-cysa-cs0-003-retirement",
     subject: "cysa-plus",
-    fact: "CySA+ CS0-003 English retires 2026-12-22",
+    fact: "CySA+ CS0-003 English retires 2026-12-22; JP/PT/ES retire 2027-03-23",
     sourceIds: ["src-cysa-plus-cs0-003"],
     reviewBy: "2026-11-01",
     severity: "critical",
+    notes:
+      "Confirmed on CompTIA CySA+ V3 page (Exa 2026-08-04). Prior catalog draft incorrectly said 2027-03-16 for translations.",
+  },
+  {
+    id: "review-cysa-cs0-004-cutover",
+    subject: "cysa-plus",
+    fact: "CySA+ CS0-004 (V4) launched 2026-06-23; no V4 blueprint or objective lines registered yet",
+    sourceIds: ["src-cysa-plus-cs0-004", "src-cysa-plus-cs0-003"],
+    reviewBy: "2026-11-01",
+    severity: "critical",
+    notes:
+      "Keep CS0-003 and CS0-004 isolated. Product page ≠ complete objectives PDF.",
   },
   {
     id: "review-security-plus-estimated-retirement",
     subject: "security-plus",
-    fact: "Security+ SY0-701 retirement estimated ~2026 (CompTIA usual ~3 years after launch)",
+    fact: "Security+ SY0-701 retirement ESTIMATED ~2026 (CompTIA: usually three years after launch) — not an officially confirmed date",
     sourceIds: ["src-security-plus-sy0-701"],
     reviewBy: "2026-10-01",
     severity: "warning",
-    notes: "Estimate from CompTIA product page wording — confirm exact retirement date before rewriting content.",
+    notes:
+      "CompTIA product page itself labels this as an estimate. Do not rewrite curriculum as if a hard cutover date is confirmed.",
   },
   {
     id: "review-azure-skills-measured",

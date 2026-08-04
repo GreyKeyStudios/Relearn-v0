@@ -81,8 +81,10 @@ See [`SOURCE_RETRIEVAL_LOG.md`](SOURCE_RETRIEVAL_LOG.md) for the 2026-08-04 Exa 
 
 - Open the **current** vendor objectives PDF/page; update retrieval date in the same PR as any renumbering.
 - A+: only V15 `220-1201` / `220-1202` — see [`../a-plus-objectives-source.md`](../a-plus-objectives-source.md).
-- CCNA: `src/content/objectives/ccna.ts` is a **pilot catalog** (`needs-retrieval`) until first-party Cisco topics are recorded.
+- CCNA: first-party 200-301 v1.1 topics are recorded (`src-cisco-ccna-200-301-v1.1`); `src/content/objectives/ccna.ts` remains a **pilot catalog** with `mixedVersionWarning` until remapped — never claim pilot IDs are official v1.1 lines.
+- A first-party **product page** is not automatically a complete objectives/syllabus document. Prefer official PDFs for objective-line mapping; keep `objectives: []` until then.
 - Tag quiz/bank items with `objectiveId` consistent with `topic.objectives`.
+- `retrievedAt` / `lastCheckedAt` / `reviewBy` are **UTC calendar dates** (`YYYY-MM-DD`), not local wall-clock timestamps.
 
 ---
 
