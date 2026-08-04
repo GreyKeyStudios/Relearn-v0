@@ -1,6 +1,6 @@
 # ReLearn Curriculum Gap Report
 
-Generated: 2026-08-04T04:07:41.570Z
+Generated: 2026-08-04T04:12:27.904Z
 
 ## Totals
 
@@ -8,7 +8,8 @@ Generated: 2026-08-04T04:07:41.570Z
 - Live topics: 286
 - Full CES topics: 182
 - Uncovered blueprint objectives: 2
-- Certification tracks still needing blueprints: security-plus, network-plus, cysa-plus, aws-cloud-practitioner, azure-fundamentals, linux-plus, itil-foundation
+- Certification tracks still needing blueprints: (none)
+- Certification tracks needing official objective-line mapping: ccna, security-plus, network-plus, cysa-plus, aws-cloud-practitioner, azure-fundamentals, linux-plus, itil-foundation
 
 ## Live tracks
 
@@ -102,8 +103,8 @@ Generated: 2026-08-04T04:07:41.570Z
 - Quiz / bank / flashcards: 80 / 128 / 96
 - Questions missing objectiveId / difficulty / explanation: 208 / 208 / 0
 - Invalid correctChoiceId: 0; duplicate question ids: 0; broken prereqs: 0
-- Missing exam blueprint: yes
-- Note: No production exam blueprint registered for this certification track.
+- Missing exam blueprint: no
+- Note: Blueprint exists but needs first-party retrieval before official-alignment claims.
 - Note: No LES experiences authored yet for this track.
 
 ### CompTIA Network+ (`network-plus`) — certification
@@ -115,8 +116,8 @@ Generated: 2026-08-04T04:07:41.570Z
 - Quiz / bank / flashcards: 75 / 87 / 75
 - Questions missing objectiveId / difficulty / explanation: 162 / 162 / 0
 - Invalid correctChoiceId: 0; duplicate question ids: 0; broken prereqs: 0
-- Missing exam blueprint: yes
-- Note: No production exam blueprint registered for this certification track.
+- Missing exam blueprint: no
+- Note: Blueprint exists but needs first-party retrieval before official-alignment claims.
 - Note: No LES experiences authored yet for this track.
 
 ### CompTIA Cybersecurity Analyst (`cysa-plus`) — certification
@@ -128,8 +129,8 @@ Generated: 2026-08-04T04:07:41.570Z
 - Quiz / bank / flashcards: 60 / 69 / 60
 - Questions missing objectiveId / difficulty / explanation: 129 / 129 / 0
 - Invalid correctChoiceId: 0; duplicate question ids: 0; broken prereqs: 0
-- Missing exam blueprint: yes
-- Note: No production exam blueprint registered for this certification track.
+- Missing exam blueprint: no
+- Note: Blueprint exists but needs first-party retrieval before official-alignment claims.
 - Note: No LES experiences authored yet for this track.
 
 ### AWS Certified Cloud Practitioner (`aws-cloud-practitioner`) — certification
@@ -141,8 +142,8 @@ Generated: 2026-08-04T04:07:41.570Z
 - Quiz / bank / flashcards: 65 / 104 / 78
 - Questions missing objectiveId / difficulty / explanation: 169 / 169 / 0
 - Invalid correctChoiceId: 0; duplicate question ids: 0; broken prereqs: 0
-- Missing exam blueprint: yes
-- Note: No production exam blueprint registered for this certification track.
+- Missing exam blueprint: no
+- Note: Blueprint exists but needs first-party retrieval before official-alignment claims.
 - Note: No LES experiences authored yet for this track.
 
 ### Microsoft Azure Fundamentals (`azure-fundamentals`) — certification
@@ -154,8 +155,8 @@ Generated: 2026-08-04T04:07:41.570Z
 - Quiz / bank / flashcards: 65 / 88 / 75
 - Questions missing objectiveId / difficulty / explanation: 153 / 153 / 0
 - Invalid correctChoiceId: 0; duplicate question ids: 0; broken prereqs: 0
-- Missing exam blueprint: yes
-- Note: No production exam blueprint registered for this certification track.
+- Missing exam blueprint: no
+- Note: Blueprint exists but needs first-party retrieval before official-alignment claims.
 - Note: No LES experiences authored yet for this track.
 
 ### CompTIA Linux+ (`linux-plus`) — certification
@@ -167,8 +168,8 @@ Generated: 2026-08-04T04:07:41.570Z
 - Quiz / bank / flashcards: 65 / 97 / 65
 - Questions missing objectiveId / difficulty / explanation: 162 / 162 / 0
 - Invalid correctChoiceId: 0; duplicate question ids: 0; broken prereqs: 0
-- Missing exam blueprint: yes
-- Note: No production exam blueprint registered for this certification track.
+- Missing exam blueprint: no
+- Note: Blueprint exists but needs first-party retrieval before official-alignment claims.
 - Note: No LES experiences authored yet for this track.
 
 ### ITIL 4 Foundation (`itil-foundation`) — certification
@@ -180,8 +181,8 @@ Generated: 2026-08-04T04:07:41.570Z
 - Quiz / bank / flashcards: 55 / 72 / 55
 - Questions missing objectiveId / difficulty / explanation: 127 / 127 / 0
 - Invalid correctChoiceId: 0; duplicate question ids: 0; broken prereqs: 0
-- Missing exam blueprint: yes
-- Note: No production exam blueprint registered for this certification track.
+- Missing exam blueprint: no
+- Note: Blueprint exists but needs first-party retrieval before official-alignment claims.
 - Note: No LES experiences authored yet for this track.
 
 ## Planned tracks

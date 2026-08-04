@@ -47,8 +47,22 @@ export function buildLiveSubjects(): SubjectDefinition[] {
         : cert.id === "a-plus"
           ? ["src-aplus-objectives-v15", "src-cf-aplus-architecture"]
           : cert.id === "ccna"
-            ? ["src-ccna-objectives-pilot"]
-            : ["src-relearn-course-architecture"],
+            ? ["src-cisco-ccna-200-301-v1.1", "src-ccna-objectives-pilot"]
+            : cert.id === "security-plus"
+              ? ["src-security-plus-sy0-701"]
+              : cert.id === "network-plus"
+                ? ["src-network-plus-n10-009"]
+                : cert.id === "cysa-plus"
+                  ? ["src-cysa-plus-cs0-003"]
+                  : cert.id === "linux-plus"
+                    ? ["src-linux-plus-xk0-005"]
+                    : cert.id === "aws-cloud-practitioner"
+                      ? ["src-aws-clf-c02"]
+                      : cert.id === "azure-fundamentals"
+                        ? ["src-azure-az-900"]
+                        : cert.id === "itil-foundation"
+                          ? ["src-itil4-foundation-peoplecert"]
+                          : ["src-relearn-course-architecture"],
       assumedBackground: skills ? "intro-it" : "general-literacy",
     };
   });

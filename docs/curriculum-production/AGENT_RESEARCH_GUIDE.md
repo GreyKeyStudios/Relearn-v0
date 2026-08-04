@@ -17,20 +17,35 @@ Improve ReLearn curriculum integrity through research, schemas, sources, and qua
 1. **Preserve live app behavior.** Do not change mastery scoring, SRS intervals, or progress store shape unless the ticket is a platform change with tests.
 2. **Never invent** quotations, objective numbers, standards alignments, or citations.
 3. **One exam version per blueprint.** If you must compare versions, set `mixedVersionWarning` and keep IDs namespaced.
-4. **Record provenance:** `version`, `retrievedAt`, `url` (when public), `confidence`.
-5. **Prefer first-party sources** for certifications; textbooks / university / standards / peer-reviewed for academic subjects.
-6. **Map to atomic objectives** before writing large lesson bodies.
-7. **Keep explanation layers honest:** only fill `mathematical` / `technical` layers when you have a real derivation or protocol detail — do not pad.
-8. **Misconceptions need diagnostics + remediation**, not just a wrong-statement list.
-9. **Run validators** before opening a PR:
+4. **Record provenance:** `version`, `retrievedAt`, `url` (when public), `confidence`, and `retrievalMethod` (`exa` preferred for live web checks).
+5. **Source priority**
+   - **Certification:** current first-party exam objectives and official vendor documentation only.
+   - **Academic:** peer-reviewed papers → university materials → recognized textbooks → standards organizations → government scientific agencies.
+6. **Flag future review:** set `reviewBy` + `futureReviewReason` on sources, and add `FutureReviewFlag` entries for sunsets / estimated retirements.
+7. **Map to atomic objectives** before writing large lesson bodies.
+8. **Keep explanation layers honest:** only fill `mathematical` / `technical` layers when you have a real derivation or protocol detail — do not pad.
+9. **Misconceptions need diagnostics + remediation**, not just a wrong-statement list.
+10. **Run validators** before opening a PR:
    ```bash
    npm run verify:production
    npm run curriculum:gap-report
    npm run verify:curriculum -- --strict-ccna --strict-ccna-objectives
    npx tsc --noEmit
    ```
-10. **Respect file ownership** in `BRIDGE_MASTER.md`. Production schemas live under `src/content/production/` and `src/lib/production/`.
+11. **Respect file ownership** in `BRIDGE_MASTER.md`. Production schemas live under `src/content/production/` and `src/lib/production/`.
 
+---
+
+## Live research with Exa
+
+Use Exa for source retrieval before claiming official alignment:
+
+1. `web_search_exa` — find the current first-party objectives / standards page  
+2. `web_fetch_exa` — read the canonical URL  
+3. Update `src/content/production/sources/catalog.ts` and the retrieval log  
+4. Do **not** paste partial SERP highlights as complete objective lists  
+
+See [`SOURCE_RETRIEVAL_LOG.md`](SOURCE_RETRIEVAL_LOG.md) for the 2026-08-04 Exa pass.
 ---
 
 ## Research workflow

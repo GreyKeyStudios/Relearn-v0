@@ -85,6 +85,23 @@ export interface SourceRecord {
   notes?: string;
   /** Explicit flag when mixing versions is unavoidable */
   mixedVersionWarning?: string;
+  /** ISO date by which this source/fact must be re-checked */
+  reviewBy?: string;
+  /** Why a future review is required */
+  futureReviewReason?: string;
+  /** How the live retrieval was performed (e.g. exa, manual) */
+  retrievalMethod?: "exa" | "manual" | "internal";
+}
+
+/** Explicit fact that must be re-verified later (version sunsets, estimated retirements, etc.). */
+export interface FutureReviewFlag {
+  id: string;
+  subject: string;
+  fact: string;
+  sourceIds: string[];
+  reviewBy: string;
+  severity: "info" | "warning" | "critical";
+  notes?: string;
 }
 
 export interface SubjectDefinition {

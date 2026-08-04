@@ -65,10 +65,11 @@ Do not invent a second progression system.
 
 ## Source integrity
 
+- Use **Exa** for live retrieval (`SOURCE_RETRIEVAL_LOG.md`).
 - Prefer current first-party exam objectives and official technical docs for certifications.
-- Record **version** and **retrieval date**.
+- For academic subjects: peer-reviewed → university → textbooks → standards orgs → government scientific agencies.
+- Record **version**, **retrieval date**, and **`reviewBy`** when a fact will age (exam sunsets, skills-measured updates).
 - Never mix exam versions without `mixedVersionWarning`.
-- For academic subjects, prefer textbooks, university resources, standards, peer-reviewed work.
 - **Never invent** quotations, objective numbers, standards alignments, or citations.
 
 ## Related docs

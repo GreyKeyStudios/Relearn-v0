@@ -39,16 +39,17 @@ Asserted via `src/content/production/mastery-compatibility.ts` against live cons
 ## Inventory (verify:production)
 
 - 30 subjects (live + planned + future academic stubs)
-- 10 source records (honest provenance only; CCNA flagged `needs-retrieval`)
-- 2 exam blueprints (A+ V15 verified provenance; CCNA pilot)
+- First-party + academic `SourceRecord`s from Exa live retrieval (2026-08-04) — see [`SOURCE_RETRIEVAL_LOG.md`](SOURCE_RETRIEVAL_LOG.md)
+- Exam blueprints for all certification tracks (domain weights); A+ has objective lines; CCNA still on pilot IDs with `mixedVersionWarning`
+- Future-review flags for CCNA v2.0 cutover, CySA+ retirement, Security+ estimated retirement, AZ-900 skills-measured drift
 - 14 live-track prerequisite graphs + Knowledge DNA graph validation
 - 5 freshness classes
 
 ## Gap report snapshot (high level)
 
 - Live tracks: 14 · Live topics: 286 · Full CES topics: 182
-- Uncovered blueprint objectives currently reported: CCNA-2.1, CCNA-2.2
-- Certification tracks still needing blueprints: security-plus, network-plus, cysa-plus, aws-cloud-practitioner, azure-fundamentals, linux-plus, itil-foundation
+- Uncovered **pilot** blueprint objectives currently reported: CCNA-2.1, CCNA-2.2 (pilot catalog — not official v1.1 lines)
+- Certification tracks needing official objective-line mapping: ccna, security-plus, network-plus, cysa-plus, aws-cloud-practitioner, azure-fundamentals, linux-plus, itil-foundation
 - Full details: [`gap-report-latest.md`](gap-report-latest.md)
 
 ## Recommended next batches

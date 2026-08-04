@@ -1,12 +1,18 @@
 import { verifyProductionArchitecture } from "../src/lib/production/verify-production";
+import { listFutureReviewFlags } from "../src/content/production/sources/catalog";
 
 const result = verifyProductionArchitecture();
+const reviewFlags = listFutureReviewFlags();
 
 console.log("=== ReLearn curriculum production verification ===");
 console.log(
   `Inventory: ${result.inventory.subjects} subjects, ${result.inventory.sources} sources, ` +
     `${result.inventory.blueprints} exam blueprints, ${result.inventory.prereqGraphs} prereq graphs, ` +
     `${result.inventory.freshnessClasses} freshness classes`
+);
+console.log(
+  `Future-review flags: ${reviewFlags.length} ` +
+    `(${reviewFlags.filter((f) => f.severity === "critical").length} critical)`
 );
 console.log(
   `Mastery/SRS compatibility: ${

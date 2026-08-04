@@ -6,11 +6,17 @@ export * from "./types";
 export * from "./freshness";
 export * from "./mastery-compatibility";
 export * from "./hierarchy";
-export { listProductionSources, getProductionSource } from "./sources/catalog";
+export {
+  listProductionSources,
+  getProductionSource,
+  listFutureReviewFlags,
+  FUTURE_REVIEW_FLAGS,
+} from "./sources/catalog";
 export {
   listExamBlueprints,
   getExamBlueprint,
   CERT_TRACKS_NEEDING_BLUEPRINT,
+  CERT_TRACKS_NEEDING_OBJECTIVE_LINES,
 } from "./exam-blueprints";
 export {
   buildLiveTopicPrerequisiteGraph,

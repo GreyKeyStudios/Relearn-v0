@@ -1,6 +1,10 @@
 /**
  * Exam blueprint registry — maps certification tracks to official (or
  * explicitly flagged pilot) objective versions.
+ *
+ * Domain weights and exam codes come from first-party pages retrieved via Exa
+ * on 2026-08-04. Objective line-items are only listed when we have an honest
+ * registry (A+) or an explicitly flagged internal pilot (CCNA).
  */
 
 import { APLUS_OBJECTIVES } from "@/content/objectives/a-plus";
@@ -9,6 +13,8 @@ import { aPlus } from "@/content/certifications/a-plus";
 import { ccna } from "@/content/certifications/ccna";
 import type { Certification } from "@/content/types";
 import type { ExamBlueprint, ExamBlueprintDomain } from "../types";
+
+const RETRIEVED = "2026-08-04";
 
 function topicCoverageForObjectives(
   cert: Certification,
@@ -28,18 +34,37 @@ function topicCoverageForObjectives(
   return map;
 }
 
+function domainOnly(
+  id: string,
+  name: string,
+  weightPercent?: number
+): ExamBlueprintDomain {
+  return { id, name, weightPercent, objectives: [] };
+}
+
 function buildCcnaBlueprint(): ExamBlueprint {
   const coverage = topicCoverageForObjectives(
     ccna,
     CCNA_OBJECTIVES.map((o) => o.id)
   );
   const byDomain = new Map<string, ExamBlueprintDomain>();
+  // Official v1.1 domain weights (Cisco Learning Network, Exa 2026-08-04)
+  const weights: Record<string, { name: string; weight: number }> = {
+    "network-fundamentals": { name: "Network Fundamentals", weight: 20 },
+    "network-access": { name: "Network Access", weight: 20 },
+    "ip-connectivity": { name: "IP Connectivity", weight: 25 },
+    "ip-services": { name: "IP Services", weight: 10 },
+    "security-fundamentals": { name: "Security Fundamentals", weight: 15 },
+    automation: { name: "Automation and Programmability", weight: 10 },
+  };
   for (const obj of CCNA_OBJECTIVES) {
     let domain = byDomain.get(obj.domain);
     if (!domain) {
+      const meta = weights[obj.domain];
       domain = {
         id: obj.domain,
-        name: obj.domain,
+        name: meta?.name ?? obj.domain,
+        weightPercent: meta?.weight,
         objectives: [],
       };
       byDomain.set(obj.domain, domain);
@@ -52,20 +77,25 @@ function buildCcnaBlueprint(): ExamBlueprint {
     });
   }
   return {
-    id: "blueprint-ccna-pilot",
+    id: "blueprint-ccna-200-301-v1.1",
     trackId: "ccna",
     vendor: "Cisco",
     examName: "CCNA",
     examCodes: ["200-301"],
-    objectivesVersion: "pilot-catalog",
-    retrievedAt: "2026-08-04",
-    sourceIds: ["src-ccna-objectives-pilot"],
+    objectivesVersion: "v1.1 (pilot objective IDs still attached)",
+    retrievedAt: RETRIEVED,
+    lastCheckedAt: RETRIEVED,
+    sourceIds: ["src-cisco-ccna-200-301-v1.1", "src-ccna-objectives-pilot"],
     domains: [...byDomain.values()],
     confidence: "needs-retrieval",
+    mixedVersionWarning:
+      "Official exam is 200-301 CCNA v1.1 (Cisco Learning Network, retrieved 2026-08-04). " +
+      "Objective rows below still use the internal pilot catalog (src/content/objectives/ccna.ts), " +
+      "which does not match v1.1 numbering one-for-one. Remap in a dedicated batch; do not invent IDs here.",
     notes:
-      "Pilot objective catalog in src/content/objectives/ccna.ts. " +
-      "Retrieve current Cisco CCNA exam topics before claiming official alignment in marketing. " +
-      "Do not mix retired objective numbering without mixedVersionWarning.",
+      "Domain weights verified from first-party page. Official PDF: " +
+      "https://learningcontent.cisco.com/documents/marketing/exam-topics/200-301-CCNA-v1.1.pdf. " +
+      "v1.1 last test date 2027-02-02; v2.0 begins 2027-02-03.",
   };
 }
 
@@ -100,21 +130,200 @@ function buildAplusBlueprint(): ExamBlueprint {
     vendor: "CompTIA",
     examName: "CompTIA A+",
     examCodes: ["220-1201", "220-1202"],
-    objectivesVersion: "3.0",
+    objectivesVersion: "3.0 / V15",
     retrievedAt: "2026-07-15",
-    lastCheckedAt: "2026-08-01",
+    lastCheckedAt: RETRIEVED,
     sourceIds: ["src-aplus-objectives-v15", "src-cf-aplus-architecture"],
     domains: [core1, core2],
     confidence: "verified",
     notes:
-      "See docs/a-plus-objectives-source.md. Do not teach retired 220-1101/220-1102.",
+      "Exa live check 2026-08-04 confirms V15 still current on CompTIA product page. " +
+      "Do not teach retired 220-1101/220-1102. See docs/a-plus-objectives-source.md.",
   };
 }
 
-/** Blueprints with first-party or explicitly flagged pilot provenance. */
+/** Domain-weight blueprints — no invented objective line items. */
+function buildSecurityPlusBlueprint(): ExamBlueprint {
+  return {
+    id: "blueprint-security-plus-sy0-701",
+    trackId: "security-plus",
+    vendor: "CompTIA",
+    examName: "CompTIA Security+",
+    examCodes: ["SY0-701"],
+    objectivesVersion: "V7",
+    retrievedAt: RETRIEVED,
+    lastCheckedAt: RETRIEVED,
+    sourceIds: ["src-security-plus-sy0-701"],
+    domains: [
+      domainOnly("1.0", "General Security Concepts", 12),
+      domainOnly("2.0", "Threats, Vulnerabilities, and Mitigations", 22),
+      domainOnly("3.0", "Security Architecture", 18),
+      domainOnly("4.0", "Security Operations", 28),
+      domainOnly("5.0", "Security Program Management and Oversight", 20),
+    ],
+    confidence: "needs-retrieval",
+    notes:
+      "Domain weights from CompTIA Security+ product page (Exa 2026-08-04). " +
+      "Objective-line PDF not yet mapped into topic.objectives — next batch.",
+  };
+}
+
+function buildNetworkPlusBlueprint(): ExamBlueprint {
+  return {
+    id: "blueprint-network-plus-n10-009",
+    trackId: "network-plus",
+    vendor: "CompTIA",
+    examName: "CompTIA Network+",
+    examCodes: ["N10-009"],
+    objectivesVersion: "V9",
+    retrievedAt: RETRIEVED,
+    lastCheckedAt: RETRIEVED,
+    sourceIds: ["src-network-plus-n10-009"],
+    domains: [
+      domainOnly("1.0", "Networking Concepts", 23),
+      domainOnly("2.0", "Network Implementation", 20),
+      domainOnly("3.0", "Network Operations", 19),
+      domainOnly("4.0", "Network Security", 14),
+      domainOnly("5.0", "Network Troubleshooting", 24),
+    ],
+    confidence: "needs-retrieval",
+    notes:
+      "Domain weights from CompTIA Network+ product page (Exa 2026-08-04). N10-008 is retired.",
+  };
+}
+
+function buildCysaPlusBlueprint(): ExamBlueprint {
+  return {
+    id: "blueprint-cysa-plus-cs0-003",
+    trackId: "cysa-plus",
+    vendor: "CompTIA",
+    examName: "CompTIA CySA+",
+    examCodes: ["CS0-003"],
+    objectivesVersion: "V3 / Objectives 3.0",
+    retrievedAt: RETRIEVED,
+    lastCheckedAt: RETRIEVED,
+    sourceIds: ["src-cysa-plus-cs0-003"],
+    domains: [
+      domainOnly("1.0", "Security Operations", 33),
+      domainOnly("2.0", "Vulnerability Management", 30),
+      domainOnly("3.0", "Incident Response and Management", 20),
+      domainOnly("4.0", "Reporting and Communication", 17),
+    ],
+    confidence: "needs-retrieval",
+    notes:
+      "Domain weights from CompTIA CySA+ materials (Exa 2026-08-04). " +
+      "English exam retires 2026-12-22 — prioritize successor mapping.",
+  };
+}
+
+function buildLinuxPlusBlueprint(): ExamBlueprint {
+  return {
+    id: "blueprint-linux-plus-xk0-005",
+    trackId: "linux-plus",
+    vendor: "CompTIA",
+    examName: "CompTIA Linux+",
+    examCodes: ["XK0-005"],
+    objectivesVersion: "1.0",
+    retrievedAt: RETRIEVED,
+    lastCheckedAt: RETRIEVED,
+    sourceIds: ["src-linux-plus-xk0-005"],
+    domains: [
+      domainOnly("1.0", "System Management", 32),
+      domainOnly("2.0", "Security", 21),
+      domainOnly("3.0", "Scripting, Containers, and Automation", 19),
+      domainOnly("4.0", "Troubleshooting", 28),
+    ],
+    confidence: "needs-retrieval",
+    notes: "Domain weights from official XK0-005 objectives PDF (Exa 2026-08-04).",
+  };
+}
+
+function buildAwsCpBlueprint(): ExamBlueprint {
+  return {
+    id: "blueprint-aws-clf-c02",
+    trackId: "aws-cloud-practitioner",
+    vendor: "Amazon Web Services",
+    examName: "AWS Certified Cloud Practitioner",
+    examCodes: ["CLF-C02"],
+    objectivesVersion: "CLF-C02",
+    retrievedAt: RETRIEVED,
+    lastCheckedAt: RETRIEVED,
+    sourceIds: ["src-aws-clf-c02"],
+    domains: [
+      domainOnly("1", "Cloud Concepts", 24),
+      domainOnly("2", "Security and Compliance", 30),
+      domainOnly("3", "Cloud Technology and Services", 34),
+      domainOnly("4", "Billing, Pricing, and Support", 12),
+    ],
+    confidence: "needs-retrieval",
+    notes:
+      "Domain weights from AWS CLF-C02 exam guide PDF (Exa 2026-08-04). Task statements not yet mapped.",
+  };
+}
+
+function buildAzureFundamentalsBlueprint(): ExamBlueprint {
+  return {
+    id: "blueprint-azure-az-900",
+    trackId: "azure-fundamentals",
+    vendor: "Microsoft",
+    examName: "Microsoft Azure Fundamentals",
+    examCodes: ["AZ-900"],
+    objectivesVersion: "skills measured as of 2026-07-20",
+    retrievedAt: RETRIEVED,
+    lastCheckedAt: RETRIEVED,
+    sourceIds: ["src-azure-az-900"],
+    domains: [
+      domainOnly("1", "Describe cloud concepts"),
+      domainOnly("2", "Describe Azure architecture and services"),
+      domainOnly("3", "Describe Azure management and governance"),
+    ],
+    confidence: "needs-retrieval",
+    notes:
+      "Skill group ranges from Microsoft Learn study guide (Exa 2026-08-04): " +
+      "cloud concepts 25–30%; architecture and services 35–40%; management and governance 30–35%. " +
+      "WeightPercent left unset because Microsoft publishes ranges, not single percentages.",
+  };
+}
+
+function buildItilBlueprint(): ExamBlueprint {
+  return {
+    id: "blueprint-itil4-foundation",
+    trackId: "itil-foundation",
+    vendor: "PeopleCert / AXELOS",
+    examName: "ITIL 4 Foundation",
+    examCodes: ["ITIL4-Foundation"],
+    objectivesVersion: "ITIL 4 Foundation",
+    retrievedAt: RETRIEVED,
+    lastCheckedAt: RETRIEVED,
+    sourceIds: ["src-itil4-foundation-peoplecert"],
+    domains: [
+      domainOnly("1", "Key concepts of service management"),
+      domainOnly("2", "ITIL guiding principles"),
+      domainOnly("3", "Four dimensions of service management"),
+      domainOnly("4", "Service value system"),
+      domainOnly("5", "Service value chain"),
+      domainOnly("6", "ITIL practices (purpose/key terms)"),
+      domainOnly("7", "ITIL practices (detailed)"),
+    ],
+    confidence: "needs-retrieval",
+    notes:
+      "Domain titles summarized from commonly published syllabus structure; " +
+      "confirm against official PeopleCert/AXELOS syllabus before objective tagging. " +
+      "Exam: 40 questions, 65% pass (PeopleCert page, Exa 2026-08-04).",
+  };
+}
+
+/** Blueprints with first-party provenance (domain and/or objective level). */
 export const EXAM_BLUEPRINTS: ExamBlueprint[] = [
   buildCcnaBlueprint(),
   buildAplusBlueprint(),
+  buildSecurityPlusBlueprint(),
+  buildNetworkPlusBlueprint(),
+  buildCysaPlusBlueprint(),
+  buildLinuxPlusBlueprint(),
+  buildAwsCpBlueprint(),
+  buildAzureFundamentalsBlueprint(),
+  buildItilBlueprint(),
 ];
 
 const byTrack = new Map(EXAM_BLUEPRINTS.map((b) => [b.trackId, b]));
@@ -127,8 +336,12 @@ export function listExamBlueprints(): ExamBlueprint[] {
   return EXAM_BLUEPRINTS;
 }
 
-/** Tracks that are certifications but lack a production blueprint yet. */
-export const CERT_TRACKS_NEEDING_BLUEPRINT = [
+/**
+ * Certification tracks that still lack objective-line mapping
+ * (domain blueprint may exist with empty objectives[]).
+ */
+export const CERT_TRACKS_NEEDING_OBJECTIVE_LINES = [
+  "ccna", // pilot IDs present but not official v1.1 lines
   "security-plus",
   "network-plus",
   "cysa-plus",
@@ -137,3 +350,6 @@ export const CERT_TRACKS_NEEDING_BLUEPRINT = [
   "linux-plus",
   "itil-foundation",
 ] as const;
+
+/** @deprecated use CERT_TRACKS_NEEDING_OBJECTIVE_LINES */
+export const CERT_TRACKS_NEEDING_BLUEPRINT = CERT_TRACKS_NEEDING_OBJECTIVE_LINES;

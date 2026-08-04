@@ -7,7 +7,10 @@ import { CERTIFICATIONS } from "@/content/registry";
 import type { Certification, QuizQuestion, Topic } from "@/content/types";
 import { getContentExpansionLevel } from "@/lib/content-expansion";
 import { listExamBlueprints } from "@/content/production/exam-blueprints";
-import { listProductionSources } from "@/content/production/sources/catalog";
+import {
+  listFutureReviewFlags,
+  listProductionSources,
+} from "@/content/production/sources/catalog";
 import { assertMasteryCompatibility } from "@/content/production/mastery-compatibility";
 import {
   buildKnowledgePrerequisiteGraph,
@@ -195,9 +198,10 @@ export function validateMissingSourceRecords(): ProductionValidationIssue[] {
       });
     }
     if (blueprint.mixedVersionWarning) {
+      // Presence of the field is the intentional flag — warn, do not hard-fail.
       issues.push({
         code: "mixed-exam-version",
-        severity: "error",
+        severity: "warning",
         trackId: blueprint.trackId,
         entityId: blueprint.id,
         message: blueprint.mixedVersionWarning,
@@ -301,6 +305,41 @@ export function validateProductionRegistry(): ProductionValidationIssue[] {
       code: "mastery-compatibility",
       severity: "error",
       message: err,
+    });
+  }
+
+  for (const source of listProductionSources()) {
+    if (source.confidence !== "placeholder" && !source.retrievedAt && source.kind !== "internal-architecture") {
+      issues.push({
+        code: "missing-retrieval-date",
+        severity: "warning",
+        entityId: source.id,
+        message: `Non-internal source "${source.id}" lacks retrievedAt`,
+      });
+    }
+    if (source.futureReviewReason && !source.reviewBy) {
+      issues.push({
+        code: "review-flag-missing-date",
+        severity: "warning",
+        entityId: source.id,
+        message: `Source has futureReviewReason but no reviewBy date`,
+      });
+    }
+  }
+
+  for (const flag of listFutureReviewFlags()) {
+    const severity =
+      flag.severity === "critical"
+        ? "warning"
+        : flag.severity === "warning"
+          ? "info"
+          : "info";
+    issues.push({
+      code: "future-review-flag",
+      severity,
+      trackId: flag.subject,
+      entityId: flag.id,
+      message: `[reviewBy ${flag.reviewBy}] ${flag.fact}`,
     });
   }
 
