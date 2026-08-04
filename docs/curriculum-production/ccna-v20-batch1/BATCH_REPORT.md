@@ -1,6 +1,6 @@
 # CCNA v2.0 Curriculum-Production Batch 1 Report
 
-Generated: 2026-08-04T05:17:33.293Z
+Generated: 2026-08-04T05:31:16.661Z
 Batch id: `ccna-v20-batch1-p0-depth`
 
 ## Scope
@@ -77,14 +77,14 @@ Selection uses the transition manifest, V20 gap report, and production sequence 
 
 ## Per-objective deliverables
 
-### 2.4 — Troubleshoot L2/L3 connectivity with show, ping, traceroute, and capture
+### 2.4 — Troubleshoot L2/L3 connectivity and device operations with show, ping, trace route, and capture
 
 - Official id: `200-301-v2.0/2.4`
 - Pathway: **version-specific**
 - Transition: newly added
 - Related v1.1 ids: —
-- Atomics: `alo-ccna-v2.0-2.4`, `alo-ccna-v2.0-2.4-tools`, `alo-ccna-v2.0-2.4-evidence`
-- Prereq edges: 2
+- Atomics: `alo-ccna-v2.0-2.4`, `alo-ccna-v2.0-2.4-tools`, `alo-ccna-v2.0-2.4-device-ops`, `alo-ccna-v2.0-2.4-evidence`
+- Prereq edges: 3
 - Misconceptions: misc-v20-ping-success-means-l2-healthy
 - Remediations: rem-v20-l2l3-evidence-ladder
 - Lesson spec: `les-ccna-v2.0-2.4`
@@ -98,6 +98,7 @@ Selection uses the transition manifest, V20 gap report, and production sequence 
   - Author LES/CES live topic elevation without renaming pilot progress keys
   - Michael/owner walkthrough per definition-of-done
   - Keep examObjectiveIds version-namespaced (200-301-v2.0/* only)
+  - SPLIT: ship as two learner-facing lessons under one official parent — (A) connectivity probes (ping/extended ping/trace route/capture) (B) device-operations show/logs correlation — then a short synthesis for multi-evidence
   - No v1.1 one-to-one counterpart — do not auto-credit from older topics
 
 ### 1.3 — Troubleshoot IPv4 addressing, assignment, and subnetting
@@ -107,7 +108,7 @@ Selection uses the transition manifest, V20 gap report, and production sequence 
 - Transition: requires greater practical depth
 - Related v1.1 ids: 200-301-v1.1/1.6, 200-301-v1.1/1.7
 - Atomics: `alo-ccna-v2.0-1.3`, `alo-ccna-v2.0-1.3-public-private`, `alo-ccna-v2.0-1.3-assignment`
-- Prereq edges: 2
+- Prereq edges: 3
 - Misconceptions: misc-v20-ipv4-private-always-unusable
 - Remediations: rem-v20-ipv4-public-private-triage
 - Lesson spec: `les-ccna-v2.0-1.3`
@@ -131,7 +132,7 @@ Selection uses the transition manifest, V20 gap report, and production sequence 
 - Transition: requires greater practical depth
 - Related v1.1 ids: 200-301-v1.1/1.8, 200-301-v1.1/1.9
 - Atomics: `alo-ccna-v2.0-1.4`, `alo-ccna-v2.0-1.4-prefix`, `alo-ccna-v2.0-1.4-eui64`
-- Prereq edges: 1
+- Prereq edges: 2
 - Misconceptions: misc-v20-eui64-always-required
 - Remediations: rem-v20-ipv6-prefix-eui64
 - Lesson spec: `les-ccna-v2.0-1.4`
@@ -145,7 +146,8 @@ Selection uses the transition manifest, V20 gap report, and production sequence 
   - Author LES/CES live topic elevation without renaming pilot progress keys
   - Michael/owner walkthrough per definition-of-done
   - Keep examObjectiveIds version-namespaced (200-301-v2.0/* only)
-  - No live IPv6 troubleshoot simulator yet — implement simspec-ccna-v20-ipv6-troubleshoot
+  - REVISE elevation: live ipv6-basics does not teach modified EUI-64 — lesson elevation must introduce EUI-64 procedure (FFFE + U/L) before troubleshoot drills
+  - No live IPv6 troubleshoot simulator yet — implement simspec-ccna-v20-ipv6-troubleshoot with observable config/symptom panels
 
 ### 1.7 — Troubleshoot DHCPv4 client, server, and relay on IOS
 
@@ -153,8 +155,8 @@ Selection uses the transition manifest, V20 gap report, and production sequence 
 - Pathway: **shared-core** (`shared-services-security`)
 - Transition: requires greater practical depth
 - Related v1.1 ids: 200-301-v1.1/4.3, 200-301-v1.1/4.6
-- Atomics: `alo-ccna-v2.0-1.7`, `alo-ccna-v2.0-1.7-server`, `alo-ccna-v2.0-1.7-relay`
-- Prereq edges: 1
+- Atomics: `alo-ccna-v2.0-1.7`, `alo-ccna-v2.0-1.7-client`, `alo-ccna-v2.0-1.7-server`, `alo-ccna-v2.0-1.7-relay`
+- Prereq edges: 3
 - Misconceptions: misc-v20-dhcp-relay-optional-everywhere
 - Remediations: rem-v20-dhcp-relay-path
 - Lesson spec: `les-ccna-v2.0-1.7`
@@ -176,8 +178,8 @@ Selection uses the transition manifest, V20 gap report, and production sequence 
 - Pathway: **shared-core** (`shared-switching-access`)
 - Transition: requires greater practical depth
 - Related v1.1 ids: 200-301-v1.1/2.5
-- Atomics: `alo-ccna-v2.0-2.5`, `alo-ccna-v2.0-2.5-root`, `alo-ccna-v2.0-2.5-guards`
-- Prereq edges: 1
+- Atomics: `alo-ccna-v2.0-2.5`, `alo-ccna-v2.0-2.5-root`, `alo-ccna-v2.0-2.5-portfast`, `alo-ccna-v2.0-2.5-guards`
+- Prereq edges: 3
 - Misconceptions: misc-v20-bpdu-filter-still-required
 - Remediations: rem-v20-stp-guard-scope
 - Lesson spec: `les-ccna-v2.0-2.5`
@@ -200,7 +202,7 @@ Selection uses the transition manifest, V20 gap report, and production sequence 
 - Transition: requires greater practical depth
 - Related v1.1 ids: 200-301-v1.1/3.3
 - Atomics: `alo-ccna-v2.0-3.2`, `alo-ccna-v2.0-3.2-types`, `alo-ccna-v2.0-3.2-floating`
-- Prereq edges: 1
+- Prereq edges: 2
 - Misconceptions: misc-v20-static-float-always-wins
 - Remediations: rem-v20-floating-static-ad
 - Lesson spec: `les-ccna-v2.0-3.2`
@@ -221,8 +223,8 @@ Selection uses the transition manifest, V20 gap report, and production sequence 
 - Pathway: **shared-core** (`shared-routing`)
 - Transition: expanded
 - Related v1.1 ids: 200-301-v1.1/3.4
-- Atomics: `alo-ccna-v2.0-3.3`, `alo-ccna-v2.0-3.3-ospfv3`, `alo-ccna-v2.0-3.3-adjacency`
-- Prereq edges: 1
+- Atomics: `alo-ccna-v2.0-3.3`, `alo-ccna-v2.0-3.3-ospfv2`, `alo-ccna-v2.0-3.3-ospfv3`, `alo-ccna-v2.0-3.3-adjacency`
+- Prereq edges: 3
 - Misconceptions: misc-v20-ospfv3-same-as-v2-commands
 - Remediations: rem-v20-ospfv2-vs-v3
 - Lesson spec: `les-ccna-v2.0-3.3`
@@ -236,7 +238,9 @@ Selection uses the transition manifest, V20 gap report, and production sequence 
   - Author LES/CES live topic elevation without renaming pilot progress keys
   - Michael/owner walkthrough per definition-of-done
   - Keep examObjectiveIds version-namespaced (200-301-v2.0/* only)
+  - SPLIT: learner-facing Lesson A = single-area OSPFv2 (3.3.a–d on IPv4); Lesson B = single-area OSPFv3 (same 3.3.a–d depth on IPv6) + short synthesis — keep one official parent association
   - Live ospf-basics is OSPFv2-leaning — add OSPFv3 labs without inventing authentication tasks
+  - OSPFv3 content is the v2.0 expansion — do not label it v1.1-required
 
 ### 5.2 — Select generative-AI prompts for network operations
 
@@ -261,14 +265,15 @@ Selection uses the transition manifest, V20 gap report, and production sequence 
   - Keep examObjectiveIds version-namespaced (200-301-v2.0/* only)
   - No live AI topic yet — create version-specific pathway (do not force into v1.1 automation topic)
   - Safety review for prompt scenarios (no secret leakage in examples)
+  - First-party support is the official exam objective line; do not invent Cisco product claims beyond that without added sources
 
 ## Inventory
 
 | Artifact | Count |
 | --- | ---: |
 | Official parents | 8 |
-| Atomic objectives | 24 |
-| Prerequisite edges | 10 |
+| Atomic objectives | 28 |
+| Prerequisite edges | 20 |
 | Misconceptions | 8 |
 | Remediations | 8 |
 | Simulator specs | 8 |

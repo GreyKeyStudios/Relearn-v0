@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-04T05:17:33.293Z",
+  "generatedAt": "2026-08-04T05:31:16.661Z",
   "batch": {
     "id": "ccna-v20-batch1-p0-depth",
     "selectedOfficialNumbers": [
@@ -152,6 +152,7 @@
       "atomicIds": [
         "alo-ccna-v2.0-2.4",
         "alo-ccna-v2.0-2.4-tools",
+        "alo-ccna-v2.0-2.4-device-ops",
         "alo-ccna-v2.0-2.4-evidence"
       ],
       "lessonSpecId": "les-ccna-v2.0-2.4",
@@ -167,6 +168,7 @@
         "Author LES/CES live topic elevation without renaming pilot progress keys",
         "Michael/owner walkthrough per definition-of-done",
         "Keep examObjectiveIds version-namespaced (200-301-v2.0/* only)",
+        "SPLIT: ship as two learner-facing lessons under one official parent — (A) connectivity probes (ping/extended ping/trace route/capture) (B) device-operations show/logs correlation — then a short synthesis for multi-evidence",
         "No v1.1 one-to-one counterpart — do not auto-credit from older topics"
       ]
     },
@@ -220,7 +222,8 @@
         "Author LES/CES live topic elevation without renaming pilot progress keys",
         "Michael/owner walkthrough per definition-of-done",
         "Keep examObjectiveIds version-namespaced (200-301-v2.0/* only)",
-        "No live IPv6 troubleshoot simulator yet — implement simspec-ccna-v20-ipv6-troubleshoot"
+        "REVISE elevation: live ipv6-basics does not teach modified EUI-64 — lesson elevation must introduce EUI-64 procedure (FFFE + U/L) before troubleshoot drills",
+        "No live IPv6 troubleshoot simulator yet — implement simspec-ccna-v20-ipv6-troubleshoot with observable config/symptom panels"
       ]
     },
     {
@@ -230,6 +233,7 @@
       "transitionClassification": "requires greater practical depth",
       "atomicIds": [
         "alo-ccna-v2.0-1.7",
+        "alo-ccna-v2.0-1.7-client",
         "alo-ccna-v2.0-1.7-server",
         "alo-ccna-v2.0-1.7-relay"
       ],
@@ -257,6 +261,7 @@
       "atomicIds": [
         "alo-ccna-v2.0-2.5",
         "alo-ccna-v2.0-2.5-root",
+        "alo-ccna-v2.0-2.5-portfast",
         "alo-ccna-v2.0-2.5-guards"
       ],
       "lessonSpecId": "les-ccna-v2.0-2.5",
@@ -307,6 +312,7 @@
       "transitionClassification": "expanded",
       "atomicIds": [
         "alo-ccna-v2.0-3.3",
+        "alo-ccna-v2.0-3.3-ospfv2",
         "alo-ccna-v2.0-3.3-ospfv3",
         "alo-ccna-v2.0-3.3-adjacency"
       ],
@@ -323,7 +329,9 @@
         "Author LES/CES live topic elevation without renaming pilot progress keys",
         "Michael/owner walkthrough per definition-of-done",
         "Keep examObjectiveIds version-namespaced (200-301-v2.0/* only)",
-        "Live ospf-basics is OSPFv2-leaning — add OSPFv3 labs without inventing authentication tasks"
+        "SPLIT: learner-facing Lesson A = single-area OSPFv2 (3.3.a–d on IPv4); Lesson B = single-area OSPFv3 (same 3.3.a–d depth on IPv6) + short synthesis — keep one official parent association",
+        "Live ospf-basics is OSPFv2-leaning — add OSPFv3 labs without inventing authentication tasks",
+        "OSPFv3 content is the v2.0 expansion — do not label it v1.1-required"
       ]
     },
     {
@@ -350,7 +358,8 @@
         "Michael/owner walkthrough per definition-of-done",
         "Keep examObjectiveIds version-namespaced (200-301-v2.0/* only)",
         "No live AI topic yet — create version-specific pathway (do not force into v1.1 automation topic)",
-        "Safety review for prompt scenarios (no secret leakage in examples)"
+        "Safety review for prompt scenarios (no secret leakage in examples)",
+        "First-party support is the official exam objective line; do not invent Cisco product claims beyond that without added sources"
       ]
     }
   ]

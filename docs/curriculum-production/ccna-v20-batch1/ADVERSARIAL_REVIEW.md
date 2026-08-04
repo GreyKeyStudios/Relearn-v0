@@ -102,17 +102,17 @@ L2/L3, IPv4/IPv6, DHCP, and static sim specs require visible symptom/evidence pa
 
 ---
 
-## Verification suite (post-fix)
+## Verification suite (post-fix) — all passed
 
 | Check | Result |
 | --- | --- |
-| `npm run curriculum:ccna-v20-batch1-report` | _(filled after run)_ |
-| `npm run verify:production` | _(filled after run)_ |
-| `verify:curriculum --strict-ccna --strict-ccna-objectives` | _(filled after run)_ |
-| `verify:curriculum --strict-pedagogy` | _(filled after run)_ |
-| `verify:curriculum --strict-experience` | _(filled after run)_ |
-| `npx tsc --noEmit` | _(filled after run)_ |
-| `npm run build` | _(filled after run)_ |
-| Playwright `learner-loop` + `ccna-curriculum-audit` | _(filled after run)_ |
+| `npm run curriculum:ccna-v20-batch1-report` | OK |
+| `npm run verify:production` | OK (0 errors) |
+| `verify:curriculum --strict-ccna --strict-ccna-objectives` | OK |
+| `verify:curriculum --strict-pedagogy` | OK |
+| `verify:curriculum --strict-experience` | OK |
+| `npx tsc --noEmit` | OK |
+| `npm run build` | OK |
+| Playwright `learner-loop` + `ccna-curriculum-audit` | 23 passed |
 
 **Do not merge** — draft/open for human review of dispositions (especially **split** 2.4/3.3 and **revise** 1.4).
