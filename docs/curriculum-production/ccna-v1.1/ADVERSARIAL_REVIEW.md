@@ -88,16 +88,16 @@
 
 ---
 
-## Verification rerun (post-fix)
+## Verification rerun (post-fix) — all passed
 
-```bash
-npm run curriculum:ccna-v11-report
-npm run verify:production
-npm run curriculum:gap-report
-npm run verify:curriculum -- --strict-ccna --strict-ccna-objectives
-npm run verify:curriculum -- --strict-pedagogy
-npm run verify:curriculum -- --strict-experience
-npx tsc --noEmit
-npm run build
-npx playwright test e2e/learner-loop.spec.ts
-```
+| Check | Result |
+| --- | --- |
+| `npm run curriculum:ccna-v11-report` | OK (21/53 uncovered) |
+| `npm run verify:production` | OK (0 errors) |
+| `npm run curriculum:gap-report` | OK |
+| `verify:curriculum --strict-ccna --strict-ccna-objectives` | OK |
+| `verify:curriculum --strict-pedagogy` | OK |
+| `verify:curriculum --strict-experience` | OK |
+| `npx tsc --noEmit` | OK |
+| `npm run build` | OK |
+| `playwright e2e/learner-loop.spec.ts` | 1 passed |
