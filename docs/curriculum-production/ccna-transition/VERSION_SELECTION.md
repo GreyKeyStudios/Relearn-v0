@@ -13,14 +13,27 @@ Ask for the learner’s **intended exam date**, then recommend the official path
 
 Source of truth: `src/content/production/ccna-transition/dates.ts`
 
-## Helper
+## Helpers
 
 ```ts
-import { buildCcnaVersionSelection } from "@/content/production/ccna-transition";
+import {
+  buildCcnaVersionSelection,
+  buildCcnaVersionSelectionFromOptionalDate,
+} from "@/content/production/ccna-transition";
 
 const result = buildCcnaVersionSelection("2027-01-15");
 // result.recommendedVersion === "v1.1"
+
+const undecided = buildCcnaVersionSelectionFromOptionalDate(null);
+// undecided.recommendationState === "missing-exam-date"
+// undecided.recommendedVersion === null  // do not invent a default pathway
 ```
+
+## Date semantics
+
+- Store **UTC calendar** `YYYY-MM-DD` date-of-record (`isUtcCalendarDate`).
+- Convert learner-local civil dates **before** calling selection helpers — `dates.ts` does not apply timezone offsets.
+- Boundary: `2027-02-02` → v1.1; `2027-02-03` → v2.0 (inclusive; configurable).
 
 ## UI contract
 
@@ -30,6 +43,7 @@ const result = buildCcnaVersionSelection("2027-01-15");
 | Preferred version override | `ccna.preferredObjectivesVersion` | `v1.1` \| `v2.0` |
 | Manual override allowed | yes | Override never deletes the other pathway |
 | Show both during overlap | no | Current Cisco windows do not overlap |
+| Preserve progress on switch | yes | No duplicate mastery/SRS; pilot keys unchanged |
 
 `CCNA_VERSION_SELECTION_UI_CONTRACT` in `version-selection.ts` documents these fields for a future screen.
 

@@ -1,6 +1,6 @@
 # CCNA v2.0 Content & Simulator Gap Report
 
-Generated: 2026-08-04T04:47:30.867Z
+Generated: 2026-08-04T05:04:23.137Z
 
 ## Content gaps (official v2.0 parents)
 

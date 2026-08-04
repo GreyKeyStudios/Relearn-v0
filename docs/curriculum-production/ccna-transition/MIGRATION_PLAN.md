@@ -58,10 +58,11 @@ Blueprints:
 
 ### Phase T1 — Learner version selection (UI only)
 
-1. Collect intended exam date (`ccna.intendedExamDate`).
-2. Recommend v1.1 or v2.0 via `buildCcnaVersionSelection()`.
-3. Allow manual override; store `ccna.preferredObjectivesVersion`.
-4. **Do not** rewrite progress keys — only change which checklist/blueprint is emphasized.
+1. Collect intended exam date (`ccna.intendedExamDate`) as a UTC calendar `YYYY-MM-DD` date-of-record (convert learner-local civil dates before save).
+2. If no date yet, call `buildCcnaVersionSelectionFromOptionalDate(null)` — do **not** invent a default pathway.
+3. Recommend v1.1 or v2.0 via `buildCcnaVersionSelection()` / optional-date helper.
+4. Allow manual override; store `ccna.preferredObjectivesVersion`.
+5. **Do not** rewrite progress keys when switching pathways — only change which checklist/blueprint is emphasized. Mastery/SRS remain the single existing system keyed on pilot `CCNA-*` IDs (`preserveProgressOnPathwaySwitch: true`).
 
 ### Phase T2 — Dual-tag production annotations
 

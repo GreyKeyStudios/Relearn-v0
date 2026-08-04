@@ -33,6 +33,7 @@ Retrieved: **2026-08-04**. Extracted text: [`200-301_CCNA_v2.0.extracted.txt`](.
 | Shared-core design | [`SHARED_CORE.md`](./SHARED_CORE.md) |
 | Version-selection design | [`VERSION_SELECTION.md`](./VERSION_SELECTION.md) |
 | Production sequence | [`PRODUCTION_SEQUENCE.md`](./PRODUCTION_SEQUENCE.md) |
+| Adversarial review | [`ADVERSARIAL_REVIEW.md`](./ADVERSARIAL_REVIEW.md) |
 
 ## Code modules
 

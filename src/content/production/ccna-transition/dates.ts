@@ -45,6 +45,22 @@ export const CCNA_VERSION_WINDOWS: readonly CcnaVersionWindow[] = [
 export const CCNA_V11_LAST_TEST_DATE: UtcCalendarDate = "2027-02-02";
 export const CCNA_V20_FIRST_TEST_DATE: UtcCalendarDate = "2027-02-03";
 
+/**
+ * UTC calendar date-of-record regex (`YYYY-MM-DD`).
+ * Selection helpers do **not** apply learner-timezone offsets — callers must
+ * convert a learner-local civil date to this UTC calendar form first.
+ */
+const UTC_CALENDAR_DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+
+export function isUtcCalendarDate(
+  value: string | null | undefined
+): value is UtcCalendarDate {
+  if (value == null || value === "") return false;
+  if (!UTC_CALENDAR_DATE_RE.test(value)) return false;
+  const ms = Date.parse(`${value}T12:00:00Z`);
+  return !Number.isNaN(ms);
+}
+
 function parseUtcDay(iso: UtcCalendarDate): number {
   return Date.parse(`${iso}T12:00:00Z`);
 }
@@ -56,8 +72,8 @@ export function isCcnaVersionAvailableOn(
 ): boolean {
   const win = windows.find((w) => w.objectivesVersion === version);
   if (!win) return false;
+  if (!isUtcCalendarDate(intendedExamDate)) return false;
   const day = parseUtcDay(intendedExamDate);
-  if (Number.isNaN(day)) return false;
   if (day < parseUtcDay(win.firstTestDate)) return false;
   if (win.lastTestDate != null && day > parseUtcDay(win.lastTestDate)) {
     return false;

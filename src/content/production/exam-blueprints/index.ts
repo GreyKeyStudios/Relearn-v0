@@ -27,7 +27,11 @@ import {
 } from "../objectives/ccna-200-301-v2.0";
 import { liveTopicsCoveringOfficialId } from "../mappings/ccna-pilot-to-v1.1";
 import { CCNA_PILOT_DUAL_VERSION_MAPPINGS } from "../ccna-transition/pilot-dual-map";
-import { resolveActiveCcnaVersion } from "../ccna-transition/dates";
+import {
+  CCNA_V11_LAST_TEST_DATE,
+  CCNA_V20_FIRST_TEST_DATE,
+  resolveActiveCcnaVersion,
+} from "../ccna-transition/dates";
 
 const RETRIEVED = "2026-08-04";
 
@@ -135,7 +139,7 @@ function buildCcnaBlueprint(): ExamBlueprint {
     notes:
       `Official PDF ingested (${lineCount} numbered lines including sub-bullets). ` +
       `PDF: ${CCNA_V11_PDF_URL}. SHA-256: ${CCNA_V11_PDF_SHA256}. ` +
-      "Active through configurable last-test date (default 2027-02-02).",
+      `Active through configurable last-test date (default ${CCNA_V11_LAST_TEST_DATE} from dates.ts).`,
   };
 }
 
@@ -209,7 +213,7 @@ function buildCcnaV20Blueprint(): ExamBlueprint {
     notes:
       `Official PDF ingested (${lineCount} numbered lines including sub-bullets). ` +
       `PDF: ${CCNA_V20_PDF_URL}. SHA-256: ${CCNA_V20_PDF_SHA256}. ` +
-      "First test date configurable (default 2027-02-03). Pathway is additive — v1.1 blueprint retained.",
+      `First test date configurable (default ${CCNA_V20_FIRST_TEST_DATE} from dates.ts). Pathway is additive — v1.1 blueprint retained.`,
   };
 }
 

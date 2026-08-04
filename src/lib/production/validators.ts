@@ -552,7 +552,7 @@ export function validateCcnaV11Ingestion(): ProductionValidationIssue[] {
       message: err,
     });
   }
-  if (resolveActiveCcnaVersion("2027-02-02") !== "v1.1") {
+  if (resolveActiveCcnaVersion(CCNA_V11_LAST_TEST_DATE) !== "v1.1") {
     issues.push({
       code: "ccna-cutover-config",
       severity: "error",
@@ -560,7 +560,7 @@ export function validateCcnaV11Ingestion(): ProductionValidationIssue[] {
       message: `Expected v1.1 active on ${CCNA_V11_LAST_TEST_DATE}`,
     });
   }
-  if (resolveActiveCcnaVersion("2027-02-03") !== "v2.0") {
+  if (resolveActiveCcnaVersion(CCNA_V20_FIRST_TEST_DATE) !== "v2.0") {
     issues.push({
       code: "ccna-cutover-config",
       severity: "error",
