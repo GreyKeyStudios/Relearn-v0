@@ -44,9 +44,14 @@ Adapters derive skeleton hierarchies and graphs from live tracks so gap analysis
 ```bash
 npm run verify:production
 npm run curriculum:gap-report
+npm run curriculum:ccna-v11-report
 npm run verify:curriculum -- --strict-ccna --strict-ccna-objectives
 npx tsc --noEmit
 ```
+
+## CCNA v1.1 official ingestion
+
+See [`ccna-v1.1/`](ccna-v1.1/) for the complete official blueprint, pilot→official mapping table/manifest, coverage report, and progress-safe migration plan. Live Path A still uses pilot `CCNA-*` aliases.
 
 ## Mastery / SRS contract
 

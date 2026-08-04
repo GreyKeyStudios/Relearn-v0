@@ -11,8 +11,8 @@
 
 | Source id | Publisher | Version / code | URL | Kind / confidence | Future review |
 |-----------|-----------|----------------|-----|-------------------|---------------|
-| `src-cisco-ccna-200-301-v1.1` | Cisco | 200-301 v1.1 | https://learningnetwork.cisco.com/s/ccna-exam-topics | official-exam-objectives / verified | **Critical:** v1.1 last test 2027-02-02; v2.0 starts 2027-02-03 |
-| `src-ccna-objectives-pilot` | ReLearn | pilot | internal | internal / needs-retrieval | Remap pilot IDs ≠ official v1.1 numbering by 2026-09-30 |
+| `src-cisco-ccna-200-301-v1.1` | Cisco | 200-301 v1.1 | Official PDF (SHA-256 `da15a22…`) | official-exam-objectives / verified | **Critical:** v1.1 last test 2027-02-02; v2.0 starts 2027-02-03. Full line ingestion: `docs/curriculum-production/ccna-v1.1/` |
+| `src-ccna-objectives-pilot` | ReLearn | pilot | internal | internal / verified (aliases) | Live `CCNA-*` tags remain operational; alias map in `mappings/ccna-pilot-to-v1.1.ts` |
 | `src-aplus-objectives-v15` | CompTIA | V15 / 220-1201+1202 | https://www.comptia.org/en/certifications/a/core-1-and-2-v15/ | official-exam-objectives / verified | Watch V16 (~2027+) |
 | `src-security-plus-sy0-701` | CompTIA | V7 / SY0-701 | https://www.comptia.org/en/certifications/security/ | official-vendor-docs / verified (weights only) | **Estimated** retirement ~2026 (not confirmed) |
 | `src-network-plus-n10-009` | CompTIA | V9 / N10-009 | https://www.comptia.org/en/certifications/network/ | official-vendor-docs / verified (weights only) | Confirm no V10 |

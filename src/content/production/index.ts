@@ -17,7 +17,21 @@ export {
   getExamBlueprint,
   CERT_TRACKS_NEEDING_BLUEPRINT,
   CERT_TRACKS_NEEDING_OBJECTIVE_LINES,
+  CERT_TRACKS_NEEDING_LIVE_OBJECTIVE_REMAP,
 } from "./exam-blueprints";
+export {
+  listCcnaV11OfficialLines,
+  listCcnaV11ParentObjectives,
+  listCcnaV11AtomicObjectives,
+  CCNA_V11_PDF_URL,
+  CCNA_V11_PDF_SHA256,
+} from "./objectives/ccna-200-301-v1.1";
+export {
+  CCNA_PILOT_TO_V11_MAPPINGS,
+  buildCcnaPilotMappingManifest,
+  buildCcnaV11CoverageReport,
+  resolveOfficialIdsForPilot,
+} from "./mappings/ccna-pilot-to-v1.1";
 export {
   buildLiveTopicPrerequisiteGraph,
   buildKnowledgePrerequisiteGraph,

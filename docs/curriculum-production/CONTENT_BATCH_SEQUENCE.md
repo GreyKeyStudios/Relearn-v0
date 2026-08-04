@@ -20,9 +20,9 @@ This sequence is a **recommendation for future tickets**, not work included in t
 
 ## Phase P1 — Provenance hardening (certs)
 
-1. ~~Retrieve current Cisco CCNA exam topics~~ — **done (Exa 2026-08-04):** official **200-301 v1.1** recorded; pilot IDs still diverge (`mixedVersionWarning`).
+1. ~~Retrieve current Cisco CCNA exam topics~~ — **done (Exa 2026-08-04):** official **200-301 v1.1** recorded.
 2. ~~Register domain-level blueprints~~ for Security+, Network+, CySA+, AWS CP, Azure, Linux+, ITIL — **done** with first-party domain weights; objective **line-items** still empty.
-3. **Next:** Remap CCNA pilot `CCNA-*` tags to official v1.1 lines (no invented IDs); plan for **v2.0 cutover 2027-02-03**.
+3. ~~Ingest complete CCNA v1.1 PDF lines + pilot alias mapping~~ — **done** (`docs/curriculum-production/ccna-v1.1/`). Live `CCNA-*` tags remain operational aliases; content remap is a later progress-safe batch. v2.0 cutover stays future-review (**2027-02-03**).
 4. **Next:** Download full objective PDFs and populate `objectives[]` for SY0-701, N10-009, CS0-003 (before **2026-12-22** English retirement), XK0-005, CLF-C02, AZ-900, ITIL 4.
 5. Reconcile uncovered objectives — map or explicitly defer (deferral manifest style).
 

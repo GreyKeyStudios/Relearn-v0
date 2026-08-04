@@ -14,43 +14,47 @@ export const PRODUCTION_SOURCES: SourceRecord[] = [
   // ── First-party certification sources (Exa live retrieval) ─────────────
   {
     id: "src-cisco-ccna-200-301-v1.1",
-    title: "Cisco 200-301 CCNA v1.1 Exam Topics",
+    title: "Cisco 200-301 CCNA v1.1 Exam Topics (official PDF)",
     kind: "official-exam-objectives",
     publisher: "Cisco",
     version: "v1.1",
-    url: "https://learningnetwork.cisco.com/s/ccna-exam-topics",
+    url: "https://learningcontent.cisco.com/documents/marketing/exam-topics/200-301-CCNA-v1.1.pdf",
     retrievedAt: RETRIEVED,
     lastCheckedAt: RETRIEVED,
     confidence: "verified",
     retrievalMethod: "exa",
     notes:
-      "Official Cisco Learning Network exam topics for Implementing and Administering Cisco Solutions (200-301 CCNA) v1.1. " +
-      "Domain weights observed: Network Fundamentals 20%, Network Access 20%, IP Connectivity 25%, IP Services 10%, " +
+      "Complete official PDF inspected (4 pages). SHA-256 da15a22dda1afb61af1a14a53264eea6b87d81e8a3036dbaa69cb1b6260bebd5. " +
+      "Extracted text: docs/curriculum-production/ccna-v1.1/200-301-CCNA-v1.1.extracted.txt. " +
+      "Full numbered hierarchy ingested into src/content/production/objectives/ccna-200-301-v1.1.ts. " +
+      "Domain weights: Network Fundamentals 20%, Network Access 20%, IP Connectivity 25%, IP Services 10%, " +
       "Security Fundamentals 15%, Automation and Programmability 10%. " +
-      "Official PDF linked from page: https://learningcontent.cisco.com/documents/marketing/exam-topics/200-301-CCNA-v1.1.pdf. " +
-      "Product page: https://www.cisco.com/site/us/en/learn/training-certifications/exams/ccna.html.",
+      "Landing page: https://learningnetwork.cisco.com/s/ccna-exam-topics. " +
+      "Product page: https://www.cisco.com/site/us/en/learn/training-certifications/exams/ccna.html. " +
+      "v2.0 topics are intentionally NOT ingested here.",
     reviewBy: "2027-01-15",
     futureReviewReason:
-      "Cisco page states last date to test v1.1 is 2027-02-02; first date to test v2.0 is 2027-02-03. Reconcile curriculum before that cutover.",
+      "Cisco page states last date to test v1.1 is 2027-02-02; first date to test v2.0 is 2027-02-03. " +
+      "Keep as future-review only — do not mix v2.0 lines into the v1.1 blueprint.",
   },
   {
     id: "src-ccna-objectives-pilot",
-    title: "CCNA exam objectives — ReLearn pilot catalog",
+    title: "CCNA exam objectives — ReLearn pilot catalog (operational aliases)",
     kind: "internal-architecture",
     publisher: "ReLearn",
     version: "pilot",
-    confidence: "needs-retrieval",
+    confidence: "verified",
     retrievalMethod: "internal",
     retrievedAt: RETRIEVED,
     mixedVersionWarning:
-      "Pilot IDs in src/content/objectives/ccna.ts do NOT match Cisco 200-301 v1.1 numbering one-for-one " +
-      "(e.g. official 1.9 is IPv6 address types; pilot CCNA-1.9 is subnet calculations). " +
-      "Do not claim official Cisco numbering until a reconciliation batch remaps topic.objectives.",
+      "Pilot IDs in src/content/objectives/ccna.ts remain the live operational tags for topic.objectives, " +
+      "quiz.objectiveId, and persisted objectiveScores/objectiveAttempts. They do NOT match official v1.1 " +
+      "numbering one-for-one. Official truth is src-cisco-ccna-200-301-v1.1 + mappings/ccna-pilot-to-v1.1.ts.",
     notes:
-      "Internal mastery tags only. Prefer src-cisco-ccna-200-301-v1.1 for first-party truth.",
+      "Keep pilot IDs stable for learner progress. Use the alias mapping layer; do not silently rename.",
     reviewBy: "2026-09-30",
     futureReviewReason:
-      "Reconcile pilot objective IDs to Cisco v1.1 (and plan v2.0) without mixing versions unmarked.",
+      "Content-remap batch may dual-tag or migrate live tags onto official IDs with an explicit progress migration — not yet authorized.",
   },
   {
     id: "src-aplus-objectives-v15",
@@ -398,11 +402,12 @@ export const FUTURE_REVIEW_FLAGS: FutureReviewFlag[] = [
   {
     id: "review-ccna-pilot-remap",
     subject: "ccna",
-    fact: "ReLearn pilot CCNA objective IDs diverge from official v1.1 numbering",
+    fact: "Official v1.1 blueprint ingested; live content still uses pilot CCNA-* aliases pending progress-safe content remap",
     sourceIds: ["src-ccna-objectives-pilot", "src-cisco-ccna-200-301-v1.1"],
     reviewBy: "2026-09-30",
     severity: "critical",
-    notes: "Do not invent remapped IDs until a dedicated reconciliation batch.",
+    notes:
+      "See docs/curriculum-production/ccna-v1.1/MIGRATION_PLAN.md. Do not silently rename persisted objective keys.",
   },
   {
     id: "review-cysa-cs0-003-retirement",
