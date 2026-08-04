@@ -1,0 +1,392 @@
+/**
+ * ReLearn Curriculum Production Architecture — authoring schemas.
+ *
+ * Parallel to the live Path A model (`src/content/types.ts`).
+ * Production records guide research, quality control, and gap analysis.
+ * They do NOT replace Certification/Topic at runtime and must not change
+ * mastery scoring or SRS intervals.
+ *
+ * Hierarchy:
+ *   Subject → Domain → Competency → Skill → Concept → AtomicLearningObjective
+ */
+
+import type { TopicDifficulty } from "@/content/types";
+import type { MasteryLevel } from "@/types/mastery";
+
+/** Subject families ReLearn may eventually teach. */
+export type SubjectFamily =
+  | "certification"
+  | "mathematics"
+  | "science"
+  | "technology"
+  | "music"
+  | "language"
+  | "history"
+  | "philosophy"
+  | "skill"
+  | "tool"
+  | "other";
+
+export type CourseTemplate = "A" | "B" | "C" | "D";
+
+/** Freshness classification — timeless vs review-required information. */
+export type FreshnessClass =
+  | "timeless"
+  | "slow-changing"
+  | "versioned"
+  | "vendor-current"
+  | "ephemeral";
+
+export type CognitiveLoad = "low" | "moderate" | "high" | "very-high";
+
+export type AssumedBackground =
+  | "none"
+  | "general-literacy"
+  | "secondary-math"
+  | "intro-it"
+  | "prior-track"
+  | "domain-experience";
+
+/** Explanation layers every rich concept should eventually support. */
+export type ExplanationLayer =
+  | "intuitive"
+  | "practical"
+  | "technical"
+  | "mathematical";
+
+export type SourceKind =
+  | "official-exam-objectives"
+  | "official-vendor-docs"
+  | "textbook"
+  | "university"
+  | "standards-body"
+  | "peer-reviewed"
+  | "reputable-education"
+  | "internal-architecture"
+  | "other";
+
+export type SourceConfidence = "verified" | "needs-retrieval" | "placeholder";
+
+/** Provenance record — never invent quotations, objective numbers, or citations. */
+export interface SourceRecord {
+  id: string;
+  title: string;
+  kind: SourceKind;
+  /** Publisher / vendor / institution when known */
+  publisher?: string;
+  url?: string;
+  /** Document or exam version string when applicable */
+  version?: string;
+  /** ISO date YYYY-MM-DD when the source was retrieved */
+  retrievedAt?: string;
+  /** ISO date of last live check */
+  lastCheckedAt?: string;
+  confidence: SourceConfidence;
+  notes?: string;
+  /** Explicit flag when mixing versions is unavoidable */
+  mixedVersionWarning?: string;
+}
+
+export interface SubjectDefinition {
+  id: string;
+  name: string;
+  family: SubjectFamily;
+  template: CourseTemplate;
+  /** Live Path A certification/track id when already registered */
+  liveTrackId?: string;
+  overview: string;
+  sourceIds: string[];
+  assumedBackground: AssumedBackground;
+}
+
+export interface DomainDefinition {
+  id: string;
+  subjectId: string;
+  name: string;
+  /** Live domain id when mapped */
+  liveDomainId?: string;
+  order: number;
+  summary?: string;
+}
+
+export interface CompetencyDefinition {
+  id: string;
+  domainId: string;
+  name: string;
+  description: string;
+  skillIds: string[];
+}
+
+export interface SkillDefinition {
+  id: string;
+  competencyId: string;
+  name: string;
+  description: string;
+  conceptIds: string[];
+  difficulty: TopicDifficulty;
+  cognitiveLoad: CognitiveLoad;
+}
+
+export interface ConceptDefinition {
+  id: string;
+  skillId: string;
+  name: string;
+  summary: string;
+  freshness: FreshnessClass;
+  /** Review cadence hint in days when not timeless */
+  reviewCadenceDays?: number;
+  explanationLayers: Partial<Record<ExplanationLayer, string>>;
+  atomicObjectiveIds: string[];
+  misconceptionIds: string[];
+  sourceIds: string[];
+}
+
+/** Smallest teachable / assessable unit. */
+export interface AtomicLearningObjective {
+  id: string;
+  conceptId: string;
+  statement: string;
+  /** Bloom-ish verb for authoring clarity */
+  verb:
+    | "recognize"
+    | "explain"
+    | "calculate"
+    | "configure"
+    | "diagnose"
+    | "compare"
+    | "apply"
+    | "create";
+  difficulty: TopicDifficulty;
+  cognitiveLoad: CognitiveLoad;
+  assumedBackground: AssumedBackground;
+  freshness: FreshnessClass;
+  /** Official exam objective ids when certification-aligned */
+  examObjectiveIds?: string[];
+  prerequisiteAtomicIds: string[];
+  sourceIds: string[];
+}
+
+/**
+ * Prerequisite graph edge. Nodes may be atomic objectives, concepts,
+ * skills, topics (live), or knowledge-DNA nodes.
+ */
+export type PrereqNodeKind =
+  | "atomic"
+  | "concept"
+  | "skill"
+  | "competency"
+  | "live-topic"
+  | "knowledge-node";
+
+export interface PrereqNodeRef {
+  kind: PrereqNodeKind;
+  id: string;
+  /** For live-topic: certId:topicId */
+  liveTrackId?: string;
+}
+
+export type PrereqEdgeStrength = "required" | "recommended" | "helpful";
+
+export interface PrereqEdge {
+  id: string;
+  from: PrereqNodeRef;
+  to: PrereqNodeRef;
+  strength: PrereqEdgeStrength;
+  rationale?: string;
+}
+
+export interface PrerequisiteGraph {
+  id: string;
+  subjectId: string;
+  nodes: PrereqNodeRef[];
+  edges: PrereqEdge[];
+}
+
+export interface ExplanationBundle {
+  intuitive?: string;
+  practical?: string;
+  technical?: string;
+  mathematical?: string;
+}
+
+export interface ExampleSpec {
+  id: string;
+  title: string;
+  steps: string[];
+  layer?: ExplanationLayer;
+  sourceIds?: string[];
+}
+
+export interface FlashcardSpec {
+  id: string;
+  front: string;
+  back: string;
+  atomicObjectiveIds?: string[];
+  freshness?: FreshnessClass;
+}
+
+export interface QuizItemSpec {
+  id: string;
+  prompt: string;
+  choices: { id: string; text: string }[];
+  correctChoiceId: string;
+  explanation: string;
+  difficulty?: TopicDifficulty;
+  atomicObjectiveIds?: string[];
+  examObjectiveId?: string;
+  misconceptionIds?: string[];
+}
+
+export interface DiagnosticItemSpec {
+  id: string;
+  prompt: string;
+  purpose: "placement" | "pretest" | "formative" | "summative";
+  atomicObjectiveIds: string[];
+  choices?: { id: string; text: string }[];
+  correctChoiceId?: string;
+  scoringNote?: string;
+}
+
+export interface MisconceptionRecord {
+  id: string;
+  statement: string;
+  /** Why learners believe it */
+  whyItAppears: string;
+  /** Correct model */
+  correction: string;
+  diagnosticSignals: string[];
+  remediationActivityIds: string[];
+  relatedAtomicIds: string[];
+  sourceIds?: string[];
+}
+
+export interface RemediationActivity {
+  id: string;
+  title: string;
+  kind: "re-teach" | "worked-example" | "drill" | "lab" | "reflection";
+  instructions: string;
+  targetMisconceptionIds: string[];
+  atomicObjectiveIds: string[];
+  estimatedMinutes: number;
+}
+
+export interface SimulatorSpec {
+  id: string;
+  name: string;
+  /** Live simulator registry id when implemented */
+  liveSimulatorId?: string;
+  status: "live" | "planned" | "spec-only";
+  learningGoals: string[];
+  atomicObjectiveIds: string[];
+  interactionSummary: string;
+  autoGradeHints?: string[];
+}
+
+export interface LessonProductionSpec {
+  id: string;
+  /** Live topic id when mapped */
+  liveTopicId?: string;
+  liveTrackId?: string;
+  title: string;
+  atomicObjectiveIds: string[];
+  explanations: ExplanationBundle;
+  examples: ExampleSpec[];
+  flashcards: FlashcardSpec[];
+  quiz: QuizItemSpec[];
+  diagnostics?: DiagnosticItemSpec[];
+  misconceptionIds: string[];
+  remediationIds: string[];
+  simulatorIds: string[];
+  sourceIds: string[];
+  difficulty: TopicDifficulty;
+  cognitiveLoad: CognitiveLoad;
+  assumedBackground: AssumedBackground;
+  freshness: FreshnessClass;
+  estimatedStudyMinutes?: number;
+}
+
+/** Maps a track to one official exam blueprint version. */
+export interface ExamBlueprint {
+  id: string;
+  trackId: string;
+  vendor: string;
+  examName: string;
+  examCodes: string[];
+  /** Document version from first-party objectives */
+  objectivesVersion: string;
+  retrievedAt: string;
+  lastCheckedAt?: string;
+  sourceIds: string[];
+  domains: ExamBlueprintDomain[];
+  /** Set when any objective text mixes versions */
+  mixedVersionWarning?: string;
+  confidence: SourceConfidence;
+  notes?: string;
+}
+
+export interface ExamBlueprintDomain {
+  id: string;
+  name: string;
+  weightPercent?: number;
+  objectives: ExamBlueprintObjective[];
+}
+
+export interface ExamBlueprintObjective {
+  id: string;
+  text: string;
+  /** Live topic ids that claim coverage */
+  coveredByTopicIds: string[];
+  freshness: FreshnessClass;
+}
+
+/**
+ * Assessment / mastery requirements for production content.
+ * Must stay compatible with `src/lib/mastery-thresholds.ts` and SRS intervals.
+ */
+export interface MasteryRequirementSpec {
+  quizPassPercent: number;
+  srsAdvancePercent: number;
+  weakClearPercent: number;
+  objectiveWeakPercent: number;
+  objectiveMinAttempts: number;
+  /** Canonical SRS interval ladder in days */
+  srsIntervalDays: number[];
+  scoreToLevel: { minScore: number; level: MasteryLevel }[];
+  notes: string;
+}
+
+export interface ProductionValidationIssue {
+  code: string;
+  severity: "error" | "warning" | "info";
+  trackId?: string;
+  topicId?: string;
+  entityId?: string;
+  message: string;
+}
+
+export interface TrackGapSummary {
+  trackId: string;
+  trackName: string;
+  kind: "certification" | "skills" | "planned";
+  topicCount: number;
+  domainCount: number;
+  topicsWithObjectives: number;
+  topicsWithPrerequisites: number;
+  topicsWithExperience: number;
+  topicsFullCes: number;
+  topicsStandardCes: number;
+  topicsMinimalCes: number;
+  quizQuestionCount: number;
+  bankQuestionCount: number;
+  flashcardCount: number;
+  questionsMissingObjectiveId: number;
+  questionsMissingDifficulty: number;
+  questionsMissingExplanation: number;
+  invalidCorrectChoiceCount: number;
+  duplicateQuestionIdCount: number;
+  brokenPrerequisiteCount: number;
+  missingSourceBlueprint: boolean;
+  uncoveredBlueprintObjectives: string[];
+  freshnessCoverage: Partial<Record<FreshnessClass, number>>;
+  notes: string[];
+}

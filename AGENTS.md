@@ -25,10 +25,14 @@ npm run build
 npm run verify:curriculum -- --strict-ccna --strict-ccna-objectives
 npm run verify:curriculum -- --strict-pedagogy   # Phase 4.8 BLS warnings
 npm run verify:curriculum -- --strict-experience # LES storyboard checks
+npm run verify:production                        # curriculum production architecture QC
+npm run curriculum:gap-report                    # per-track coverage / blueprint gaps
 npx tsc --noEmit
 ```
 
 **Topic complete gate:** [`docs/definition-of-done.md`](docs/definition-of-done.md) — no topic graduates until all artifacts align. Relocations: [`docs/ccna-deferral-manifest.md`](docs/ccna-deferral-manifest.md).
+
+Curriculum production layer: [`docs/curriculum-production/README.md`](docs/curriculum-production/README.md) · research rules: [`docs/curriculum-production/AGENT_RESEARCH_GUIDE.md`](docs/curriculum-production/AGENT_RESEARCH_GUIDE.md).
 
 ## File ownership (summary)
 
