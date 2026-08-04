@@ -1,0 +1,1090 @@
+{
+  "schemaVersion": 1,
+  "examCode": "200-301",
+  "note": "Pilot CCNA-* IDs remain operational aliases for live content and persisted progress. v2.0 links are derived only through medium/high-confidence v1.1→v2.0 edges — never invented.",
+  "mappings": [
+    {
+      "pilotId": "CCNA-1.1",
+      "pilotText": "Explain the role and function of network components",
+      "v11": {
+        "status": "exact match",
+        "officialIds": [
+          "200-301-v1.1/1.1"
+        ],
+        "officialNumbers": [
+          "1.1"
+        ],
+        "notes": "Wording matches official 1.1 parent line."
+      },
+      "v20": {
+        "status": "unable to map",
+        "officialIds": [],
+        "officialNumbers": [],
+        "notes": "v1.1 aliases [1.1] have no medium/high-confidence v2.0 edge."
+      },
+      "liveTopicIds": [
+        "osi-model",
+        "tcp-ip-model"
+      ],
+      "liveQuestionCount": 15
+    },
+    {
+      "pilotId": "CCNA-1.2",
+      "pilotText": "Describe characteristics of network topology architectures",
+      "v11": {
+        "status": "exact match",
+        "officialIds": [
+          "200-301-v1.1/1.2"
+        ],
+        "officialNumbers": [
+          "1.2"
+        ],
+        "notes": "Wording matches official 1.2 parent line."
+      },
+      "v20": {
+        "status": "unable to map",
+        "officialIds": [],
+        "officialNumbers": [],
+        "notes": "v1.1 aliases [1.2] have no medium/high-confidence v2.0 edge."
+      },
+      "liveTopicIds": [
+        "osi-model"
+      ],
+      "liveQuestionCount": 8
+    },
+    {
+      "pilotId": "CCNA-1.3",
+      "pilotText": "Compare physical interface and cabling types",
+      "v11": {
+        "status": "exact match",
+        "officialIds": [
+          "200-301-v1.1/1.3"
+        ],
+        "officialNumbers": [
+          "1.3"
+        ],
+        "notes": "Wording matches official 1.3 parent line."
+      },
+      "v20": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v2.0/1.1"
+        ],
+        "officialNumbers": [
+          "1.1"
+        ],
+        "notes": "Derived from v1.1 alias status (exact match). via v1.1 1.3→v2.0 1.1 (moved, medium)"
+      },
+      "liveTopicIds": [
+        "osi-model",
+        "ethernet"
+      ],
+      "liveQuestionCount": 13
+    },
+    {
+      "pilotId": "CCNA-1.4",
+      "pilotText": "Identify interface and cable issues",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/1.4"
+        ],
+        "officialNumbers": [
+          "1.4"
+        ],
+        "notes": "Pilot omits official parenthetical detail (collisions, errors, mismatch duplex, and/or speed)."
+      },
+      "v20": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v2.0/1.1"
+        ],
+        "officialNumbers": [
+          "1.1"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 1.4→v2.0 1.1 (requires greater practical depth, high)"
+      },
+      "liveTopicIds": [
+        "tcp-ip-model",
+        "ethernet"
+      ],
+      "liveQuestionCount": 9
+    },
+    {
+      "pilotId": "CCNA-1.5",
+      "pilotText": "Compare TCP to UDP",
+      "v11": {
+        "status": "exact match",
+        "officialIds": [
+          "200-301-v1.1/1.5"
+        ],
+        "officialNumbers": [
+          "1.5"
+        ],
+        "notes": "Wording matches official 1.5."
+      },
+      "v20": {
+        "status": "unable to map",
+        "officialIds": [],
+        "officialNumbers": [],
+        "notes": "v1.1 aliases [1.5] have no medium/high-confidence v2.0 edge."
+      },
+      "liveTopicIds": [
+        "tcp-ip-model",
+        "ethernet"
+      ],
+      "liveQuestionCount": 8
+    },
+    {
+      "pilotId": "CCNA-1.6",
+      "pilotText": "Configure and verify IPv4 addressing and subnetting",
+      "v11": {
+        "status": "exact match",
+        "officialIds": [
+          "200-301-v1.1/1.6"
+        ],
+        "officialNumbers": [
+          "1.6"
+        ],
+        "notes": "Wording matches official 1.6."
+      },
+      "v20": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v2.0/1.3"
+        ],
+        "officialNumbers": [
+          "1.3"
+        ],
+        "notes": "Derived from v1.1 alias status (exact match). via v1.1 1.6→v2.0 1.3 (requires greater practical depth, high)"
+      },
+      "liveTopicIds": [
+        "ethernet",
+        "ipv4-addressing"
+      ],
+      "liveQuestionCount": 5
+    },
+    {
+      "pilotId": "CCNA-1.7",
+      "pilotText": "Describe IPv4 and IPv6 address types",
+      "v11": {
+        "status": "combines multiple official objectives",
+        "officialIds": [
+          "200-301-v1.1/1.7",
+          "200-301-v1.1/1.9"
+        ],
+        "officialNumbers": [
+          "1.7",
+          "1.9"
+        ],
+        "notes": "Pilot text 'Describe IPv4 and IPv6 address types' spans official 1.7 (private IPv4 addressing) and 1.9 (IPv6 address types). Not an exact match to either line alone."
+      },
+      "v20": {
+        "status": "combines multiple official objectives",
+        "officialIds": [
+          "200-301-v2.0/1.3",
+          "200-301-v2.0/1.4"
+        ],
+        "officialNumbers": [
+          "1.3",
+          "1.4"
+        ],
+        "notes": "Derived from v1.1 alias status (combines multiple official objectives). via v1.1 1.7→v2.0 1.3 (moved, high); via v1.1 1.9→v2.0 1.4 (reduced, medium)"
+      },
+      "liveTopicIds": [
+        "ipv4-addressing",
+        "ip-ranges"
+      ],
+      "liveQuestionCount": 20
+    },
+    {
+      "pilotId": "CCNA-1.8",
+      "pilotText": "Verify IP parameters for Client OS",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/1.10"
+        ],
+        "officialNumbers": [
+          "1.10"
+        ],
+        "notes": "Pilot number 1.8 is NOT official 1.8 (IPv6 addressing). Closest official line is 1.10; pilot omits OS list (Windows, Mac OS, Linux)."
+      },
+      "v20": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v2.0/1.6"
+        ],
+        "officialNumbers": [
+          "1.6"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 1.10→v2.0 1.6 (requires greater practical depth, high)"
+      },
+      "liveTopicIds": [
+        "ipv4-addressing"
+      ],
+      "liveQuestionCount": 3
+    },
+    {
+      "pilotId": "CCNA-1.9",
+      "pilotText": "Perform subnet calculations",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/1.6"
+        ],
+        "officialNumbers": [
+          "1.6"
+        ],
+        "notes": "CRITICAL numbering mismatch: pilot CCNA-1.9 is subnet calculations; official 1.9 is IPv6 address types. Maps as a narrower slice of official 1.6 (IPv4 addressing and subnetting)."
+      },
+      "v20": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v2.0/1.3"
+        ],
+        "officialNumbers": [
+          "1.3"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 1.6→v2.0 1.3 (requires greater practical depth, high)"
+      },
+      "liveTopicIds": [
+        "subnetting"
+      ],
+      "liveQuestionCount": 15
+    },
+    {
+      "pilotId": "CCNA-1.10",
+      "pilotText": "Configure IPv4 addressing and subnetting",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/1.6"
+        ],
+        "officialNumbers": [
+          "1.6"
+        ],
+        "notes": "Pilot number 1.10 is NOT official 1.10 (client OS IP parameters). Text is a configure-only slice of official 1.6 (omits verify)."
+      },
+      "v20": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v2.0/1.3"
+        ],
+        "officialNumbers": [
+          "1.3"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 1.6→v2.0 1.3 (requires greater practical depth, high)"
+      },
+      "liveTopicIds": [
+        "subnetting"
+      ],
+      "liveQuestionCount": 23
+    },
+    {
+      "pilotId": "CCNA-1.11",
+      "pilotText": "Describe private IPv4 addressing",
+      "v11": {
+        "status": "exact match",
+        "officialIds": [
+          "200-301-v1.1/1.7"
+        ],
+        "officialNumbers": [
+          "1.7"
+        ],
+        "notes": "Text matches official 1.7; pilot numbering does not match official numbering."
+      },
+      "v20": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v2.0/1.3"
+        ],
+        "officialNumbers": [
+          "1.3"
+        ],
+        "notes": "Derived from v1.1 alias status (exact match). via v1.1 1.7→v2.0 1.3 (moved, high)"
+      },
+      "liveTopicIds": [
+        "ipv4-addressing",
+        "ip-ranges"
+      ],
+      "liveQuestionCount": 8
+    },
+    {
+      "pilotId": "CCNA-1.12",
+      "pilotText": "Configure IPv6 addressing",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/1.8"
+        ],
+        "officialNumbers": [
+          "1.8"
+        ],
+        "notes": "Closest official line is 1.8; pilot omits verify and prefix language."
+      },
+      "v20": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v2.0/1.4"
+        ],
+        "officialNumbers": [
+          "1.4"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 1.8→v2.0 1.4 (requires greater practical depth, high)"
+      },
+      "liveTopicIds": [
+        "ipv6-basics"
+      ],
+      "liveQuestionCount": 12
+    },
+    {
+      "pilotId": "CCNA-1.13",
+      "pilotText": "Describe wireless principles",
+      "v11": {
+        "status": "exact match",
+        "officialIds": [
+          "200-301-v1.1/1.11"
+        ],
+        "officialNumbers": [
+          "1.11"
+        ],
+        "notes": "Text matches official 1.11; pilot numbering does not match official numbering."
+      },
+      "v20": {
+        "status": "exact match",
+        "officialIds": [
+          "200-301-v2.0/1.5"
+        ],
+        "officialNumbers": [
+          "1.5"
+        ],
+        "notes": "Derived from v1.1 alias status (exact match). via v1.1 1.11→v2.0 1.5 (unchanged, high)"
+      },
+      "liveTopicIds": [
+        "ipv6-basics",
+        "wireless-basics"
+      ],
+      "liveQuestionCount": 26
+    },
+    {
+      "pilotId": "CCNA-2.1",
+      "pilotText": "Configure and verify VLANs",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/2.1"
+        ],
+        "officialNumbers": [
+          "2.1"
+        ],
+        "notes": "Pilot omits 'normal range spanning multiple switches' and sub-bullets. Unused by live topics today."
+      },
+      "v20": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v2.0/2.2"
+        ],
+        "officialNumbers": [
+          "2.2"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 2.1→v2.0 2.2 (moved, medium)"
+      },
+      "liveTopicIds": [],
+      "liveQuestionCount": 0
+    },
+    {
+      "pilotId": "CCNA-2.2",
+      "pilotText": "Configure interswitch connectivity",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/2.2"
+        ],
+        "officialNumbers": [
+          "2.2"
+        ],
+        "notes": "Pilot omits verify and trunk/802.1Q/native VLAN detail. Unused by live topics today."
+      },
+      "v20": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v2.0/2.1"
+        ],
+        "officialNumbers": [
+          "2.1"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 2.2→v2.0 2.1 (expanded, medium)"
+      },
+      "liveTopicIds": [],
+      "liveQuestionCount": 0
+    },
+    {
+      "pilotId": "CCNA-2.3",
+      "pilotText": "Configure Layer 2 discovery protocols",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/2.3"
+        ],
+        "officialNumbers": [
+          "2.3"
+        ],
+        "notes": "Pilot omits verify and explicit CDP/LLDP naming."
+      },
+      "v20": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v2.0/2.3"
+        ],
+        "officialNumbers": [
+          "2.3"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 2.3→v2.0 2.3 (requires greater practical depth, high)"
+      },
+      "liveTopicIds": [
+        "switching"
+      ],
+      "liveQuestionCount": 6
+    },
+    {
+      "pilotId": "CCNA-2.4",
+      "pilotText": "Configure and verify EtherChannel",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/2.4"
+        ],
+        "officialNumbers": [
+          "2.4"
+        ],
+        "notes": "Pilot omits Layer 2/Layer 3 and LACP specificity."
+      },
+      "v20": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v2.0/2.1"
+        ],
+        "officialNumbers": [
+          "2.1"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 2.4→v2.0 2.1 (moved, high)"
+      },
+      "liveTopicIds": [
+        "switching"
+      ],
+      "liveQuestionCount": 5
+    },
+    {
+      "pilotId": "CCNA-2.5",
+      "pilotText": "Describe STP and RSTP",
+      "v11": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v1.1/2.5"
+        ],
+        "officialNumbers": [
+          "2.5"
+        ],
+        "notes": "Pilot 'Describe STP and RSTP' vs official 'Interpret basic operations of Rapid PVST+ Spanning Tree Protocol' — related but different verb/scope."
+      },
+      "v20": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v2.0/2.5"
+        ],
+        "officialNumbers": [
+          "2.5"
+        ],
+        "notes": "Derived from v1.1 alias status (partial match). via v1.1 2.5→v2.0 2.5 (requires greater practical depth, high)"
+      },
+      "liveTopicIds": [
+        "vlans"
+      ],
+      "liveQuestionCount": 7
+    },
+    {
+      "pilotId": "CCNA-2.6",
+      "pilotText": "Configure root bridge and port roles",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/2.5"
+        ],
+        "officialNumbers": [
+          "2.5"
+        ],
+        "notes": "Pilot number 2.6 is NOT official 2.6 (wireless architectures). Root bridge/port roles are covered under official 2.5 / 2.5.a."
+      },
+      "v20": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v2.0/2.5"
+        ],
+        "officialNumbers": [
+          "2.5"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 2.5→v2.0 2.5 (requires greater practical depth, high)"
+      },
+      "liveTopicIds": [
+        "vlans",
+        "trunking"
+      ],
+      "liveQuestionCount": 12
+    },
+    {
+      "pilotId": "CCNA-2.7",
+      "pilotText": "Compare Cisco Wireless architectures",
+      "v11": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v1.1/2.6"
+        ],
+        "officialNumbers": [
+          "2.6"
+        ],
+        "notes": "Pilot 'Compare Cisco Wireless architectures' vs official 2.6 'Describe Cisco Wireless Architectures and AP modes'."
+      },
+      "v20": {
+        "status": "unable to map",
+        "officialIds": [],
+        "officialNumbers": [],
+        "notes": "v1.1 aliases [2.6] have no medium/high-confidence v2.0 edge."
+      },
+      "liveTopicIds": [
+        "trunking"
+      ],
+      "liveQuestionCount": 5
+    },
+    {
+      "pilotId": "CCNA-2.8",
+      "pilotText": "Describe physical infrastructure connections",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/2.7"
+        ],
+        "officialNumbers": [
+          "2.7"
+        ],
+        "notes": "Pilot number 2.8 is NOT official 2.8 (device management access). Generic 'physical infrastructure connections' is narrower than official WLAN-component 2.7."
+      },
+      "v20": {
+        "status": "unable to map",
+        "officialIds": [],
+        "officialNumbers": [],
+        "notes": "v1.1 aliases [2.7] have no medium/high-confidence v2.0 edge."
+      },
+      "liveTopicIds": [
+        "stp"
+      ],
+      "liveQuestionCount": 6
+    },
+    {
+      "pilotId": "CCNA-2.9",
+      "pilotText": "Describe wireless LAN access",
+      "v11": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v1.1/2.9"
+        ],
+        "officialNumbers": [
+          "2.9"
+        ],
+        "notes": "Pilot 'Describe wireless LAN access' is vaguer than official GUI client-connectivity interpretation objective 2.9."
+      },
+      "v20": {
+        "status": "unable to map",
+        "officialIds": [],
+        "officialNumbers": [],
+        "notes": "v1.1 aliases [2.9] have no medium/high-confidence v2.0 edge."
+      },
+      "liveTopicIds": [
+        "stp"
+      ],
+      "liveQuestionCount": 5
+    },
+    {
+      "pilotId": "CCNA-3.1",
+      "pilotText": "Interpret routing table components",
+      "v11": {
+        "status": "exact match",
+        "officialIds": [
+          "200-301-v1.1/3.1"
+        ],
+        "officialNumbers": [
+          "3.1"
+        ],
+        "notes": "Equivalent wording to official 3.1."
+      },
+      "v20": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v2.0/3.1"
+        ],
+        "officialNumbers": [
+          "3.1"
+        ],
+        "notes": "Derived from v1.1 alias status (exact match). via v1.1 3.1→v2.0 3.1 (expanded, high)"
+      },
+      "liveTopicIds": [
+        "routing-fundamentals"
+      ],
+      "liveQuestionCount": 6
+    },
+    {
+      "pilotId": "CCNA-3.2",
+      "pilotText": "Determine how a router makes forwarding decisions",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/3.2"
+        ],
+        "officialNumbers": [
+          "3.2"
+        ],
+        "notes": "Pilot omits official trailing 'by default'."
+      },
+      "v20": {
+        "status": "unable to map",
+        "officialIds": [],
+        "officialNumbers": [],
+        "notes": "v1.1 aliases [3.2] have no medium/high-confidence v2.0 edge."
+      },
+      "liveTopicIds": [
+        "routing-fundamentals"
+      ],
+      "liveQuestionCount": 5
+    },
+    {
+      "pilotId": "CCNA-3.3",
+      "pilotText": "Configure and verify IPv4 and IPv6 static routing",
+      "v11": {
+        "status": "exact match",
+        "officialIds": [
+          "200-301-v1.1/3.3"
+        ],
+        "officialNumbers": [
+          "3.3"
+        ],
+        "notes": "Wording matches official 3.3."
+      },
+      "v20": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v2.0/3.2"
+        ],
+        "officialNumbers": [
+          "3.2"
+        ],
+        "notes": "Derived from v1.1 alias status (exact match). via v1.1 3.3→v2.0 3.2 (requires greater practical depth, high)"
+      },
+      "liveTopicIds": [
+        "static-routes"
+      ],
+      "liveQuestionCount": 6
+    },
+    {
+      "pilotId": "CCNA-3.4",
+      "pilotText": "Configure single-area OSPFv2",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/3.4"
+        ],
+        "officialNumbers": [
+          "3.4"
+        ],
+        "notes": "Pilot omits verify."
+      },
+      "v20": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v2.0/3.3"
+        ],
+        "officialNumbers": [
+          "3.3"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 3.4→v2.0 3.3 (expanded, high)"
+      },
+      "liveTopicIds": [
+        "static-routes"
+      ],
+      "liveQuestionCount": 5
+    },
+    {
+      "pilotId": "CCNA-3.5",
+      "pilotText": "Describe OSPF neighbor adjacencies",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/3.4"
+        ],
+        "officialNumbers": [
+          "3.4"
+        ],
+        "notes": "CRITICAL numbering mismatch: pilot CCNA-3.5 is OSPF neighbor adjacencies; official 3.5 is first hop redundancy protocols (FHRP). Maps as a narrower slice of official 3.4 / 3.4.a."
+      },
+      "v20": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v2.0/3.3"
+        ],
+        "officialNumbers": [
+          "3.3"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 3.4→v2.0 3.3 (expanded, high)"
+      },
+      "liveTopicIds": [
+        "ospf-basics"
+      ],
+      "liveQuestionCount": 7
+    },
+    {
+      "pilotId": "CCNA-3.6",
+      "pilotText": "Configure and verify OSPF neighbor relationships",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/3.4"
+        ],
+        "officialNumbers": [
+          "3.4"
+        ],
+        "notes": "No official 3.6. OSPF neighbor relationships are under official 3.4."
+      },
+      "v20": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v2.0/3.3"
+        ],
+        "officialNumbers": [
+          "3.3"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 3.4→v2.0 3.3 (expanded, high)"
+      },
+      "liveTopicIds": [
+        "ospf-basics"
+      ],
+      "liveQuestionCount": 6
+    },
+    {
+      "pilotId": "CCNA-3.7",
+      "pilotText": "Configure and verify NAT",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/4.1"
+        ],
+        "officialNumbers": [
+          "4.1"
+        ],
+        "notes": "Domain misnumbering: NAT is official IP Services 4.1 (inside source NAT using static and pools), not IP Connectivity 3.x."
+      },
+      "v20": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v2.0/4.3"
+        ],
+        "officialNumbers": [
+          "4.3"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 4.1→v2.0 4.3 (expanded, high)"
+      },
+      "liveTopicIds": [
+        "nat"
+      ],
+      "liveQuestionCount": 6
+    },
+    {
+      "pilotId": "CCNA-3.8",
+      "pilotText": "Configure and verify NTP",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/4.2"
+        ],
+        "officialNumbers": [
+          "4.2"
+        ],
+        "notes": "Domain misnumbering: NTP is official 4.2; pilot omits client/server mode detail."
+      },
+      "v20": {
+        "status": "unable to map",
+        "officialIds": [],
+        "officialNumbers": [],
+        "notes": "v1.1 aliases [4.2] have no medium/high-confidence v2.0 edge."
+      },
+      "liveTopicIds": [
+        "nat"
+      ],
+      "liveQuestionCount": 5
+    },
+    {
+      "pilotId": "CCNA-4.1",
+      "pilotText": "Configure and verify DHCP on a router",
+      "v11": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v1.1/4.6"
+        ],
+        "officialNumbers": [
+          "4.6"
+        ],
+        "notes": "Pilot 'Configure and verify DHCP on a router' is not an official line. Closest official configure objective is 4.6 (DHCP client and relay); 4.3 covers DHCP/DNS roles."
+      },
+      "v20": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v2.0/1.7"
+        ],
+        "officialNumbers": [
+          "1.7"
+        ],
+        "notes": "Derived from v1.1 alias status (partial match). via v1.1 4.6→v2.0 1.7 (requires greater practical depth, high)"
+      },
+      "liveTopicIds": [
+        "dhcp"
+      ],
+      "liveQuestionCount": 6
+    },
+    {
+      "pilotId": "CCNA-4.2",
+      "pilotText": "Describe DNS lookup operation",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/4.3"
+        ],
+        "officialNumbers": [
+          "4.3"
+        ],
+        "notes": "DNS lookup is only part of official 4.3 (role of DHCP and DNS)."
+      },
+      "v20": {
+        "status": "combines multiple official objectives",
+        "officialIds": [
+          "200-301-v2.0/1.7",
+          "200-301-v2.0/4.4"
+        ],
+        "officialNumbers": [
+          "1.7",
+          "4.4"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 4.3→v2.0 1.7 (moved, medium); via v1.1 4.3→v2.0 4.4 (expanded, medium)"
+      },
+      "liveTopicIds": [
+        "dhcp"
+      ],
+      "liveQuestionCount": 5
+    },
+    {
+      "pilotId": "CCNA-4.3",
+      "pilotText": "Configure DNS on a Cisco router",
+      "v11": {
+        "status": "unable to map",
+        "officialIds": [],
+        "officialNumbers": [],
+        "notes": "No official v1.1 line for 'Configure DNS on a Cisco router'. Official 4.3 is explain-role only. Left unmapped rather than inventing alignment."
+      },
+      "v20": {
+        "status": "unable to map",
+        "officialIds": [],
+        "officialNumbers": [],
+        "notes": "No v1.1 official home (No official v1.1 line for 'Configure DNS on a Cisco router'. Official 4.3 is explain-role only. Left unmapped rather than inventing alignment.) — refusing to invent a v2.0 mapping."
+      },
+      "liveTopicIds": [
+        "dns"
+      ],
+      "liveQuestionCount": 6
+    },
+    {
+      "pilotId": "CCNA-4.4",
+      "pilotText": "Describe SNMP in network operations",
+      "v11": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v1.1/4.4"
+        ],
+        "officialNumbers": [
+          "4.4"
+        ],
+        "notes": "Describe vs official Explain; same SNMP subject."
+      },
+      "v20": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v2.0/5.4"
+        ],
+        "officialNumbers": [
+          "5.4"
+        ],
+        "notes": "Derived from v1.1 alias status (partial match). via v1.1 4.4→v2.0 5.4 (moved, high)"
+      },
+      "liveTopicIds": [
+        "dns"
+      ],
+      "liveQuestionCount": 5
+    },
+    {
+      "pilotId": "CCNA-5.1",
+      "pilotText": "Define key security concepts",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/5.1"
+        ],
+        "officialNumbers": [
+          "5.1"
+        ],
+        "notes": "Pilot omits official parenthetical (threats, vulnerabilities, exploits, and mitigation techniques)."
+      },
+      "v20": {
+        "status": "unable to map",
+        "officialIds": [],
+        "officialNumbers": [],
+        "notes": "v1.1 aliases [5.1] have no medium/high-confidence v2.0 edge."
+      },
+      "liveTopicIds": [
+        "acls"
+      ],
+      "liveQuestionCount": 7
+    },
+    {
+      "pilotId": "CCNA-5.2",
+      "pilotText": "Configure and verify ACLs",
+      "v11": {
+        "status": "exact match",
+        "officialIds": [
+          "200-301-v1.1/5.6"
+        ],
+        "officialNumbers": [
+          "5.6"
+        ],
+        "notes": "Text matches official 5.6 ACLs; pilot number 5.2 is NOT official 5.2 (security program elements)."
+      },
+      "v20": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v2.0/4.6"
+        ],
+        "officialNumbers": [
+          "4.6"
+        ],
+        "notes": "Derived from v1.1 alias status (exact match). via v1.1 5.6→v2.0 4.6 (expanded, high)"
+      },
+      "liveTopicIds": [
+        "acls"
+      ],
+      "liveQuestionCount": 6
+    },
+    {
+      "pilotId": "CCNA-5.3",
+      "pilotText": "Configure Layer 2 security features",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/5.7"
+        ],
+        "officialNumbers": [
+          "5.7"
+        ],
+        "notes": "Pilot number 5.3 is NOT official 5.3 (local passwords). Maps to official 5.7; omits DHCP snooping / DAI / port security list."
+      },
+      "v20": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v2.0/4.7"
+        ],
+        "officialNumbers": [
+          "4.7"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 5.7→v2.0 4.7 (expanded, high)"
+      },
+      "liveTopicIds": [
+        "network-security"
+      ],
+      "liveQuestionCount": 7
+    },
+    {
+      "pilotId": "CCNA-5.4",
+      "pilotText": "Describe wireless security protocols",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/5.9"
+        ],
+        "officialNumbers": [
+          "5.9"
+        ],
+        "notes": "Pilot number 5.4 is NOT official 5.4 (password policy). Maps to official 5.9; omits WPA/WPA2/WPA3 list."
+      },
+      "v20": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v2.0/1.5"
+        ],
+        "officialNumbers": [
+          "1.5"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 5.9→v2.0 1.5 (moved, medium)"
+      },
+      "liveTopicIds": [
+        "network-security"
+      ],
+      "liveQuestionCount": 6
+    },
+    {
+      "pilotId": "CCNA-6.1",
+      "pilotText": "Explain how automation impacts network management",
+      "v11": {
+        "status": "exact match",
+        "officialIds": [
+          "200-301-v1.1/6.1"
+        ],
+        "officialNumbers": [
+          "6.1"
+        ],
+        "notes": "Wording matches official 6.1."
+      },
+      "v20": {
+        "status": "unable to map",
+        "officialIds": [],
+        "officialNumbers": [],
+        "notes": "v1.1 aliases [6.1] have no medium/high-confidence v2.0 edge."
+      },
+      "liveTopicIds": [
+        "automation-basics"
+      ],
+      "liveQuestionCount": 6
+    },
+    {
+      "pilotId": "CCNA-6.2",
+      "pilotText": "Compare traditional networks with controller-based networking",
+      "v11": {
+        "status": "exact match",
+        "officialIds": [
+          "200-301-v1.1/6.2"
+        ],
+        "officialNumbers": [
+          "6.2"
+        ],
+        "notes": "Wording matches official 6.2."
+      },
+      "v20": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v2.0/5.3"
+        ],
+        "officialNumbers": [
+          "5.3"
+        ],
+        "notes": "Derived from v1.1 alias status (exact match). via v1.1 6.2→v2.0 5.3 (moved, medium)"
+      },
+      "liveTopicIds": [
+        "automation-basics"
+      ],
+      "liveQuestionCount": 5
+    }
+  ]
+}

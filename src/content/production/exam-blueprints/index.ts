@@ -2,9 +2,9 @@
  * Exam blueprint registry — maps certification tracks to official (or
  * explicitly flagged pilot) objective versions.
  *
- * CCNA uses the ingested official 200-301 v1.1 PDF lines. Live Path A content
- * still tags pilot `CCNA-*` IDs; coverage is computed through the alias mapping
- * layer (see mappings/ccna-pilot-to-v1.1.ts). Do not mix v2.0.
+ * CCNA has separate official blueprints for 200-301 v1.1 and v2.0. Live Path A
+ * still tags pilot `CCNA-*` IDs; coverage uses the alias / dual-mapping layers.
+ * Never mix `200-301-v1.1/*` and `200-301-v2.0/*` IDs in one blueprint.
  */
 
 import { APLUS_OBJECTIVES } from "@/content/objectives/a-plus";
@@ -18,9 +18,27 @@ import {
   listCcnaV11OfficialLines,
   listCcnaV11ParentObjectives,
 } from "../objectives/ccna-200-301-v1.1";
+import {
+  CCNA_V20_PDF_SHA256,
+  CCNA_V20_PDF_URL,
+  CCNA_V20_RETRIEVED_AT,
+  listCcnaV20OfficialLines,
+  listCcnaV20ParentObjectives,
+} from "../objectives/ccna-200-301-v2.0";
 import { liveTopicsCoveringOfficialId } from "../mappings/ccna-pilot-to-v1.1";
+import { CCNA_PILOT_DUAL_VERSION_MAPPINGS } from "../ccna-transition/pilot-dual-map";
+import { resolveActiveCcnaVersion } from "../ccna-transition/dates";
 
 const RETRIEVED = "2026-08-04";
+
+function liveTopicsCoveringV20OfficialId(officialId: string): string[] {
+  const topics = new Set<string>();
+  for (const entry of CCNA_PILOT_DUAL_VERSION_MAPPINGS) {
+    if (!entry.v20.officialIds.includes(officialId)) continue;
+    for (const topicId of entry.liveTopicIds) topics.add(topicId);
+  }
+  return [...topics].sort();
+}
 
 function topicCoverageForObjectives(
   cert: Certification,
@@ -113,12 +131,85 @@ function buildCcnaBlueprint(): ExamBlueprint {
     mixedVersionWarning:
       "Blueprint rows use official 200-301 v1.1 IDs (`200-301-v1.1/<number>`). " +
       "Live Path A topics/quizzes still tag pilot `CCNA-*` IDs; progress keys must keep using pilot IDs. " +
-      "Coverage is computed through the alias mapping in mappings/ccna-pilot-to-v1.1.ts. " +
-      "Do not mix v2.0 objectives into this blueprint.",
+      "A separate v2.0 blueprint exists — do not mix IDs. Coverage via mappings/ccna-pilot-to-v1.1.ts.",
     notes:
       `Official PDF ingested (${lineCount} numbered lines including sub-bullets). ` +
       `PDF: ${CCNA_V11_PDF_URL}. SHA-256: ${CCNA_V11_PDF_SHA256}. ` +
-      "v1.1 last test date 2027-02-02; v2.0 begins 2027-02-03 (future-review only — not in this blueprint).",
+      "Active through configurable last-test date (default 2027-02-02).",
+  };
+}
+
+function buildCcnaV20Blueprint(): ExamBlueprint {
+  const parents = listCcnaV20ParentObjectives();
+  const byDomain = new Map<string, ExamBlueprintDomain>();
+  const domainMeta: Record<
+    string,
+    { slug: string; name: string; weight: number }
+  > = {
+    "1.0": {
+      slug: "network-infrastructure-connectivity",
+      name: "Network Infrastructure and Connectivity",
+      weight: 25,
+    },
+    "2.0": {
+      slug: "switching-network-access",
+      name: "Switching and Network Access",
+      weight: 25,
+    },
+    "3.0": { slug: "ip-routing", name: "IP Routing", weight: 20 },
+    "4.0": {
+      slug: "network-services-security",
+      name: "Network Services and Security",
+      weight: 20,
+    },
+    "5.0": {
+      slug: "ai-network-ops-management",
+      name: "AI, and Network Operations and Management",
+      weight: 10,
+    },
+  };
+
+  for (const obj of parents) {
+    const meta = domainMeta[obj.domainNumber];
+    const domainId = meta?.slug ?? obj.domainNumber;
+    let domain = byDomain.get(domainId);
+    if (!domain) {
+      domain = {
+        id: domainId,
+        name: meta?.name ?? obj.domainName,
+        weightPercent: meta?.weight ?? obj.domainWeightPercent,
+        objectives: [],
+      };
+      byDomain.set(domainId, domain);
+    }
+    domain.objectives.push({
+      id: obj.id,
+      text: obj.text,
+      coveredByTopicIds: liveTopicsCoveringV20OfficialId(obj.id),
+      freshness: "versioned",
+    });
+  }
+
+  const lineCount = listCcnaV20OfficialLines().length;
+  return {
+    id: "blueprint-ccna-200-301-v2.0",
+    trackId: "ccna",
+    vendor: "Cisco",
+    examName: "CCNA",
+    examCodes: ["200-301"],
+    objectivesVersion: "v2.0",
+    retrievedAt: CCNA_V20_RETRIEVED_AT,
+    lastCheckedAt: RETRIEVED,
+    sourceIds: ["src-cisco-ccna-200-301-v2.0", "src-ccna-objectives-pilot"],
+    domains: [...byDomain.values()],
+    confidence: "verified",
+    mixedVersionWarning:
+      "This blueprint is 200-301 v2.0 only (`200-301-v2.0/<number>`). " +
+      "Do not mix with v1.1 IDs. Live content still uses pilot aliases; v2.0 coverage is alias-derived via dual mapping.",
+    notes:
+      `Official PDF ingested (${lineCount} numbered lines including sub-bullets). ` +
+      `PDF: ${CCNA_V20_PDF_URL}. SHA-256: ${CCNA_V20_PDF_SHA256}. ` +
+      "First test date configurable (default 2027-02-03). Pathway is additive — v1.1 blueprint retained.",
   };
 }
 
@@ -339,6 +430,7 @@ function buildItilBlueprint(): ExamBlueprint {
 /** Blueprints with first-party provenance (domain and/or objective level). */
 export const EXAM_BLUEPRINTS: ExamBlueprint[] = [
   buildCcnaBlueprint(),
+  buildCcnaV20Blueprint(),
   buildAplusBlueprint(),
   buildSecurityPlusBlueprint(),
   buildNetworkPlusBlueprint(),
@@ -349,14 +441,46 @@ export const EXAM_BLUEPRINTS: ExamBlueprint[] = [
   buildItilBlueprint(),
 ];
 
-const byTrack = new Map(EXAM_BLUEPRINTS.map((b) => [b.trackId, b]));
-
-export function getExamBlueprint(trackId: string): ExamBlueprint | undefined {
-  return byTrack.get(trackId);
-}
-
 export function listExamBlueprints(): ExamBlueprint[] {
   return EXAM_BLUEPRINTS;
+}
+
+export function listExamBlueprintsForTrack(trackId: string): ExamBlueprint[] {
+  return EXAM_BLUEPRINTS.filter((b) => b.trackId === trackId);
+}
+
+/**
+ * Returns a blueprint for a track.
+ * For CCNA (multi-version), defaults to the active version for `asOf`
+ * (or today UTC). Pass `objectivesVersion` to force v1.1 or v2.0.
+ */
+export function getExamBlueprint(
+  trackId: string,
+  options?: { objectivesVersion?: string; asOf?: string }
+): ExamBlueprint | undefined {
+  const all = listExamBlueprintsForTrack(trackId);
+  if (all.length === 0) return undefined;
+  if (all.length === 1) return all[0];
+
+  if (options?.objectivesVersion) {
+    return all.find(
+      (b) =>
+        b.objectivesVersion === options.objectivesVersion ||
+        b.objectivesVersion.startsWith(options.objectivesVersion!)
+    );
+  }
+
+  if (trackId === "ccna") {
+    const asOf =
+      options?.asOf ?? new Date().toISOString().slice(0, 10);
+    const active = resolveActiveCcnaVersion(asOf) ?? "v1.1";
+    return (
+      all.find((b) => b.objectivesVersion === active) ??
+      all.find((b) => b.objectivesVersion === "v1.1")
+    );
+  }
+
+  return all[0];
 }
 
 /**

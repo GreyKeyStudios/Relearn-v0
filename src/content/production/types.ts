@@ -433,6 +433,69 @@ export interface PilotOfficialMappingEntry {
   liveQuestionCount: number;
 }
 
+/** How an official objective relates across CCNA v1.1 ↔ v2.0. */
+export type TransitionClassification =
+  | "unchanged"
+  | "wording changed only"
+  | "expanded"
+  | "reduced"
+  | "moved"
+  | "newly added"
+  | "removed"
+  | "requires greater practical depth"
+  | "unable to determine";
+
+export interface CcnaTransitionManifestEntry {
+  id: string;
+  side: "v1.1" | "v2.0";
+  objectiveId: string;
+  number: string;
+  text: string;
+  domainNumber: string;
+  classification: TransitionClassification;
+  /** Counterpart objective ids on the other version (empty when removed/new/undetermined). */
+  counterpartIds: string[];
+  counterpartNumbers: string[];
+  notes: string;
+  /** Candidate for shared-core lesson association (version-specific tags still required). */
+  sharedCoreCandidate: boolean;
+  sourceId: string;
+  pdfPage: number;
+}
+
+export interface CcnaVersionComparisonEdge {
+  id: string;
+  v11Id: string;
+  v11Number: string;
+  v20Id: string;
+  v20Number: string;
+  relationship: Exclude<
+    TransitionClassification,
+    "newly added" | "removed"
+  >;
+  confidence: "high" | "medium" | "low";
+  notes: string;
+}
+
+export interface PilotDualVersionMappingEntry {
+  pilotId: string;
+  pilotText: string;
+  v11: {
+    status: PilotMappingStatus;
+    officialIds: string[];
+    officialNumbers: string[];
+    notes: string;
+  };
+  v20: {
+    status: PilotMappingStatus;
+    officialIds: string[];
+    officialNumbers: string[];
+    notes: string;
+  };
+  liveTopicIds: string[];
+  liveQuestionCount: number;
+}
+
 /**
  * Assessment / mastery requirements for production content.
  * Must stay compatible with `src/lib/mastery-thresholds.ts` and SRS intervals.

@@ -13,6 +13,7 @@
     "verify:production": "tsx scripts/verify-production.ts",
     "curriculum:gap-report": "tsx scripts/curriculum-gap-report.ts",
     "curriculum:ccna-v11-report": "tsx scripts/ccna-v11-mapping-report.ts",
+    "curriculum:ccna-transition-report": "tsx scripts/ccna-transition-report.ts",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:audit": "playwright test e2e/ccna-curriculum-audit.spec.ts",
