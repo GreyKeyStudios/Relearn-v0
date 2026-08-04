@@ -5,6 +5,7 @@
 
 import { getAllSimulatorIds } from "@/content/simulators/registry";
 import type { SimulatorSpec } from "../types";
+import { CCNA_V20_BATCH1_SIMULATORS } from "../batches/ccna-v20-batch1";
 
 /** Seed specs — status live when present in the app simulator registry. */
 const SEED_SPECS: Omit<SimulatorSpec, "status" | "liveSimulatorId">[] = [
@@ -30,7 +31,7 @@ const SEED_SPECS: Omit<SimulatorSpec, "status" | "liveSimulatorId">[] = [
 
 export function listSimulatorSpecs(): SimulatorSpec[] {
   const liveIds = new Set(getAllSimulatorIds());
-  return SEED_SPECS.map((seed) => {
+  const fromSeeds = SEED_SPECS.map((seed) => {
     const guessedLiveId =
       seed.id === "simspec-subnet-cidr-drill"
         ? "subnet-cidr-drill"
@@ -41,7 +42,9 @@ export function listSimulatorSpecs(): SimulatorSpec[] {
     return {
       ...seed,
       liveSimulatorId: live,
-      status: live ? "live" : "spec-only",
+      status: live ? ("live" as const) : ("spec-only" as const),
     } satisfies SimulatorSpec;
   });
+  // Batch-1 CCNA v2.0 simulators remain spec-only until implemented.
+  return [...fromSeeds, ...CCNA_V20_BATCH1_SIMULATORS];
 }

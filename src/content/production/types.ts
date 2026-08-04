@@ -497,6 +497,49 @@ export interface PilotDualVersionMappingEntry {
 }
 
 /**
+ * One official exam objective elevated in a bounded production batch.
+ * Specs are authoring artifacts — they do not rewrite live Path A content.
+ */
+export interface ObjectiveProductionUnit {
+  officialObjectiveId: string;
+  officialNumber: string;
+  officialText: string;
+  objectivesVersion: string;
+  selectionReasons: string[];
+  transitionClassification: TransitionClassification;
+  /** shared-core body may exist later; associations stay version-specific */
+  pathwayClassification: "shared-core" | "version-specific";
+  sharedCoreClusterId?: string;
+  relatedV11ObjectiveIds: string[];
+  atomicObjectives: AtomicLearningObjective[];
+  prerequisiteEdges: PrereqEdge[];
+  misconceptionIds: string[];
+  remediationIds: string[];
+  lessonSpec: LessonProductionSpec;
+  quizSpecIds: string[];
+  simulatorSpecIds: string[];
+  sourceIds: string[];
+  masteryEvidence: MasteryRequirementSpec;
+  /** What remains before learner-facing Path A elevation */
+  remainingBeforeLearnerFacing: string[];
+}
+
+/** Bounded curriculum-production batch (≤N official parents). */
+export interface ContentProductionBatch {
+  id: string;
+  title: string;
+  trackId: string;
+  objectivesVersion: string;
+  maxParents: number;
+  selectedOfficialNumbers: string[];
+  units: ObjectiveProductionUnit[];
+  misconceptionRecords: MisconceptionRecord[];
+  remediationActivities: RemediationActivity[];
+  simulatorSpecs: SimulatorSpec[];
+  notes: string;
+}
+
+/**
  * Assessment / mastery requirements for production content.
  * Must stay compatible with `src/lib/mastery-thresholds.ts` and SRS intervals.
  */
