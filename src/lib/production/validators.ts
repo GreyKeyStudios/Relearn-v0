@@ -465,12 +465,13 @@ export function validateCcnaV11Ingestion(): ProductionValidationIssue[] {
       message: `Expected 53 official v1.1 parent objectives, found ${parents.length}`,
     });
   }
-  if (CCNA_V11_OFFICIAL_LINES.length < 53) {
+  // Complete v1.1 PDF hierarchy: 53 parents + 58 sub-bullets = 111 numbered lines.
+  if (CCNA_V11_OFFICIAL_LINES.length !== 111) {
     issues.push({
       code: "ccna-v11-line-count",
       severity: "error",
       trackId: "ccna",
-      message: `Official line registry too small (${CCNA_V11_OFFICIAL_LINES.length})`,
+      message: `Expected 111 official v1.1 numbered lines, found ${CCNA_V11_OFFICIAL_LINES.length}`,
     });
   }
   const numbers = new Set<string>();
@@ -492,6 +493,36 @@ export function validateCcnaV11Ingestion(): ProductionValidationIssue[] {
         trackId: "ccna",
         entityId: line.id,
         message: "Non-v1.1 / non-200-301 line found in v1.1 registry",
+      });
+    }
+    if (line.id.includes("v2.0")) {
+      issues.push({
+        code: "ccna-version-mix",
+        severity: "error",
+        trackId: "ccna",
+        entityId: line.id,
+        message: "v2.0 objective id leaked into v1.1 registry",
+      });
+    }
+    // Sub-bullet form N.M.x → parent N.M; parent form N.M → no parent.
+    if (/^\d+\.\d+\.[a-z]$/i.test(line.number)) {
+      const parent = `${line.number.split(".")[0]}.${line.number.split(".")[1]}`;
+      if (line.parentNumber !== parent || line.depth !== 2) {
+        issues.push({
+          code: "ccna-v11-hierarchy",
+          severity: "error",
+          trackId: "ccna",
+          entityId: line.id,
+          message: `Bad parent/depth for ${line.number}: parent=${line.parentNumber} depth=${line.depth}`,
+        });
+      }
+    } else if (line.parentNumber != null || line.depth !== 1) {
+      issues.push({
+        code: "ccna-v11-hierarchy",
+        severity: "error",
+        trackId: "ccna",
+        entityId: line.id,
+        message: `Parent line ${line.number} must have depth 1 and no parentNumber`,
       });
     }
   }

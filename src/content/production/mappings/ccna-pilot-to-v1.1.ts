@@ -71,7 +71,7 @@ const DRAFT_MAPPINGS: Draft[] = [
     status: "combines multiple official objectives",
     officialNumbers: ["1.7", "1.9"],
     notes:
-      "Pilot text 'Describe IPv4 and IPv6 address types' spans official 1.7 (private IPv4 addressing) and 1.9 (IPv6 address types). Not an exact match to either line alone.",
+      "Pilot text 'Describe IPv4 and IPv6 address types' spans official 1.7 and 1.9. Official 1.7 is private-IPv4-addressing only (not a general IPv4 address-types catalog); official 1.9 is IPv6 address types. Combined alias is intentional — not an exact match to either line alone.",
   },
   {
     pilotId: "CCNA-1.8",
@@ -150,10 +150,10 @@ const DRAFT_MAPPINGS: Draft[] = [
   },
   {
     pilotId: "CCNA-2.6",
-    status: "narrower than official objective",
+    status: "partial match",
     officialNumbers: ["2.5"],
     notes:
-      "Pilot number 2.6 is NOT official 2.6 (wireless architectures). Root bridge/port roles are covered under official 2.5 / 2.5.a.",
+      "Pilot number 2.6 is NOT official 2.6 (wireless architectures). Root bridge/port roles relate to official 2.5 / 2.5.a, but pilot verb is Configure while official 2.5 is Interpret — partial, not a narrower same-verb slice.",
   },
   {
     pilotId: "CCNA-2.7",
@@ -178,9 +178,10 @@ const DRAFT_MAPPINGS: Draft[] = [
   },
   {
     pilotId: "CCNA-3.1",
-    status: "exact match",
+    status: "partial match",
     officialNumbers: ["3.1"],
-    notes: "Equivalent wording to official 3.1.",
+    notes:
+      "Same subject as official 3.1, but wording differs (pilot 'Interpret routing table components' vs official 'Interpret the components of routing table') — not an exact match.",
   },
   {
     pilotId: "CCNA-3.2",
@@ -202,10 +203,10 @@ const DRAFT_MAPPINGS: Draft[] = [
   },
   {
     pilotId: "CCNA-3.5",
-    status: "narrower than official objective",
+    status: "partial match",
     officialNumbers: ["3.4"],
     notes:
-      "CRITICAL numbering mismatch: pilot CCNA-3.5 is OSPF neighbor adjacencies; official 3.5 is first hop redundancy protocols (FHRP). Maps as a narrower slice of official 3.4 / 3.4.a.",
+      "CRITICAL numbering mismatch: pilot CCNA-3.5 is OSPF neighbor adjacencies; official 3.5 is first hop redundancy protocols (FHRP). Relates to official 3.4.a under 3.4, but pilot verb is Describe while parent 3.4 is Configure and verify — partial, not a silent remap to FHRP.",
   },
   {
     pilotId: "CCNA-3.6",
@@ -264,10 +265,10 @@ const DRAFT_MAPPINGS: Draft[] = [
   },
   {
     pilotId: "CCNA-5.2",
-    status: "exact match",
+    status: "partial match",
     officialNumbers: ["5.6"],
     notes:
-      "Text matches official 5.6 ACLs; pilot number 5.2 is NOT official 5.2 (security program elements).",
+      "Pilot 'Configure and verify ACLs' abbreviates official 5.6 'Configure and verify access control lists'. Pilot number 5.2 is NOT official 5.2 (security program elements).",
   },
   {
     pilotId: "CCNA-5.3",

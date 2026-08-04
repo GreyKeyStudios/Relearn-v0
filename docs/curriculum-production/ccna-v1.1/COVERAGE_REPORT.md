@@ -1,6 +1,6 @@
 # CCNA 200-301 v1.1 Official Coverage Report
 
-Generated: 2026-08-04T04:37:32.503Z
+Generated: 2026-08-04T04:59:56.434Z
 
 Coverage means at least one live topic tags a pilot ID that aliases to the official parent via `mappings/ccna-pilot-to-v1.1.ts`. This is **not** a claim that the topic fully teaches the official objective.
 

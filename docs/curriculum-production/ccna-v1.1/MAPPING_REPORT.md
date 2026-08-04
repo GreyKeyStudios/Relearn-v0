@@ -1,6 +1,6 @@
 # CCNA Pilot → Official 200-301 v1.1 Mapping Report
 
-Generated: 2026-08-04T04:37:32.503Z
+Generated: 2026-08-04T04:59:56.434Z
 
 ## Source provenance
 
@@ -23,9 +23,9 @@ Generated: 2026-08-04T04:37:32.503Z
 | Status | Count |
 | --- | ---: |
 | combines multiple official objectives | 1 |
-| exact match | 12 |
-| narrower than official objective | 21 |
-| partial match | 5 |
+| exact match | 10 |
+| narrower than official objective | 19 |
+| partial match | 9 |
 | unable to map | 1 |
 
 ## Human-readable mapping table
@@ -38,7 +38,7 @@ Generated: 2026-08-04T04:37:32.503Z
 | `CCNA-1.4` | Identify interface and cable issues | narrower than official objective | 1.4 | tcp-ip-model, ethernet | 9 | Pilot omits official parenthetical detail (collisions, errors, mismatch duplex, and/or speed). |
 | `CCNA-1.5` | Compare TCP to UDP | exact match | 1.5 | tcp-ip-model, ethernet | 8 | Wording matches official 1.5. |
 | `CCNA-1.6` | Configure and verify IPv4 addressing and subnetting | exact match | 1.6 | ethernet, ipv4-addressing | 5 | Wording matches official 1.6. |
-| `CCNA-1.7` | Describe IPv4 and IPv6 address types | combines multiple official objectives | 1.7, 1.9 | ipv4-addressing, ip-ranges | 20 | Pilot text 'Describe IPv4 and IPv6 address types' spans official 1.7 (private IPv4 addressing) and 1.9 (IPv6 address types). Not an exact match to either line alone. |
+| `CCNA-1.7` | Describe IPv4 and IPv6 address types | combines multiple official objectives | 1.7, 1.9 | ipv4-addressing, ip-ranges | 20 | Pilot text 'Describe IPv4 and IPv6 address types' spans official 1.7 and 1.9. Official 1.7 is private-IPv4-addressing only (not a general IPv4 address-types catalog); official 1.9 is IPv6 address types. Combined alias is intentional — not an exact match to either line alone. |
 | `CCNA-1.8` | Verify IP parameters for Client OS | narrower than official objective | 1.10 | ipv4-addressing | 3 | Pilot number 1.8 is NOT official 1.8 (IPv6 addressing). Closest official line is 1.10; pilot omits OS list (Windows, Mac OS, Linux). |
 | `CCNA-1.9` | Perform subnet calculations | narrower than official objective | 1.6 | subnetting | 15 | CRITICAL numbering mismatch: pilot CCNA-1.9 is subnet calculations; official 1.9 is IPv6 address types. Maps as a narrower slice of official 1.6 (IPv4 addressing and subnetting). |
 | `CCNA-1.10` | Configure IPv4 addressing and subnetting | narrower than official objective | 1.6 | subnetting | 23 | Pilot number 1.10 is NOT official 1.10 (client OS IP parameters). Text is a configure-only slice of official 1.6 (omits verify). |
@@ -50,15 +50,15 @@ Generated: 2026-08-04T04:37:32.503Z
 | `CCNA-2.3` | Configure Layer 2 discovery protocols | narrower than official objective | 2.3 | switching | 6 | Pilot omits verify and explicit CDP/LLDP naming. |
 | `CCNA-2.4` | Configure and verify EtherChannel | narrower than official objective | 2.4 | switching | 5 | Pilot omits Layer 2/Layer 3 and LACP specificity. |
 | `CCNA-2.5` | Describe STP and RSTP | partial match | 2.5 | vlans | 7 | Pilot 'Describe STP and RSTP' vs official 'Interpret basic operations of Rapid PVST+ Spanning Tree Protocol' — related but different verb/scope. |
-| `CCNA-2.6` | Configure root bridge and port roles | narrower than official objective | 2.5 | vlans, trunking | 12 | Pilot number 2.6 is NOT official 2.6 (wireless architectures). Root bridge/port roles are covered under official 2.5 / 2.5.a. |
+| `CCNA-2.6` | Configure root bridge and port roles | partial match | 2.5 | vlans, trunking | 12 | Pilot number 2.6 is NOT official 2.6 (wireless architectures). Root bridge/port roles relate to official 2.5 / 2.5.a, but pilot verb is Configure while official 2.5 is Interpret — partial, not a narrower same-verb slice. |
 | `CCNA-2.7` | Compare Cisco Wireless architectures | partial match | 2.6 | trunking | 5 | Pilot 'Compare Cisco Wireless architectures' vs official 2.6 'Describe Cisco Wireless Architectures and AP modes'. |
 | `CCNA-2.8` | Describe physical infrastructure connections | narrower than official objective | 2.7 | stp | 6 | Pilot number 2.8 is NOT official 2.8 (device management access). Generic 'physical infrastructure connections' is narrower than official WLAN-component 2.7. |
 | `CCNA-2.9` | Describe wireless LAN access | partial match | 2.9 | stp | 5 | Pilot 'Describe wireless LAN access' is vaguer than official GUI client-connectivity interpretation objective 2.9. |
-| `CCNA-3.1` | Interpret routing table components | exact match | 3.1 | routing-fundamentals | 6 | Equivalent wording to official 3.1. |
+| `CCNA-3.1` | Interpret routing table components | partial match | 3.1 | routing-fundamentals | 6 | Same subject as official 3.1, but wording differs (pilot 'Interpret routing table components' vs official 'Interpret the components of routing table') — not an exact match. |
 | `CCNA-3.2` | Determine how a router makes forwarding decisions | narrower than official objective | 3.2 | routing-fundamentals | 5 | Pilot omits official trailing 'by default'. |
 | `CCNA-3.3` | Configure and verify IPv4 and IPv6 static routing | exact match | 3.3 | static-routes | 6 | Wording matches official 3.3. |
 | `CCNA-3.4` | Configure single-area OSPFv2 | narrower than official objective | 3.4 | static-routes | 5 | Pilot omits verify. |
-| `CCNA-3.5` | Describe OSPF neighbor adjacencies | narrower than official objective | 3.4 | ospf-basics | 7 | CRITICAL numbering mismatch: pilot CCNA-3.5 is OSPF neighbor adjacencies; official 3.5 is first hop redundancy protocols (FHRP). Maps as a narrower slice of official 3.4 / 3.4.a. |
+| `CCNA-3.5` | Describe OSPF neighbor adjacencies | partial match | 3.4 | ospf-basics | 7 | CRITICAL numbering mismatch: pilot CCNA-3.5 is OSPF neighbor adjacencies; official 3.5 is first hop redundancy protocols (FHRP). Relates to official 3.4.a under 3.4, but pilot verb is Describe while parent 3.4 is Configure and verify — partial, not a silent remap to FHRP. |
 | `CCNA-3.6` | Configure and verify OSPF neighbor relationships | narrower than official objective | 3.4 | ospf-basics | 6 | No official 3.6. OSPF neighbor relationships are under official 3.4. |
 | `CCNA-3.7` | Configure and verify NAT | narrower than official objective | 4.1 | nat | 6 | Domain misnumbering: NAT is official IP Services 4.1 (inside source NAT using static and pools), not IP Connectivity 3.x. |
 | `CCNA-3.8` | Configure and verify NTP | narrower than official objective | 4.2 | nat | 5 | Domain misnumbering: NTP is official 4.2; pilot omits client/server mode detail. |
@@ -67,7 +67,7 @@ Generated: 2026-08-04T04:37:32.503Z
 | `CCNA-4.3` | Configure DNS on a Cisco router | unable to map | — | dns | 6 | No official v1.1 line for 'Configure DNS on a Cisco router'. Official 4.3 is explain-role only. Left unmapped rather than inventing alignment. |
 | `CCNA-4.4` | Describe SNMP in network operations | partial match | 4.4 | dns | 5 | Describe vs official Explain; same SNMP subject. |
 | `CCNA-5.1` | Define key security concepts | narrower than official objective | 5.1 | acls | 7 | Pilot omits official parenthetical (threats, vulnerabilities, exploits, and mitigation techniques). |
-| `CCNA-5.2` | Configure and verify ACLs | exact match | 5.6 | acls | 6 | Text matches official 5.6 ACLs; pilot number 5.2 is NOT official 5.2 (security program elements). |
+| `CCNA-5.2` | Configure and verify ACLs | partial match | 5.6 | acls | 6 | Pilot 'Configure and verify ACLs' abbreviates official 5.6 'Configure and verify access control lists'. Pilot number 5.2 is NOT official 5.2 (security program elements). |
 | `CCNA-5.3` | Configure Layer 2 security features | narrower than official objective | 5.7 | network-security | 7 | Pilot number 5.3 is NOT official 5.3 (local passwords). Maps to official 5.7; omits DHCP snooping / DAI / port security list. |
 | `CCNA-5.4` | Describe wireless security protocols | narrower than official objective | 5.9 | network-security | 6 | Pilot number 5.4 is NOT official 5.4 (password policy). Maps to official 5.9; omits WPA/WPA2/WPA3 list. |
 | `CCNA-6.1` | Explain how automation impacts network management | exact match | 6.1 | automation-basics | 6 | Wording matches official 6.1. |

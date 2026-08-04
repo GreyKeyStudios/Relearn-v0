@@ -118,7 +118,7 @@
         "1.7",
         "1.9"
       ],
-      "notes": "Pilot text 'Describe IPv4 and IPv6 address types' spans official 1.7 (private IPv4 addressing) and 1.9 (IPv6 address types). Not an exact match to either line alone.",
+      "notes": "Pilot text 'Describe IPv4 and IPv6 address types' spans official 1.7 and 1.9. Official 1.7 is private-IPv4-addressing only (not a general IPv4 address-types catalog); official 1.9 is IPv6 address types. Combined alias is intentional — not an exact match to either line alone.",
       "liveTopicIds": [
         "ipv4-addressing",
         "ip-ranges"
@@ -302,14 +302,14 @@
     {
       "pilotId": "CCNA-2.6",
       "pilotText": "Configure root bridge and port roles",
-      "status": "narrower than official objective",
+      "status": "partial match",
       "officialIds": [
         "200-301-v1.1/2.5"
       ],
       "officialNumbers": [
         "2.5"
       ],
-      "notes": "Pilot number 2.6 is NOT official 2.6 (wireless architectures). Root bridge/port roles are covered under official 2.5 / 2.5.a.",
+      "notes": "Pilot number 2.6 is NOT official 2.6 (wireless architectures). Root bridge/port roles relate to official 2.5 / 2.5.a, but pilot verb is Configure while official 2.5 is Interpret — partial, not a narrower same-verb slice.",
       "liveTopicIds": [
         "vlans",
         "trunking"
@@ -367,14 +367,14 @@
     {
       "pilotId": "CCNA-3.1",
       "pilotText": "Interpret routing table components",
-      "status": "exact match",
+      "status": "partial match",
       "officialIds": [
         "200-301-v1.1/3.1"
       ],
       "officialNumbers": [
         "3.1"
       ],
-      "notes": "Equivalent wording to official 3.1.",
+      "notes": "Same subject as official 3.1, but wording differs (pilot 'Interpret routing table components' vs official 'Interpret the components of routing table') — not an exact match.",
       "liveTopicIds": [
         "routing-fundamentals"
       ],
@@ -431,14 +431,14 @@
     {
       "pilotId": "CCNA-3.5",
       "pilotText": "Describe OSPF neighbor adjacencies",
-      "status": "narrower than official objective",
+      "status": "partial match",
       "officialIds": [
         "200-301-v1.1/3.4"
       ],
       "officialNumbers": [
         "3.4"
       ],
-      "notes": "CRITICAL numbering mismatch: pilot CCNA-3.5 is OSPF neighbor adjacencies; official 3.5 is first hop redundancy protocols (FHRP). Maps as a narrower slice of official 3.4 / 3.4.a.",
+      "notes": "CRITICAL numbering mismatch: pilot CCNA-3.5 is OSPF neighbor adjacencies; official 3.5 is first hop redundancy protocols (FHRP). Relates to official 3.4.a under 3.4, but pilot verb is Describe while parent 3.4 is Configure and verify — partial, not a silent remap to FHRP.",
       "liveTopicIds": [
         "ospf-basics"
       ],
@@ -571,14 +571,14 @@
     {
       "pilotId": "CCNA-5.2",
       "pilotText": "Configure and verify ACLs",
-      "status": "exact match",
+      "status": "partial match",
       "officialIds": [
         "200-301-v1.1/5.6"
       ],
       "officialNumbers": [
         "5.6"
       ],
-      "notes": "Text matches official 5.6 ACLs; pilot number 5.2 is NOT official 5.2 (security program elements).",
+      "notes": "Pilot 'Configure and verify ACLs' abbreviates official 5.6 'Configure and verify access control lists'. Pilot number 5.2 is NOT official 5.2 (security program elements).",
       "liveTopicIds": [
         "acls"
       ],
