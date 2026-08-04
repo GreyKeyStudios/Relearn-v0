@@ -77,6 +77,12 @@ export interface FlashcardInProgress {
   flipped: boolean;
 }
 
+/** CCNA dual-version pathway preference — does not duplicate mastery/SRS. */
+export interface CcnaPathwayPreferenceState {
+  intendedExamDate: string | null;
+  preferredObjectivesVersion: "v1.1" | "v2.0" | null;
+}
+
 export interface ProgressState {
   completedLessons: Record<string, true>;
   completedAssignments: Record<string, true>;
@@ -95,4 +101,6 @@ export interface ProgressState {
   questionStats?: Record<string, QuestionStat>;
   caseStudyAttempts?: CaseStudyAttempt[];
   confidenceScores?: Record<string, LearnerConfidenceScore>;
+  /** CCNA exam-date / pathway override — switching never deletes other progress */
+  ccnaPathwayPreference?: CcnaPathwayPreferenceState;
 }

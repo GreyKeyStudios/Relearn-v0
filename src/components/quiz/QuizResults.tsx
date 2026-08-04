@@ -19,6 +19,7 @@ import { Badge } from "@/components/ui/Badge";
 import { RotateCcw, BookOpen, Target } from "lucide-react";
 import { TopicWhatsNext, type NextTopicInfo } from "@/components/topic/TopicWhatsNext";
 import { getTopic } from "@/lib/content-selectors";
+import { getCcnaV20RemediationCopy } from "@/content/certifications/ccna/v20-remediation-copy";
 
 export interface QuizRemediationProps {
   certId: string;
@@ -162,6 +163,14 @@ export function QuizResults({
         <h3 className="text-sm font-semibold text-zinc-300">Review</h3>
         {questions.map((q, i) => {
           const answer = answers.find((a) => a.questionId === q.id);
+          const misconceptionHit =
+            answer &&
+            !answer.correct &&
+            (q.misconceptionChoiceIds?.includes(answer.selectedChoiceId) ??
+              false);
+          const remediationCopy = misconceptionHit
+            ? getCcnaV20RemediationCopy(q.remediationActivityId)
+            : undefined;
           return (
             <Card key={q.id} className="flex flex-col gap-2">
               <div className="flex items-start justify-between gap-2">
@@ -173,6 +182,18 @@ export function QuizResults({
                 </Badge>
               </div>
               <p className="text-xs text-zinc-400">{q.explanation}</p>
+              {remediationCopy && (
+                <div
+                  className="rounded-lg border border-amber-500/30 bg-amber-500/10 p-3"
+                  data-testid="results-diagnostic-remediation"
+                  data-remediation-id={q.remediationActivityId}
+                >
+                  <p className="text-xs font-medium text-amber-300">
+                    Misconception remediation — {remediationCopy.title}
+                  </p>
+                  <p className="mt-1 text-xs text-zinc-300">{remediationCopy.body}</p>
+                </div>
+              )}
             </Card>
           );
         })}

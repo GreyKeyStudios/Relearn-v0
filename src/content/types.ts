@@ -256,6 +256,14 @@ export interface Topic {
   flashcards: Flashcard[];
   /** Phase 2 — optional until content agents expand certs */
   objectives?: string[];
+  /**
+   * Official objectives pathway for catalog visibility.
+   * Omit for legacy/shared foundation topics (always visible).
+   * `"v2.0"` topics appear when the learner’s effective CCNA pathway is v2.0.
+   */
+  objectivesVersion?: "v1.1" | "v2.0";
+  /** Short badge for unfinished / version-specific pathway UI */
+  pathwayBadge?: string;
   assignments?: Assignment[];
   externalResources?: ExternalResource[];
   practiceType?: PracticeType[];
@@ -345,6 +353,13 @@ export interface QuizQuestion {
   /** Phase 4.5 — exam objective mapping (CCNA pilot) */
   objectiveId?: string;
   difficulty?: TopicDifficulty;
+  /**
+   * Choice ids that signal a known misconception (not random guessing).
+   * Used to route diagnostic → remediation without inventing a second mastery engine.
+   */
+  misconceptionChoiceIds?: string[];
+  /** Production remediation activity id when a misconception choice is selected */
+  remediationActivityId?: string;
 }
 
 export interface Flashcard {

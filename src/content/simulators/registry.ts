@@ -33,6 +33,8 @@ import {
   DnsRecordDrill,
   Ipv6CompressDrill,
   IpRangeDrill,
+  Ipv4TroubleshootDrill,
+  AiPromptsNetopsDrill,
   NatTypeDrill,
   StaticRouteDrill,
   VlanTrunkDrill,
@@ -193,6 +195,18 @@ export const networkRegistry: SimulatorRegistryEntry[] = [
     name: "Binary ↔ Decimal IP Converter",
     component: BinaryIpConverterDrill,
     topicIds: ["ipv4-addressing", "subnetting"],
+  },
+  {
+    id: "ipv4-troubleshoot-drill",
+    name: "IPv4 Addressing Troubleshoot",
+    component: Ipv4TroubleshootDrill,
+    topicIds: ["ipv4-troubleshoot-v20"],
+  },
+  {
+    id: "ai-prompts-netops-drill",
+    name: "AI Prompt Selection for Network Ops",
+    component: AiPromptsNetopsDrill,
+    topicIds: ["ai-prompts-netops-v20"],
   },
 ];
 

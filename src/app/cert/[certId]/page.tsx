@@ -20,7 +20,12 @@ import { getWeakObjectivesFromState } from "@/lib/objective-mastery";
 import { WeakObjectivesCard } from "@/components/mastery/WeakObjectivesCard";
 import { StudyNowCard } from "@/components/planner/StudyNowCard";
 import { CfPlacementWizard } from "@/components/cf/CfPlacementWizard";
+import { CcnaVersionPathwayCard } from "@/components/ccna/CcnaVersionPathwayCard";
 import { useProgressStore } from "@/stores/progress-store";
+import {
+  filterCertificationForCcnaPathway,
+  resolveEffectiveCcnaPathway,
+} from "@/lib/ccna-version-pathway";
 
 interface CertDetailPageProps {
   params: Promise<{ certId: string }>;
@@ -36,11 +41,19 @@ export default function CertDetailPage({ params }: CertDetailPageProps) {
   const getWeakTopics = useProgressStore((s) => s.getWeakTopics);
   const weakTopics = getWeakTopics().filter((w) => w.certId === certId);
   const progressState = useProgressStore((s) => s);
-  const progress = getCertProgressPercent(cert, {
+  const pathwayPreference = useProgressStore((s) => s.ccnaPathwayPreference);
+  const progressCert =
+    certId === "ccna"
+      ? filterCertificationForCcnaPathway(
+          cert,
+          resolveEffectiveCcnaPathway(pathwayPreference ?? null)
+        )
+      : cert;
+  const progress = getCertProgressPercent(progressCert, {
     completedLessons,
     completedAssignments,
   });
-  const masteryPercent = getCertMasteryPercent(cert, progressState);
+  const masteryPercent = getCertMasteryPercent(progressCert, progressState);
   const sessionMinutes = useProgressStore((s) => s.studyPlan.sessionMinutes);
   const coachRec = getCoachRecommendationForSession(progressState, [cert], { certId });
   const examPace = getExamPaceSummary(progressState, [cert]);
@@ -70,6 +83,8 @@ export default function CertDetailPage({ params }: CertDetailPageProps) {
       {examPace && !isSkillsTrack(cert) && <ExamCountdownCard pace={examPace} />}
 
       {certId === "computer-fundamentals" && <CfPlacementWizard />}
+
+      {certId === "ccna" && <CcnaVersionPathwayCard />}
 
       {hasContent && (
         <StudyNowCard
