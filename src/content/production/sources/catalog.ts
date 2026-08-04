@@ -38,6 +38,31 @@ export const PRODUCTION_SOURCES: SourceRecord[] = [
       "Keep as future-review only — do not mix v2.0 lines into the v1.1 blueprint.",
   },
   {
+    id: "src-cisco-ccna-200-301-v2.0",
+    title: "Cisco 200-301 CCNA v2.0 Exam Topics (official PDF)",
+    kind: "official-exam-objectives",
+    publisher: "Cisco",
+    version: "v2.0",
+    url: "https://learningcontent.cisco.com/documents/marketing/exam-topics/200-301_CCNA_v2.0_Exam_Topics_PDF.pdf",
+    retrievedAt: RETRIEVED,
+    lastCheckedAt: RETRIEVED,
+    confidence: "verified",
+    retrievalMethod: "exa",
+    notes:
+      "Complete official PDF inspected (3 pages). SHA-256 5f0bf00d2d459c1f2b52c54c9680fd7c5bb261b6842641a1f445fb0a0ca9923e. " +
+      "Extracted text: docs/curriculum-production/ccna-transition/200-301_CCNA_v2.0.extracted.txt. " +
+      "Full numbered hierarchy in src/content/production/objectives/ccna-200-301-v2.0.ts. " +
+      "Domain weights: Network Infrastructure and Connectivity 25%; Switching and Network Access 25%; " +
+      "IP Routing 20%; Network Services and Security 20%; AI, and Network Operations and Management 10%. " +
+      "Landing page: https://learningnetwork.cisco.com/s/ccna-v2-exam-topics (first date to test 2027-02-03). " +
+      "Do not mix objective IDs with v1.1.",
+    mixedVersionWarning:
+      "v2.0 is a separate pathway. Keep IDs namespaced as 200-301-v2.0/<number>. Shared lessons may exist, but objective associations stay version-specific.",
+    reviewBy: "2027-01-15",
+    futureReviewReason:
+      "Confirm cutover still 2027-02-03 and watch for PDF revisions before first test date.",
+  },
+  {
     id: "src-ccna-objectives-pilot",
     title: "CCNA exam objectives — ReLearn pilot catalog (operational aliases)",
     kind: "internal-architecture",
@@ -393,11 +418,12 @@ export const FUTURE_REVIEW_FLAGS: FutureReviewFlag[] = [
   {
     id: "review-ccna-v2-cutover",
     subject: "ccna",
-    fact: "Cisco CCNA 200-301 v1.1 last test date 2027-02-02; v2.0 begins 2027-02-03",
-    sourceIds: ["src-cisco-ccna-200-301-v1.1"],
+    fact: "Cisco CCNA 200-301 v1.1 last test date 2027-02-02; v2.0 begins 2027-02-03 (configurable in ccna-transition/dates.ts)",
+    sourceIds: ["src-cisco-ccna-200-301-v1.1", "src-cisco-ccna-200-301-v2.0"],
     reviewBy: "2027-01-15",
     severity: "critical",
-    notes: "Retrieved from Cisco Learning Network exam topics page via Exa on 2026-08-04.",
+    notes:
+      "Both official PDFs ingested. Dual-version architecture keeps pathways separate; do not hard-code cutover in UI.",
   },
   {
     id: "review-ccna-pilot-remap",

@@ -1,0 +1,3830 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-04T05:04:23.137Z",
+  "examCode": "200-301",
+  "windows": {
+    "v1_1_lastTestDate": "2027-02-02",
+    "v2_0_firstTestDate": "2027-02-03",
+    "configModule": "src/content/production/ccna-transition/dates.ts"
+  },
+  "sources": {
+    "v1_1": {
+      "url": "https://learningcontent.cisco.com/documents/marketing/exam-topics/200-301-CCNA-v1.1.pdf",
+      "sha256": "da15a22dda1afb61af1a14a53264eea6b87d81e8a3036dbaa69cb1b6260bebd5"
+    },
+    "v2_0": {
+      "url": "https://learningcontent.cisco.com/documents/marketing/exam-topics/200-301_CCNA_v2.0_Exam_Topics_PDF.pdf",
+      "sha256": "5f0bf00d2d459c1f2b52c54c9680fd7c5bb261b6842641a1f445fb0a0ca9923e"
+    }
+  },
+  "parentCounts": {
+    "v1_1": 53,
+    "v2_0": 29
+  },
+  "comparisonEdges": [
+    {
+      "id": "edge-v11-1.4-v20-1.1",
+      "v11Id": "200-301-v1.1/1.4",
+      "v11Number": "1.4",
+      "v20Id": "200-301-v2.0/1.1",
+      "v20Number": "1.1",
+      "relationship": "requires greater practical depth",
+      "confidence": "high",
+      "notes": "Identify cable/interface issues → Diagnose with broader fault list (distance, signal levels, pin out, cable types)."
+    },
+    {
+      "id": "edge-v11-1.3-v20-1.1",
+      "v11Id": "200-301-v1.1/1.3",
+      "v11Number": "1.3",
+      "v20Id": "200-301-v2.0/1.1",
+      "v20Number": "1.1",
+      "relationship": "moved",
+      "confidence": "medium",
+      "notes": "Cabling-type compare knowledge is absorbed into the broader diagnose-cable objective; not a one-for-one wording match."
+    },
+    {
+      "id": "edge-v11-1.6-v20-1.3",
+      "v11Id": "200-301-v1.1/1.6",
+      "v11Number": "1.6",
+      "v20Id": "200-301-v2.0/1.3",
+      "v20Number": "1.3",
+      "relationship": "requires greater practical depth",
+      "confidence": "high",
+      "notes": "Configure and verify IPv4 addressing/subnetting → Troubleshoot IPv4 (public and private)."
+    },
+    {
+      "id": "edge-v11-1.7-v20-1.3",
+      "v11Id": "200-301-v1.1/1.7",
+      "v11Number": "1.7",
+      "v20Id": "200-301-v2.0/1.3",
+      "v20Number": "1.3",
+      "relationship": "moved",
+      "confidence": "high",
+      "notes": "Standalone private IPv4 describe line folded into v2.0 1.3 public/private troubleshooting."
+    },
+    {
+      "id": "edge-v11-1.8-v20-1.4",
+      "v11Id": "200-301-v1.1/1.8",
+      "v11Number": "1.8",
+      "v20Id": "200-301-v2.0/1.4",
+      "v20Number": "1.4",
+      "relationship": "requires greater practical depth",
+      "confidence": "high",
+      "notes": "Configure/verify IPv6 addressing/prefix → Troubleshoot IPv6 configuration/assignment/prefix sizing."
+    },
+    {
+      "id": "edge-v11-1.9-v20-1.4",
+      "v11Id": "200-301-v1.1/1.9",
+      "v11Number": "1.9",
+      "v20Id": "200-301-v2.0/1.4",
+      "v20Number": "1.4",
+      "relationship": "reduced",
+      "confidence": "medium",
+      "notes": "IPv6 address-types catalog shrinks; v2.0 1.4 names unicast + modified EUI-64 only (not anycast/multicast catalog)."
+    },
+    {
+      "id": "edge-v11-1.10-v20-1.6",
+      "v11Id": "200-301-v1.1/1.10",
+      "v11Number": "1.10",
+      "v20Id": "200-301-v2.0/1.6",
+      "v20Number": "1.6",
+      "relationship": "requires greater practical depth",
+      "confidence": "high",
+      "notes": "Verify client OS IP parameters → Troubleshoot wired/wireless client connectivity including wireless security parameters."
+    },
+    {
+      "id": "edge-v11-1.11-v20-1.5",
+      "v11Id": "200-301-v1.1/1.11",
+      "v11Number": "1.11",
+      "v20Id": "200-301-v2.0/1.5",
+      "v20Number": "1.5",
+      "relationship": "unchanged",
+      "confidence": "high",
+      "notes": "Parent wording identical ('Describe wireless principles'). Sub-bullets differ (SSID/encryption vs interference/security protocols) — track separately in content work."
+    },
+    {
+      "id": "edge-v11-1.12-v20-1.2",
+      "v11Id": "200-301-v1.1/1.12",
+      "v11Number": "1.12",
+      "v20Id": "200-301-v2.0/1.2",
+      "v20Number": "1.2",
+      "relationship": "reduced",
+      "confidence": "medium",
+      "notes": "Virtualization fundamentals → hypervisors/VMs/containers; VRFs called out in v1.1 are not present in v2.0 1.2."
+    },
+    {
+      "id": "edge-v11-2.1-v20-2.2",
+      "v11Id": "200-301-v1.1/2.1",
+      "v11Number": "2.1",
+      "v20Id": "200-301-v2.0/2.2",
+      "v20Number": "2.2",
+      "relationship": "moved",
+      "confidence": "medium",
+      "notes": "VLAN configure/verify relocates into edge-host switch-port attributes (VLAN/PoE/port-channel/LACP)."
+    },
+    {
+      "id": "edge-v11-2.2-v20-2.1",
+      "v11Id": "200-301-v1.1/2.2",
+      "v11Number": "2.2",
+      "v20Id": "200-301-v2.0/2.1",
+      "v20Number": "2.1",
+      "relationship": "expanded",
+      "confidence": "medium",
+      "notes": "Interswitch connectivity expands into switch-to-switch/switch-to-router infrastructure connectivity with SVI/LACP/trunk detail."
+    },
+    {
+      "id": "edge-v11-2.3-v20-2.3",
+      "v11Id": "200-301-v1.1/2.3",
+      "v11Number": "2.3",
+      "v20Id": "200-301-v2.0/2.3",
+      "v20Number": "2.3",
+      "relationship": "requires greater practical depth",
+      "confidence": "high",
+      "notes": "Configure/verify CDP/LLDP → Validate network documentation accuracy using CDP/LLDP."
+    },
+    {
+      "id": "edge-v11-2.4-v20-2.1",
+      "v11Id": "200-301-v1.1/2.4",
+      "v11Number": "2.4",
+      "v20Id": "200-301-v2.0/2.1",
+      "v20Number": "2.1",
+      "relationship": "moved",
+      "confidence": "high",
+      "notes": "EtherChannel/LACP becomes v2.0 2.1.c under infrastructure connectivity."
+    },
+    {
+      "id": "edge-v11-2.5-v20-2.5",
+      "v11Id": "200-301-v1.1/2.5",
+      "v11Number": "2.5",
+      "v20Id": "200-301-v2.0/2.5",
+      "v20Number": "2.5",
+      "relationship": "requires greater practical depth",
+      "confidence": "high",
+      "notes": "Interpret Rapid PVST+ → Configure Rapid PVST+ operations. BPDU filter present in v1.1 2.5.d is absent from v2.0 2.5.d."
+    },
+    {
+      "id": "edge-v11-3.1-v20-3.1",
+      "v11Id": "200-301-v1.1/3.1",
+      "v11Number": "3.1",
+      "v20Id": "200-301-v2.0/3.1",
+      "v20Number": "3.1",
+      "relationship": "expanded",
+      "confidence": "high",
+      "notes": "Interpret routing-table components → Interpret routing table to identify next hop (components listed inline)."
+    },
+    {
+      "id": "edge-v11-3.3-v20-3.2",
+      "v11Id": "200-301-v1.1/3.3",
+      "v11Number": "3.3",
+      "v20Id": "200-301-v2.0/3.2",
+      "v20Number": "3.2",
+      "relationship": "requires greater practical depth",
+      "confidence": "high",
+      "notes": "Configure/verify static routing → Troubleshoot static routing (same route-type sub-bullets)."
+    },
+    {
+      "id": "edge-v11-3.4-v20-3.3",
+      "v11Id": "200-301-v1.1/3.4",
+      "v11Number": "3.4",
+      "v20Id": "200-301-v2.0/3.3",
+      "v20Number": "3.3",
+      "relationship": "expanded",
+      "confidence": "high",
+      "notes": "OSPFv2-only → OSPFv2 for IPv4 and OSPFv3 for IPv6; adjacency note excludes authentication."
+    },
+    {
+      "id": "edge-v11-3.5-v20-3.4",
+      "v11Id": "200-301-v1.1/3.5",
+      "v11Number": "3.5",
+      "v20Id": "200-301-v2.0/3.4",
+      "v20Number": "3.4",
+      "relationship": "requires greater practical depth",
+      "confidence": "high",
+      "notes": "Describe FHRP concepts → Interpret operational status of HSRP and VRRP."
+    },
+    {
+      "id": "edge-v11-4.1-v20-4.3",
+      "v11Id": "200-301-v1.1/4.1",
+      "v11Number": "4.1",
+      "v20Id": "200-301-v2.0/4.3",
+      "v20Number": "4.3",
+      "relationship": "expanded",
+      "confidence": "high",
+      "notes": "Inside source NAT static/pools → NAT/PAT on IOS XE routers."
+    },
+    {
+      "id": "edge-v11-4.3-v20-1.7",
+      "v11Id": "200-301-v1.1/4.3",
+      "v11Number": "4.3",
+      "v20Id": "200-301-v2.0/1.7",
+      "v20Number": "1.7",
+      "relationship": "moved",
+      "confidence": "medium",
+      "notes": "DHCP portion of v1.1 4.3 role objective moves toward v2.0 1.7 DHCPv4 troubleshoot (DNS portion maps separately to 4.4)."
+    },
+    {
+      "id": "edge-v11-4.3-v20-4.4",
+      "v11Id": "200-301-v1.1/4.3",
+      "v11Number": "4.3",
+      "v20Id": "200-301-v2.0/4.4",
+      "v20Number": "4.4",
+      "relationship": "expanded",
+      "confidence": "medium",
+      "notes": "DNS portion of v1.1 4.3 expands into diagnose DNS records (A/AAAA/CNAME/MX/NS/PTR)."
+    },
+    {
+      "id": "edge-v11-4.4-v20-5.4",
+      "v11Id": "200-301-v1.1/4.4",
+      "v11Number": "4.4",
+      "v20Id": "200-301-v2.0/5.4",
+      "v20Number": "5.4",
+      "relationship": "moved",
+      "confidence": "high",
+      "notes": "SNMP moves into AI/ops domain; wording Describe/Explain → Describe the function."
+    },
+    {
+      "id": "edge-v11-4.5-v20-5.6",
+      "v11Id": "200-301-v1.1/4.5",
+      "v11Number": "4.5",
+      "v20Id": "200-301-v2.0/5.6",
+      "v20Number": "5.6",
+      "relationship": "requires greater practical depth",
+      "confidence": "high",
+      "notes": "Describe syslog features → Interpret syslog message content, severity levels, and facilities."
+    },
+    {
+      "id": "edge-v11-4.6-v20-1.7",
+      "v11Id": "200-301-v1.1/4.6",
+      "v11Number": "4.6",
+      "v20Id": "200-301-v2.0/1.7",
+      "v20Number": "1.7",
+      "relationship": "requires greater practical depth",
+      "confidence": "high",
+      "notes": "Configure/verify DHCP client/relay → Troubleshoot DHCPv4 client/server/relay on IOS."
+    },
+    {
+      "id": "edge-v11-4.9-v20-4.2",
+      "v11Id": "200-301-v1.1/4.9",
+      "v11Number": "4.9",
+      "v20Id": "200-301-v2.0/4.2",
+      "v20Number": "4.2",
+      "relationship": "expanded",
+      "confidence": "medium",
+      "notes": "TFTP/FTP capabilities → secure file transfer with SFTP/SCP for config/software files."
+    },
+    {
+      "id": "edge-v11-5.3-v20-4.1",
+      "v11Id": "200-301-v1.1/5.3",
+      "v11Number": "5.3",
+      "v20Id": "200-301-v2.0/4.1",
+      "v20Number": "4.1",
+      "relationship": "expanded",
+      "confidence": "medium",
+      "notes": "Local password device access → local usernames and AAA client (TACACS+/RADIUS)."
+    },
+    {
+      "id": "edge-v11-5.5-v20-4.5",
+      "v11Id": "200-301-v1.1/5.5",
+      "v11Number": "5.5",
+      "v20Id": "200-301-v2.0/4.5",
+      "v20Number": "4.5",
+      "relationship": "expanded",
+      "confidence": "high",
+      "notes": "IPsec VPN describe gains protocols and transport modes detail."
+    },
+    {
+      "id": "edge-v11-5.6-v20-4.6",
+      "v11Id": "200-301-v1.1/5.6",
+      "v11Number": "5.6",
+      "v20Id": "200-301-v2.0/4.6",
+      "v20Number": "4.6",
+      "relationship": "expanded",
+      "confidence": "high",
+      "notes": "ACLs → IPv4 ACLs explicitly standard/extended/numbered/named."
+    },
+    {
+      "id": "edge-v11-5.7-v20-4.7",
+      "v11Id": "200-301-v1.1/5.7",
+      "v11Number": "5.7",
+      "v20Id": "200-301-v2.0/4.7",
+      "v20Number": "4.7",
+      "relationship": "expanded",
+      "confidence": "high",
+      "notes": "L2 security expands with storm control and RA guard; DHCP snooping/DAI/port security retained."
+    },
+    {
+      "id": "edge-v11-5.8-v20-4.1",
+      "v11Id": "200-301-v1.1/5.8",
+      "v11Number": "5.8",
+      "v20Id": "200-301-v2.0/4.1",
+      "v20Number": "4.1",
+      "relationship": "requires greater practical depth",
+      "confidence": "medium",
+      "notes": "Compare AAA concepts → configure as AAA client for management."
+    },
+    {
+      "id": "edge-v11-5.9-v20-1.5",
+      "v11Id": "200-301-v1.1/5.9",
+      "v11Number": "5.9",
+      "v20Id": "200-301-v2.0/1.5",
+      "v20Number": "1.5",
+      "relationship": "moved",
+      "confidence": "medium",
+      "notes": "Wireless security protocols relocate under wireless principles sub-bullet 1.5.c."
+    },
+    {
+      "id": "edge-v11-6.2-v20-5.3",
+      "v11Id": "200-301-v1.1/6.2",
+      "v11Number": "6.2",
+      "v20Id": "200-301-v2.0/5.3",
+      "v20Number": "5.3",
+      "relationship": "moved",
+      "confidence": "medium",
+      "notes": "Traditional vs controller-based networking is one facet of broader network management approaches."
+    },
+    {
+      "id": "edge-v11-6.4-v20-5.1",
+      "v11Id": "200-301-v1.1/6.4",
+      "v11Number": "6.4",
+      "v20Id": "200-301-v2.0/5.1",
+      "v20Number": "5.1",
+      "relationship": "expanded",
+      "confidence": "medium",
+      "notes": "AI/ML in network ops expands toward agentic AI role (also see 5.2 prompts)."
+    },
+    {
+      "id": "edge-v11-6.4-v20-5.2",
+      "v11Id": "200-301-v1.1/6.4",
+      "v11Number": "6.4",
+      "v20Id": "200-301-v2.0/5.2",
+      "v20Number": "5.2",
+      "relationship": "expanded",
+      "confidence": "medium",
+      "notes": "Generative AI portion expands into explicit prompt-selection objective."
+    },
+    {
+      "id": "edge-v11-6.6-v20-5.5",
+      "v11Id": "200-301-v1.1/6.6",
+      "v11Number": "6.6",
+      "v20Id": "200-301-v2.0/5.5",
+      "v20Number": "5.5",
+      "relationship": "requires greater practical depth",
+      "confidence": "medium",
+      "notes": "Recognize Ansible/Terraform capabilities → Use Ansible to execute commands; Terraform not named in v2.0 5.5."
+    }
+  ],
+  "transitionManifest": [
+    {
+      "id": "transition-v1.1-1.1",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/1.1",
+      "number": "1.1",
+      "text": "Explain the role and function of network components",
+      "domainNumber": "1.0",
+      "classification": "removed",
+      "counterpartIds": [],
+      "counterpartNumbers": [],
+      "notes": "No v2.0 parent asks to explain network-component roles/functions.",
+      "sharedCoreCandidate": false,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 1
+    },
+    {
+      "id": "transition-v1.1-1.2",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/1.2",
+      "number": "1.2",
+      "text": "Describe characteristics of network topology architectures",
+      "domainNumber": "1.0",
+      "classification": "removed",
+      "counterpartIds": [],
+      "counterpartNumbers": [],
+      "notes": "Topology architecture characteristics are not a v2.0 parent line.",
+      "sharedCoreCandidate": false,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 1
+    },
+    {
+      "id": "transition-v1.1-1.3",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/1.3",
+      "number": "1.3",
+      "text": "Compare physical interface and cabling types",
+      "domainNumber": "1.0",
+      "classification": "moved",
+      "counterpartIds": [
+        "200-301-v2.0/1.1"
+      ],
+      "counterpartNumbers": [
+        "1.1"
+      ],
+      "notes": "1.1: Cabling-type compare knowledge is absorbed into the broader diagnose-cable objective; not a one-for-one wording match.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 1
+    },
+    {
+      "id": "transition-v1.1-1.4",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/1.4",
+      "number": "1.4",
+      "text": "Identify interface and cable issues (collisions, errors, mismatch duplex, and/or speed)",
+      "domainNumber": "1.0",
+      "classification": "requires greater practical depth",
+      "counterpartIds": [
+        "200-301-v2.0/1.1"
+      ],
+      "counterpartNumbers": [
+        "1.1"
+      ],
+      "notes": "1.1: Identify cable/interface issues → Diagnose with broader fault list (distance, signal levels, pin out, cable types).",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 1
+    },
+    {
+      "id": "transition-v1.1-1.5",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/1.5",
+      "number": "1.5",
+      "text": "Compare TCP to UDP",
+      "domainNumber": "1.0",
+      "classification": "removed",
+      "counterpartIds": [],
+      "counterpartNumbers": [],
+      "notes": "TCP vs UDP compare is not listed in v2.0 parents.",
+      "sharedCoreCandidate": false,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 1
+    },
+    {
+      "id": "transition-v1.1-1.6",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/1.6",
+      "number": "1.6",
+      "text": "Configure and verify IPv4 addressing and subnetting",
+      "domainNumber": "1.0",
+      "classification": "requires greater practical depth",
+      "counterpartIds": [
+        "200-301-v2.0/1.3"
+      ],
+      "counterpartNumbers": [
+        "1.3"
+      ],
+      "notes": "1.3: Configure and verify IPv4 addressing/subnetting → Troubleshoot IPv4 (public and private).",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 1
+    },
+    {
+      "id": "transition-v1.1-1.7",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/1.7",
+      "number": "1.7",
+      "text": "Describe private IPv4 addressing",
+      "domainNumber": "1.0",
+      "classification": "moved",
+      "counterpartIds": [
+        "200-301-v2.0/1.3"
+      ],
+      "counterpartNumbers": [
+        "1.3"
+      ],
+      "notes": "1.3: Standalone private IPv4 describe line folded into v2.0 1.3 public/private troubleshooting.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 1
+    },
+    {
+      "id": "transition-v1.1-1.8",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/1.8",
+      "number": "1.8",
+      "text": "Configure and verify IPv6 addressing and prefix",
+      "domainNumber": "1.0",
+      "classification": "requires greater practical depth",
+      "counterpartIds": [
+        "200-301-v2.0/1.4"
+      ],
+      "counterpartNumbers": [
+        "1.4"
+      ],
+      "notes": "1.4: Configure/verify IPv6 addressing/prefix → Troubleshoot IPv6 configuration/assignment/prefix sizing.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 2
+    },
+    {
+      "id": "transition-v1.1-1.9",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/1.9",
+      "number": "1.9",
+      "text": "Describe IPv6 address types",
+      "domainNumber": "1.0",
+      "classification": "reduced",
+      "counterpartIds": [
+        "200-301-v2.0/1.4"
+      ],
+      "counterpartNumbers": [
+        "1.4"
+      ],
+      "notes": "1.4: IPv6 address-types catalog shrinks; v2.0 1.4 names unicast + modified EUI-64 only (not anycast/multicast catalog).",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 2
+    },
+    {
+      "id": "transition-v1.1-1.10",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/1.10",
+      "number": "1.10",
+      "text": "Verify IP parameters for Client OS (Windows, Mac OS, Linux)",
+      "domainNumber": "1.0",
+      "classification": "requires greater practical depth",
+      "counterpartIds": [
+        "200-301-v2.0/1.6"
+      ],
+      "counterpartNumbers": [
+        "1.6"
+      ],
+      "notes": "1.6: Verify client OS IP parameters → Troubleshoot wired/wireless client connectivity including wireless security parameters.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 2
+    },
+    {
+      "id": "transition-v1.1-1.11",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/1.11",
+      "number": "1.11",
+      "text": "Describe wireless principles",
+      "domainNumber": "1.0",
+      "classification": "unchanged",
+      "counterpartIds": [
+        "200-301-v2.0/1.5"
+      ],
+      "counterpartNumbers": [
+        "1.5"
+      ],
+      "notes": "1.5: Parent wording identical ('Describe wireless principles'). Sub-bullets differ (SSID/encryption vs interference/security protocols) — track separately in content work.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 2
+    },
+    {
+      "id": "transition-v1.1-1.12",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/1.12",
+      "number": "1.12",
+      "text": "Explain virtualization fundamentals (server virtualization, containers, and VRFs)",
+      "domainNumber": "1.0",
+      "classification": "reduced",
+      "counterpartIds": [
+        "200-301-v2.0/1.2"
+      ],
+      "counterpartNumbers": [
+        "1.2"
+      ],
+      "notes": "1.2: Virtualization fundamentals → hypervisors/VMs/containers; VRFs called out in v1.1 are not present in v2.0 1.2.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 2
+    },
+    {
+      "id": "transition-v1.1-1.13",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/1.13",
+      "number": "1.13",
+      "text": "Describe switching concepts",
+      "domainNumber": "1.0",
+      "classification": "removed",
+      "counterpartIds": [],
+      "counterpartNumbers": [],
+      "notes": "Switching concepts (MAC learning/flooding/table) are not a v2.0 parent line.",
+      "sharedCoreCandidate": false,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 2
+    },
+    {
+      "id": "transition-v1.1-2.1",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/2.1",
+      "number": "2.1",
+      "text": "Configure and verify VLANs (normal range) spanning multiple switches",
+      "domainNumber": "2.0",
+      "classification": "moved",
+      "counterpartIds": [
+        "200-301-v2.0/2.2"
+      ],
+      "counterpartNumbers": [
+        "2.2"
+      ],
+      "notes": "2.2: VLAN configure/verify relocates into edge-host switch-port attributes (VLAN/PoE/port-channel/LACP).",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 2
+    },
+    {
+      "id": "transition-v1.1-2.2",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/2.2",
+      "number": "2.2",
+      "text": "Configure and verify interswitch connectivity",
+      "domainNumber": "2.0",
+      "classification": "expanded",
+      "counterpartIds": [
+        "200-301-v2.0/2.1"
+      ],
+      "counterpartNumbers": [
+        "2.1"
+      ],
+      "notes": "2.1: Interswitch connectivity expands into switch-to-switch/switch-to-router infrastructure connectivity with SVI/LACP/trunk detail.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 2
+    },
+    {
+      "id": "transition-v1.1-2.3",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/2.3",
+      "number": "2.3",
+      "text": "Configure and verify Layer 2 discovery protocols (Cisco Discovery Protocol and LLDP)",
+      "domainNumber": "2.0",
+      "classification": "requires greater practical depth",
+      "counterpartIds": [
+        "200-301-v2.0/2.3"
+      ],
+      "counterpartNumbers": [
+        "2.3"
+      ],
+      "notes": "2.3: Configure/verify CDP/LLDP → Validate network documentation accuracy using CDP/LLDP.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 2
+    },
+    {
+      "id": "transition-v1.1-2.4",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/2.4",
+      "number": "2.4",
+      "text": "Configure and verify (Layer 2/Layer 3) EtherChannel (LACP)",
+      "domainNumber": "2.0",
+      "classification": "moved",
+      "counterpartIds": [
+        "200-301-v2.0/2.1"
+      ],
+      "counterpartNumbers": [
+        "2.1"
+      ],
+      "notes": "2.1: EtherChannel/LACP becomes v2.0 2.1.c under infrastructure connectivity.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 2
+    },
+    {
+      "id": "transition-v1.1-2.5",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/2.5",
+      "number": "2.5",
+      "text": "Interpret basic operations of Rapid PVST+ Spanning Tree Protocol",
+      "domainNumber": "2.0",
+      "classification": "requires greater practical depth",
+      "counterpartIds": [
+        "200-301-v2.0/2.5"
+      ],
+      "counterpartNumbers": [
+        "2.5"
+      ],
+      "notes": "2.5: Interpret Rapid PVST+ → Configure Rapid PVST+ operations. BPDU filter present in v1.1 2.5.d is absent from v2.0 2.5.d.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 2
+    },
+    {
+      "id": "transition-v1.1-2.6",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/2.6",
+      "number": "2.6",
+      "text": "Describe Cisco Wireless Architectures and AP modes",
+      "domainNumber": "2.0",
+      "classification": "unable to determine",
+      "counterpartIds": [],
+      "counterpartNumbers": [],
+      "notes": "Wireless architectures/AP modes loosely resemble v2.0 2.2.b edge-host AP attributes, but that is not trustworthy equivalence — left undetermined rather than inventing a map.",
+      "sharedCoreCandidate": false,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 3
+    },
+    {
+      "id": "transition-v1.1-2.7",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/2.7",
+      "number": "2.7",
+      "text": "Describe physical infrastructure connections of WLAN components (AP, WLC, access/trunk ports, and LAG)",
+      "domainNumber": "2.0",
+      "classification": "removed",
+      "counterpartIds": [],
+      "counterpartNumbers": [],
+      "notes": "WLAN physical infrastructure connections (AP/WLC/LAG) have no clear v2.0 parent.",
+      "sharedCoreCandidate": false,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 3
+    },
+    {
+      "id": "transition-v1.1-2.8",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/2.8",
+      "number": "2.8",
+      "text": "Describe network device management access (Telnet, SSH, HTTP, HTTPS, console, TACACS+/RADIUS, and cloud managed)",
+      "domainNumber": "2.0",
+      "classification": "unable to determine",
+      "counterpartIds": [],
+      "counterpartNumbers": [],
+      "notes": "Device management access (Telnet/SSH/HTTP/HTTPS/console/TACACS+/RADIUS/cloud) overlaps partially with v2.0 4.1 AAA/local usernames but is not equivalent; left undetermined.",
+      "sharedCoreCandidate": false,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 3
+    },
+    {
+      "id": "transition-v1.1-2.9",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/2.9",
+      "number": "2.9",
+      "text": "Interpret the wireless LAN GUI configuration for client connectivity, such as WLAN creation, security settings, QoS profiles, and advanced settings",
+      "domainNumber": "2.0",
+      "classification": "removed",
+      "counterpartIds": [],
+      "counterpartNumbers": [],
+      "notes": "Wireless LAN GUI client-connectivity interpretation is not listed in v2.0.",
+      "sharedCoreCandidate": false,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 3
+    },
+    {
+      "id": "transition-v1.1-3.1",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/3.1",
+      "number": "3.1",
+      "text": "Interpret the components of routing table",
+      "domainNumber": "3.0",
+      "classification": "expanded",
+      "counterpartIds": [
+        "200-301-v2.0/3.1"
+      ],
+      "counterpartNumbers": [
+        "3.1"
+      ],
+      "notes": "3.1: Interpret routing-table components → Interpret routing table to identify next hop (components listed inline).",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 3
+    },
+    {
+      "id": "transition-v1.1-3.2",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/3.2",
+      "number": "3.2",
+      "text": "Determine how a router makes a forwarding decision by default",
+      "domainNumber": "3.0",
+      "classification": "unable to determine",
+      "counterpartIds": [],
+      "counterpartNumbers": [],
+      "notes": "Default forwarding decision factors (longest prefix/AD/metric) may be implied by v2.0 3.1 but are not stated as a separate objective.",
+      "sharedCoreCandidate": false,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 3
+    },
+    {
+      "id": "transition-v1.1-3.3",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/3.3",
+      "number": "3.3",
+      "text": "Configure and verify IPv4 and IPv6 static routing",
+      "domainNumber": "3.0",
+      "classification": "requires greater practical depth",
+      "counterpartIds": [
+        "200-301-v2.0/3.2"
+      ],
+      "counterpartNumbers": [
+        "3.2"
+      ],
+      "notes": "3.2: Configure/verify static routing → Troubleshoot static routing (same route-type sub-bullets).",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 3
+    },
+    {
+      "id": "transition-v1.1-3.4",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/3.4",
+      "number": "3.4",
+      "text": "Configure and verify single area OSPFv2",
+      "domainNumber": "3.0",
+      "classification": "expanded",
+      "counterpartIds": [
+        "200-301-v2.0/3.3"
+      ],
+      "counterpartNumbers": [
+        "3.3"
+      ],
+      "notes": "3.3: OSPFv2-only → OSPFv2 for IPv4 and OSPFv3 for IPv6; adjacency note excludes authentication.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 3
+    },
+    {
+      "id": "transition-v1.1-3.5",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/3.5",
+      "number": "3.5",
+      "text": "Describe the purpose, functions, and concepts of first hop redundancy protocols",
+      "domainNumber": "3.0",
+      "classification": "requires greater practical depth",
+      "counterpartIds": [
+        "200-301-v2.0/3.4"
+      ],
+      "counterpartNumbers": [
+        "3.4"
+      ],
+      "notes": "3.4: Describe FHRP concepts → Interpret operational status of HSRP and VRRP.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 3
+    },
+    {
+      "id": "transition-v1.1-4.1",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/4.1",
+      "number": "4.1",
+      "text": "Configure and verify inside source NAT using static and pools",
+      "domainNumber": "4.0",
+      "classification": "expanded",
+      "counterpartIds": [
+        "200-301-v2.0/4.3"
+      ],
+      "counterpartNumbers": [
+        "4.3"
+      ],
+      "notes": "4.3: Inside source NAT static/pools → NAT/PAT on IOS XE routers.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 3
+    },
+    {
+      "id": "transition-v1.1-4.2",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/4.2",
+      "number": "4.2",
+      "text": "Configure and verify NTP operating in a client and server mode",
+      "domainNumber": "4.0",
+      "classification": "removed",
+      "counterpartIds": [],
+      "counterpartNumbers": [],
+      "notes": "NTP client/server configure/verify is absent from v2.0 parents.",
+      "sharedCoreCandidate": false,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 3
+    },
+    {
+      "id": "transition-v1.1-4.3",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/4.3",
+      "number": "4.3",
+      "text": "Explain the role of DHCP and DNS within the network",
+      "domainNumber": "4.0",
+      "classification": "moved",
+      "counterpartIds": [
+        "200-301-v2.0/1.7",
+        "200-301-v2.0/4.4"
+      ],
+      "counterpartNumbers": [
+        "1.7",
+        "4.4"
+      ],
+      "notes": "1.7: DHCP portion of v1.1 4.3 role objective moves toward v2.0 1.7 DHCPv4 troubleshoot (DNS portion maps separately to 4.4). 4.4: DNS portion of v1.1 4.3 expands into diagnose DNS records (A/AAAA/CNAME/MX/NS/PTR).",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 3
+    },
+    {
+      "id": "transition-v1.1-4.4",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/4.4",
+      "number": "4.4",
+      "text": "Explain the function of SNMP in network operations",
+      "domainNumber": "4.0",
+      "classification": "moved",
+      "counterpartIds": [
+        "200-301-v2.0/5.4"
+      ],
+      "counterpartNumbers": [
+        "5.4"
+      ],
+      "notes": "5.4: SNMP moves into AI/ops domain; wording Describe/Explain → Describe the function.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 4
+    },
+    {
+      "id": "transition-v1.1-4.5",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/4.5",
+      "number": "4.5",
+      "text": "Describe the use of syslog features, including facilities and severity levels",
+      "domainNumber": "4.0",
+      "classification": "requires greater practical depth",
+      "counterpartIds": [
+        "200-301-v2.0/5.6"
+      ],
+      "counterpartNumbers": [
+        "5.6"
+      ],
+      "notes": "5.6: Describe syslog features → Interpret syslog message content, severity levels, and facilities.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 4
+    },
+    {
+      "id": "transition-v1.1-4.6",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/4.6",
+      "number": "4.6",
+      "text": "Configure and verify DHCP client and relay",
+      "domainNumber": "4.0",
+      "classification": "requires greater practical depth",
+      "counterpartIds": [
+        "200-301-v2.0/1.7"
+      ],
+      "counterpartNumbers": [
+        "1.7"
+      ],
+      "notes": "1.7: Configure/verify DHCP client/relay → Troubleshoot DHCPv4 client/server/relay on IOS.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 4
+    },
+    {
+      "id": "transition-v1.1-4.7",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/4.7",
+      "number": "4.7",
+      "text": "Explain the forwarding per-hop behavior (PHB) for QoS such as classification, marking, queuing, congestion, policing, and shaping",
+      "domainNumber": "4.0",
+      "classification": "removed",
+      "counterpartIds": [],
+      "counterpartNumbers": [],
+      "notes": "QoS PHB forwarding behavior is absent from v2.0 parents.",
+      "sharedCoreCandidate": false,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 4
+    },
+    {
+      "id": "transition-v1.1-4.8",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/4.8",
+      "number": "4.8",
+      "text": "Configure network devices for remote access using SSH",
+      "domainNumber": "4.0",
+      "classification": "unable to determine",
+      "counterpartIds": [],
+      "counterpartNumbers": [],
+      "notes": "SSH remote-access configure may relate to management/file-transfer objectives but has no explicit v2.0 parent.",
+      "sharedCoreCandidate": false,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 4
+    },
+    {
+      "id": "transition-v1.1-4.9",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/4.9",
+      "number": "4.9",
+      "text": "Describe the capabilities and functions of TFTP/FTP in the network",
+      "domainNumber": "4.0",
+      "classification": "expanded",
+      "counterpartIds": [
+        "200-301-v2.0/4.2"
+      ],
+      "counterpartNumbers": [
+        "4.2"
+      ],
+      "notes": "4.2: TFTP/FTP capabilities → secure file transfer with SFTP/SCP for config/software files.",
+      "sharedCoreCandidate": false,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 4
+    },
+    {
+      "id": "transition-v1.1-5.1",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/5.1",
+      "number": "5.1",
+      "text": "Define key security concepts (threats, vulnerabilities, exploits, and mitigation techniques)",
+      "domainNumber": "5.0",
+      "classification": "removed",
+      "counterpartIds": [],
+      "counterpartNumbers": [],
+      "notes": "Key security concepts (threats/vulnerabilities/exploits/mitigation) are not a v2.0 parent.",
+      "sharedCoreCandidate": false,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 4
+    },
+    {
+      "id": "transition-v1.1-5.2",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/5.2",
+      "number": "5.2",
+      "text": "Describe security program elements (user awareness, training, and physical access control)",
+      "domainNumber": "5.0",
+      "classification": "removed",
+      "counterpartIds": [],
+      "counterpartNumbers": [],
+      "notes": "Security program elements (awareness/training/physical) are not a v2.0 parent.",
+      "sharedCoreCandidate": false,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 4
+    },
+    {
+      "id": "transition-v1.1-5.3",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/5.3",
+      "number": "5.3",
+      "text": "Configure and verify device access control using local passwords",
+      "domainNumber": "5.0",
+      "classification": "expanded",
+      "counterpartIds": [
+        "200-301-v2.0/4.1"
+      ],
+      "counterpartNumbers": [
+        "4.1"
+      ],
+      "notes": "4.1: Local password device access → local usernames and AAA client (TACACS+/RADIUS).",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 4
+    },
+    {
+      "id": "transition-v1.1-5.4",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/5.4",
+      "number": "5.4",
+      "text": "Describe security password policy elements, such as management, complexity, and password alternatives (multifactor authentication, certificates, and biometrics)",
+      "domainNumber": "5.0",
+      "classification": "removed",
+      "counterpartIds": [],
+      "counterpartNumbers": [],
+      "notes": "Password policy elements are not a v2.0 parent.",
+      "sharedCoreCandidate": false,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 4
+    },
+    {
+      "id": "transition-v1.1-5.5",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/5.5",
+      "number": "5.5",
+      "text": "Describe IPsec remote access and site-to-site VPNs",
+      "domainNumber": "5.0",
+      "classification": "expanded",
+      "counterpartIds": [
+        "200-301-v2.0/4.5"
+      ],
+      "counterpartNumbers": [
+        "4.5"
+      ],
+      "notes": "4.5: IPsec VPN describe gains protocols and transport modes detail.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 4
+    },
+    {
+      "id": "transition-v1.1-5.6",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/5.6",
+      "number": "5.6",
+      "text": "Configure and verify access control lists",
+      "domainNumber": "5.0",
+      "classification": "expanded",
+      "counterpartIds": [
+        "200-301-v2.0/4.6"
+      ],
+      "counterpartNumbers": [
+        "4.6"
+      ],
+      "notes": "4.6: ACLs → IPv4 ACLs explicitly standard/extended/numbered/named.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 4
+    },
+    {
+      "id": "transition-v1.1-5.7",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/5.7",
+      "number": "5.7",
+      "text": "Configure and verify Layer 2 security features (DHCP snooping, dynamic ARP inspection, and port security)",
+      "domainNumber": "5.0",
+      "classification": "expanded",
+      "counterpartIds": [
+        "200-301-v2.0/4.7"
+      ],
+      "counterpartNumbers": [
+        "4.7"
+      ],
+      "notes": "4.7: L2 security expands with storm control and RA guard; DHCP snooping/DAI/port security retained.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 4
+    },
+    {
+      "id": "transition-v1.1-5.8",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/5.8",
+      "number": "5.8",
+      "text": "Compare authentication, authorization, and accounting concepts",
+      "domainNumber": "5.0",
+      "classification": "requires greater practical depth",
+      "counterpartIds": [
+        "200-301-v2.0/4.1"
+      ],
+      "counterpartNumbers": [
+        "4.1"
+      ],
+      "notes": "4.1: Compare AAA concepts → configure as AAA client for management.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 4
+    },
+    {
+      "id": "transition-v1.1-5.9",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/5.9",
+      "number": "5.9",
+      "text": "Describe wireless security protocols (WPA, WPA2, and WPA3)",
+      "domainNumber": "5.0",
+      "classification": "moved",
+      "counterpartIds": [
+        "200-301-v2.0/1.5"
+      ],
+      "counterpartNumbers": [
+        "1.5"
+      ],
+      "notes": "1.5: Wireless security protocols relocate under wireless principles sub-bullet 1.5.c.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 4
+    },
+    {
+      "id": "transition-v1.1-5.10",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/5.10",
+      "number": "5.10",
+      "text": "Configure and verify WLAN within the GUI using WPA2 PSK",
+      "domainNumber": "5.0",
+      "classification": "removed",
+      "counterpartIds": [],
+      "counterpartNumbers": [],
+      "notes": "WLAN GUI WPA2 PSK configure/verify is not a v2.0 parent.",
+      "sharedCoreCandidate": false,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 4
+    },
+    {
+      "id": "transition-v1.1-6.1",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/6.1",
+      "number": "6.1",
+      "text": "Explain how automation impacts network management",
+      "domainNumber": "6.0",
+      "classification": "unable to determine",
+      "counterpartIds": [],
+      "counterpartNumbers": [],
+      "notes": "Automation impact on network management may relate to v2.0 5.3 approaches but is not a clear counterpart.",
+      "sharedCoreCandidate": false,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 4
+    },
+    {
+      "id": "transition-v1.1-6.2",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/6.2",
+      "number": "6.2",
+      "text": "Compare traditional networks with controller-based networking",
+      "domainNumber": "6.0",
+      "classification": "moved",
+      "counterpartIds": [
+        "200-301-v2.0/5.3"
+      ],
+      "counterpartNumbers": [
+        "5.3"
+      ],
+      "notes": "5.3: Traditional vs controller-based networking is one facet of broader network management approaches.",
+      "sharedCoreCandidate": false,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 4
+    },
+    {
+      "id": "transition-v1.1-6.3",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/6.3",
+      "number": "6.3",
+      "text": "Describe controller-based, software defined architecture (overlay, underlay, and fabric)",
+      "domainNumber": "6.0",
+      "classification": "unable to determine",
+      "counterpartIds": [],
+      "counterpartNumbers": [],
+      "notes": "SDN overlay/underlay/fabric + plane separation/APIs has no explicit v2.0 parent (controller-based appears only inside 5.3 list).",
+      "sharedCoreCandidate": false,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 4
+    },
+    {
+      "id": "transition-v1.1-6.4",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/6.4",
+      "number": "6.4",
+      "text": "Explain AI (generative and predictive) and machine learning in network operations",
+      "domainNumber": "6.0",
+      "classification": "expanded",
+      "counterpartIds": [
+        "200-301-v2.0/5.1",
+        "200-301-v2.0/5.2"
+      ],
+      "counterpartNumbers": [
+        "5.1",
+        "5.2"
+      ],
+      "notes": "5.1: AI/ML in network ops expands toward agentic AI role (also see 5.2 prompts). 5.2: Generative AI portion expands into explicit prompt-selection objective.",
+      "sharedCoreCandidate": false,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 4
+    },
+    {
+      "id": "transition-v1.1-6.5",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/6.5",
+      "number": "6.5",
+      "text": "Describe characteristics of REST-based APIs (authentication types, CRUD, HTTP verbs, and data encoding)",
+      "domainNumber": "6.0",
+      "classification": "removed",
+      "counterpartIds": [],
+      "counterpartNumbers": [],
+      "notes": "REST-based API characteristics are not a v2.0 parent.",
+      "sharedCoreCandidate": false,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 4
+    },
+    {
+      "id": "transition-v1.1-6.6",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/6.6",
+      "number": "6.6",
+      "text": "Recognize the capabilities of configuration management mechanisms such as Ansible and Terraform",
+      "domainNumber": "6.0",
+      "classification": "requires greater practical depth",
+      "counterpartIds": [
+        "200-301-v2.0/5.5"
+      ],
+      "counterpartNumbers": [
+        "5.5"
+      ],
+      "notes": "5.5: Recognize Ansible/Terraform capabilities → Use Ansible to execute commands; Terraform not named in v2.0 5.5.",
+      "sharedCoreCandidate": false,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 4
+    },
+    {
+      "id": "transition-v1.1-6.7",
+      "side": "v1.1",
+      "objectiveId": "200-301-v1.1/6.7",
+      "number": "6.7",
+      "text": "Recognize components of JSON-encoded data",
+      "domainNumber": "6.0",
+      "classification": "removed",
+      "counterpartIds": [],
+      "counterpartNumbers": [],
+      "notes": "JSON-encoded data components are not a v2.0 parent.",
+      "sharedCoreCandidate": false,
+      "sourceId": "src-cisco-ccna-200-301-v1.1",
+      "pdfPage": 4
+    },
+    {
+      "id": "transition-v2.0-1.1",
+      "side": "v2.0",
+      "objectiveId": "200-301-v2.0/1.1",
+      "number": "1.1",
+      "text": "Diagnose interface and cable (copper and fiber) issues such as collisions, errors, mismatched duplex, speed, distance, interface, signal levels, pin out, and cable types",
+      "domainNumber": "1.0",
+      "classification": "requires greater practical depth",
+      "counterpartIds": [
+        "200-301-v1.1/1.4",
+        "200-301-v1.1/1.3"
+      ],
+      "counterpartNumbers": [
+        "1.4",
+        "1.3"
+      ],
+      "notes": "1.4: Identify cable/interface issues → Diagnose with broader fault list (distance, signal levels, pin out, cable types). 1.3: Cabling-type compare knowledge is absorbed into the broader diagnose-cable objective; not a one-for-one wording match.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v2.0",
+      "pdfPage": 1
+    },
+    {
+      "id": "transition-v2.0-1.2",
+      "side": "v2.0",
+      "objectiveId": "200-301-v2.0/1.2",
+      "number": "1.2",
+      "text": "Describe the role and function of hypervisors, virtual machines, and containers",
+      "domainNumber": "1.0",
+      "classification": "reduced",
+      "counterpartIds": [
+        "200-301-v1.1/1.12"
+      ],
+      "counterpartNumbers": [
+        "1.12"
+      ],
+      "notes": "1.12: Virtualization fundamentals → hypervisors/VMs/containers; VRFs called out in v1.1 are not present in v2.0 1.2.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v2.0",
+      "pdfPage": 1
+    },
+    {
+      "id": "transition-v2.0-1.3",
+      "side": "v2.0",
+      "objectiveId": "200-301-v2.0/1.3",
+      "number": "1.3",
+      "text": "Troubleshoot IPv4 address configuration, assignment, and subnetting (public and private)",
+      "domainNumber": "1.0",
+      "classification": "requires greater practical depth",
+      "counterpartIds": [
+        "200-301-v1.1/1.6",
+        "200-301-v1.1/1.7"
+      ],
+      "counterpartNumbers": [
+        "1.6",
+        "1.7"
+      ],
+      "notes": "1.6: Configure and verify IPv4 addressing/subnetting → Troubleshoot IPv4 (public and private). 1.7: Standalone private IPv4 describe line folded into v2.0 1.3 public/private troubleshooting.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v2.0",
+      "pdfPage": 1
+    },
+    {
+      "id": "transition-v2.0-1.4",
+      "side": "v2.0",
+      "objectiveId": "200-301-v2.0/1.4",
+      "number": "1.4",
+      "text": "Troubleshoot IPv6 address configuration, assignment, and prefix sizing (unicast and modified EUI 64)",
+      "domainNumber": "1.0",
+      "classification": "requires greater practical depth",
+      "counterpartIds": [
+        "200-301-v1.1/1.8",
+        "200-301-v1.1/1.9"
+      ],
+      "counterpartNumbers": [
+        "1.8",
+        "1.9"
+      ],
+      "notes": "1.8: Configure/verify IPv6 addressing/prefix → Troubleshoot IPv6 configuration/assignment/prefix sizing. 1.9: IPv6 address-types catalog shrinks; v2.0 1.4 names unicast + modified EUI-64 only (not anycast/multicast catalog).",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v2.0",
+      "pdfPage": 1
+    },
+    {
+      "id": "transition-v2.0-1.5",
+      "side": "v2.0",
+      "objectiveId": "200-301-v2.0/1.5",
+      "number": "1.5",
+      "text": "Describe wireless principles",
+      "domainNumber": "1.0",
+      "classification": "unchanged",
+      "counterpartIds": [
+        "200-301-v1.1/1.11",
+        "200-301-v1.1/5.9"
+      ],
+      "counterpartNumbers": [
+        "1.11",
+        "5.9"
+      ],
+      "notes": "1.11: Parent wording identical ('Describe wireless principles'). Sub-bullets differ (SSID/encryption vs interference/security protocols) — track separately in content work. 5.9: Wireless security protocols relocate under wireless principles sub-bullet 1.5.c.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v2.0",
+      "pdfPage": 1
+    },
+    {
+      "id": "transition-v2.0-1.6",
+      "side": "v2.0",
+      "objectiveId": "200-301-v2.0/1.6",
+      "number": "1.6",
+      "text": "Troubleshoot wired and wireless client connectivity (IP configuration, network reachability, and wireless security parameters on Windows, MacOS, and Linux)",
+      "domainNumber": "1.0",
+      "classification": "requires greater practical depth",
+      "counterpartIds": [
+        "200-301-v1.1/1.10"
+      ],
+      "counterpartNumbers": [
+        "1.10"
+      ],
+      "notes": "1.10: Verify client OS IP parameters → Troubleshoot wired/wireless client connectivity including wireless security parameters.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v2.0",
+      "pdfPage": 1
+    },
+    {
+      "id": "transition-v2.0-1.7",
+      "side": "v2.0",
+      "objectiveId": "200-301-v2.0/1.7",
+      "number": "1.7",
+      "text": "Troubleshoot DHCPv4 client, server, and relay on IOS devices",
+      "domainNumber": "1.0",
+      "classification": "requires greater practical depth",
+      "counterpartIds": [
+        "200-301-v1.1/4.3",
+        "200-301-v1.1/4.6"
+      ],
+      "counterpartNumbers": [
+        "4.3",
+        "4.6"
+      ],
+      "notes": "4.3: DHCP portion of v1.1 4.3 role objective moves toward v2.0 1.7 DHCPv4 troubleshoot (DNS portion maps separately to 4.4). 4.6: Configure/verify DHCP client/relay → Troubleshoot DHCPv4 client/server/relay on IOS.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v2.0",
+      "pdfPage": 1
+    },
+    {
+      "id": "transition-v2.0-2.1",
+      "side": "v2.0",
+      "objectiveId": "200-301-v2.0/2.1",
+      "number": "2.1",
+      "text": "Configure network infrastructure connectivity (switch-to-switch and switch-to-router)",
+      "domainNumber": "2.0",
+      "classification": "moved",
+      "counterpartIds": [
+        "200-301-v1.1/2.2",
+        "200-301-v1.1/2.4"
+      ],
+      "counterpartNumbers": [
+        "2.2",
+        "2.4"
+      ],
+      "notes": "2.2: Interswitch connectivity expands into switch-to-switch/switch-to-router infrastructure connectivity with SVI/LACP/trunk detail. 2.4: EtherChannel/LACP becomes v2.0 2.1.c under infrastructure connectivity.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v2.0",
+      "pdfPage": 1
+    },
+    {
+      "id": "transition-v2.0-2.2",
+      "side": "v2.0",
+      "objectiveId": "200-301-v2.0/2.2",
+      "number": "2.2",
+      "text": "Configure Layer 2 switch port attributes for edge-host connectivity (VLAN, PoE, port channel, and LACP)",
+      "domainNumber": "2.0",
+      "classification": "moved",
+      "counterpartIds": [
+        "200-301-v1.1/2.1"
+      ],
+      "counterpartNumbers": [
+        "2.1"
+      ],
+      "notes": "2.1: VLAN configure/verify relocates into edge-host switch-port attributes (VLAN/PoE/port-channel/LACP).",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v2.0",
+      "pdfPage": 1
+    },
+    {
+      "id": "transition-v2.0-2.3",
+      "side": "v2.0",
+      "objectiveId": "200-301-v2.0/2.3",
+      "number": "2.3",
+      "text": "Validate the accuracy of network documentation using CDP and LLDP",
+      "domainNumber": "2.0",
+      "classification": "requires greater practical depth",
+      "counterpartIds": [
+        "200-301-v1.1/2.3"
+      ],
+      "counterpartNumbers": [
+        "2.3"
+      ],
+      "notes": "2.3: Configure/verify CDP/LLDP → Validate network documentation accuracy using CDP/LLDP.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v2.0",
+      "pdfPage": 1
+    },
+    {
+      "id": "transition-v2.0-2.4",
+      "side": "v2.0",
+      "objectiveId": "200-301-v2.0/2.4",
+      "number": "2.4",
+      "text": "Troubleshoot basic Layer 2/Layer 3 connectivity and device operations using show commands (including show logs), ping, extended ping, trace route, and packet capture output",
+      "domainNumber": "2.0",
+      "classification": "newly added",
+      "counterpartIds": [],
+      "counterpartNumbers": [],
+      "notes": "Explicit L2/L3 troubleshooting with show/ping/traceroute/packet capture is new as a parent line.",
+      "sharedCoreCandidate": false,
+      "sourceId": "src-cisco-ccna-200-301-v2.0",
+      "pdfPage": 2
+    },
+    {
+      "id": "transition-v2.0-2.5",
+      "side": "v2.0",
+      "objectiveId": "200-301-v2.0/2.5",
+      "number": "2.5",
+      "text": "Configure operations of the Rapid Per VLAN Spanning Tree Protocol (Rapid PVST+)",
+      "domainNumber": "2.0",
+      "classification": "requires greater practical depth",
+      "counterpartIds": [
+        "200-301-v1.1/2.5"
+      ],
+      "counterpartNumbers": [
+        "2.5"
+      ],
+      "notes": "2.5: Interpret Rapid PVST+ → Configure Rapid PVST+ operations. BPDU filter present in v1.1 2.5.d is absent from v2.0 2.5.d.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v2.0",
+      "pdfPage": 2
+    },
+    {
+      "id": "transition-v2.0-3.1",
+      "side": "v2.0",
+      "objectiveId": "200-301-v2.0/3.1",
+      "number": "3.1",
+      "text": "Interpret a routing table to identify the next hop for a packet (routing protocol, prefix/mask, administrative distance, metric, and default route)",
+      "domainNumber": "3.0",
+      "classification": "expanded",
+      "counterpartIds": [
+        "200-301-v1.1/3.1"
+      ],
+      "counterpartNumbers": [
+        "3.1"
+      ],
+      "notes": "3.1: Interpret routing-table components → Interpret routing table to identify next hop (components listed inline).",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v2.0",
+      "pdfPage": 2
+    },
+    {
+      "id": "transition-v2.0-3.2",
+      "side": "v2.0",
+      "objectiveId": "200-301-v2.0/3.2",
+      "number": "3.2",
+      "text": "Troubleshoot IPv4 and IPv6 static routing",
+      "domainNumber": "3.0",
+      "classification": "requires greater practical depth",
+      "counterpartIds": [
+        "200-301-v1.1/3.3"
+      ],
+      "counterpartNumbers": [
+        "3.3"
+      ],
+      "notes": "3.3: Configure/verify static routing → Troubleshoot static routing (same route-type sub-bullets).",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v2.0",
+      "pdfPage": 2
+    },
+    {
+      "id": "transition-v2.0-3.3",
+      "side": "v2.0",
+      "objectiveId": "200-301-v2.0/3.3",
+      "number": "3.3",
+      "text": "Configure single area OSPFv2 for IPv4 and OSPFv3 for IPv6",
+      "domainNumber": "3.0",
+      "classification": "expanded",
+      "counterpartIds": [
+        "200-301-v1.1/3.4"
+      ],
+      "counterpartNumbers": [
+        "3.4"
+      ],
+      "notes": "3.4: OSPFv2-only → OSPFv2 for IPv4 and OSPFv3 for IPv6; adjacency note excludes authentication.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v2.0",
+      "pdfPage": 2
+    },
+    {
+      "id": "transition-v2.0-3.4",
+      "side": "v2.0",
+      "objectiveId": "200-301-v2.0/3.4",
+      "number": "3.4",
+      "text": "Interpret the operational status of First Hop Redundancy Protocols (HSRP and VRRP)",
+      "domainNumber": "3.0",
+      "classification": "requires greater practical depth",
+      "counterpartIds": [
+        "200-301-v1.1/3.5"
+      ],
+      "counterpartNumbers": [
+        "3.5"
+      ],
+      "notes": "3.5: Describe FHRP concepts → Interpret operational status of HSRP and VRRP.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v2.0",
+      "pdfPage": 2
+    },
+    {
+      "id": "transition-v2.0-4.1",
+      "side": "v2.0",
+      "objectiveId": "200-301-v2.0/4.1",
+      "number": "4.1",
+      "text": "Configure network devices with local usernames and as an AAA client (TACACS+ and RADIUS) for management",
+      "domainNumber": "4.0",
+      "classification": "expanded",
+      "counterpartIds": [
+        "200-301-v1.1/5.3",
+        "200-301-v1.1/5.8"
+      ],
+      "counterpartNumbers": [
+        "5.3",
+        "5.8"
+      ],
+      "notes": "5.3: Local password device access → local usernames and AAA client (TACACS+/RADIUS). 5.8: Compare AAA concepts → configure as AAA client for management.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v2.0",
+      "pdfPage": 2
+    },
+    {
+      "id": "transition-v2.0-4.2",
+      "side": "v2.0",
+      "objectiveId": "200-301-v2.0/4.2",
+      "number": "4.2",
+      "text": "Manage device configuration and software files using secure file transfer operations with SFTP/SCP",
+      "domainNumber": "4.0",
+      "classification": "expanded",
+      "counterpartIds": [
+        "200-301-v1.1/4.9"
+      ],
+      "counterpartNumbers": [
+        "4.9"
+      ],
+      "notes": "4.9: TFTP/FTP capabilities → secure file transfer with SFTP/SCP for config/software files.",
+      "sharedCoreCandidate": false,
+      "sourceId": "src-cisco-ccna-200-301-v2.0",
+      "pdfPage": 2
+    },
+    {
+      "id": "transition-v2.0-4.3",
+      "side": "v2.0",
+      "objectiveId": "200-301-v2.0/4.3",
+      "number": "4.3",
+      "text": "Configure NAT/PAT on IOS XE routers",
+      "domainNumber": "4.0",
+      "classification": "expanded",
+      "counterpartIds": [
+        "200-301-v1.1/4.1"
+      ],
+      "counterpartNumbers": [
+        "4.1"
+      ],
+      "notes": "4.1: Inside source NAT static/pools → NAT/PAT on IOS XE routers.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v2.0",
+      "pdfPage": 2
+    },
+    {
+      "id": "transition-v2.0-4.4",
+      "side": "v2.0",
+      "objectiveId": "200-301-v2.0/4.4",
+      "number": "4.4",
+      "text": "Diagnose issues with DNS records (A, AAAA, CNAME, MX, NS, and PTR) to support host, web application, and mail server access by name",
+      "domainNumber": "4.0",
+      "classification": "expanded",
+      "counterpartIds": [
+        "200-301-v1.1/4.3"
+      ],
+      "counterpartNumbers": [
+        "4.3"
+      ],
+      "notes": "4.3: DNS portion of v1.1 4.3 expands into diagnose DNS records (A/AAAA/CNAME/MX/NS/PTR).",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v2.0",
+      "pdfPage": 2
+    },
+    {
+      "id": "transition-v2.0-4.5",
+      "side": "v2.0",
+      "objectiveId": "200-301-v2.0/4.5",
+      "number": "4.5",
+      "text": "Describe IPsec remote access and site-to-site VPNs (protocols and transport modes)",
+      "domainNumber": "4.0",
+      "classification": "expanded",
+      "counterpartIds": [
+        "200-301-v1.1/5.5"
+      ],
+      "counterpartNumbers": [
+        "5.5"
+      ],
+      "notes": "5.5: IPsec VPN describe gains protocols and transport modes detail.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v2.0",
+      "pdfPage": 2
+    },
+    {
+      "id": "transition-v2.0-4.6",
+      "side": "v2.0",
+      "objectiveId": "200-301-v2.0/4.6",
+      "number": "4.6",
+      "text": "Configure IPv4 access control lists (standard, extended, numbered, and named ACLs)",
+      "domainNumber": "4.0",
+      "classification": "expanded",
+      "counterpartIds": [
+        "200-301-v1.1/5.6"
+      ],
+      "counterpartNumbers": [
+        "5.6"
+      ],
+      "notes": "5.6: ACLs → IPv4 ACLs explicitly standard/extended/numbered/named.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v2.0",
+      "pdfPage": 2
+    },
+    {
+      "id": "transition-v2.0-4.7",
+      "side": "v2.0",
+      "objectiveId": "200-301-v2.0/4.7",
+      "number": "4.7",
+      "text": "Configure Layer 2 security features",
+      "domainNumber": "4.0",
+      "classification": "expanded",
+      "counterpartIds": [
+        "200-301-v1.1/5.7"
+      ],
+      "counterpartNumbers": [
+        "5.7"
+      ],
+      "notes": "5.7: L2 security expands with storm control and RA guard; DHCP snooping/DAI/port security retained.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v2.0",
+      "pdfPage": 2
+    },
+    {
+      "id": "transition-v2.0-5.1",
+      "side": "v2.0",
+      "objectiveId": "200-301-v2.0/5.1",
+      "number": "5.1",
+      "text": "Describe the role of agentic AI in network operations",
+      "domainNumber": "5.0",
+      "classification": "expanded",
+      "counterpartIds": [
+        "200-301-v1.1/6.4"
+      ],
+      "counterpartNumbers": [
+        "6.4"
+      ],
+      "notes": "6.4: AI/ML in network ops expands toward agentic AI role (also see 5.2 prompts).",
+      "sharedCoreCandidate": false,
+      "sourceId": "src-cisco-ccna-200-301-v2.0",
+      "pdfPage": 2
+    },
+    {
+      "id": "transition-v2.0-5.2",
+      "side": "v2.0",
+      "objectiveId": "200-301-v2.0/5.2",
+      "number": "5.2",
+      "text": "Select a prompt to send to a generative AI system to support network operations considering prompt components such as data classification, output format, persona, and instructions",
+      "domainNumber": "5.0",
+      "classification": "expanded",
+      "counterpartIds": [
+        "200-301-v1.1/6.4"
+      ],
+      "counterpartNumbers": [
+        "6.4"
+      ],
+      "notes": "6.4: Generative AI portion expands into explicit prompt-selection objective.",
+      "sharedCoreCandidate": false,
+      "sourceId": "src-cisco-ccna-200-301-v2.0",
+      "pdfPage": 2
+    },
+    {
+      "id": "transition-v2.0-5.3",
+      "side": "v2.0",
+      "objectiveId": "200-301-v2.0/5.3",
+      "number": "5.3",
+      "text": "Describe network management approaches (device-based, cloud-based, controller-based, automation-based, and infrastructure as code)",
+      "domainNumber": "5.0",
+      "classification": "moved",
+      "counterpartIds": [
+        "200-301-v1.1/6.2"
+      ],
+      "counterpartNumbers": [
+        "6.2"
+      ],
+      "notes": "6.2: Traditional vs controller-based networking is one facet of broader network management approaches.",
+      "sharedCoreCandidate": false,
+      "sourceId": "src-cisco-ccna-200-301-v2.0",
+      "pdfPage": 2
+    },
+    {
+      "id": "transition-v2.0-5.4",
+      "side": "v2.0",
+      "objectiveId": "200-301-v2.0/5.4",
+      "number": "5.4",
+      "text": "Describe the function of SNMP in network operations",
+      "domainNumber": "5.0",
+      "classification": "moved",
+      "counterpartIds": [
+        "200-301-v1.1/4.4"
+      ],
+      "counterpartNumbers": [
+        "4.4"
+      ],
+      "notes": "4.4: SNMP moves into AI/ops domain; wording Describe/Explain → Describe the function.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v2.0",
+      "pdfPage": 3
+    },
+    {
+      "id": "transition-v2.0-5.5",
+      "side": "v2.0",
+      "objectiveId": "200-301-v2.0/5.5",
+      "number": "5.5",
+      "text": "Use configuration management mechanisms such as Ansible to execute commands",
+      "domainNumber": "5.0",
+      "classification": "requires greater practical depth",
+      "counterpartIds": [
+        "200-301-v1.1/6.6"
+      ],
+      "counterpartNumbers": [
+        "6.6"
+      ],
+      "notes": "6.6: Recognize Ansible/Terraform capabilities → Use Ansible to execute commands; Terraform not named in v2.0 5.5.",
+      "sharedCoreCandidate": false,
+      "sourceId": "src-cisco-ccna-200-301-v2.0",
+      "pdfPage": 3
+    },
+    {
+      "id": "transition-v2.0-5.6",
+      "side": "v2.0",
+      "objectiveId": "200-301-v2.0/5.6",
+      "number": "5.6",
+      "text": "Interpret syslog message content, severity levels, and facilities",
+      "domainNumber": "5.0",
+      "classification": "requires greater practical depth",
+      "counterpartIds": [
+        "200-301-v1.1/4.5"
+      ],
+      "counterpartNumbers": [
+        "4.5"
+      ],
+      "notes": "4.5: Describe syslog features → Interpret syslog message content, severity levels, and facilities.",
+      "sharedCoreCandidate": true,
+      "sourceId": "src-cisco-ccna-200-301-v2.0",
+      "pdfPage": 3
+    }
+  ],
+  "pilotDualMappings": [
+    {
+      "pilotId": "CCNA-1.1",
+      "pilotText": "Explain the role and function of network components",
+      "v11": {
+        "status": "exact match",
+        "officialIds": [
+          "200-301-v1.1/1.1"
+        ],
+        "officialNumbers": [
+          "1.1"
+        ],
+        "notes": "Wording matches official 1.1 parent line."
+      },
+      "v20": {
+        "status": "unable to map",
+        "officialIds": [],
+        "officialNumbers": [],
+        "notes": "v1.1 aliases [1.1] have no medium/high-confidence v2.0 edge."
+      },
+      "liveTopicIds": [
+        "osi-model",
+        "tcp-ip-model"
+      ],
+      "liveQuestionCount": 15
+    },
+    {
+      "pilotId": "CCNA-1.2",
+      "pilotText": "Describe characteristics of network topology architectures",
+      "v11": {
+        "status": "exact match",
+        "officialIds": [
+          "200-301-v1.1/1.2"
+        ],
+        "officialNumbers": [
+          "1.2"
+        ],
+        "notes": "Wording matches official 1.2 parent line."
+      },
+      "v20": {
+        "status": "unable to map",
+        "officialIds": [],
+        "officialNumbers": [],
+        "notes": "v1.1 aliases [1.2] have no medium/high-confidence v2.0 edge."
+      },
+      "liveTopicIds": [
+        "osi-model"
+      ],
+      "liveQuestionCount": 8
+    },
+    {
+      "pilotId": "CCNA-1.3",
+      "pilotText": "Compare physical interface and cabling types",
+      "v11": {
+        "status": "exact match",
+        "officialIds": [
+          "200-301-v1.1/1.3"
+        ],
+        "officialNumbers": [
+          "1.3"
+        ],
+        "notes": "Wording matches official 1.3 parent line."
+      },
+      "v20": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v2.0/1.1"
+        ],
+        "officialNumbers": [
+          "1.1"
+        ],
+        "notes": "Derived from v1.1 alias status (exact match). via v1.1 1.3→v2.0 1.1 (moved, medium)"
+      },
+      "liveTopicIds": [
+        "osi-model",
+        "ethernet"
+      ],
+      "liveQuestionCount": 13
+    },
+    {
+      "pilotId": "CCNA-1.4",
+      "pilotText": "Identify interface and cable issues",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/1.4"
+        ],
+        "officialNumbers": [
+          "1.4"
+        ],
+        "notes": "Pilot omits official parenthetical detail (collisions, errors, mismatch duplex, and/or speed)."
+      },
+      "v20": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v2.0/1.1"
+        ],
+        "officialNumbers": [
+          "1.1"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 1.4→v2.0 1.1 (requires greater practical depth, high)"
+      },
+      "liveTopicIds": [
+        "tcp-ip-model",
+        "ethernet"
+      ],
+      "liveQuestionCount": 9
+    },
+    {
+      "pilotId": "CCNA-1.5",
+      "pilotText": "Compare TCP to UDP",
+      "v11": {
+        "status": "exact match",
+        "officialIds": [
+          "200-301-v1.1/1.5"
+        ],
+        "officialNumbers": [
+          "1.5"
+        ],
+        "notes": "Wording matches official 1.5."
+      },
+      "v20": {
+        "status": "unable to map",
+        "officialIds": [],
+        "officialNumbers": [],
+        "notes": "v1.1 aliases [1.5] have no medium/high-confidence v2.0 edge."
+      },
+      "liveTopicIds": [
+        "tcp-ip-model",
+        "ethernet"
+      ],
+      "liveQuestionCount": 8
+    },
+    {
+      "pilotId": "CCNA-1.6",
+      "pilotText": "Configure and verify IPv4 addressing and subnetting",
+      "v11": {
+        "status": "exact match",
+        "officialIds": [
+          "200-301-v1.1/1.6"
+        ],
+        "officialNumbers": [
+          "1.6"
+        ],
+        "notes": "Wording matches official 1.6."
+      },
+      "v20": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v2.0/1.3"
+        ],
+        "officialNumbers": [
+          "1.3"
+        ],
+        "notes": "Derived from v1.1 alias status (exact match). via v1.1 1.6→v2.0 1.3 (requires greater practical depth, high)"
+      },
+      "liveTopicIds": [
+        "ethernet",
+        "ipv4-addressing"
+      ],
+      "liveQuestionCount": 5
+    },
+    {
+      "pilotId": "CCNA-1.7",
+      "pilotText": "Describe IPv4 and IPv6 address types",
+      "v11": {
+        "status": "combines multiple official objectives",
+        "officialIds": [
+          "200-301-v1.1/1.7",
+          "200-301-v1.1/1.9"
+        ],
+        "officialNumbers": [
+          "1.7",
+          "1.9"
+        ],
+        "notes": "Pilot text 'Describe IPv4 and IPv6 address types' spans official 1.7 and 1.9. Official 1.7 is private-IPv4-addressing only (not a general IPv4 address-types catalog); official 1.9 is IPv6 address types. Combined alias is intentional — not an exact match to either line alone."
+      },
+      "v20": {
+        "status": "combines multiple official objectives",
+        "officialIds": [
+          "200-301-v2.0/1.3",
+          "200-301-v2.0/1.4"
+        ],
+        "officialNumbers": [
+          "1.3",
+          "1.4"
+        ],
+        "notes": "Derived from v1.1 alias status (combines multiple official objectives). via v1.1 1.7→v2.0 1.3 (moved, high); via v1.1 1.9→v2.0 1.4 (reduced, medium)"
+      },
+      "liveTopicIds": [
+        "ipv4-addressing",
+        "ip-ranges"
+      ],
+      "liveQuestionCount": 20
+    },
+    {
+      "pilotId": "CCNA-1.8",
+      "pilotText": "Verify IP parameters for Client OS",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/1.10"
+        ],
+        "officialNumbers": [
+          "1.10"
+        ],
+        "notes": "Pilot number 1.8 is NOT official 1.8 (IPv6 addressing). Closest official line is 1.10; pilot omits OS list (Windows, Mac OS, Linux)."
+      },
+      "v20": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v2.0/1.6"
+        ],
+        "officialNumbers": [
+          "1.6"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 1.10→v2.0 1.6 (requires greater practical depth, high)"
+      },
+      "liveTopicIds": [
+        "ipv4-addressing"
+      ],
+      "liveQuestionCount": 3
+    },
+    {
+      "pilotId": "CCNA-1.9",
+      "pilotText": "Perform subnet calculations",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/1.6"
+        ],
+        "officialNumbers": [
+          "1.6"
+        ],
+        "notes": "CRITICAL numbering mismatch: pilot CCNA-1.9 is subnet calculations; official 1.9 is IPv6 address types. Maps as a narrower slice of official 1.6 (IPv4 addressing and subnetting)."
+      },
+      "v20": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v2.0/1.3"
+        ],
+        "officialNumbers": [
+          "1.3"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 1.6→v2.0 1.3 (requires greater practical depth, high)"
+      },
+      "liveTopicIds": [
+        "subnetting"
+      ],
+      "liveQuestionCount": 15
+    },
+    {
+      "pilotId": "CCNA-1.10",
+      "pilotText": "Configure IPv4 addressing and subnetting",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/1.6"
+        ],
+        "officialNumbers": [
+          "1.6"
+        ],
+        "notes": "Pilot number 1.10 is NOT official 1.10 (client OS IP parameters). Text is a configure-only slice of official 1.6 (omits verify)."
+      },
+      "v20": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v2.0/1.3"
+        ],
+        "officialNumbers": [
+          "1.3"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 1.6→v2.0 1.3 (requires greater practical depth, high)"
+      },
+      "liveTopicIds": [
+        "subnetting"
+      ],
+      "liveQuestionCount": 23
+    },
+    {
+      "pilotId": "CCNA-1.11",
+      "pilotText": "Describe private IPv4 addressing",
+      "v11": {
+        "status": "exact match",
+        "officialIds": [
+          "200-301-v1.1/1.7"
+        ],
+        "officialNumbers": [
+          "1.7"
+        ],
+        "notes": "Text matches official 1.7; pilot numbering does not match official numbering."
+      },
+      "v20": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v2.0/1.3"
+        ],
+        "officialNumbers": [
+          "1.3"
+        ],
+        "notes": "Derived from v1.1 alias status (exact match). via v1.1 1.7→v2.0 1.3 (moved, high)"
+      },
+      "liveTopicIds": [
+        "ipv4-addressing",
+        "ip-ranges"
+      ],
+      "liveQuestionCount": 8
+    },
+    {
+      "pilotId": "CCNA-1.12",
+      "pilotText": "Configure IPv6 addressing",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/1.8"
+        ],
+        "officialNumbers": [
+          "1.8"
+        ],
+        "notes": "Closest official line is 1.8; pilot omits verify and prefix language."
+      },
+      "v20": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v2.0/1.4"
+        ],
+        "officialNumbers": [
+          "1.4"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 1.8→v2.0 1.4 (requires greater practical depth, high)"
+      },
+      "liveTopicIds": [
+        "ipv6-basics"
+      ],
+      "liveQuestionCount": 12
+    },
+    {
+      "pilotId": "CCNA-1.13",
+      "pilotText": "Describe wireless principles",
+      "v11": {
+        "status": "exact match",
+        "officialIds": [
+          "200-301-v1.1/1.11"
+        ],
+        "officialNumbers": [
+          "1.11"
+        ],
+        "notes": "Text matches official 1.11; pilot numbering does not match official numbering."
+      },
+      "v20": {
+        "status": "exact match",
+        "officialIds": [
+          "200-301-v2.0/1.5"
+        ],
+        "officialNumbers": [
+          "1.5"
+        ],
+        "notes": "Derived from v1.1 alias status (exact match). via v1.1 1.11→v2.0 1.5 (unchanged, high)"
+      },
+      "liveTopicIds": [
+        "ipv6-basics",
+        "wireless-basics"
+      ],
+      "liveQuestionCount": 26
+    },
+    {
+      "pilotId": "CCNA-2.1",
+      "pilotText": "Configure and verify VLANs",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/2.1"
+        ],
+        "officialNumbers": [
+          "2.1"
+        ],
+        "notes": "Pilot omits 'normal range spanning multiple switches' and sub-bullets. Unused by live topics today."
+      },
+      "v20": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v2.0/2.2"
+        ],
+        "officialNumbers": [
+          "2.2"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 2.1→v2.0 2.2 (moved, medium)"
+      },
+      "liveTopicIds": [],
+      "liveQuestionCount": 0
+    },
+    {
+      "pilotId": "CCNA-2.2",
+      "pilotText": "Configure interswitch connectivity",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/2.2"
+        ],
+        "officialNumbers": [
+          "2.2"
+        ],
+        "notes": "Pilot omits verify and trunk/802.1Q/native VLAN detail. Unused by live topics today."
+      },
+      "v20": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v2.0/2.1"
+        ],
+        "officialNumbers": [
+          "2.1"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 2.2→v2.0 2.1 (expanded, medium)"
+      },
+      "liveTopicIds": [],
+      "liveQuestionCount": 0
+    },
+    {
+      "pilotId": "CCNA-2.3",
+      "pilotText": "Configure Layer 2 discovery protocols",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/2.3"
+        ],
+        "officialNumbers": [
+          "2.3"
+        ],
+        "notes": "Pilot omits verify and explicit CDP/LLDP naming."
+      },
+      "v20": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v2.0/2.3"
+        ],
+        "officialNumbers": [
+          "2.3"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 2.3→v2.0 2.3 (requires greater practical depth, high)"
+      },
+      "liveTopicIds": [
+        "switching"
+      ],
+      "liveQuestionCount": 6
+    },
+    {
+      "pilotId": "CCNA-2.4",
+      "pilotText": "Configure and verify EtherChannel",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/2.4"
+        ],
+        "officialNumbers": [
+          "2.4"
+        ],
+        "notes": "Pilot omits Layer 2/Layer 3 and LACP specificity."
+      },
+      "v20": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v2.0/2.1"
+        ],
+        "officialNumbers": [
+          "2.1"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 2.4→v2.0 2.1 (moved, high)"
+      },
+      "liveTopicIds": [
+        "switching"
+      ],
+      "liveQuestionCount": 5
+    },
+    {
+      "pilotId": "CCNA-2.5",
+      "pilotText": "Describe STP and RSTP",
+      "v11": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v1.1/2.5"
+        ],
+        "officialNumbers": [
+          "2.5"
+        ],
+        "notes": "Pilot 'Describe STP and RSTP' vs official 'Interpret basic operations of Rapid PVST+ Spanning Tree Protocol' — related but different verb/scope."
+      },
+      "v20": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v2.0/2.5"
+        ],
+        "officialNumbers": [
+          "2.5"
+        ],
+        "notes": "Derived from v1.1 alias status (partial match). via v1.1 2.5→v2.0 2.5 (requires greater practical depth, high)"
+      },
+      "liveTopicIds": [
+        "vlans"
+      ],
+      "liveQuestionCount": 7
+    },
+    {
+      "pilotId": "CCNA-2.6",
+      "pilotText": "Configure root bridge and port roles",
+      "v11": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v1.1/2.5"
+        ],
+        "officialNumbers": [
+          "2.5"
+        ],
+        "notes": "Pilot number 2.6 is NOT official 2.6 (wireless architectures). Root bridge/port roles relate to official 2.5 / 2.5.a, but pilot verb is Configure while official 2.5 is Interpret — partial, not a narrower same-verb slice."
+      },
+      "v20": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v2.0/2.5"
+        ],
+        "officialNumbers": [
+          "2.5"
+        ],
+        "notes": "Derived from v1.1 alias status (partial match). via v1.1 2.5→v2.0 2.5 (requires greater practical depth, high)"
+      },
+      "liveTopicIds": [
+        "vlans",
+        "trunking"
+      ],
+      "liveQuestionCount": 12
+    },
+    {
+      "pilotId": "CCNA-2.7",
+      "pilotText": "Compare Cisco Wireless architectures",
+      "v11": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v1.1/2.6"
+        ],
+        "officialNumbers": [
+          "2.6"
+        ],
+        "notes": "Pilot 'Compare Cisco Wireless architectures' vs official 2.6 'Describe Cisco Wireless Architectures and AP modes'."
+      },
+      "v20": {
+        "status": "unable to map",
+        "officialIds": [],
+        "officialNumbers": [],
+        "notes": "v1.1 aliases [2.6] have no medium/high-confidence v2.0 edge."
+      },
+      "liveTopicIds": [
+        "trunking"
+      ],
+      "liveQuestionCount": 5
+    },
+    {
+      "pilotId": "CCNA-2.8",
+      "pilotText": "Describe physical infrastructure connections",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/2.7"
+        ],
+        "officialNumbers": [
+          "2.7"
+        ],
+        "notes": "Pilot number 2.8 is NOT official 2.8 (device management access). Generic 'physical infrastructure connections' is narrower than official WLAN-component 2.7."
+      },
+      "v20": {
+        "status": "unable to map",
+        "officialIds": [],
+        "officialNumbers": [],
+        "notes": "v1.1 aliases [2.7] have no medium/high-confidence v2.0 edge."
+      },
+      "liveTopicIds": [
+        "stp"
+      ],
+      "liveQuestionCount": 6
+    },
+    {
+      "pilotId": "CCNA-2.9",
+      "pilotText": "Describe wireless LAN access",
+      "v11": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v1.1/2.9"
+        ],
+        "officialNumbers": [
+          "2.9"
+        ],
+        "notes": "Pilot 'Describe wireless LAN access' is vaguer than official GUI client-connectivity interpretation objective 2.9."
+      },
+      "v20": {
+        "status": "unable to map",
+        "officialIds": [],
+        "officialNumbers": [],
+        "notes": "v1.1 aliases [2.9] have no medium/high-confidence v2.0 edge."
+      },
+      "liveTopicIds": [
+        "stp"
+      ],
+      "liveQuestionCount": 5
+    },
+    {
+      "pilotId": "CCNA-3.1",
+      "pilotText": "Interpret routing table components",
+      "v11": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v1.1/3.1"
+        ],
+        "officialNumbers": [
+          "3.1"
+        ],
+        "notes": "Same subject as official 3.1, but wording differs (pilot 'Interpret routing table components' vs official 'Interpret the components of routing table') — not an exact match."
+      },
+      "v20": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v2.0/3.1"
+        ],
+        "officialNumbers": [
+          "3.1"
+        ],
+        "notes": "Derived from v1.1 alias status (partial match). via v1.1 3.1→v2.0 3.1 (expanded, high)"
+      },
+      "liveTopicIds": [
+        "routing-fundamentals"
+      ],
+      "liveQuestionCount": 6
+    },
+    {
+      "pilotId": "CCNA-3.2",
+      "pilotText": "Determine how a router makes forwarding decisions",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/3.2"
+        ],
+        "officialNumbers": [
+          "3.2"
+        ],
+        "notes": "Pilot omits official trailing 'by default'."
+      },
+      "v20": {
+        "status": "unable to map",
+        "officialIds": [],
+        "officialNumbers": [],
+        "notes": "v1.1 aliases [3.2] have no medium/high-confidence v2.0 edge."
+      },
+      "liveTopicIds": [
+        "routing-fundamentals"
+      ],
+      "liveQuestionCount": 5
+    },
+    {
+      "pilotId": "CCNA-3.3",
+      "pilotText": "Configure and verify IPv4 and IPv6 static routing",
+      "v11": {
+        "status": "exact match",
+        "officialIds": [
+          "200-301-v1.1/3.3"
+        ],
+        "officialNumbers": [
+          "3.3"
+        ],
+        "notes": "Wording matches official 3.3."
+      },
+      "v20": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v2.0/3.2"
+        ],
+        "officialNumbers": [
+          "3.2"
+        ],
+        "notes": "Derived from v1.1 alias status (exact match). via v1.1 3.3→v2.0 3.2 (requires greater practical depth, high)"
+      },
+      "liveTopicIds": [
+        "static-routes"
+      ],
+      "liveQuestionCount": 6
+    },
+    {
+      "pilotId": "CCNA-3.4",
+      "pilotText": "Configure single-area OSPFv2",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/3.4"
+        ],
+        "officialNumbers": [
+          "3.4"
+        ],
+        "notes": "Pilot omits verify."
+      },
+      "v20": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v2.0/3.3"
+        ],
+        "officialNumbers": [
+          "3.3"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 3.4→v2.0 3.3 (expanded, high)"
+      },
+      "liveTopicIds": [
+        "static-routes"
+      ],
+      "liveQuestionCount": 5
+    },
+    {
+      "pilotId": "CCNA-3.5",
+      "pilotText": "Describe OSPF neighbor adjacencies",
+      "v11": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v1.1/3.4"
+        ],
+        "officialNumbers": [
+          "3.4"
+        ],
+        "notes": "CRITICAL numbering mismatch: pilot CCNA-3.5 is OSPF neighbor adjacencies; official 3.5 is first hop redundancy protocols (FHRP). Relates to official 3.4.a under 3.4, but pilot verb is Describe while parent 3.4 is Configure and verify — partial, not a silent remap to FHRP."
+      },
+      "v20": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v2.0/3.3"
+        ],
+        "officialNumbers": [
+          "3.3"
+        ],
+        "notes": "Derived from v1.1 alias status (partial match). via v1.1 3.4→v2.0 3.3 (expanded, high)"
+      },
+      "liveTopicIds": [
+        "ospf-basics"
+      ],
+      "liveQuestionCount": 7
+    },
+    {
+      "pilotId": "CCNA-3.6",
+      "pilotText": "Configure and verify OSPF neighbor relationships",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/3.4"
+        ],
+        "officialNumbers": [
+          "3.4"
+        ],
+        "notes": "No official 3.6. OSPF neighbor relationships are under official 3.4."
+      },
+      "v20": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v2.0/3.3"
+        ],
+        "officialNumbers": [
+          "3.3"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 3.4→v2.0 3.3 (expanded, high)"
+      },
+      "liveTopicIds": [
+        "ospf-basics"
+      ],
+      "liveQuestionCount": 6
+    },
+    {
+      "pilotId": "CCNA-3.7",
+      "pilotText": "Configure and verify NAT",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/4.1"
+        ],
+        "officialNumbers": [
+          "4.1"
+        ],
+        "notes": "Domain misnumbering: NAT is official IP Services 4.1 (inside source NAT using static and pools), not IP Connectivity 3.x."
+      },
+      "v20": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v2.0/4.3"
+        ],
+        "officialNumbers": [
+          "4.3"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 4.1→v2.0 4.3 (expanded, high)"
+      },
+      "liveTopicIds": [
+        "nat"
+      ],
+      "liveQuestionCount": 6
+    },
+    {
+      "pilotId": "CCNA-3.8",
+      "pilotText": "Configure and verify NTP",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/4.2"
+        ],
+        "officialNumbers": [
+          "4.2"
+        ],
+        "notes": "Domain misnumbering: NTP is official 4.2; pilot omits client/server mode detail."
+      },
+      "v20": {
+        "status": "unable to map",
+        "officialIds": [],
+        "officialNumbers": [],
+        "notes": "v1.1 aliases [4.2] have no medium/high-confidence v2.0 edge."
+      },
+      "liveTopicIds": [
+        "nat"
+      ],
+      "liveQuestionCount": 5
+    },
+    {
+      "pilotId": "CCNA-4.1",
+      "pilotText": "Configure and verify DHCP on a router",
+      "v11": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v1.1/4.6"
+        ],
+        "officialNumbers": [
+          "4.6"
+        ],
+        "notes": "Pilot 'Configure and verify DHCP on a router' is not an official line. Closest official configure objective is 4.6 (DHCP client and relay); 4.3 covers DHCP/DNS roles."
+      },
+      "v20": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v2.0/1.7"
+        ],
+        "officialNumbers": [
+          "1.7"
+        ],
+        "notes": "Derived from v1.1 alias status (partial match). via v1.1 4.6→v2.0 1.7 (requires greater practical depth, high)"
+      },
+      "liveTopicIds": [
+        "dhcp"
+      ],
+      "liveQuestionCount": 6
+    },
+    {
+      "pilotId": "CCNA-4.2",
+      "pilotText": "Describe DNS lookup operation",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/4.3"
+        ],
+        "officialNumbers": [
+          "4.3"
+        ],
+        "notes": "DNS lookup is only part of official 4.3 (role of DHCP and DNS)."
+      },
+      "v20": {
+        "status": "combines multiple official objectives",
+        "officialIds": [
+          "200-301-v2.0/1.7",
+          "200-301-v2.0/4.4"
+        ],
+        "officialNumbers": [
+          "1.7",
+          "4.4"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 4.3→v2.0 1.7 (moved, medium); via v1.1 4.3→v2.0 4.4 (expanded, medium)"
+      },
+      "liveTopicIds": [
+        "dhcp"
+      ],
+      "liveQuestionCount": 5
+    },
+    {
+      "pilotId": "CCNA-4.3",
+      "pilotText": "Configure DNS on a Cisco router",
+      "v11": {
+        "status": "unable to map",
+        "officialIds": [],
+        "officialNumbers": [],
+        "notes": "No official v1.1 line for 'Configure DNS on a Cisco router'. Official 4.3 is explain-role only. Left unmapped rather than inventing alignment."
+      },
+      "v20": {
+        "status": "unable to map",
+        "officialIds": [],
+        "officialNumbers": [],
+        "notes": "No v1.1 official home (No official v1.1 line for 'Configure DNS on a Cisco router'. Official 4.3 is explain-role only. Left unmapped rather than inventing alignment.) — refusing to invent a v2.0 mapping."
+      },
+      "liveTopicIds": [
+        "dns"
+      ],
+      "liveQuestionCount": 6
+    },
+    {
+      "pilotId": "CCNA-4.4",
+      "pilotText": "Describe SNMP in network operations",
+      "v11": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v1.1/4.4"
+        ],
+        "officialNumbers": [
+          "4.4"
+        ],
+        "notes": "Describe vs official Explain; same SNMP subject."
+      },
+      "v20": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v2.0/5.4"
+        ],
+        "officialNumbers": [
+          "5.4"
+        ],
+        "notes": "Derived from v1.1 alias status (partial match). via v1.1 4.4→v2.0 5.4 (moved, high)"
+      },
+      "liveTopicIds": [
+        "dns"
+      ],
+      "liveQuestionCount": 5
+    },
+    {
+      "pilotId": "CCNA-5.1",
+      "pilotText": "Define key security concepts",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/5.1"
+        ],
+        "officialNumbers": [
+          "5.1"
+        ],
+        "notes": "Pilot omits official parenthetical (threats, vulnerabilities, exploits, and mitigation techniques)."
+      },
+      "v20": {
+        "status": "unable to map",
+        "officialIds": [],
+        "officialNumbers": [],
+        "notes": "v1.1 aliases [5.1] have no medium/high-confidence v2.0 edge."
+      },
+      "liveTopicIds": [
+        "acls"
+      ],
+      "liveQuestionCount": 7
+    },
+    {
+      "pilotId": "CCNA-5.2",
+      "pilotText": "Configure and verify ACLs",
+      "v11": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v1.1/5.6"
+        ],
+        "officialNumbers": [
+          "5.6"
+        ],
+        "notes": "Pilot 'Configure and verify ACLs' abbreviates official 5.6 'Configure and verify access control lists'. Pilot number 5.2 is NOT official 5.2 (security program elements)."
+      },
+      "v20": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v2.0/4.6"
+        ],
+        "officialNumbers": [
+          "4.6"
+        ],
+        "notes": "Derived from v1.1 alias status (partial match). via v1.1 5.6→v2.0 4.6 (expanded, high)"
+      },
+      "liveTopicIds": [
+        "acls"
+      ],
+      "liveQuestionCount": 6
+    },
+    {
+      "pilotId": "CCNA-5.3",
+      "pilotText": "Configure Layer 2 security features",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/5.7"
+        ],
+        "officialNumbers": [
+          "5.7"
+        ],
+        "notes": "Pilot number 5.3 is NOT official 5.3 (local passwords). Maps to official 5.7; omits DHCP snooping / DAI / port security list."
+      },
+      "v20": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v2.0/4.7"
+        ],
+        "officialNumbers": [
+          "4.7"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 5.7→v2.0 4.7 (expanded, high)"
+      },
+      "liveTopicIds": [
+        "network-security"
+      ],
+      "liveQuestionCount": 7
+    },
+    {
+      "pilotId": "CCNA-5.4",
+      "pilotText": "Describe wireless security protocols",
+      "v11": {
+        "status": "narrower than official objective",
+        "officialIds": [
+          "200-301-v1.1/5.9"
+        ],
+        "officialNumbers": [
+          "5.9"
+        ],
+        "notes": "Pilot number 5.4 is NOT official 5.4 (password policy). Maps to official 5.9; omits WPA/WPA2/WPA3 list."
+      },
+      "v20": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v2.0/1.5"
+        ],
+        "officialNumbers": [
+          "1.5"
+        ],
+        "notes": "Derived from v1.1 alias status (narrower than official objective). via v1.1 5.9→v2.0 1.5 (moved, medium)"
+      },
+      "liveTopicIds": [
+        "network-security"
+      ],
+      "liveQuestionCount": 6
+    },
+    {
+      "pilotId": "CCNA-6.1",
+      "pilotText": "Explain how automation impacts network management",
+      "v11": {
+        "status": "exact match",
+        "officialIds": [
+          "200-301-v1.1/6.1"
+        ],
+        "officialNumbers": [
+          "6.1"
+        ],
+        "notes": "Wording matches official 6.1."
+      },
+      "v20": {
+        "status": "unable to map",
+        "officialIds": [],
+        "officialNumbers": [],
+        "notes": "v1.1 aliases [6.1] have no medium/high-confidence v2.0 edge."
+      },
+      "liveTopicIds": [
+        "automation-basics"
+      ],
+      "liveQuestionCount": 6
+    },
+    {
+      "pilotId": "CCNA-6.2",
+      "pilotText": "Compare traditional networks with controller-based networking",
+      "v11": {
+        "status": "exact match",
+        "officialIds": [
+          "200-301-v1.1/6.2"
+        ],
+        "officialNumbers": [
+          "6.2"
+        ],
+        "notes": "Wording matches official 6.2."
+      },
+      "v20": {
+        "status": "partial match",
+        "officialIds": [
+          "200-301-v2.0/5.3"
+        ],
+        "officialNumbers": [
+          "5.3"
+        ],
+        "notes": "Derived from v1.1 alias status (exact match). via v1.1 6.2→v2.0 5.3 (moved, medium)"
+      },
+      "liveTopicIds": [
+        "automation-basics"
+      ],
+      "liveQuestionCount": 5
+    }
+  ],
+  "sharedCoreClusters": [
+    {
+      "id": "shared-cabling-interfaces",
+      "title": "Cabling, interfaces, and link faults",
+      "summary": "Physical media, duplex/speed, and interface fault recognition spanning v1.1 identify/compare and v2.0 diagnose depth.",
+      "v11ObjectiveNumbers": [
+        "1.3",
+        "1.4"
+      ],
+      "v20ObjectiveNumbers": [
+        "1.1"
+      ],
+      "candidateLiveTopicIds": [
+        "ethernet",
+        "tcp-ip-model"
+      ],
+      "priority": "P0",
+      "notes": "v2.0 requires greater practical diagnose depth."
+    },
+    {
+      "id": "shared-ipv4-addressing",
+      "title": "IPv4 addressing, private space, and subnetting",
+      "summary": "IPv4 address planning and subnet math common to both; v2.0 emphasizes troubleshoot.",
+      "v11ObjectiveNumbers": [
+        "1.6",
+        "1.7"
+      ],
+      "v20ObjectiveNumbers": [
+        "1.3"
+      ],
+      "candidateLiveTopicIds": [
+        "ipv4-addressing",
+        "subnetting",
+        "ip-ranges"
+      ],
+      "priority": "P0",
+      "notes": "Keep version-specific objective tags on shared lesson."
+    },
+    {
+      "id": "shared-ipv6-addressing",
+      "title": "IPv6 addressing and prefix basics",
+      "summary": "IPv6 configuration/types overlapping v1.1 1.8/1.9 and v2.0 1.4 troubleshoot.",
+      "v11ObjectiveNumbers": [
+        "1.8",
+        "1.9"
+      ],
+      "v20ObjectiveNumbers": [
+        "1.4"
+      ],
+      "candidateLiveTopicIds": [
+        "ipv6-basics"
+      ],
+      "priority": "P0",
+      "notes": "v2.0 reduces named address-type catalog."
+    },
+    {
+      "id": "shared-wireless-principles",
+      "title": "Wireless principles",
+      "summary": "Parent wording unchanged; sub-bullet sets differ by version.",
+      "v11ObjectiveNumbers": [
+        "1.11",
+        "5.9"
+      ],
+      "v20ObjectiveNumbers": [
+        "1.5"
+      ],
+      "candidateLiveTopicIds": [
+        "wireless-basics"
+      ],
+      "priority": "P1",
+      "notes": "Version-specific sub-bullet coverage must stay separate."
+    },
+    {
+      "id": "shared-virtualization",
+      "title": "Virtualization / hypervisors / containers",
+      "summary": "Overlapping virtualization fundamentals; VRFs not required in v2.0 1.2.",
+      "v11ObjectiveNumbers": [
+        "1.12"
+      ],
+      "v20ObjectiveNumbers": [
+        "1.2"
+      ],
+      "candidateLiveTopicIds": [
+        "ipv6-basics"
+      ],
+      "priority": "P1",
+      "notes": "Candidate live topic tagging is weak today — do not invent coverage."
+    },
+    {
+      "id": "shared-switching-access",
+      "title": "Switching, VLANs, trunks, EtherChannel, STP",
+      "summary": "Core L2 access skills shared; v2.0 adds documentation validation and deeper troubleshooting.",
+      "v11ObjectiveNumbers": [
+        "2.1",
+        "2.2",
+        "2.3",
+        "2.4",
+        "2.5"
+      ],
+      "v20ObjectiveNumbers": [
+        "2.1",
+        "2.2",
+        "2.3",
+        "2.5"
+      ],
+      "candidateLiveTopicIds": [
+        "switching",
+        "vlans",
+        "trunking",
+        "stp"
+      ],
+      "priority": "P0",
+      "notes": "v2.0 2.4 troubleshoot parent is version-specific add-on, not shared-core."
+    },
+    {
+      "id": "shared-routing",
+      "title": "Routing tables, static routes, OSPF, FHRP",
+      "summary": "IP routing core with v2.0 OSPFv3 + operational FHRP depth.",
+      "v11ObjectiveNumbers": [
+        "3.1",
+        "3.3",
+        "3.4",
+        "3.5"
+      ],
+      "v20ObjectiveNumbers": [
+        "3.1",
+        "3.2",
+        "3.3",
+        "3.4"
+      ],
+      "candidateLiveTopicIds": [
+        "routing-fundamentals",
+        "static-routes",
+        "ospf-basics"
+      ],
+      "priority": "P0",
+      "notes": "Static routes shift configure→troubleshoot in v2.0."
+    },
+    {
+      "id": "shared-services-security",
+      "title": "NAT, DHCP, DNS, ACLs, L2 security, VPN, AAA",
+      "summary": "Services/security overlap with domain renumbering in v2.0.",
+      "v11ObjectiveNumbers": [
+        "4.1",
+        "4.3",
+        "4.6",
+        "5.3",
+        "5.5",
+        "5.6",
+        "5.7",
+        "5.8"
+      ],
+      "v20ObjectiveNumbers": [
+        "1.7",
+        "4.1",
+        "4.3",
+        "4.4",
+        "4.5",
+        "4.6",
+        "4.7"
+      ],
+      "candidateLiveTopicIds": [
+        "nat",
+        "dhcp",
+        "dns",
+        "acls",
+        "network-security"
+      ],
+      "priority": "P0",
+      "notes": "NTP/QoS/SSH/TFTP gaps are version-specific, not shared-core."
+    },
+    {
+      "id": "shared-ops-telemetry",
+      "title": "SNMP and syslog operations",
+      "summary": "Ops telemetry common to both; domain moves to AI/ops in v2.0.",
+      "v11ObjectiveNumbers": [
+        "4.4",
+        "4.5"
+      ],
+      "v20ObjectiveNumbers": [
+        "5.4",
+        "5.6"
+      ],
+      "candidateLiveTopicIds": [
+        "dns",
+        "automation-basics"
+      ],
+      "priority": "P1",
+      "notes": "Live topic coverage is thin — mark as shared-core design only."
+    }
+  ],
+  "v20ContentGaps": [
+    {
+      "officialNumber": "1.1",
+      "officialId": "200-301-v2.0/1.1",
+      "text": "Diagnose interface and cable (copper and fiber) issues such as collisions, errors, mismatched duplex, speed, distance, interface, signal levels, pin out, and cable types",
+      "classification": "requires greater practical depth",
+      "coveringPilotIds": [
+        "CCNA-1.3",
+        "CCNA-1.4"
+      ],
+      "coveringTopicIds": [
+        "ethernet",
+        "osi-model",
+        "tcp-ip-model"
+      ],
+      "sharedCoreClusterIds": [
+        "shared-cabling-interfaces"
+      ],
+      "gapSeverity": "medium",
+      "notes": "Alias coverage exists; still verify lesson depth against v2.0 verb (troubleshoot/configure/diagnose)."
+    },
+    {
+      "officialNumber": "1.2",
+      "officialId": "200-301-v2.0/1.2",
+      "text": "Describe the role and function of hypervisors, virtual machines, and containers",
+      "classification": "reduced",
+      "coveringPilotIds": [],
+      "coveringTopicIds": [],
+      "sharedCoreClusterIds": [
+        "shared-virtualization"
+      ],
+      "gapSeverity": "high",
+      "notes": "No live topic currently aliases to this v2.0 parent via the dual mapping layer."
+    },
+    {
+      "officialNumber": "1.3",
+      "officialId": "200-301-v2.0/1.3",
+      "text": "Troubleshoot IPv4 address configuration, assignment, and subnetting (public and private)",
+      "classification": "requires greater practical depth",
+      "coveringPilotIds": [
+        "CCNA-1.6",
+        "CCNA-1.7",
+        "CCNA-1.9",
+        "CCNA-1.10",
+        "CCNA-1.11"
+      ],
+      "coveringTopicIds": [
+        "ethernet",
+        "ip-ranges",
+        "ipv4-addressing",
+        "subnetting"
+      ],
+      "sharedCoreClusterIds": [
+        "shared-ipv4-addressing"
+      ],
+      "gapSeverity": "medium",
+      "notes": "Alias coverage exists; still verify lesson depth against v2.0 verb (troubleshoot/configure/diagnose)."
+    },
+    {
+      "officialNumber": "1.4",
+      "officialId": "200-301-v2.0/1.4",
+      "text": "Troubleshoot IPv6 address configuration, assignment, and prefix sizing (unicast and modified EUI 64)",
+      "classification": "requires greater practical depth",
+      "coveringPilotIds": [
+        "CCNA-1.7",
+        "CCNA-1.12"
+      ],
+      "coveringTopicIds": [
+        "ip-ranges",
+        "ipv4-addressing",
+        "ipv6-basics"
+      ],
+      "sharedCoreClusterIds": [
+        "shared-ipv6-addressing"
+      ],
+      "gapSeverity": "medium",
+      "notes": "Alias coverage exists; still verify lesson depth against v2.0 verb (troubleshoot/configure/diagnose)."
+    },
+    {
+      "officialNumber": "1.5",
+      "officialId": "200-301-v2.0/1.5",
+      "text": "Describe wireless principles",
+      "classification": "unchanged",
+      "coveringPilotIds": [
+        "CCNA-1.13",
+        "CCNA-5.4"
+      ],
+      "coveringTopicIds": [
+        "ipv6-basics",
+        "network-security",
+        "wireless-basics"
+      ],
+      "sharedCoreClusterIds": [
+        "shared-wireless-principles"
+      ],
+      "gapSeverity": "low",
+      "notes": "Alias coverage exists; still verify lesson depth against v2.0 verb (troubleshoot/configure/diagnose)."
+    },
+    {
+      "officialNumber": "1.6",
+      "officialId": "200-301-v2.0/1.6",
+      "text": "Troubleshoot wired and wireless client connectivity (IP configuration, network reachability, and wireless security parameters on Windows, MacOS, and Linux)",
+      "classification": "requires greater practical depth",
+      "coveringPilotIds": [
+        "CCNA-1.8"
+      ],
+      "coveringTopicIds": [
+        "ipv4-addressing"
+      ],
+      "sharedCoreClusterIds": [],
+      "gapSeverity": "medium",
+      "notes": "Alias coverage exists; still verify lesson depth against v2.0 verb (troubleshoot/configure/diagnose)."
+    },
+    {
+      "officialNumber": "1.7",
+      "officialId": "200-301-v2.0/1.7",
+      "text": "Troubleshoot DHCPv4 client, server, and relay on IOS devices",
+      "classification": "requires greater practical depth",
+      "coveringPilotIds": [
+        "CCNA-4.1",
+        "CCNA-4.2"
+      ],
+      "coveringTopicIds": [
+        "dhcp"
+      ],
+      "sharedCoreClusterIds": [
+        "shared-services-security"
+      ],
+      "gapSeverity": "medium",
+      "notes": "Alias coverage exists; still verify lesson depth against v2.0 verb (troubleshoot/configure/diagnose)."
+    },
+    {
+      "officialNumber": "2.1",
+      "officialId": "200-301-v2.0/2.1",
+      "text": "Configure network infrastructure connectivity (switch-to-switch and switch-to-router)",
+      "classification": "moved",
+      "coveringPilotIds": [
+        "CCNA-2.2",
+        "CCNA-2.4"
+      ],
+      "coveringTopicIds": [
+        "switching"
+      ],
+      "sharedCoreClusterIds": [
+        "shared-switching-access"
+      ],
+      "gapSeverity": "low",
+      "notes": "Alias coverage exists; still verify lesson depth against v2.0 verb (troubleshoot/configure/diagnose)."
+    },
+    {
+      "officialNumber": "2.2",
+      "officialId": "200-301-v2.0/2.2",
+      "text": "Configure Layer 2 switch port attributes for edge-host connectivity (VLAN, PoE, port channel, and LACP)",
+      "classification": "moved",
+      "coveringPilotIds": [
+        "CCNA-2.1"
+      ],
+      "coveringTopicIds": [],
+      "sharedCoreClusterIds": [
+        "shared-switching-access"
+      ],
+      "gapSeverity": "high",
+      "notes": "No live topic currently aliases to this v2.0 parent via the dual mapping layer."
+    },
+    {
+      "officialNumber": "2.3",
+      "officialId": "200-301-v2.0/2.3",
+      "text": "Validate the accuracy of network documentation using CDP and LLDP",
+      "classification": "requires greater practical depth",
+      "coveringPilotIds": [
+        "CCNA-2.3"
+      ],
+      "coveringTopicIds": [
+        "switching"
+      ],
+      "sharedCoreClusterIds": [
+        "shared-switching-access"
+      ],
+      "gapSeverity": "medium",
+      "notes": "Alias coverage exists; still verify lesson depth against v2.0 verb (troubleshoot/configure/diagnose)."
+    },
+    {
+      "officialNumber": "2.4",
+      "officialId": "200-301-v2.0/2.4",
+      "text": "Troubleshoot basic Layer 2/Layer 3 connectivity and device operations using show commands (including show logs), ping, extended ping, trace route, and packet capture output",
+      "classification": "newly added",
+      "coveringPilotIds": [],
+      "coveringTopicIds": [],
+      "sharedCoreClusterIds": [],
+      "gapSeverity": "critical",
+      "notes": "No live topic currently aliases to this v2.0 parent via the dual mapping layer."
+    },
+    {
+      "officialNumber": "2.5",
+      "officialId": "200-301-v2.0/2.5",
+      "text": "Configure operations of the Rapid Per VLAN Spanning Tree Protocol (Rapid PVST+)",
+      "classification": "requires greater practical depth",
+      "coveringPilotIds": [
+        "CCNA-2.5",
+        "CCNA-2.6"
+      ],
+      "coveringTopicIds": [
+        "trunking",
+        "vlans"
+      ],
+      "sharedCoreClusterIds": [
+        "shared-switching-access"
+      ],
+      "gapSeverity": "medium",
+      "notes": "Alias coverage exists; still verify lesson depth against v2.0 verb (troubleshoot/configure/diagnose)."
+    },
+    {
+      "officialNumber": "3.1",
+      "officialId": "200-301-v2.0/3.1",
+      "text": "Interpret a routing table to identify the next hop for a packet (routing protocol, prefix/mask, administrative distance, metric, and default route)",
+      "classification": "expanded",
+      "coveringPilotIds": [
+        "CCNA-3.1"
+      ],
+      "coveringTopicIds": [
+        "routing-fundamentals"
+      ],
+      "sharedCoreClusterIds": [
+        "shared-routing"
+      ],
+      "gapSeverity": "medium",
+      "notes": "Alias coverage exists; still verify lesson depth against v2.0 verb (troubleshoot/configure/diagnose)."
+    },
+    {
+      "officialNumber": "3.2",
+      "officialId": "200-301-v2.0/3.2",
+      "text": "Troubleshoot IPv4 and IPv6 static routing",
+      "classification": "requires greater practical depth",
+      "coveringPilotIds": [
+        "CCNA-3.3"
+      ],
+      "coveringTopicIds": [
+        "static-routes"
+      ],
+      "sharedCoreClusterIds": [
+        "shared-routing"
+      ],
+      "gapSeverity": "medium",
+      "notes": "Alias coverage exists; still verify lesson depth against v2.0 verb (troubleshoot/configure/diagnose)."
+    },
+    {
+      "officialNumber": "3.3",
+      "officialId": "200-301-v2.0/3.3",
+      "text": "Configure single area OSPFv2 for IPv4 and OSPFv3 for IPv6",
+      "classification": "expanded",
+      "coveringPilotIds": [
+        "CCNA-3.4",
+        "CCNA-3.5",
+        "CCNA-3.6"
+      ],
+      "coveringTopicIds": [
+        "ospf-basics",
+        "static-routes"
+      ],
+      "sharedCoreClusterIds": [
+        "shared-routing"
+      ],
+      "gapSeverity": "medium",
+      "notes": "Alias coverage exists; still verify lesson depth against v2.0 verb (troubleshoot/configure/diagnose)."
+    },
+    {
+      "officialNumber": "3.4",
+      "officialId": "200-301-v2.0/3.4",
+      "text": "Interpret the operational status of First Hop Redundancy Protocols (HSRP and VRRP)",
+      "classification": "requires greater practical depth",
+      "coveringPilotIds": [],
+      "coveringTopicIds": [],
+      "sharedCoreClusterIds": [
+        "shared-routing"
+      ],
+      "gapSeverity": "high",
+      "notes": "No live topic currently aliases to this v2.0 parent via the dual mapping layer."
+    },
+    {
+      "officialNumber": "4.1",
+      "officialId": "200-301-v2.0/4.1",
+      "text": "Configure network devices with local usernames and as an AAA client (TACACS+ and RADIUS) for management",
+      "classification": "expanded",
+      "coveringPilotIds": [],
+      "coveringTopicIds": [],
+      "sharedCoreClusterIds": [
+        "shared-services-security"
+      ],
+      "gapSeverity": "high",
+      "notes": "No live topic currently aliases to this v2.0 parent via the dual mapping layer."
+    },
+    {
+      "officialNumber": "4.2",
+      "officialId": "200-301-v2.0/4.2",
+      "text": "Manage device configuration and software files using secure file transfer operations with SFTP/SCP",
+      "classification": "expanded",
+      "coveringPilotIds": [],
+      "coveringTopicIds": [],
+      "sharedCoreClusterIds": [],
+      "gapSeverity": "high",
+      "notes": "No live topic currently aliases to this v2.0 parent via the dual mapping layer."
+    },
+    {
+      "officialNumber": "4.3",
+      "officialId": "200-301-v2.0/4.3",
+      "text": "Configure NAT/PAT on IOS XE routers",
+      "classification": "expanded",
+      "coveringPilotIds": [
+        "CCNA-3.7"
+      ],
+      "coveringTopicIds": [
+        "nat"
+      ],
+      "sharedCoreClusterIds": [
+        "shared-services-security"
+      ],
+      "gapSeverity": "medium",
+      "notes": "Alias coverage exists; still verify lesson depth against v2.0 verb (troubleshoot/configure/diagnose)."
+    },
+    {
+      "officialNumber": "4.4",
+      "officialId": "200-301-v2.0/4.4",
+      "text": "Diagnose issues with DNS records (A, AAAA, CNAME, MX, NS, and PTR) to support host, web application, and mail server access by name",
+      "classification": "expanded",
+      "coveringPilotIds": [
+        "CCNA-4.2"
+      ],
+      "coveringTopicIds": [
+        "dhcp"
+      ],
+      "sharedCoreClusterIds": [
+        "shared-services-security"
+      ],
+      "gapSeverity": "medium",
+      "notes": "Alias coverage exists; still verify lesson depth against v2.0 verb (troubleshoot/configure/diagnose)."
+    },
+    {
+      "officialNumber": "4.5",
+      "officialId": "200-301-v2.0/4.5",
+      "text": "Describe IPsec remote access and site-to-site VPNs (protocols and transport modes)",
+      "classification": "expanded",
+      "coveringPilotIds": [],
+      "coveringTopicIds": [],
+      "sharedCoreClusterIds": [
+        "shared-services-security"
+      ],
+      "gapSeverity": "high",
+      "notes": "No live topic currently aliases to this v2.0 parent via the dual mapping layer."
+    },
+    {
+      "officialNumber": "4.6",
+      "officialId": "200-301-v2.0/4.6",
+      "text": "Configure IPv4 access control lists (standard, extended, numbered, and named ACLs)",
+      "classification": "expanded",
+      "coveringPilotIds": [
+        "CCNA-5.2"
+      ],
+      "coveringTopicIds": [
+        "acls"
+      ],
+      "sharedCoreClusterIds": [
+        "shared-services-security"
+      ],
+      "gapSeverity": "medium",
+      "notes": "Alias coverage exists; still verify lesson depth against v2.0 verb (troubleshoot/configure/diagnose)."
+    },
+    {
+      "officialNumber": "4.7",
+      "officialId": "200-301-v2.0/4.7",
+      "text": "Configure Layer 2 security features",
+      "classification": "expanded",
+      "coveringPilotIds": [
+        "CCNA-5.3"
+      ],
+      "coveringTopicIds": [
+        "network-security"
+      ],
+      "sharedCoreClusterIds": [
+        "shared-services-security"
+      ],
+      "gapSeverity": "medium",
+      "notes": "Alias coverage exists; still verify lesson depth against v2.0 verb (troubleshoot/configure/diagnose)."
+    },
+    {
+      "officialNumber": "5.1",
+      "officialId": "200-301-v2.0/5.1",
+      "text": "Describe the role of agentic AI in network operations",
+      "classification": "expanded",
+      "coveringPilotIds": [],
+      "coveringTopicIds": [],
+      "sharedCoreClusterIds": [],
+      "gapSeverity": "high",
+      "notes": "No live topic currently aliases to this v2.0 parent via the dual mapping layer."
+    },
+    {
+      "officialNumber": "5.2",
+      "officialId": "200-301-v2.0/5.2",
+      "text": "Select a prompt to send to a generative AI system to support network operations considering prompt components such as data classification, output format, persona, and instructions",
+      "classification": "expanded",
+      "coveringPilotIds": [],
+      "coveringTopicIds": [],
+      "sharedCoreClusterIds": [],
+      "gapSeverity": "high",
+      "notes": "No live topic currently aliases to this v2.0 parent via the dual mapping layer."
+    },
+    {
+      "officialNumber": "5.3",
+      "officialId": "200-301-v2.0/5.3",
+      "text": "Describe network management approaches (device-based, cloud-based, controller-based, automation-based, and infrastructure as code)",
+      "classification": "moved",
+      "coveringPilotIds": [
+        "CCNA-6.2"
+      ],
+      "coveringTopicIds": [
+        "automation-basics"
+      ],
+      "sharedCoreClusterIds": [],
+      "gapSeverity": "low",
+      "notes": "Alias coverage exists; still verify lesson depth against v2.0 verb (troubleshoot/configure/diagnose)."
+    },
+    {
+      "officialNumber": "5.4",
+      "officialId": "200-301-v2.0/5.4",
+      "text": "Describe the function of SNMP in network operations",
+      "classification": "moved",
+      "coveringPilotIds": [
+        "CCNA-4.4"
+      ],
+      "coveringTopicIds": [
+        "dns"
+      ],
+      "sharedCoreClusterIds": [
+        "shared-ops-telemetry"
+      ],
+      "gapSeverity": "low",
+      "notes": "Alias coverage exists; still verify lesson depth against v2.0 verb (troubleshoot/configure/diagnose)."
+    },
+    {
+      "officialNumber": "5.5",
+      "officialId": "200-301-v2.0/5.5",
+      "text": "Use configuration management mechanisms such as Ansible to execute commands",
+      "classification": "requires greater practical depth",
+      "coveringPilotIds": [],
+      "coveringTopicIds": [],
+      "sharedCoreClusterIds": [],
+      "gapSeverity": "high",
+      "notes": "No live topic currently aliases to this v2.0 parent via the dual mapping layer."
+    },
+    {
+      "officialNumber": "5.6",
+      "officialId": "200-301-v2.0/5.6",
+      "text": "Interpret syslog message content, severity levels, and facilities",
+      "classification": "requires greater practical depth",
+      "coveringPilotIds": [],
+      "coveringTopicIds": [],
+      "sharedCoreClusterIds": [
+        "shared-ops-telemetry"
+      ],
+      "gapSeverity": "high",
+      "notes": "No live topic currently aliases to this v2.0 parent via the dual mapping layer."
+    }
+  ],
+  "v20SimulatorGaps": [
+    {
+      "needId": "sim-gap-ipv4-troubleshoot",
+      "title": "IPv4 addressing/subnetting troubleshoot drill",
+      "relatedV20Numbers": [
+        "1.3"
+      ],
+      "existingSimulatorIds": [
+        "subnet-cidr-drill"
+      ],
+      "status": "partial",
+      "priority": "P0",
+      "notes": "Existing subnet CIDR drill covers calculation; v2.0 asks troubleshoot configuration/assignment (public/private)."
+    },
+    {
+      "needId": "sim-gap-ipv6-troubleshoot",
+      "title": "IPv6 addressing/prefix troubleshoot drill",
+      "relatedV20Numbers": [
+        "1.4"
+      ],
+      "existingSimulatorIds": [],
+      "status": "missing",
+      "priority": "P0",
+      "notes": "No live IPv6 troubleshoot simulator registered."
+    },
+    {
+      "needId": "sim-gap-client-connectivity",
+      "title": "Wired/wireless client connectivity troubleshoot lab",
+      "relatedV20Numbers": [
+        "1.6"
+      ],
+      "existingSimulatorIds": [],
+      "status": "missing",
+      "priority": "P1",
+      "notes": "Needs OS-parameter + wireless security parameter scenarios."
+    },
+    {
+      "needId": "sim-gap-dhcpv4-troubleshoot",
+      "title": "DHCPv4 client/server/relay troubleshoot",
+      "relatedV20Numbers": [
+        "1.7"
+      ],
+      "existingSimulatorIds": [],
+      "status": "missing",
+      "priority": "P0",
+      "notes": "Live dhcp topic exists but no dedicated DHCP troubleshoot simulator."
+    },
+    {
+      "needId": "sim-gap-l2l3-troubleshoot",
+      "title": "L2/L3 connectivity troubleshoot with show/ping/trace/pcap",
+      "relatedV20Numbers": [
+        "2.4"
+      ],
+      "existingSimulatorIds": [],
+      "status": "missing",
+      "priority": "P0",
+      "notes": "Newly added v2.0 parent — high simulator priority."
+    },
+    {
+      "needId": "sim-gap-stp-configure",
+      "title": "Rapid PVST+ configure operations",
+      "relatedV20Numbers": [
+        "2.5"
+      ],
+      "existingSimulatorIds": [],
+      "status": "missing",
+      "priority": "P1",
+      "notes": "v1.1 was interpret; v2.0 is configure — depth gap."
+    },
+    {
+      "needId": "sim-gap-static-troubleshoot",
+      "title": "IPv4/IPv6 static route troubleshoot",
+      "relatedV20Numbers": [
+        "3.2"
+      ],
+      "existingSimulatorIds": [],
+      "status": "missing",
+      "priority": "P0",
+      "notes": "Shift from configure/verify to troubleshoot."
+    },
+    {
+      "needId": "sim-gap-ospfv3",
+      "title": "OSPFv3 for IPv6 configure lab",
+      "relatedV20Numbers": [
+        "3.3"
+      ],
+      "existingSimulatorIds": [],
+      "status": "missing",
+      "priority": "P0",
+      "notes": "v2.0 expands beyond OSPFv2-only."
+    },
+    {
+      "needId": "sim-gap-fhrp-status",
+      "title": "HSRP/VRRP operational status interpretation",
+      "relatedV20Numbers": [
+        "3.4"
+      ],
+      "existingSimulatorIds": [],
+      "status": "missing",
+      "priority": "P1",
+      "notes": "No FHRP simulator today."
+    },
+    {
+      "needId": "sim-gap-dns-diagnose",
+      "title": "DNS record diagnose drill (A/AAAA/CNAME/MX/NS/PTR)",
+      "relatedV20Numbers": [
+        "4.4"
+      ],
+      "existingSimulatorIds": [],
+      "status": "missing",
+      "priority": "P1",
+      "notes": "Expanded DNS depth vs v1.1 role-only wording."
+    },
+    {
+      "needId": "sim-gap-l2-security-expanded",
+      "title": "L2 security including storm control + RA guard",
+      "relatedV20Numbers": [
+        "4.7"
+      ],
+      "existingSimulatorIds": [],
+      "status": "missing",
+      "priority": "P1",
+      "notes": "New sub-features vs v1.1 DHCP snooping/DAI/port security set."
+    },
+    {
+      "needId": "sim-gap-ai-prompts",
+      "title": "Generative/agentic AI prompt selection scenarios",
+      "relatedV20Numbers": [
+        "5.1",
+        "5.2"
+      ],
+      "existingSimulatorIds": [],
+      "status": "missing",
+      "priority": "P0",
+      "notes": "Net-new AI objectives — no current ReLearn simulator."
+    },
+    {
+      "needId": "sim-gap-ansible-execute",
+      "title": "Ansible command execution practice",
+      "relatedV20Numbers": [
+        "5.5"
+      ],
+      "existingSimulatorIds": [],
+      "status": "missing",
+      "priority": "P1",
+      "notes": "v2.0 asks use/execute, not merely recognize capabilities."
+    }
+  ],
+  "productionSequence": [
+    {
+      "order": 1,
+      "batchId": "ccna-v20-p0-addressing-troubleshoot",
+      "title": "IPv4/IPv6/DHCP troubleshoot elevation",
+      "focus": "Upgrade shared addressing lessons + add troubleshoot drills",
+      "relatedV20Numbers": [
+        "1.3",
+        "1.4",
+        "1.7"
+      ],
+      "dependsOnSharedCore": true
+    },
+    {
+      "order": 2,
+      "batchId": "ccna-v20-p0-l2l3-troubleshoot",
+      "title": "New L2/L3 troubleshoot parent + STP configure depth",
+      "focus": "Author 2.4 pathway; elevate 2.5 from interpret→configure",
+      "relatedV20Numbers": [
+        "2.4",
+        "2.5"
+      ],
+      "dependsOnSharedCore": true
+    },
+    {
+      "order": 3,
+      "batchId": "ccna-v20-p0-routing-expansion",
+      "title": "Static troubleshoot + OSPFv3 + FHRP status",
+      "focus": "Routing shared-core with v2.0-only expansions",
+      "relatedV20Numbers": [
+        "3.2",
+        "3.3",
+        "3.4"
+      ],
+      "dependsOnSharedCore": true
+    },
+    {
+      "order": 4,
+      "batchId": "ccna-v20-p0-ai-ops",
+      "title": "Agentic/generative AI + Ansible execute",
+      "focus": "Net-new AI/ops objectives with safe scenario design",
+      "relatedV20Numbers": [
+        "5.1",
+        "5.2",
+        "5.5"
+      ],
+      "dependsOnSharedCore": false
+    },
+    {
+      "order": 5,
+      "batchId": "ccna-v20-p1-services-security",
+      "title": "DNS diagnose, L2 security expands, AAA/NAT wording",
+      "focus": "Services/security shared-core plus expanded subfeatures",
+      "relatedV20Numbers": [
+        "4.1",
+        "4.3",
+        "4.4",
+        "4.6",
+        "4.7"
+      ],
+      "dependsOnSharedCore": true
+    },
+    {
+      "order": 6,
+      "batchId": "ccna-v20-p1-client-wireless",
+      "title": "Client connectivity + wireless sub-bullet refresh",
+      "focus": "1.5/1.6 depth and OS/wireless security parameters",
+      "relatedV20Numbers": [
+        "1.5",
+        "1.6"
+      ],
+      "dependsOnSharedCore": true
+    }
+  ]
+}

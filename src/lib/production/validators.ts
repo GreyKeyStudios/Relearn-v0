@@ -24,6 +24,13 @@ import {
   listCcnaV11ParentObjectives,
 } from "@/content/production/objectives/ccna-200-301-v1.1";
 import { assertCcnaPilotMappingComplete } from "@/content/production/mappings/ccna-pilot-to-v1.1";
+import { assertCcnaTransitionIntegrity } from "@/content/production/ccna-transition/comparison";
+import {
+  CCNA_V11_LAST_TEST_DATE,
+  CCNA_V20_FIRST_TEST_DATE,
+  resolveActiveCcnaVersion,
+} from "@/content/production/ccna-transition/dates";
+import { listCcnaV20ParentObjectives } from "@/content/production/objectives/ccna-200-301-v2.0";
 import type { ProductionValidationIssue } from "@/content/production/types";
 
 /** UTC calendar date-of-record (YYYY-MM-DD). Not a local wall-clock timestamp. */
@@ -527,6 +534,73 @@ export function validateCcnaV11Ingestion(): ProductionValidationIssue[] {
       message: err,
     });
   }
+
+  const v20Parents = listCcnaV20ParentObjectives();
+  if (v20Parents.length !== 29) {
+    issues.push({
+      code: "ccna-v20-parent-count",
+      severity: "error",
+      trackId: "ccna",
+      message: `Expected 29 official v2.0 parent objectives, found ${v20Parents.length}`,
+    });
+  }
+  for (const err of assertCcnaTransitionIntegrity()) {
+    issues.push({
+      code: "ccna-transition-integrity",
+      severity: "error",
+      trackId: "ccna",
+      message: err,
+    });
+  }
+  if (resolveActiveCcnaVersion(CCNA_V11_LAST_TEST_DATE) !== "v1.1") {
+    issues.push({
+      code: "ccna-cutover-config",
+      severity: "error",
+      trackId: "ccna",
+      message: `Expected v1.1 active on ${CCNA_V11_LAST_TEST_DATE}`,
+    });
+  }
+  if (resolveActiveCcnaVersion(CCNA_V20_FIRST_TEST_DATE) !== "v2.0") {
+    issues.push({
+      code: "ccna-cutover-config",
+      severity: "error",
+      trackId: "ccna",
+      message: `Expected v2.0 active on ${CCNA_V20_FIRST_TEST_DATE}`,
+    });
+  }
+
+  // Guard against silent ID mixing in blueprint objective ids.
+  for (const blueprint of listExamBlueprints().filter((b) => b.trackId === "ccna")) {
+    for (const domain of blueprint.domains) {
+      for (const obj of domain.objectives) {
+        if (
+          blueprint.objectivesVersion === "v1.1" &&
+          obj.id.includes("v2.0")
+        ) {
+          issues.push({
+            code: "ccna-version-mix",
+            severity: "error",
+            trackId: "ccna",
+            entityId: obj.id,
+            message: "v1.1 blueprint contains a v2.0 objective id",
+          });
+        }
+        if (
+          blueprint.objectivesVersion === "v2.0" &&
+          obj.id.includes("v1.1")
+        ) {
+          issues.push({
+            code: "ccna-version-mix",
+            severity: "error",
+            trackId: "ccna",
+            entityId: obj.id,
+            message: "v2.0 blueprint contains a v1.1 objective id",
+          });
+        }
+      }
+    }
+  }
+
   return issues;
 }
 
