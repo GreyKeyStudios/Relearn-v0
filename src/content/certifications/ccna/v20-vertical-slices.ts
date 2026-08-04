@@ -543,7 +543,7 @@ Stay inside Cisco-relevant network operations (CRC triage, ACL review, change-wi
       prompt: "Official objective id namespace for this slice?",
       choices: [
         { id: "a", text: "200-301-v2.0/5.2" },
-        { id: "b", text: "CCNA-6.1 only" },
+        { id: "b", text: "A v1.1 automation objective only" },
         { id: "c", text: "200-301-v1.1/6.4 as the live score key" },
         { id: "d", text: "No objective id" },
       ],

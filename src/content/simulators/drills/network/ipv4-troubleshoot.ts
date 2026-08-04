@@ -197,8 +197,11 @@ export const IPV4_TROUBLESHOOT_SCENARIOS: Ipv4TroubleshootScenario[] = [
       { id: "d", text: "BPDU filter missing on the WAN port", faultClass: "healthy-private-lan" },
     ],
     correctChoiceId: "a",
+    misconceptionChoiceId: "b",
     explanation:
       "The WAN segment is public /30 space; a leftover private next-hop is a public/private context assignment fault — not a ban on private LANs.",
+    remediationHint:
+      "Private LANs remain valid — the fault here is putting a private next-hop on a public WAN handoff.",
     weakConcept: "Public vs private IPv4 assignment context",
   },
   {

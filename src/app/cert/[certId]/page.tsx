@@ -84,6 +84,8 @@ export default function CertDetailPage({ params }: CertDetailPageProps) {
 
       {certId === "computer-fundamentals" && <CfPlacementWizard />}
 
+      {certId === "ccna" && <CcnaVersionPathwayCard />}
+
       {hasContent && (
         <StudyNowCard
           recommendation={coachRec}
@@ -120,8 +122,6 @@ export default function CertDetailPage({ params }: CertDetailPageProps) {
           </div>
         )}
       </Card>
-
-      {certId === "ccna" && <CcnaVersionPathwayCard />}
 
       {certId === "ccna" && (
         <Card className="mb-6 p-4">
