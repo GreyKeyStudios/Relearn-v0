@@ -14,7 +14,8 @@ import {
 import { getEmpiricalDifficultyScore } from "@/lib/question-stats";
 import { topicBankKey, topicKey } from "@/lib/ids";
 
-const SRS_INTERVALS = [1, 3, 7, 14, 30];
+/** Canonical spaced-review ladder (days). Exported for production-layer drift checks. */
+export const SRS_INTERVALS = [1, 3, 7, 14, 30] as const;
 
 export function scoreToLevel(score: number): MasteryLevel {
   if (score >= 90) return "mastered";
@@ -134,7 +135,9 @@ export function recomputeTopicMastery(
   if (sessionPassed !== undefined) {
     if (sessionPassed) {
       streak += 1;
-      const idx = SRS_INTERVALS.indexOf(reviewIntervalDays);
+      const idx = (SRS_INTERVALS as readonly number[]).indexOf(
+        reviewIntervalDays
+      );
       reviewIntervalDays =
         idx < SRS_INTERVALS.length - 1 ? SRS_INTERVALS[idx + 1] : 30;
     } else {

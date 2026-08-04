@@ -47,6 +47,8 @@ feature/codex-pr-review-fixes
 ```bash
 npm run build
 npm run verify:curriculum -- --strict-ccna --strict-ccna-objectives
+npm run verify:production
+npm run curriculum:gap-report
 npx tsc --noEmit
 
 git add .
