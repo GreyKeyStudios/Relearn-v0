@@ -36,4 +36,17 @@ test.describe("available-course beginner quality", () => {
     await expect(page.getByRole("heading", { name: "Install and hear sound" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "When you get stuck" })).toBeVisible();
   });
+
+  test("Cloudflare hosting is studyable and hands beginners back to Git", async ({ page }) => {
+    await seedProfile(page, "new-learner");
+    await gotoHydrated(page, "/cert/cloudflare-hosting");
+
+    await expect(page.getByRole("heading", { name: "Cloudflare Website Hosting" })).toBeVisible();
+    await expect(page.getByText("Module 10 — Operate, Troubleshoot, and Recover a Website")).toBeVisible();
+
+    await gotoHydrated(page, "/cert/cloudflare-hosting/assignment/cfh-git-readiness");
+    const gitPath = page.getByRole("link", { name: "Open ReLearn Git/GitHub deployment prerequisites" });
+    await expect(gitPath).toHaveAttribute("href", "/cert/git-github/lesson/git-repos-and-commits");
+    await expect(page.getByText("Then return to this Cloudflare deployment lesson.")).toBeVisible();
+  });
 });

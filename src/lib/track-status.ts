@@ -45,6 +45,7 @@ const STATUS_BY_ID: Record<string, TrackStatus> = {
   "computer-fundamentals": "first-pass",
   "sound-synthesis": "first-pass",
   "vm-lab": "first-pass",
+  "cloudflare-hosting": "first-pass",
   /** All 220-1201/1202 objectives and domain integrations are first-pass; learner QA follows. */
   "a-plus": "first-pass",
 };
