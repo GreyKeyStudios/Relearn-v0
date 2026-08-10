@@ -5,6 +5,7 @@ import { azureFundamentals } from "./certifications/azure-fundamentals";
 import { ccna } from "./certifications/ccna";
 import { computerFundamentals } from "./certifications/computer-fundamentals";
 import { cysaPlus } from "./certifications/cysa-plus";
+import { cloudflareHosting } from "./certifications/cloudflare-hosting";
 import { gitGithub } from "./certifications/git-github";
 import { powershell } from "./certifications/powershell";
 import { itilFoundation } from "./certifications/itil-foundation";
@@ -21,6 +22,7 @@ export const CERTIFICATIONS: Certification[] = [
   powershell,
   soundSynthesis,
   vmLab,
+  cloudflareHosting,
   aPlus,
   securityPlus,
   networkPlus,
