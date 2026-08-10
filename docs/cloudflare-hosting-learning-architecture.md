@@ -5,6 +5,21 @@
 **Reference track:** Git & GitHub Foundations  
 **Primary outcome:** A beginner can deploy, secure, troubleshoot, recover, and hand off a small website.
 
+## Transfer standard
+
+Course completion is not the outcome. A graduate must be able to take a different small website outside ReLearn, determine what it needs, select an appropriate Cloudflare architecture, deploy it, verify it, diagnose ordinary failures, recover safely, and explain the result to another person.
+
+Instruction therefore fades across the track:
+
+```text
+explicit model and guided example
+→ bounded Try It / Break It / Fix It practice
+→ unfamiliar symptoms with evidence prompts
+→ independently planned capstone and handoff
+```
+
+The capstone provides requirements and acceptance evidence, not a click-by-click recipe. Learners may consult current official documentation—as working professionals do—but must choose and justify their own DNS, hosting, access, storage, security, verification, and rollback decisions. Passing requires transfer to a fresh site or scenario, not merely reproducing the course example.
+
 ## Product boundary
 
 This is not a Cloudflare certification-prep course or a tour of every Cloudflare product. It follows one job-shaped journey:
@@ -39,7 +54,7 @@ A learner who lacks those skills follows the Git readiness assignment, completes
 | 5 | Caching/performance | Explain stale state without blind global purges |
 | 6 | Edge security | Narrow form protection with false-positive testing |
 | 7 | Workers/Wrangler | Minimal dynamic route, safe secrets, rollback |
-| 8 | Website storage | Choose KV, D1, or R2 from access patterns |
+| 8 | Website storage and R2 delivery | Choose KV, D1, or R2; configure and troubleshoot a safe R2 browser delivery path |
 | 9 | Origins/Tunnel | Separate public and private service paths |
 | 10 | Operations capstone | Deploy, secure, observe, break, fix, and hand off |
 
@@ -52,7 +67,7 @@ Every module includes a Try It → Break It → Fix It external lab. Work that c
 | Why teach it? | Website hosting joins DNS, security, Git, deployment, and operations into a portfolio-ready skill. |
 | Audience | High-school-readable beginner with basic file and browser skills. |
 | Prerequisites | Git/GitHub modules are linked at the point of need; domain purchase is optional. |
-| Success | Independent capstone deployment and controlled recovery with a usable runbook. |
+| Success | Transfer to a fresh website: independently plan, deploy, secure, troubleshoot, recover, and hand off using current documentation rather than replaying course steps. |
 | Activities | Lessons, quizzes, flashcards, external labs, Break/Fix, capstone. |
 | Lab model | Real learner-owned Cloudflare/Git environment or a paper simulation where purchasing/production access is inappropriate. |
 | Template | Type B skill track; Git is the canonical reference. |
@@ -75,6 +90,20 @@ Primary official documentation families:
 - Cloudflare One / Tunnel / Access
 - Workers observability
 
+### R2 depth boundary
+
+R2 is the storage product taught beyond awareness level because it is a common website-hosting dependency and a frequent source of beginner browser failures. Module 8 takes a learner from object-storage vocabulary through:
+
+- bucket and key design plus HTTP metadata
+- public custom-domain delivery versus private Worker bindings
+- temporary presigned S3 operations without exposing credentials
+- browser CORS, OPTIONS preflight, exact origin/method/header matching, and exposed response headers
+- custom-domain cache effects after a CORS policy change
+- development/production isolation, least-privilege tokens, retention, lifecycle, and deletion
+- an evidence-based Try It → Break It → Fix It browser upload lab
+
+Large migrations, multipart tuning, event pipelines, data lakes, and advanced media processing remain specialist-track material. The lab must use a disposable bucket and synthetic objects; it never operates on an existing production bucket.
+
 ## Graduation gate
 
-The track remains **first-pass / In progress** until the owner completes the course from a new learner profile, performs the live capstone on a disposable domain or approved practice hostname, verifies cost and deletion guidance against current documentation, and confirms that Git detours return learners to the correct Cloudflare lesson.
+The track remains **first-pass / In progress** until the owner completes the course from a new learner profile, performs the live capstone on a fresh disposable site or approved practice hostname without a click-by-click course recipe, verifies cost and deletion guidance against current documentation, confirms that Git detours return learners to the correct Cloudflare lesson, and demonstrates recovery from at least one unfamiliar injected failure.
