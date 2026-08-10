@@ -1,6 +1,5 @@
 import { CERTIFICATIONS } from "@/content/registry";
-import { getExternalToolGuideIds } from "@/content/external-tools/packet-tracer";
-import { SIMULATORS } from "@/content/simulators/registry";
+import { getExternalToolGuide } from "@/content/external-tools/packet-tracer";
 import { getDomainQuestionBank } from "@/lib/content-selectors";
 
 export function allCertParams() {
@@ -32,21 +31,36 @@ export function allAssignmentParams() {
 }
 
 export function allSimulatorParams() {
+  const seen = new Set<string>();
   return CERTIFICATIONS.flatMap((cert) =>
-    SIMULATORS.map((sim) => ({
-      certId: cert.id,
-      simulatorId: sim.id,
-    }))
+    cert.domains.flatMap((domain) =>
+      domain.topics.flatMap((topic) =>
+        (topic.assignments ?? []).flatMap((assignment) => {
+          if (!assignment.simulatorId) return [];
+          const key = `${cert.id}:${assignment.simulatorId}`;
+          if (seen.has(key)) return [];
+          seen.add(key);
+          return [{ certId: cert.id, simulatorId: assignment.simulatorId }];
+        })
+      )
+    )
   );
 }
 
 export function allToolParams() {
-  const toolIds = getExternalToolGuideIds();
+  const seen = new Set<string>();
   return CERTIFICATIONS.flatMap((cert) =>
-    toolIds.map((toolId) => ({
-      certId: cert.id,
-      toolId,
-    }))
+    cert.domains.flatMap((domain) =>
+      domain.topics.flatMap((topic) =>
+        (topic.externalResources ?? []).flatMap((resource) => {
+          if (!getExternalToolGuide(resource.id)) return [];
+          const key = `${cert.id}:${resource.id}`;
+          if (seen.has(key)) return [];
+          seen.add(key);
+          return [{ certId: cert.id, toolId: resource.id }];
+        })
+      )
+    )
   );
 }
 
