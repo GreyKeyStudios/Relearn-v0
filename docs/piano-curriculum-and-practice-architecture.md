@@ -11,6 +11,19 @@ Piano begins at genuine zero knowledge. No task may require a term, physical lan
 
 Learner-facing language may compress this to `Play → Notice → Practice → Prove`. Musical wins—small riffs, melodies, play-alongs, accompaniment, and constrained improvisation—must occur throughout rather than after a theory prerequisite wall.
 
+### Permanent execution constraints
+
+1. Preserve the zero-knowledge depth of Meet the Keyboard. Never assume terminology, physical familiarity, or musical knowledge that has not been taught or discovered.
+2. The academy map is the long-term target. Each implementation batch must prefer a polished coherent learner path over shallow coverage across many levels.
+3. Practice remains independent of Courses and Review and may become a graduate learner's primary daily ReLearn surface.
+4. Competency and evaluation remain separate from presentation so lessons, trainers, remediation, review, and games can share educational logic.
+5. Never fake verification. MIDI evidence may update demonstrated competencies; posture, fingering, physical technique, interpretation, and taste require self-check or coaching unless another truthful evidence source exists.
+6. Open musical exercises support multiple valid outcomes and distinguish descriptive analysis/coaching from objective correctness.
+7. Early and frequent musical wins prevent the curriculum from becoming a prerequisite tunnel.
+8. Generic exercise/evidence/renderer contracts must remain useful to non-piano ReLearn domains; music reasoning belongs behind the GK Theory boundary.
+
+Piano is the reference implementation for ReLearn's generalized learning architecture because it exercises instruction, deliberate practice, objective verification, coaching, remediation, progression, external input, and optional game renderers in one inspectable domain. It must not become a piano-only architecture hidden behind generic names.
+
 ## Foundations graph
 
 1. Meet the Keyboard — one white key; natural keys; black-key groups; C landmark; octave repetition; full instrument.

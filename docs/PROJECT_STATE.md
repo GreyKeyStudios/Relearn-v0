@@ -3,6 +3,8 @@
 **Branch:** `feature/codex-piano-foundations`  
 **Current focus:** Piano curriculum expansion and first-class Practice
 
+**Reference-implementation decision:** Piano is the proving ground for ReLearn's reusable exercise, evidence, remediation, coaching, hardware-input, and renderer architecture. Piano-specific theory stays separable through the GK Theory boundary.
+
 ## Working now
 
 - Connected-learning dashboard direction and independently usable Piano Foundations route.
