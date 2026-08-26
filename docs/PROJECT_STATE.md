@@ -14,6 +14,7 @@
 - The full 12-unit Foundations path is authored as 64 small lessons, with explicit phase, verification mode, competency links, early musical wins, and three post-Foundations paths.
 - The post-Foundations academy now includes six Shared Pianist Core stages, six Classical Pianist stages, six Jazz Pianist stages, explicit milestones, and a ten-stage arpeggio progression.
 - Shared Pianist Core now has its first playable lesson: C-major arpeggio as chord tones in motion, ascending and descending, with on-screen/MIDI parity and persisted competency evidence.
+- Foundations Units 5–7 now have a playable musical-application path: ascending/descending C major, a coached six-note original melody with multiple valid answers, and C/F chord construction. Ordered exercises recover after wrong notes rather than becoming stuck.
 - Telemetry hooks remain local-first and contain no learner identity or MIDI device name.
 - The Grey Key is permanently locked and explicitly not product-awarded mastery.
 

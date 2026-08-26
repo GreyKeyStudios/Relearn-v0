@@ -81,3 +81,10 @@ test("first arpeggio lesson teaches and verifies both directions", async ({ page
   for (const note of ["C4", "E4", "G4", "C5", "C5", "G4", "E4", "C4"]) await page.getByRole("button", { name: `Play ${note}` }).click();
   await expect(page.getByRole("heading", { name: "You played an arpeggio in both directions." })).toBeVisible();
 });
+
+test("musical application connects scales, melody, and chords", async ({ page }) => {
+  await page.goto("/learn/piano-foundations/musical-application");
+  await page.getByRole("button", { name: "Build the scale" }).click();
+  for (const note of ["C4","D4","E4","F4","G4","A4","B4","C5","C5","B4","A4","G4","F4","E4","D4","C4","C4","E4","G4","E4","D4","C4","C4","E4","G4","F4","A4","C5"]) await page.getByRole("button", { name: `Play ${note}` }).click();
+  await expect(page.getByRole("heading", { name: "Scale, melody, and harmony are connected." })).toBeVisible();
+});

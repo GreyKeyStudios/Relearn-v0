@@ -56,10 +56,28 @@ export function evaluateNoteEvent(
   }
 
   const targets = exercise.targetNotes ?? exercise.targetPitchClasses ?? [];
-  const played = exercise.targetNotes
+  let played = exercise.targetNotes
     ? nextState.playedNotes
     : nextState.playedNotes.map((note) => ((note % 12) + 12) % 12);
   const ordered = exercise.ordered ?? ["play-sequence", "play-scale"].includes(exercise.kind);
+  let recoveredState = nextState;
+  if (ordered) {
+    const candidate = played.slice(-targets.length);
+    const prefixMatches = candidate.every((value, index) => value === targets[index]);
+    if (!prefixMatches) {
+      const currentValue = played.at(-1);
+      const restart = currentValue === targets[0];
+      played = restart ? [currentValue] : [];
+      recoveredState = {
+        ...nextState,
+        playedNotes: restart ? [event.note] : [],
+        playedAt: restart ? [event.timestamp] : [],
+      };
+    } else {
+      played = candidate;
+      recoveredState = { ...nextState, playedNotes: nextState.playedNotes.slice(-targets.length), playedAt: nextState.playedAt.slice(-targets.length) };
+    }
+  }
   const matched = ordered
     ? targets.every((target, index) => played[index] === target)
     : targets.every((target) => played.includes(target));
@@ -68,6 +86,6 @@ export function evaluateNoteEvent(
     success: matched,
     accepted: exactTarget || pitchClassTarget || targets.includes(event.note),
     feedback: matched ? "Pattern complete." : `${event.noteName} recorded. Keep going.`,
-    nextState: matched ? { ...nextState, completedAt: event.timestamp } : nextState,
+    nextState: matched ? { ...recoveredState, completedAt: event.timestamp } : recoveredState,
   };
 }
