@@ -6,6 +6,7 @@ import { ChevronDown, ChevronUp, ArrowRight } from "lucide-react";
 import { StatCard } from "@/components/dashboard/StatCard";
 import { TrackCard } from "@/components/dashboard/TrackCard";
 import { ConceptHero } from "@/components/dashboard/ConceptHero";
+import { LearningSystemHero } from "@/components/dashboard/LearningSystemHero";
 import { CertProgressCard } from "@/components/dashboard/CertProgressCard";
 import { WeakAreaList } from "@/components/dashboard/WeakAreaList";
 import { ActivityFeed } from "@/components/dashboard/ActivityFeed";
@@ -117,6 +118,8 @@ export default function DashboardPage() {
         </span>
         <span className="eyebrow">{today}</span>
       </header>
+
+      <LearningSystemHero />
 
       {hydrated ? (
         <ConceptHero hero={conceptHero} />

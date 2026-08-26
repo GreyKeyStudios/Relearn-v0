@@ -1,6 +1,6 @@
 # Course Architecture — ReLearn Platform Constitution
 
-**Version:** 1.0  
+**Version:** 1.1
 **Owner:** M0  
 **Status:** Approved for agent and content planning  
 **Parent:** ReLearn product vision (Bridge Study Companion = first implementation)
@@ -20,6 +20,30 @@ ReLearn Engine  +  Content Pack (Track)  =  What the learner sees
 **Core insight:** Do not build courses. Build **course templates**. Subjects (CCNA, Git, SQL, French) are content that fills a template the engine already knows how to deliver.
 
 Bridge owns curriculum. External tools (Packet Tracer, terminal, GitHub, Excel) appear as **assignments inside the path** — not random links.
+
+### Expanded learning loop
+
+ReLearn is the learning layer for the Grey Key ecosystem. Its general loop is:
+
+```text
+diagnose → determine best learning mode → teach / simulate / route externally
+→ practice → verify → update learner knowledge graph → recommend next step
+```
+
+Interactive practice is a first-class engine capability. It may use browser input,
+simulation, a native host, or an external tool, but completion evidence must flow
+through a reusable exercise contract rather than page-specific conditionals.
+
+### Grey Key product boundaries
+
+- **ReLearn** owns pedagogy, diagnostics, delivery, practice, mastery, progress,
+  the learner model, prerequisite graph, and recommendations.
+- **GK Theory** owns reusable music knowledge and music-specific exercise logic.
+- **GK Studio** owns creative session/audio truth and may host ReLearn experiences.
+- ReLearn remains independently usable. Products exchange versioned semantic
+  inputs/evidence; ReLearn does not depend on GK Studio UI or engine state.
+
+The first interactive vertical slice is [Piano Foundations](piano-foundations-vertical-slice.md).
 
 ---
 
@@ -67,7 +91,7 @@ Each template has **one reference track** where new platform patterns are proven
 | A | CCNA | CES, LES, BLS, deferral manifest, Professor oral gate |
 | B | Git | TYPE_B_MASTER, Break/Fix labs, workflow LES anchor |
 | C | **VM Lab Foundations** | Local VirtualBox install + guest snapshots/Break/Fix — see [`vm-lab-learning-architecture.md`](vm-lab-learning-architecture.md) |
-| D | TBD | Performance + feedback loop |
+| D | **Piano Foundations** | Physical/creative performance + feedback loop |
 
 **Rule:** Invent features in the reference track first. After owner walkthrough sign-off, propagate to sibling tracks.
 

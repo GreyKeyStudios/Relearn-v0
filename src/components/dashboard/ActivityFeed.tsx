@@ -2,7 +2,7 @@
 
 import type { Activity, ActivityType } from "@/types/progress";
 import { Card } from "@/components/ui/Card";
-import { BookOpen, Brain, ClipboardCheck, Layers, Target } from "lucide-react";
+import { BookOpen, Brain, ClipboardCheck, Dumbbell, Layers, Target } from "lucide-react";
 
 interface ActivityFeedProps {
   activities: Activity[];
@@ -15,6 +15,7 @@ const icons: Record<ActivityType, typeof BookOpen> = {
   flashcards: Layers,
   simulator: Target,
   assignment_complete: ClipboardCheck,
+  practice: Dumbbell,
 };
 
 export function ActivityFeed({ activities, limit = 5 }: ActivityFeedProps) {

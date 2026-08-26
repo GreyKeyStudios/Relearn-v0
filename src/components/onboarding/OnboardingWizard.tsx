@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import type { StudyPlanPreferences } from "@/types/mastery";
 import { DEFAULT_STUDY_PLAN } from "@/types/mastery";
 import { getAllCertifications } from "@/lib/content-selectors";
@@ -9,7 +10,7 @@ import { isActiveTrack } from "@/lib/track-status";
 import { useProgressStore } from "@/stores/progress-store";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { GraduationCap } from "lucide-react";
+import { ArrowRight, GraduationCap, Piano } from "lucide-react";
 
 const STEPS = ["cert", "schedule", "exam"] as const;
 type Step = (typeof STEPS)[number];
@@ -60,7 +61,11 @@ export function OnboardingWizard() {
         <div className="min-h-0 flex-1 overflow-y-auto px-5 py-4">
           {step === "cert" && (
             <>
-              <h2 className="text-lg font-semibold text-zinc-50">Which course are you studying?</h2>
+              <Link href="/learn/piano-foundations" className="mb-5 flex items-center justify-between gap-4 rounded-xl border border-amber-300/30 bg-amber-300/10 p-4 text-left transition-colors hover:border-amber-300/60">
+                <span className="flex items-center gap-3"><span className="rounded-lg bg-amber-300/15 p-2 text-amber-200"><Piano className="h-5 w-5" /></span><span><span className="block font-medium text-zinc-50">New to piano?</span><span className="block text-xs text-zinc-400">Connect a MIDI keyboard and play your first pattern.</span></span></span>
+                <ArrowRight className="h-4 w-4 shrink-0 text-amber-200" />
+              </Link>
+              <h2 className="text-lg font-semibold text-zinc-50">Or choose a study track</h2>
               <p className="mt-1 text-sm text-zinc-400">
                 We&apos;ll focus your study plan and recommendations on this track.
               </p>

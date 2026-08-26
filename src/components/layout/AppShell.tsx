@@ -8,9 +8,9 @@ interface AppShellProps {
 
 export function AppShell({ children }: AppShellProps) {
   return (
-    <div className="mx-auto flex min-h-full w-full max-w-lg flex-col bg-background text-foreground">
+    <div className="mx-auto flex min-h-full w-full max-w-5xl flex-col bg-background text-foreground">
       <ProgressStoreProvider>
-        <main className="flex-1 px-4 pb-24 pt-4">{children}</main>
+        <main className="flex-1 px-4 pb-24 pt-4 md:px-6">{children}</main>
       </ProgressStoreProvider>
       <BottomNav />
     </div>
