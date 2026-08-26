@@ -73,3 +73,11 @@ test("Practice works independently with on-screen input", async ({ page }) => {
   }
   await expect(page.getByText(/Steady pulse complete/i)).toBeVisible();
 });
+
+test("first arpeggio lesson teaches and verifies both directions", async ({ page }) => {
+  await page.goto("/learn/piano-academy/developing-1/arpeggio");
+  await expect(page.getByRole("heading", { name: "Your first arpeggio." })).toBeVisible();
+  await page.getByRole("button", { name: "Explore the motion" }).click();
+  for (const note of ["C4", "E4", "G4", "C5", "C5", "G4", "E4", "C4"]) await page.getByRole("button", { name: `Play ${note}` }).click();
+  await expect(page.getByRole("heading", { name: "You played an arpeggio in both directions." })).toBeVisible();
+});
