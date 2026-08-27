@@ -97,7 +97,7 @@ Standard MIDI can establish note identity, order, event timing, velocity, durati
 
 ## Implementation batches
 
-Implemented now: persistent `/practice`, global Practice navigation, reusable competency references and evaluation modes, working C-landmark, ascending C-major, and steady-pulse trainers through both on-screen and MIDI input, persisted competency evidence, practice telemetry context, a fully authored 64-lesson Foundations curriculum, three continuation paths, a six-step Learn the Notes unit, and a playable introductory hand-control sequence.
+Implemented now: persistent `/practice`, global Practice navigation, reusable competency references and evaluation modes, working landmark, scale, pulse, five-note control, held-duration, chord-tone, and arpeggio trainers through both on-screen and MIDI input, persisted competency evidence, practice telemetry context, a fully authored 64-lesson Foundations curriculum, a resumable continuous course player, three continuation paths, a six-step Learn the Notes unit, and a playable introductory hand-control sequence.
 
 Next batch: persistent competency evidence in the progress store; exact sequence recovery; descending scales; multi-note/chord windows; timing/rhythm tolerance and pulse playback; Unit 2 micro-lessons; Unit 3 posture illustrations plus unverified self-checks; remediation routing; accessibility and physical-device usability tests.
 

@@ -6,7 +6,7 @@ import type {
 } from "./types";
 
 export function createAttemptState(now = Date.now()): ExerciseAttemptState {
-  return { startedAt: now, attempts: 0, playedNotes: [], playedAt: [] };
+  return { startedAt: now, attempts: 0, playedNotes: [], playedAt: [], noteOnAt: {} };
 }
 
 export function evaluateNoteEvent(
@@ -14,6 +14,31 @@ export function evaluateNoteEvent(
   state: ExerciseAttemptState,
   event: NoteEvent
 ): ExerciseEvaluation {
+  if (exercise.kind === "hold-notes") {
+    const targets = exercise.targetNotes ?? [];
+    if (!targets.includes(event.note)) {
+      return { success: false, accepted: false, feedback: `${event.noteName} is not the note to hold.`, nextState: state };
+    }
+    if (event.type === "note-on") {
+      return {
+        success: false,
+        accepted: true,
+        feedback: `Keep holding ${event.noteName}…`,
+        nextState: { ...state, attempts: state.attempts + 1, noteOnAt: { ...state.noteOnAt, [event.note]: event.timestamp } },
+      };
+    }
+    const pressedAt = state.noteOnAt[event.note];
+    if (pressedAt === undefined) return { success: false, accepted: false, feedback: "Press the note, then release it.", nextState: state };
+    const duration = event.timestamp - pressedAt;
+    const success = duration >= (exercise.minimumHoldMs ?? 1000);
+    return {
+      success,
+      accepted: true,
+      feedback: success ? `${event.noteName} held for ${(duration / 1000).toFixed(1)} seconds.` : `${(duration / 1000).toFixed(1)} seconds—let the sound last a little longer.`,
+      nextState: { ...state, noteOnAt: {}, completedAt: success ? event.timestamp : undefined },
+    };
+  }
+
   if (event.type !== "note-on") {
     return { success: false, accepted: false, feedback: "Keep exploring.", nextState: state };
   }

@@ -52,6 +52,7 @@ export interface ExerciseAttemptState {
   attempts: number;
   playedNotes: number[];
   playedAt: number[];
+  noteOnAt: Record<number, number>;
   completedAt?: number;
 }
 
