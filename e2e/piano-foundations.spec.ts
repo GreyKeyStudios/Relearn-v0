@@ -110,3 +110,19 @@ test("continuous Foundations course saves and restores its lesson checkpoint", a
   await expect(page.getByRole("heading", { name: "Find Every C" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Open playable activity" })).toHaveAttribute("href", "/learn/piano-foundations");
 });
+
+test("Foundations integration reaches a complete musical sketch", async ({ page }) => {
+  await page.goto("/learn/piano-foundations/integration");
+  await expect(page.getByRole("heading", { name: "Make the pieces work together." })).toBeVisible();
+  const notes = [
+    "C4","E4","G4","F4","A4","C5","G4","B4","D5","C4","E4","G4",
+    "C3","F3","G3","C3",
+    "C4","D4","E4","G4","E4","D4","C4",
+  ];
+  for (const note of notes) await page.getByRole("button", { name: `Play ${note}` }).click();
+  await page.getByRole("button", { name: "Play C softly" }).click();
+  await page.getByRole("button", { name: "Play C strongly" }).click();
+  const piece = ["C3","C4","E4","G4","F3","C4","F4","A4","G3","B3","D4","G4","C3","C4","E4","G4","C5"];
+  for (const note of piece) await page.getByRole("button", { name: `Play ${note}` }).click();
+  await expect(page.getByRole("heading", { name: "You finished a complete musical sketch." })).toBeVisible();
+});

@@ -45,6 +45,7 @@ function evidenceLabel(lesson: PianoCurriculumLesson) {
 function activityHref(unitId: string) {
   if (["keyboard", "notes", "hands", "rhythm"].includes(unitId)) return "/learn/piano-foundations";
   if (["scales", "melodies", "chords"].includes(unitId)) return "/learn/piano-foundations/musical-application";
+  if (["progressions", "two-hands", "reading", "expression", "piece"].includes(unitId)) return "/learn/piano-foundations/integration";
   return null;
 }
 

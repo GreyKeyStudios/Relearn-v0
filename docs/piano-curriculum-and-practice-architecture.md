@@ -99,6 +99,8 @@ Standard MIDI can establish note identity, order, event timing, velocity, durati
 
 Implemented now: persistent `/practice`, global Practice navigation, reusable competency references and evaluation modes, working landmark, scale, pulse, five-note control, held-duration, chord-tone, and arpeggio trainers through both on-screen and MIDI input, persisted competency evidence, practice telemetry context, a fully authored 64-lesson Foundations curriculum, a resumable continuous course player, three continuation paths, a six-step Learn the Notes unit, and a playable introductory hand-control sequence.
 
+Every Foundations unit now has a playable destination. Units 8–12 culminate in an integration path covering harmonic motion, register-separated hand roles, symbolic reading transfer, velocity contrast, and a short complete performance. This does not imply that every micro-lesson has reached its final instructional renderer.
+
 Next batch: persistent competency evidence in the progress store; exact sequence recovery; descending scales; multi-note/chord windows; timing/rhythm tolerance and pulse playback; Unit 2 micro-lessons; Unit 3 posture illustrations plus unverified self-checks; remediation routing; accessibility and physical-device usability tests.
 
 Later: coaching analysis backed by GK Theory for progression completion, harmonization, and improvisation; renderer adapters for review and games; prescribed practice from Knowledge DNA weakness.

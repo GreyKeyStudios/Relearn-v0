@@ -19,6 +19,7 @@
 - Foundations Units 5–7 now have a playable musical-application path: ascending/descending C major, a coached six-note original melody with multiple valid answers, and C/F chord construction. Ordered exercises recover after wrong notes rather than becoming stuck.
 - The authored 64-lesson Foundations map now has a continuous course player with automatic local resume, lesson/unit navigation, completion history, honest evidence labels, competency targets, and routes into the dedicated playable labs.
 - Independent Practice now provides an eight-exercise first-session path covering C navigation, ascending/descending scales, steady pulse, five-note control, measured note duration, primary chord tones, and the first arpeggio. Pointer and MIDI note releases share the reusable duration evaluator.
+- Foundations Units 8–12 now share a playable integration path: C–F–G–C harmonic motion, lower-register roots, symbol-to-keyboard reading transfer, measurable velocity contrast, and a complete original harmonic sketch.
 - Telemetry hooks remain local-first and contain no learner identity or MIDI device name.
 - The Grey Key is permanently locked and explicitly not product-awarded mastery.
 
@@ -32,7 +33,7 @@
 
 ## Exact next implementation batch
 
-1. Replace generic completion controls in the continuous course with dedicated interaction renderers, beginning with Units 8–12.
+1. Replace remaining generic completion controls in the continuous course with lesson-specific renderers; every unit now has a playable destination, but not every micro-lesson has its own renderer.
 2. Convert Shared Pianist Core I into the next playable course after Foundations; its first technical block includes one-octave tonic arpeggios.
 3. Unify new competency evidence with `KnowledgeDna` selectors and surface prescribed Practice from weak evidence.
 4. Split Unit 3 into physical setup self-checks and additional MIDI-verifiable deliberate-motion exercises.
