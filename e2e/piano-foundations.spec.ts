@@ -163,4 +163,10 @@ test("course explains register and remembers the connected keyboard size", async
   await page.getByRole("button", { name: "49 keys" }).click();
   await expect(page.getByText(/Four-octave plan/i)).toBeVisible();
   await expect.poll(() => page.evaluate(() => localStorage.getItem("relearn:piano-keyboard-profile:v1"))).toBe("49");
+  for (const note of ["C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5"]) {
+    await page.getByRole("button", { name: `Play ${note}` }).click();
+  }
+  await page.getByRole("button", { name: "Continue to the next lesson" }).click();
+  await expect(page.getByRole("button", { name: "MIDI connected" })).toBeVisible();
+  await expect(page.getByText(/1 MIDI input ready · 49-key profile/i)).toBeVisible();
 });

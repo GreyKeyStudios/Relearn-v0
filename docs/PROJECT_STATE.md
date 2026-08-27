@@ -22,6 +22,7 @@
 - Foundations Units 8–12 now share a playable integration path: C–F–G–C harmonic motion, lower-register roots, symbol-to-keyboard reading transfer, measurable velocity contrast, and a complete original harmonic sketch.
 - Ordinary objective activities now run directly inside the continuous course lesson and advance in place. A separate workspace is reserved for the final complete performance, where the larger uninterrupted task genuinely benefits from it.
 - Exact-register activities state their MIDI note range and identify Middle C/C4 on the on-screen keyboard; pitch-class activities explicitly allow any octave. MIDI setup remembers a 25-, 49-, 61-, or 88-key instrument profile and communicates the resulting practice plan.
+- Web MIDI access is session-level: moving between lessons and piano routes keeps the connected input alive while the active exercise subscribes to its note events.
 - Telemetry hooks remain local-first and contain no learner identity or MIDI device name.
 - The Grey Key is permanently locked and explicitly not product-awarded mastery.
 
