@@ -20,21 +20,21 @@
 - The authored 64-lesson Foundations map now has a continuous course player with automatic local resume, lesson/unit navigation, completion history, honest evidence labels, competency targets, and routes into the dedicated playable labs.
 - Independent Practice now provides an eight-exercise first-session path covering C navigation, ascending/descending scales, steady pulse, five-note control, measured note duration, primary chord tones, and the first arpeggio. Pointer and MIDI note releases share the reusable duration evaluator.
 - Foundations Units 8–12 now share a playable integration path: C–F–G–C harmonic motion, lower-register roots, symbol-to-keyboard reading transfer, measurable velocity contrast, and a complete original harmonic sketch.
-- Continuous-course activity links carry unit and lesson identifiers. Each link opens the nearest matching playable checkpoint rather than restarting the shared activity, and each activity can return to the exact course lesson.
+- Ordinary objective activities now run directly inside the continuous course lesson and advance in place. A separate workspace is reserved for the final complete performance, where the larger uninterrupted task genuinely benefits from it.
 - Telemetry hooks remain local-first and contain no learner identity or MIDI device name.
 - The Grey Key is permanently locked and explicitly not product-awarded mastery.
 
 ## Known boundaries
 
 - Competency evidence is persisted locally, but has not yet been unified with the older `KnowledgeDna` model or recommendation selectors.
-- Held-note, simultaneous chord, pedal, velocity, and coaching analyzers are designed but not implemented.
-- Unit 4 now has a playable steady-pulse exercise; Units 5–12 are fully authored but not yet playable.
+- Simultaneous chord, pedal/controller, and coaching analyzers remain incomplete. Held-note duration and velocity contrast are implemented.
+- Many objective micro-lessons across all 12 Foundations units now play inline; physical technique, interpretation, pedal use, and other non-verifiable lessons remain honest self-checks.
 - Unit 3 verifies note order only. It does not claim to see fingering, posture, or tension.
 - No remote telemetry/consent system has been approved.
 
 ## Exact next implementation batch
 
-1. Replace remaining generic completion controls in the continuous course with lesson-specific renderers; every unit now has a playable destination, but not every micro-lesson has its own renderer.
+1. Continue replacing generic self-checks only where a truthful lesson-specific evaluator or useful coaching renderer adds value.
 2. Convert Shared Pianist Core I into the next playable course after Foundations; its first technical block includes one-octave tonic arpeggios.
 3. Unify new competency evidence with `KnowledgeDna` selectors and surface prescribed Practice from weak evidence.
 4. Split Unit 3 into physical setup self-checks and additional MIDI-verifiable deliberate-motion exercises.

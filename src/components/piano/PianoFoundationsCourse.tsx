@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight, Check, Circle, LockKeyhole, Piano, RotateCcw } from "lucide-react";
 import { PIANO_FOUNDATIONS_CURRICULUM, type PianoCurriculumLesson } from "@/content/piano-curriculum";
 import { Button } from "@/components/ui/Button";
+import { hasInlinePianoActivity, InlinePianoLessonActivity } from "./InlinePianoLessonActivity";
 
 const STORAGE_KEY = "relearn:piano-foundations-course:v1";
 
@@ -42,12 +43,8 @@ function evidenceLabel(lesson: PianoCurriculumLesson) {
   return "Performance evidence + self-check";
 }
 
-function activityHref(unitId: string, lessonId: string) {
-  const query = `?unit=${encodeURIComponent(unitId)}&lesson=${encodeURIComponent(lessonId)}`;
-  if (["keyboard", "notes", "hands", "rhythm"].includes(unitId)) return `/learn/piano-foundations${query}`;
-  if (["scales", "melodies", "chords"].includes(unitId)) return `/learn/piano-foundations/musical-application${query}`;
-  if (["progressions", "two-hands", "reading", "expression", "piece"].includes(unitId)) return `/learn/piano-foundations/integration${query}`;
-  return null;
+function workspaceHref(lessonId: string) {
+  return lessonId === "perform" ? "/learn/piano-foundations/integration?unit=piece&lesson=perform" : null;
 }
 
 export function PianoFoundationsCourse({ initialLessonId }: { initialLessonId?: string }) {
@@ -81,7 +78,8 @@ export function PianoFoundationsCourse({ initialLessonId }: { initialLessonId?: 
   const currentIndex = Math.max(0, flatLessons.findIndex(({ lesson }) => lesson.id === currentLessonId));
   const current = flatLessons[currentIndex];
   const unitLessonIndex = current.unit.lessons.findIndex((lesson) => lesson.id === current.lesson.id);
-  const activity = activityHref(current.unit.id, current.lesson.id);
+  const activity = workspaceHref(current.lesson.id);
+  const hasInlineActivity = hasInlinePianoActivity(current.lesson.id);
   const courseComplete = completed.size === flatLessons.length;
   const percent = Math.round((completed.size / flatLessons.length) * 100);
 
@@ -122,8 +120,9 @@ export function PianoFoundationsCourse({ initialLessonId }: { initialLessonId?: 
           <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">{current.unit.promise}</p>
           <div className="mt-7 rounded-2xl bg-background/50 p-5"><p className="text-sm leading-relaxed text-foreground">{UNIT_GUIDANCE[current.unit.id]}</p><p className="mt-3 text-sm leading-relaxed text-muted-foreground">{PHASE_COPY[current.lesson.phase]}</p></div>
           {current.lesson.musicalWin && <div className="mt-5 flex gap-3 rounded-2xl border border-accent/30 bg-accent/10 p-4"><Piano className="mt-0.5 h-5 w-5 shrink-0 text-accent" /><div><p className="text-sm font-medium text-foreground">Musical destination</p><p className="mt-1 text-sm text-muted-foreground">{current.lesson.musicalWin}</p></div></div>}
-          <div className="mt-6 rounded-2xl border border-hairline p-5"><p className="eyebrow">What counts here</p><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{current.lesson.verification === "midi" ? "Use the playable activity when available. Note and timing evidence can demonstrate the bounded skill; it cannot verify fingering or physical comfort." : current.lesson.verification === "coaching" ? "Explore more than one musical answer. Completion means you made and considered a choice; ReLearn does not invent one objectively correct result." : current.lesson.verification === "self-check" ? "Pause and assess the prompt yourself. Continue only after you have genuinely performed the check; the app will not pretend it observed you." : "Combine the playable evidence with an honest physical or musical self-check."}</p>{current.lesson.competencyIds.length > 0 && <p className="mt-3 text-xs text-faint">Knowledge DNA: {current.lesson.competencyIds.join(" · ")}</p>}</div>
-          <div className="mt-7 flex flex-wrap items-center justify-between gap-3"><div className="flex gap-2"><Button variant="secondary" disabled={currentIndex === 0} onClick={() => choose(flatLessons[currentIndex - 1].lesson.id)}>Previous</Button>{activity && <Link href={activity} className="inline-flex min-h-10 items-center rounded-lg border border-primary/40 px-4 text-sm font-medium text-primary">Open playable activity</Link>}</div><Button onClick={completeAndContinue}>{current.lesson.verification === "self-check" ? "I completed the self-check" : current.lesson.verification === "coaching" ? "I explored this idea" : "Mark complete and continue"}<ArrowRight className="h-4 w-4" /></Button></div>
+          <div className="mt-6 rounded-2xl border border-hairline p-5"><p className="eyebrow">What counts here</p><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{current.lesson.verification === "midi" ? "Play directly in this lesson. Note and timing evidence can demonstrate the bounded skill; it cannot verify fingering or physical comfort." : current.lesson.verification === "coaching" ? "Explore more than one musical answer. Completion means you made and considered a choice; ReLearn does not invent one objectively correct result." : current.lesson.verification === "self-check" ? "Pause and assess the prompt yourself. Continue only after you have genuinely performed the check; the app will not pretend it observed you." : "Combine the inline performance evidence with an honest physical or musical self-check."}</p>{current.lesson.competencyIds.length > 0 && <p className="mt-3 text-xs text-faint">Knowledge DNA: {current.lesson.competencyIds.join(" · ")}</p>}</div>
+          {hasInlineActivity && <InlinePianoLessonActivity key={current.lesson.id} lessonId={current.lesson.id} onComplete={completeAndContinue} />}
+          <div className="mt-7 flex flex-wrap items-center justify-between gap-3"><div className="flex gap-2"><Button variant="secondary" disabled={currentIndex === 0} onClick={() => choose(flatLessons[currentIndex - 1].lesson.id)}>Previous</Button>{activity && <Link href={activity} className="inline-flex min-h-10 items-center rounded-lg border border-primary/40 px-4 text-sm font-medium text-primary">Open performance workspace</Link>}</div>{!hasInlineActivity && <Button onClick={completeAndContinue}>{current.lesson.verification === "self-check" ? "I completed the self-check" : current.lesson.verification === "coaching" ? "I explored this idea" : "Complete and continue"}<ArrowRight className="h-4 w-4" /></Button>}</div>
         </section>}
         <button type="button" onClick={() => { setCompleted(new Set()); setCurrentLessonId(flatLessons[0].lesson.id); }} className="mt-4 inline-flex items-center gap-2 text-xs text-faint hover:text-foreground"><RotateCcw className="h-3.5 w-3.5" /> Reset this course checkpoint</button>
       </main>

@@ -69,6 +69,8 @@ Advanced physical technique and interpretation remain expert-review gates. Publi
 
 All three consume the same competency and exercise definitions. Games are an optional renderer, never a second education engine.
 
+Within Courses, the default is a continuous lesson: explanation, demonstration, playing, feedback, verification, and progression stay on one page. A separate activity workspace is used only when the activity is materially different in scale or interaction model—for example a full-piece performance, notation editor, ear lab, improvisation analysis, game, recording session, or large simulation. Learners should never have to open a second screen merely to play the exercise a lesson just taught.
+
 ```text
 Competency + exercise definition
               │
@@ -97,9 +99,9 @@ Standard MIDI can establish note identity, order, event timing, velocity, durati
 
 ## Implementation batches
 
-Implemented now: persistent `/practice`, global Practice navigation, reusable competency references and evaluation modes, working landmark, scale, pulse, five-note control, held-duration, chord-tone, and arpeggio trainers through both on-screen and MIDI input, persisted competency evidence, practice telemetry context, a fully authored 64-lesson Foundations curriculum, a resumable continuous course player, three continuation paths, a six-step Learn the Notes unit, and a playable introductory hand-control sequence.
+Implemented now: persistent `/practice`, global Practice navigation, reusable competency references and evaluation modes, working landmark, scale, pulse, five-note control, held-duration, velocity-contrast, chord-tone, and arpeggio trainers through both on-screen and MIDI input, persisted competency evidence, practice telemetry context, a fully authored 64-lesson Foundations curriculum, a resumable continuous course player, three continuation paths, a six-step Learn the Notes unit, and a playable introductory hand-control sequence.
 
-Every Foundations unit now has a playable destination. Units 8–12 culminate in an integration path covering harmonic motion, register-separated hand roles, symbolic reading transfer, velocity contrast, and a short complete performance. This does not imply that every micro-lesson has reached its final instructional renderer.
+Objective micro-lessons now embed their playable renderer directly in the continuous course and advance without a route change. The final complete performance keeps a dedicated workspace because it is an uninterrupted multi-skill performance. Units 8–12 culminate in harmonic motion, register-separated hand roles, symbolic reading transfer, velocity contrast, and a short complete performance. This does not imply that every micro-lesson has reached its final instructional renderer.
 
 Next batch: persistent competency evidence in the progress store; exact sequence recovery; descending scales; multi-note/chord windows; timing/rhythm tolerance and pulse playback; Unit 2 micro-lessons; Unit 3 posture illustrations plus unverified self-checks; remediation routing; accessibility and physical-device usability tests.
 
