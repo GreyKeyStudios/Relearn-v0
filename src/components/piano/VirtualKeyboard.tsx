@@ -26,7 +26,7 @@ export function VirtualKeyboard({ activeNotes, onPlay, onRelease, startNote = 48
               className={`relative flex min-w-10 flex-1 items-end justify-center border-r border-zinc-300 pb-3 text-[10px] transition-all duration-500 last:border-r-0 ${!isVisible(note) ? "opacity-10" : active ? "bg-accent text-accent-foreground" : emphasized ? "z-[1] bg-gradient-to-b from-white to-zinc-100 text-zinc-700 shadow-[inset_0_0_0_3px_var(--accent)]" : "bg-gradient-to-b from-white to-zinc-100 text-zinc-500 hover:bg-zinc-50"}`}
               aria-label={`Play ${midiNoteToName(note)}`}
             >
-              {labelNaturals || midiNoteToName(note).startsWith("C") || active || emphasized ? midiNoteToName(note).replace(/[0-9]/g, "") : ""}
+              {note === 60 ? <span className="flex flex-col items-center leading-tight"><span>C</span><span className="mt-1 text-[8px] font-semibold uppercase tracking-wide">Middle C</span></span> : labelNaturals || midiNoteToName(note).startsWith("C") || active || emphasized ? midiNoteToName(note).replace(/[0-9]/g, "") : ""}
             </button>
           );
           })}

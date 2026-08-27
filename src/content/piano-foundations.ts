@@ -66,8 +66,8 @@ export const PRACTICE_EXERCISES: PerformanceExercise[] = [
   {
     id: "practice-c-major-up",
     kind: "play-scale",
-    prompt: "Play C major upward: C D E F G A B C.",
-    hint: "Use only the white keys, beginning and ending on C.",
+    prompt: "From Middle C (C4), play C major upward to C5: C D E F G A B C.",
+    hint: "Middle C is C4. Use only the white keys from Middle C to the next C on its right.",
     targetNotes: [60, 62, 64, 65, 67, 69, 71, 72],
     ordered: true,
     competency: { id: "piano.scale.c-major.ascending", label: "C major ascending", prerequisites: ["piano.note-navigation.c"] },
@@ -106,8 +106,8 @@ export const PRACTICE_EXERCISES: PerformanceExercise[] = [
   {
     id: "practice-c-major-down",
     kind: "play-scale",
-    prompt: "Play C major downward: C B A G F E D C.",
-    hint: "Begin on the higher C and move left using only white keys.",
+    prompt: "From C5, play C major downward to Middle C (C4): C B A G F E D C.",
+    hint: "Begin one octave above Middle C and move left using only white keys.",
     targetNotes: [72, 71, 69, 67, 65, 64, 62, 60],
     ordered: true,
     competency: { id: "piano.scale.c-major.descending", label: "C major descending", prerequisites: ["piano.scale.c-major.ascending"] },

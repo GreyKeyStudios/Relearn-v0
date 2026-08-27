@@ -25,6 +25,15 @@ type InlineActivity = {
 
 const naturals = [0, 2, 4, 5, 7, 9, 11];
 const blacks = [1, 3, 6, 8, 10];
+const KEYBOARD_PROFILE_KEY = "relearn:piano-keyboard-profile:v1";
+const keyboardSizes = [25, 49, 61, 88] as const;
+const keyboardPlan = (size: number) => size === 25
+  ? "Compact plan: one-octave scales, hands separately, and shorter arpeggio shapes unless you change the controller octave."
+  : size === 49
+    ? "Four-octave plan: compact two-hand arrangements and arpeggios sized to the available span."
+    : size === 61
+      ? "Five-octave plan: most two-hand study fits, with long concert-range gestures adapted when necessary."
+      : "Concert-range plan: full-span scales, two-hand octave work, and long arpeggio gestures are available.";
 const ex = (id: string, kind: PerformanceExercise["kind"], prompt: string, targetNotes: number[], competencyId: string, hint?: string): InlineActivity => ({
   prompt,
   hint,
@@ -103,6 +112,11 @@ export function InlinePianoLessonActivity({ lessonId, onComplete }: { lessonId: 
   const [success, setSuccess] = useState(false);
   const [creative, setCreative] = useState<number[]>([]);
   const [velocities, setVelocities] = useState<number[]>([]);
+  const [keyboardSize, setKeyboardSize] = useState<number | null>(() => {
+    if (typeof window === "undefined") return null;
+    const saved = Number(window.localStorage.getItem(KEYBOARD_PROFILE_KEY));
+    return keyboardSizes.includes(saved as (typeof keyboardSizes)[number]) ? saved : null;
+  });
   const recordEvidence = useProgressStore((state) => state.recordCompetencyEvidence);
 
   const handleNote = useCallback((event: NoteEvent) => {
@@ -131,6 +145,16 @@ export function InlinePianoLessonActivity({ lessonId, onComplete }: { lessonId: 
 
   const { status, inputCount, connect } = useMidiInput(handleNote);
   if (!activity) return null;
+  const exactNotes = activity.exercise?.targetNotes;
+  const registerGuidance = exactNotes?.length
+    ? `Register required: ${midiNoteToName(exactNotes[0])}${exactNotes[0] === 60 ? " (Middle C)" : ""} through ${midiNoteToName(Math.max(...exactNotes))}.`
+    : activity.exercise?.targetPitchClasses?.length
+      ? "Register: any octave is accepted."
+      : null;
+  const saveKeyboardSize = (size: number) => {
+    window.localStorage.setItem(KEYBOARD_PROFILE_KEY, String(size));
+    setKeyboardSize(size);
+  };
   const play = (note: number, velocity = 96) => {
     if (activity.exercise?.kind === "hold-notes" && active.has(note)) { handleNote({ note, noteName: midiNoteToName(note), pitchClass: midiNoteToPitchClass(note), velocity: 0, type: "note-off", timestamp: Date.now(), source: "virtual" }); return; }
     handleNote({ note, noteName: midiNoteToName(note), pitchClass: midiNoteToPitchClass(note), velocity, type: "note-on", timestamp: Date.now(), source: "virtual" });
@@ -138,7 +162,9 @@ export function InlinePianoLessonActivity({ lessonId, onComplete }: { lessonId: 
   };
 
   return <div className="mt-6 rounded-2xl border border-primary/30 bg-background/35 p-5">
-    <div className="flex flex-wrap items-start justify-between gap-4"><div><p className="eyebrow">Play it here</p><h3 className="mt-2 font-serif text-2xl">{activity.prompt}</h3><p className="mt-2 text-xs text-faint">{status === "connected" ? `${inputCount} MIDI input${inputCount === 1 ? "" : "s"} ready` : "On-screen keyboard ready · MIDI optional"}</p></div><Button variant="secondary" onClick={() => void connect()}><Usb className="h-4 w-4" /> {status === "connected" ? "MIDI connected" : "Connect MIDI"}</Button></div>
+    <div className="flex flex-wrap items-start justify-between gap-4"><div><p className="eyebrow">Play it here</p><h3 className="mt-2 font-serif text-2xl">{activity.prompt}</h3>{registerGuidance && <p className="mt-2 text-sm font-medium text-foreground">{registerGuidance}</p>}<p className="mt-2 text-xs text-faint">{status === "connected" ? `${inputCount} MIDI input${inputCount === 1 ? "" : "s"} ready${keyboardSize ? ` · ${keyboardSize}-key profile` : ""}` : "On-screen keyboard ready · MIDI optional"}</p></div><Button variant="secondary" onClick={() => void connect()}><Usb className="h-4 w-4" /> {status === "connected" ? "MIDI connected" : "Connect MIDI"}</Button></div>
+    {status === "connected" && !keyboardSize && <div className="mt-4 rounded-xl border border-primary/30 bg-primary/5 p-4"><p className="font-medium text-foreground">How many keys does your MIDI keyboard have?</p><p className="mt-1 text-sm text-muted-foreground">ReLearn will use this to keep scales, two-hand work, and arpeggios inside your instrument’s practical range.</p><div className="mt-3 flex flex-wrap gap-2">{keyboardSizes.map((size) => <button key={size} type="button" onClick={() => saveKeyboardSize(size)} className="rounded-lg border border-hairline bg-surface px-4 py-2 text-sm hover:border-primary">{size} keys</button>)}</div></div>}
+    {keyboardSize && <div className="mt-3 rounded-lg bg-surface px-3 py-2 text-xs text-faint"><span>{keyboardPlan(keyboardSize)}</span> <button type="button" className="text-primary underline-offset-2 hover:underline" onClick={() => setKeyboardSize(null)}>Change size</button></div>}
     <div className={`my-4 rounded-xl p-4 text-sm ${success ? "bg-accent/10 text-foreground" : "bg-surface text-muted-foreground"}`} aria-live="polite">{success && <Check className="mr-2 inline h-4 w-4 text-accent" />}{feedback}</div>
     {activity.velocityContrast ? <div className="grid gap-3 sm:grid-cols-2"><button type="button" onClick={() => play(60, 32)} className="rounded-xl border border-hairline p-4 text-left">Play C softly</button><button type="button" onClick={() => play(60, 108)} className="rounded-xl border border-primary/40 bg-primary/10 p-4 text-left">Play C strongly</button></div> : <VirtualKeyboard activeNotes={active} onPlay={play} startNote={activity.start ?? 48} endNote={activity.end ?? 76} visibleNotes={activity.visible ? new Set(activity.visible) : undefined} emphasizedNotes={activity.emphasized ? new Set(activity.emphasized) : new Set(activity.exercise?.targetNotes ?? [])} labelNaturals />}
     <div className="mt-4 flex flex-wrap items-center justify-between gap-3">{activity.hint ? <button type="button" onClick={() => setHint(true)} className="inline-flex items-center gap-2 text-sm text-primary"><Lightbulb className="h-4 w-4" />{hint ? activity.hint : "Show hint"}</button> : <span />}{success && <Button onClick={onComplete}>Continue to the next lesson</Button>}</div>

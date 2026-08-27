@@ -144,3 +144,23 @@ test("ordinary course activities play inline while full performance keeps a work
   const performanceActivity = page.getByRole("link", { name: "Open performance workspace" });
   await expect(performanceActivity).toHaveAttribute("href", "/learn/piano-foundations/integration?unit=piece&lesson=perform");
 });
+
+test("course explains register and remembers the connected keyboard size", async ({ page }) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, "requestMIDIAccess", {
+      configurable: true,
+      value: async () => ({
+        inputs: new Map([["test", { state: "connected", onmidimessage: null }]]),
+        onstatechange: null,
+      }),
+    });
+  });
+  await page.goto("/learn/piano-foundations/course?lesson=build-major");
+  await expect(page.getByText(/Register required: C4 \(Middle C\) through C5/i)).toBeVisible();
+  await expect(page.getByText("Middle C", { exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Connect MIDI" }).click();
+  await expect(page.getByText(/How many keys does your MIDI keyboard have/i)).toBeVisible();
+  await page.getByRole("button", { name: "49 keys" }).click();
+  await expect(page.getByText(/Four-octave plan/i)).toBeVisible();
+  await expect.poll(() => page.evaluate(() => localStorage.getItem("relearn:piano-keyboard-profile:v1"))).toBe("49");
+});

@@ -21,6 +21,7 @@
 - Independent Practice now provides an eight-exercise first-session path covering C navigation, ascending/descending scales, steady pulse, five-note control, measured note duration, primary chord tones, and the first arpeggio. Pointer and MIDI note releases share the reusable duration evaluator.
 - Foundations Units 8–12 now share a playable integration path: C–F–G–C harmonic motion, lower-register roots, symbol-to-keyboard reading transfer, measurable velocity contrast, and a complete original harmonic sketch.
 - Ordinary objective activities now run directly inside the continuous course lesson and advance in place. A separate workspace is reserved for the final complete performance, where the larger uninterrupted task genuinely benefits from it.
+- Exact-register activities state their MIDI note range and identify Middle C/C4 on the on-screen keyboard; pitch-class activities explicitly allow any octave. MIDI setup remembers a 25-, 49-, 61-, or 88-key instrument profile and communicates the resulting practice plan.
 - Telemetry hooks remain local-first and contain no learner identity or MIDI device name.
 - The Grey Key is permanently locked and explicitly not product-awarded mastery.
 
@@ -35,13 +36,14 @@
 ## Exact next implementation batch
 
 1. Continue replacing generic self-checks only where a truthful lesson-specific evaluator or useful coaching renderer adds value.
-2. Convert Shared Pianist Core I into the next playable course after Foundations; its first technical block includes one-octave tonic arpeggios.
-3. Unify new competency evidence with `KnowledgeDna` selectors and surface prescribed Practice from weak evidence.
-4. Split Unit 3 into physical setup self-checks and additional MIDI-verifiable deliberate-motion exercises.
-5. Add a simultaneous chord-window evaluator; held-note duration now works with pointer and MIDI release events.
-6. Add prerequisite-remediation return routing with a return-to-original-task contract.
-7. Add audio-backed ear/reproduction prompts and coaching-result records without right/wrong scoring.
-8. Test with the target learner and physical MIDI keyboard; record comprehension and friction, not punitive scores.
-9. Add review/game renderers only after the shared evidence adapter is stable.
+2. Calibrate the actual lowest and highest MIDI notes after setup so octave-shifted controllers refine the count-based keyboard profile.
+3. Convert Shared Pianist Core I into the next playable course after Foundations; its first technical block includes one-octave tonic arpeggios.
+4. Unify new competency evidence with `KnowledgeDna` selectors and surface prescribed Practice from weak evidence.
+5. Split Unit 3 into physical setup self-checks and additional MIDI-verifiable deliberate-motion exercises.
+6. Add a simultaneous chord-window evaluator; held-note duration now works with pointer and MIDI release events.
+7. Add prerequisite-remediation return routing with a return-to-original-task contract.
+8. Add audio-backed ear/reproduction prompts and coaching-result records without right/wrong scoring.
+9. Test with the target learner and physical MIDI keyboard; record comprehension and friction, not punitive scores.
+10. Add review/game renderers only after the shared evidence adapter is stable.
 
 See [piano curriculum and Practice architecture](piano-curriculum-and-practice-architecture.md) for the full accepted direction.
