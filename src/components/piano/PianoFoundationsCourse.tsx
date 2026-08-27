@@ -42,14 +42,15 @@ function evidenceLabel(lesson: PianoCurriculumLesson) {
   return "Performance evidence + self-check";
 }
 
-function activityHref(unitId: string) {
-  if (["keyboard", "notes", "hands", "rhythm"].includes(unitId)) return "/learn/piano-foundations";
-  if (["scales", "melodies", "chords"].includes(unitId)) return "/learn/piano-foundations/musical-application";
-  if (["progressions", "two-hands", "reading", "expression", "piece"].includes(unitId)) return "/learn/piano-foundations/integration";
+function activityHref(unitId: string, lessonId: string) {
+  const query = `?unit=${encodeURIComponent(unitId)}&lesson=${encodeURIComponent(lessonId)}`;
+  if (["keyboard", "notes", "hands", "rhythm"].includes(unitId)) return `/learn/piano-foundations${query}`;
+  if (["scales", "melodies", "chords"].includes(unitId)) return `/learn/piano-foundations/musical-application${query}`;
+  if (["progressions", "two-hands", "reading", "expression", "piece"].includes(unitId)) return `/learn/piano-foundations/integration${query}`;
   return null;
 }
 
-export function PianoFoundationsCourse() {
+export function PianoFoundationsCourse({ initialLessonId }: { initialLessonId?: string }) {
   const flatLessons = useMemo(() => PIANO_FOUNDATIONS_CURRICULUM.flatMap((unit) => unit.lessons.map((lesson) => ({ unit, lesson }))), []);
   const [ready, setReady] = useState(false);
   const [currentLessonId, setCurrentLessonId] = useState(flatLessons[0].lesson.id);
@@ -59,7 +60,10 @@ export function PianoFoundationsCourse() {
     const hydration = window.setTimeout(() => {
       try {
         const saved = JSON.parse(window.localStorage.getItem(STORAGE_KEY) ?? "null") as SavedCourse | null;
-        if (saved && flatLessons.some(({ lesson }) => lesson.id === saved.currentLessonId)) {
+      if (initialLessonId && flatLessons.some(({ lesson }) => lesson.id === initialLessonId)) {
+        setCurrentLessonId(initialLessonId);
+        setCompleted(new Set(saved?.completedLessonIds ?? []));
+      } else if (saved && flatLessons.some(({ lesson }) => lesson.id === saved.currentLessonId)) {
           setCurrentLessonId(saved.currentLessonId);
           setCompleted(new Set(saved.completedLessonIds));
         }
@@ -67,7 +71,7 @@ export function PianoFoundationsCourse() {
       setReady(true);
     }, 0);
     return () => window.clearTimeout(hydration);
-  }, [flatLessons]);
+  }, [flatLessons, initialLessonId]);
 
   useEffect(() => {
     if (!ready) return;
@@ -77,7 +81,7 @@ export function PianoFoundationsCourse() {
   const currentIndex = Math.max(0, flatLessons.findIndex(({ lesson }) => lesson.id === currentLessonId));
   const current = flatLessons[currentIndex];
   const unitLessonIndex = current.unit.lessons.findIndex((lesson) => lesson.id === current.lesson.id);
-  const activity = activityHref(current.unit.id);
+  const activity = activityHref(current.unit.id, current.lesson.id);
   const courseComplete = completed.size === flatLessons.length;
   const percent = Math.round((completed.size / flatLessons.length) * 100);
 

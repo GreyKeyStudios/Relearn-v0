@@ -108,7 +108,7 @@ test("continuous Foundations course saves and restores its lesson checkpoint", a
   await page.getByText("Learn the Notes", { exact: true }).click();
   await page.getByRole("button", { name: /Find Every C/ }).click();
   await expect(page.getByRole("heading", { name: "Find Every C" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Open playable activity" })).toHaveAttribute("href", "/learn/piano-foundations");
+  await expect(page.getByRole("link", { name: "Open playable activity" })).toHaveAttribute("href", "/learn/piano-foundations?unit=notes&lesson=c-fluency");
 });
 
 test("Foundations integration reaches a complete musical sketch", async ({ page }) => {
@@ -125,4 +125,24 @@ test("Foundations integration reaches a complete musical sketch", async ({ page 
   const piece = ["C3","C4","E4","G4","F3","C4","F4","A4","G3","B3","D4","G4","C3","C4","E4","G4","C5"];
   for (const note of piece) await page.getByRole("button", { name: `Play ${note}` }).click();
   await expect(page.getByRole("heading", { name: "You finished a complete musical sketch." })).toBeVisible();
+});
+
+test("course activity links open the matching playable checkpoint", async ({ page }) => {
+  await page.goto("/learn/piano-foundations/course?lesson=c-triad");
+  await expect(page.getByRole("heading", { name: "Build C Major" })).toBeVisible();
+  const chordActivity = page.getByRole("link", { name: "Open playable activity" });
+  await expect(chordActivity).toHaveAttribute("href", "/learn/piano-foundations/musical-application?unit=chords&lesson=c-triad");
+  await chordActivity.click();
+  await expect(page.getByRole("heading", { name: "Build C major by skipping scale notes." })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Return to this course lesson" })).toHaveAttribute("href", "/learn/piano-foundations/course?lesson=c-triad");
+
+  await page.goto("/learn/piano-foundations?unit=notes&lesson=f-landmark");
+  await expect(page.getByRole("heading", { name: "Find F." })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Connect MIDI" })).toBeVisible();
+
+  await page.goto("/learn/piano-foundations/course?lesson=perform");
+  const performanceActivity = page.getByRole("link", { name: "Open playable activity" });
+  await expect(performanceActivity).toHaveAttribute("href", "/learn/piano-foundations/integration?unit=piece&lesson=perform");
+  await performanceActivity.click();
+  await expect(page.getByRole("heading", { name: "Perform your first harmonic sketch." })).toBeVisible();
 });

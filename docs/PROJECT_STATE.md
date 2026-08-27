@@ -20,6 +20,7 @@
 - The authored 64-lesson Foundations map now has a continuous course player with automatic local resume, lesson/unit navigation, completion history, honest evidence labels, competency targets, and routes into the dedicated playable labs.
 - Independent Practice now provides an eight-exercise first-session path covering C navigation, ascending/descending scales, steady pulse, five-note control, measured note duration, primary chord tones, and the first arpeggio. Pointer and MIDI note releases share the reusable duration evaluator.
 - Foundations Units 8–12 now share a playable integration path: C–F–G–C harmonic motion, lower-register roots, symbol-to-keyboard reading transfer, measurable velocity contrast, and a complete original harmonic sketch.
+- Continuous-course activity links carry unit and lesson identifiers. Each link opens the nearest matching playable checkpoint rather than restarting the shared activity, and each activity can return to the exact course lesson.
 - Telemetry hooks remain local-first and contain no learner identity or MIDI device name.
 - The Grey Key is permanently locked and explicitly not product-awarded mastery.
 

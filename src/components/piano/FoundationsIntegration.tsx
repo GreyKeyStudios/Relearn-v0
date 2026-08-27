@@ -58,8 +58,9 @@ const STEPS: IntegrationStep[] = [
   },
 ];
 
-export function FoundationsIntegration() {
-  const [index, setIndex] = useState(0);
+export function FoundationsIntegration({ startUnitId, startLessonId }: { startUnitId?: string; startLessonId?: string }) {
+  const initialIndex = startUnitId === "two-hands" ? 1 : startUnitId === "reading" ? 2 : startUnitId === "expression" ? 3 : startUnitId === "piece" ? 4 : 0;
+  const [index, setIndex] = useState(initialIndex);
   const [attempt, setAttempt] = useState(() => createAttemptState());
   const [active, setActive] = useState<Set<number>>(new Set());
   const [feedback, setFeedback] = useState("Begin slowly. Accuracy and awareness come before speed.");
@@ -102,8 +103,9 @@ export function FoundationsIntegration() {
     window.setTimeout(() => onNote({ note, noteName: midiNoteToName(note), pitchClass: midiNoteToPitchClass(note), velocity: 0, type: "note-off", timestamp: Date.now(), source: "virtual" }), 150);
   };
 
+  const returnHref = startLessonId ? `/learn/piano-foundations/course?lesson=${encodeURIComponent(startLessonId)}` : "/learn/piano-foundations/course";
   return <div className="mx-auto max-w-5xl pb-20">
-    <Link href="/learn/piano-foundations/course" className="mb-8 inline-flex items-center gap-2 text-sm text-faint"><ArrowLeft className="h-4 w-4" /> Continuous course</Link>
+    <Link href={returnHref} className="mb-8 inline-flex items-center gap-2 text-sm text-faint"><ArrowLeft className="h-4 w-4" /> Return to this course lesson</Link>
     <header className="mb-8 border-b border-hairline pb-8"><p className="eyebrow">Foundations · integration</p><h1 className="mt-2 font-serif text-4xl md:text-5xl">Make the pieces work together.</h1><p className="mt-4 max-w-2xl leading-relaxed text-muted-foreground">Harmony, hand roles, symbolic reading, expression, and performance become one connected musical act.</p></header>
     {complete ? <section className="rounded-3xl border border-accent/40 bg-accent/10 p-8"><Check className="h-7 w-7 text-accent" /><p className="eyebrow mt-4 text-accent">Foundations performance complete</p><h2 className="mt-2 font-serif text-4xl">You finished a complete musical sketch.</h2><p className="mt-4 max-w-2xl leading-relaxed text-muted-foreground">That is evidence of navigation, ordered harmony, register roles, reading transfer, expressive contrast, recovery, and continuity. It is a beginning—not a declaration of mastery.</p><div className="mt-6 flex flex-wrap gap-3"><Link href="/practice" className="rounded-lg bg-primary px-4 py-3 text-sm text-primary-foreground">Practice the ingredients</Link><Link href="/learn/piano-academy/developing-1/arpeggio" className="rounded-lg border border-hairline px-4 py-3 text-sm">Continue to Shared Pianist Core</Link></div></section> : <section className="rounded-3xl border border-primary/30 bg-surface p-6 md:p-8">
       <div className="flex flex-wrap items-start justify-between gap-4"><div><p className="eyebrow">Unit {step.unit} · {index + 1} of {STEPS.length}</p><h2 className="mt-2 font-serif text-3xl md:text-4xl">{step.title}</h2></div><Button variant="secondary" onClick={() => void connect()}><Usb className="h-4 w-4" /> Connect MIDI</Button></div>

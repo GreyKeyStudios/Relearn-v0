@@ -27,12 +27,16 @@ const NOTE_LESSON_STAGES = [
   { title: "The key between C and D has two useful names.", copy: "Play the black key between C and D. It can be C sharp—C raised—or D flat—D lowered.", target: 61 },
 ] as const;
 
-export function PianoFoundationsExperience() {
-  const [introStage, setIntroStage] = useState(0);
-  const [introComplete, setIntroComplete] = useState(false);
-  const [inputReady, setInputReady] = useState(false);
-  const [lessonNumber, setLessonNumber] = useState(1);
-  const [noteLessonStage, setNoteLessonStage] = useState(0);
+const KEYBOARD_STAGE_BY_LESSON: Record<string, number> = { "one-white-key": 0, "white-key-field": 1, "black-key-groups": 3, "c-landmark": 4, "natural-family": 5, "octave-pattern": 6 };
+const NOTE_STAGE_BY_LESSON: Record<string, number> = { "c-fluency": 0, "neighbors-of-c": 1, "f-landmark": 3, "natural-navigation": 4, "higher-lower": 4, "sharp-flat-neighbor": 5 };
+
+export function PianoFoundationsExperience({ startUnitId, startLessonId }: { startUnitId?: string; startLessonId?: string }) {
+  const directUnitNumber = startUnitId === "notes" ? 2 : startUnitId === "hands" ? 3 : startUnitId === "rhythm" ? 4 : 1;
+  const [introStage, setIntroStage] = useState(() => startLessonId ? (KEYBOARD_STAGE_BY_LESSON[startLessonId] ?? 0) : 0);
+  const [introComplete, setIntroComplete] = useState(() => Boolean(startUnitId && startUnitId !== "keyboard"));
+  const [inputReady, setInputReady] = useState(() => Boolean(startUnitId && startUnitId !== "keyboard"));
+  const [lessonNumber, setLessonNumber] = useState(directUnitNumber);
+  const [noteLessonStage, setNoteLessonStage] = useState(() => startLessonId ? (NOTE_STAGE_BY_LESSON[startLessonId] ?? 0) : 0);
   const [noteSequenceIndex, setNoteSequenceIndex] = useState(0);
   const [handSequenceIndex, setHandSequenceIndex] = useState(0);
   const [exerciseIndex, setExerciseIndex] = useState(0);
@@ -210,10 +214,11 @@ export function PianoFoundationsExperience() {
     unsupported: "Web MIDI is unavailable in this browser; use the on-screen keyboard",
     denied: "MIDI permission was not granted; use the on-screen keyboard or retry",
   })[status], [inputCount, status]);
+  const returnHref = startLessonId ? `/learn/piano-foundations/course?lesson=${encodeURIComponent(startLessonId)}` : "/";
 
   return (
     <div className="mx-auto max-w-4xl pb-16">
-      <Link href="/" className="mb-8 inline-flex items-center gap-2 text-sm text-faint hover:text-foreground"><ArrowLeft className="h-4 w-4" /> Learning map</Link>
+      <Link href={returnHref} className="mb-8 inline-flex items-center gap-2 text-sm text-faint hover:text-foreground"><ArrowLeft className="h-4 w-4" /> {startLessonId ? "Return to this course lesson" : "Learning map"}</Link>
       <header className="mb-8 grid gap-6 border-b border-hairline pb-8 md:grid-cols-[1fr_auto] md:items-end">
         <div><p className="eyebrow mb-3">Piano Foundations · live prototype</p><h1 className="font-serif text-4xl leading-tight md:text-5xl">Learn the pattern by playing it.</h1><p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">No notation test. No setup maze. Play on screen right away—or connect a MIDI keyboard—and discover how twelve notes repeat.</p><div className="mt-4 flex flex-wrap gap-4"><Link href="/learn/piano-foundations/course" className="inline-flex items-center text-sm font-medium text-primary hover:text-foreground">Start or resume the full course →</Link><Link href="/learn/piano-foundations/curriculum" className="inline-flex items-center text-sm text-faint hover:text-foreground">See the curriculum map →</Link></div></div>
         <div className="rounded-2xl border border-hairline bg-surface p-4 text-sm"><p className="text-faint">Current loop</p><p className="mt-1 text-foreground">Play → notice → practice → prove</p></div>
@@ -233,6 +238,7 @@ export function PianoFoundationsExperience() {
         </aside>
 
         <main className="space-y-5">
+          {introComplete && inputReady && <section className="rounded-2xl border border-hairline bg-surface px-5 py-3"><div className="flex flex-wrap items-center justify-between gap-3"><div className="flex items-center gap-3"><span className={`h-2.5 w-2.5 rounded-full ${status === "connected" ? "bg-accent" : "bg-primary"}`} /><p className="text-sm text-muted-foreground">{status === "connected" ? `${inputCount} MIDI input${inputCount === 1 ? "" : "s"} ready` : "On-screen piano ready · connect your MIDI keyboard when you want"}</p></div>{status !== "connected" && <Button variant="secondary" onClick={connectMidi}><Usb className="h-4 w-4" /> Connect MIDI</Button>}</div></section>}
           {!introComplete ? <PianoPatternIntro stage={introStage} onReplay={() => setIntroStage(0)} onNext={() => { if (introStage < PIANO_PATTERN_INTRO_STAGE_COUNT - 1) setIntroStage((stage) => stage + 1); else { setIntroComplete(true); setAttempt(createAttemptState()); } }} /> : !inputReady ? <section className="rounded-2xl border border-primary/30 bg-surface p-6 md:p-8">
             <p className="eyebrow mb-3">Choose how to play</p>
             <h2 className="font-serif text-3xl">Do you have a MIDI keyboard?</h2>
