@@ -9,7 +9,7 @@ export function VirtualKeyboard({ activeNotes, onPlay, onRelease, startNote = 48
   const isVisible = (note: number) => !visibleNotes || visibleNotes.has(note);
   const blackKeyPosition = (note: number) => (whiteNotes.filter((whiteNote) => whiteNote < note).length / whiteNotes.length) * 100;
   return (
-    <div className="overflow-x-auto pb-2">
+    <div className="w-full max-w-full overflow-x-auto pb-2">
       <div className="relative min-w-[680px] rounded-xl border-4 border-zinc-950 bg-zinc-950 shadow-[0_14px_28px_rgba(0,0,0,0.35)]" role="group" aria-label="Playable on-screen piano keyboard">
         <div className="flex h-48 overflow-hidden rounded-lg bg-white">
           {whiteNotes.map((note) => {

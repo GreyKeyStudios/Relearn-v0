@@ -36,16 +36,10 @@ test("virtual keyboard completes the first octave-discovery lesson", async ({ pa
 
   await page.getByRole("button", { name: "Play C5" }).click();
   await expect(page.getByText("C repeats every twelve notes.")).toBeVisible();
-  await page.getByRole("button", { name: "Continue to Twelve Notes" }).click();
-  await expect(page.getByRole("heading", { name: "Find C again." })).toBeVisible();
-  for (const note of ["C4", "D4", "B3", "F4", "C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5", "C♯4"]) {
-    await page.getByRole("button", { name: `Play ${note}` }).click();
-  }
-  await expect(page.getByRole("heading", { name: "Small, relaxed movements come first." })).toBeVisible();
-  for (const note of ["C4", "D4", "E4", "F4", "G4"]) await page.getByRole("button", { name: `Play ${note}` }).click();
-  await expect(page.getByRole("heading", { name: "Music moves through time." })).toBeVisible();
-  await page.getByRole("button", { name: "Continue without timing verification" }).click();
-  await expect(page.getByRole("heading", { name: "The keyboard is no longer an unknown object." })).toBeVisible();
+  await page.getByRole("link", { name: "Continue to Learn the Notes" }).click();
+  await expect(page).toHaveURL(/course\?lesson=c-fluency/);
+  await expect(page.getByRole("heading", { name: "Find Every C" })).toBeVisible();
+  await expect(page.getByText(/Every group of two black keys points to a C/i)).toBeVisible();
 
   const eventNames = await page.evaluate(() => {
     const events = JSON.parse(localStorage.getItem("relearn-learning-events-v1") ?? "[]") as Array<{ name: string }>;
@@ -99,14 +93,14 @@ test("musical application connects scales, melody, and chords", async ({ page })
 
 test("continuous Foundations course saves and restores its lesson checkpoint", async ({ page }) => {
   await page.goto("/learn/piano-foundations/course");
-  await expect(page.getByRole("heading", { name: "From first key to first piece." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "From first key to first scale." })).toBeVisible();
   await expect(page.getByRole("heading", { name: "This Is a White Key" })).toBeVisible();
   await page.getByRole("button", { name: "Play D4" }).click();
   await page.getByRole("button", { name: "Continue to the next lesson" }).click();
   await expect(page.getByRole("heading", { name: "The White Keys" })).toBeVisible();
   await page.reload();
   await expect(page.getByRole("heading", { name: "The White Keys" })).toBeVisible();
-  await expect(page.getByText("1 of 64 lessons")).toBeVisible();
+  await expect(page.getByText("1 of 27 ready lessons")).toBeVisible();
   await page.getByText("Learn the Notes", { exact: true }).click();
   await page.getByRole("button", { name: /Find Every C/ }).click();
   await expect(page.getByRole("heading", { name: "Find Every C" })).toBeVisible();
@@ -130,19 +124,17 @@ test("Foundations integration reaches a complete musical sketch", async ({ page 
   await expect(page.getByRole("heading", { name: "You finished a complete musical sketch." })).toBeVisible();
 });
 
-test("ordinary course activities play inline while full performance keeps a workspace", async ({ page }) => {
-  await page.goto("/learn/piano-foundations/course?lesson=c-triad");
-  await expect(page.getByRole("heading", { name: "Build C Major", exact: true })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Build C major: C E G." })).toBeVisible();
+test("ready lessons play inline while unfinished units stay out of the learner path", async ({ page }) => {
+  await page.goto("/learn/piano-foundations/course?lesson=build-major");
+  await expect(page.getByRole("heading", { name: "Build the Major Pattern", exact: true })).toBeVisible();
+  await expect(page.getByText(/Every major scale follows the same distance pattern/i)).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Build C major: C D E F G A B C." })).toBeVisible();
   await expect(page.getByRole("link", { name: /Open playable activity/i })).toHaveCount(0);
   await expect(page.getByRole("button", { name: "Connect MIDI" })).toBeVisible();
-  for (const note of ["C4", "E4", "G4"]) await page.getByRole("button", { name: `Play ${note}` }).click();
-  await page.getByRole("button", { name: "Continue to the next lesson" }).click();
-  await expect(page.getByRole("heading", { name: "Bright and Darker Chord Color" })).toBeVisible();
-
-  await page.goto("/learn/piano-foundations/course?lesson=perform");
-  const performanceActivity = page.getByRole("link", { name: "Open performance workspace" });
-  await expect(performanceActivity).toHaveAttribute("href", "/learn/piano-foundations/integration?unit=piece&lesson=perform");
+  await expect(page.getByText("In development · curriculum preview only")).toHaveCount(7);
+  await page.goto("/learn/piano-foundations/course?lesson=c-triad");
+  await expect(page.getByRole("heading", { name: "Build the Major Pattern", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Build C Major", exact: true })).toHaveCount(0);
 });
 
 test("course explains register and remembers the connected keyboard size", async ({ page }) => {
