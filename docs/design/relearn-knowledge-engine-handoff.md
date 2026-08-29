@@ -1,28 +1,30 @@
 # ReLearn Knowledge Engine — Design Handoff
 
-Status: approved visual direction, implementation not started  
+Status: canonical art direction approved, representative route validation complete, implementation not started  
 Target: ReLearn v0 / Bridge Study Companion  
 Prototype: `docs/design/relearn-app-system-prototype.html`
 
 ## Decision
 
-Use the dark Knowledge Engine direction as ReLearn's visual foundation. The dashboard establishes the system, but other routes must not become copies of its card grid. Every surface inherits shared tokens and interaction language while using a structure appropriate to its learning job.
+Use the **Warm Knowledge Studio** direction as ReLearn's canonical visual foundation. The warm-light dashboard establishes the product vocabulary, but other routes must not become copies of its card grid. Every surface inherits shared tokens and interaction language while using a structure appropriate to its learning job. Dark mode is a later derived theme, not the source of truth.
 
 ## Shared visual system
 
-- Canvas: `#090B0D` / `#0A0A0A`
-- Primary text: `#F4F1EA`
-- Secondary text: `#9B9A96`
-- Muted text: `#686A6E`
-- Active/current: `#C89B58` with light gold `#E0BE86`
-- Proven/durable: `#71B88A`
-- Review/fragile: `#9B82D6`
-- Misconception/risk: `#D4746B`
-- Future/locked: `#526173`
-- Typography: Inter for the application; restrained Playfair Display Italic only for rare editorial/Professor moments
-- Depth: dark translucent working surfaces, quiet borders, restrained warm glow for meaningful interactive systems
+- Canvas: warm ivory `#F7F4EE`, never sterile white
+- Working sheets: `#FBFAF7` with occasional deeper paper `#EFE9DE`
+- Primary text: `#191713`
+- Secondary text: `#59544C`
+- Muted text: `#8A8379`
+- Active/current: gold `#C59432` with deep gold `#9E721E`
+- Proven/durable: teal `#258A84` with deep teal `#166964`
+- Review/fragile: restrained lavender `#7569A8`
+- Misconception/risk: `#B65F50`
+- Future/locked: muted blue-gray `#9AA1A2`
+- Typography: Libre Baskerville for editorial headings, Inter for interface/body copy, and JetBrains Mono for technical notation
+- Depth: thin warm borders, subtle paper/drafting texture, modest corner rounding, and restrained shadows
+- Imagery: technical illustrations, annotated diagrams, and knowledge relationships instead of generic decorative icons
 
-These colors are semantic learning states, not decoration. A future light theme should preserve the same semantic roles through CSS variables rather than create a separate product identity.
+These colors are semantic learning states, not decoration. A future dark theme must preserve the same semantic roles, hierarchy, and technical-study character through CSS variables rather than create a separate product identity.
 
 ## Shared application patterns
 
@@ -138,11 +140,11 @@ The prototype is a design artifact with static representative data. It does not 
 5. Apply a shared activity shell to Quiz, Flashcards, Assignment, Simulator, Tool Guide, and Domain Review while preserving each activity's distinct interaction.
 6. Add the 2D Knowledge surface, Practice aggregation, and assigned Lab environments.
 7. Design career-path templates after the track/activity hierarchy is proven.
-8. Add Notes, full Professor, light theme, Spline, and native packaging only after their product gates are approved.
+8. Add Notes, full Professor, derived dark theme, Spline, and native packaging only after their product gates are approved.
 
 ## Porting readiness decision
 
-The visual system and Focus screen are ready to enter production implementation. The prototype is not approved for a one-to-one route replacement.
+The visual system has been validated across Focus, Track Detail, Lesson, Quiz, Simulator, Review Session, Knowledge, Progress, and Career Path surfaces. It is ready to enter production implementation. The prototype remains a visual and interaction reference, not approval for a one-to-one route replacement.
 
 Production work may begin when the first implementation PR is limited to:
 
