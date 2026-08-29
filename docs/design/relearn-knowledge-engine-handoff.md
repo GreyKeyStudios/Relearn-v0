@@ -71,20 +71,22 @@ Desktop may expose Practice, assigned Labs, Notes, and future Professor tools in
 | Existing or planned route | Required production screen | Prototype coverage | Action before implementation |
 | --- | --- | --- | --- |
 | `/` | Focus dashboard | Strong | First reference implementation |
-| `/certifications` | Library / Explore | Missing | Add search, active tracks, available tracks, planned tracks, and resume state |
-| `/cert/[certId]` | Track detail / curriculum | Partial in Learn | Separate track identity, pathway/version, domains/modules, progress, and next action |
-| `/cert/[certId]/lesson/[topicId]` | Lesson workspace | Partial in Learn | Preserve lesson map, inline checks, notes, and next activity handoff |
-| `/cert/[certId]/quiz/[topicId]` | Quiz activity | Missing | Add question progress, response states, explanation, and evidence result |
-| `/cert/[certId]/flashcards/[topicId]` | Flashcard activity | Missing | Add reveal, confidence, keyboard/touch controls, and session progress |
-| `/cert/[certId]/assignment/[assignmentId]` | Assignment workspace | Missing | Add brief, success criteria, submission/evidence, and retry state |
-| `/cert/[certId]/simulator/[simulatorId]` | Simulator workspace | Missing | Add task pane, active environment, validation, hints, and evidence capture |
-| `/cert/[certId]/tool/[toolId]` | External tool guide | Missing | Keep the tool inside its curriculum assignment with setup and return-to-ReLearn flow |
-| `/cert/[certId]/domain-review/[domainId]` | Domain review | Missing | Add domain readiness, mixed retrieval, gaps, and recommended next action |
-| `/review/session` | Review session | Partial in Review | Separate queue overview from the focused retrieval session and completion state |
-| `/labs/relearn-vm` | Assigned environment | Partial in Labs | Clearly distinguish available-now capabilities from planned capabilities |
-| `/career/[path]` and journey/scenario routes | Career path experience | Missing | Design after the core track and activity system is stable |
-| onboarding/study-plan flow | Track selection and plan setup | Missing | Preserve current setup behavior; design as a focused flow rather than dashboard cards |
-| settings/profile | Preferences, theme, sync, offline, notifications | Missing | Utility surface, not a primary learning destination |
+| `/certifications` | Library / Explore | Covered | Map the row-based library to the registry and current-track state |
+| `/cert/[certId]` | Track detail / curriculum | Covered | Bind pathway/version, domains/modules, progress, and next action |
+| `/cert/[certId]/lesson/[topicId]` | Lesson workspace | Covered | Bind lesson content, checks, notes, and next-activity handoff |
+| `/cert/[certId]/quiz/[topicId]` | Quiz activity | Covered | Preserve current grading and evidence behavior inside the activity shell |
+| `/cert/[certId]/flashcards/[topicId]` | Flashcard activity | Covered | Preserve reveal/confidence logic and add keyboard/touch controls |
+| `/cert/[certId]/assignment/[assignmentId]` | Assignment workspace | Covered | Bind brief, success contract, response, submission, and retry state |
+| `/cert/[certId]/simulator/[simulatorId]` | Simulator workspace | Covered | Bind task pane, environment, validation, hints, and evidence capture |
+| `/cert/[certId]/tool/[toolId]` | External tool guide | Covered | Keep setup, assignment, and return-to-ReLearn evidence in one flow |
+| `/cert/[certId]/domain-review/[domainId]` | Domain review | Covered | Bind domain readiness, gaps, and recommended proof |
+| `/review/session` | Review session | Covered | Keep the queue overview separate from focused retrieval |
+| `/labs/relearn-vm` | Assigned environment | Covered | Bind real availability and keep planned capabilities visibly unavailable |
+| `/career/[path]` and journey/scenario routes | Career path experience | Reference template | Expand scenario detail after the core track/activity system is stable |
+| onboarding/study-plan flow | Track selection and plan setup | Reference template | Extend the focused study-rhythm step using current onboarding behavior |
+| settings/profile | Preferences, theme, sync, offline, notifications | Reference template | Expand utility sections only when their underlying capability exists |
+
+The expanded prototype contains 20 navigable states: Focus, Library, Track Detail, Lesson, Quiz, Flashcards, Assignment, Simulator, Tool Guide, Domain Review, Review, Review Session, Knowledge, Practice, Assigned Labs, Progress, Career Path, Onboarding, lesson-local Notes, and Settings.
 
 ## Product boundaries
 
