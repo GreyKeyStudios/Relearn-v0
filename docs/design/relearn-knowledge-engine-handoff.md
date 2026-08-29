@@ -48,6 +48,71 @@ These colors are semantic learning states, not decoration. A future light theme 
 | Notes | Note list + writing surface + concept connections | Standalone text documents disconnected from learning |
 | Progress | Evidence trends + Professor readout + mastery ledger | Completion percentage as the primary result |
 
+## Production information architecture
+
+The prototype's nine screens are visual directions, not a replacement route map. Production keeps the learning hierarchy explicit:
+
+`Focus → Library → Track → Lesson → Activity → Evidence → Review`
+
+### Primary learner navigation
+
+| Destination | Product job | Initial route mapping |
+| --- | --- | --- |
+| Focus | Decide and launch the learner's next best action | `/` |
+| Library | Discover, search, and resume tracks across subjects | `/certifications` |
+| Review | Maintain recall and reopen fragile concepts | `/review` |
+| Progress | Inspect usable knowledge and evidence | `/progress` |
+| Knowledge | Explore the learner's connected concept model | Future top-level route after the 2D graph is proven |
+
+Desktop may expose Practice, assigned Labs, Notes, and future Professor tools in the rail. Mobile must stay at four or five primary destinations; secondary tools belong in contextual actions or an overflow/profile surface.
+
+### Route coverage and required design templates
+
+| Existing or planned route | Required production screen | Prototype coverage | Action before implementation |
+| --- | --- | --- | --- |
+| `/` | Focus dashboard | Strong | First reference implementation |
+| `/certifications` | Library / Explore | Missing | Add search, active tracks, available tracks, planned tracks, and resume state |
+| `/cert/[certId]` | Track detail / curriculum | Partial in Learn | Separate track identity, pathway/version, domains/modules, progress, and next action |
+| `/cert/[certId]/lesson/[topicId]` | Lesson workspace | Partial in Learn | Preserve lesson map, inline checks, notes, and next activity handoff |
+| `/cert/[certId]/quiz/[topicId]` | Quiz activity | Missing | Add question progress, response states, explanation, and evidence result |
+| `/cert/[certId]/flashcards/[topicId]` | Flashcard activity | Missing | Add reveal, confidence, keyboard/touch controls, and session progress |
+| `/cert/[certId]/assignment/[assignmentId]` | Assignment workspace | Missing | Add brief, success criteria, submission/evidence, and retry state |
+| `/cert/[certId]/simulator/[simulatorId]` | Simulator workspace | Missing | Add task pane, active environment, validation, hints, and evidence capture |
+| `/cert/[certId]/tool/[toolId]` | External tool guide | Missing | Keep the tool inside its curriculum assignment with setup and return-to-ReLearn flow |
+| `/cert/[certId]/domain-review/[domainId]` | Domain review | Missing | Add domain readiness, mixed retrieval, gaps, and recommended next action |
+| `/review/session` | Review session | Partial in Review | Separate queue overview from the focused retrieval session and completion state |
+| `/labs/relearn-vm` | Assigned environment | Partial in Labs | Clearly distinguish available-now capabilities from planned capabilities |
+| `/career/[path]` and journey/scenario routes | Career path experience | Missing | Design after the core track and activity system is stable |
+| onboarding/study-plan flow | Track selection and plan setup | Missing | Preserve current setup behavior; design as a focused flow rather than dashboard cards |
+| settings/profile | Preferences, theme, sync, offline, notifications | Missing | Utility surface, not a primary learning destination |
+
+## Product boundaries
+
+### Build now
+
+- Semantic tokens and responsive shell
+- Focus using current planner and coaching data
+- Library, Track Detail, Lesson, Review, Review Session, and Progress
+- Existing activity engines restyled through shared activity-shell patterns
+- A performant accessible 2D Knowledge surface before optional 3D enhancement
+- Rule-based Professor Insight components when supported by real learner evidence
+
+### Defer or feature-flag
+
+- Full AI Professor chat remains a Phase 5 feature and must not be represented as live functionality.
+- Spline is an optional enhancement layer, never a required dependency for navigation or comprehension.
+- Notes remain lesson-local until persistence, ownership, sync, search, and export behavior are approved.
+- Native wrappers remain later work; the web implementation must be responsive and touch-ready now.
+- Planned tracks, device bridges, environments, and downloads must be visibly labeled and cannot appear runnable.
+
+### Do not build
+
+- A generic external-resources or random-tools catalog
+- A second practice engine that duplicates quiz, flashcard, assignment, simulator, or review logic
+- Nine equally weighted mobile destinations
+- Dashboard card grids copied onto every route
+- AI-generated coaching claims without traceable learner evidence
+
 ## Mobile rules
 
 - Keep the learning task first; supporting evidence follows.
@@ -64,12 +129,27 @@ The prototype is a design artifact with static representative data. It does not 
 
 ## Recommended implementation sequence
 
-1. Introduce semantic CSS variables and shared shell primitives behind the current routes.
-2. Implement the dashboard/Focus route as the reference screen.
-3. Apply the system to existing production routes: certifications, cert detail, lesson, review, progress, simulator shell.
-4. Extract reusable Professor Insight, Mastery State, Learning Loop, and Knowledge Surface components only after the first production route proves their props.
-5. Perform mobile walkthroughs before adding Spline.
-6. Add the future light theme through the same semantic tokens.
+1. Introduce semantic CSS variables and shared shell primitives behind the current routes without changing stores or curriculum behavior.
+2. Implement the dashboard/Focus route as the reference screen using real planner and coaching data.
+3. Port the core learning hierarchy: Library → Track Detail → Lesson.
+4. Port Review overview, Review Session, and Progress.
+5. Apply a shared activity shell to Quiz, Flashcards, Assignment, Simulator, Tool Guide, and Domain Review while preserving each activity's distinct interaction.
+6. Add the 2D Knowledge surface, Practice aggregation, and assigned Lab environments.
+7. Design career-path templates after the track/activity hierarchy is proven.
+8. Add Notes, full Professor, light theme, Spline, and native packaging only after their product gates are approved.
+
+## Porting readiness decision
+
+The visual system and Focus screen are ready to enter production implementation. The prototype is not approved for a one-to-one route replacement.
+
+Production work may begin when the first implementation PR is limited to:
+
+1. semantic design tokens,
+2. responsive application shell,
+3. Focus dashboard mapped to existing data and actions, and
+4. regression coverage proving the current learner loop and persisted progress remain intact.
+
+Library and downstream route implementations should follow only after their design templates are reviewed. This prevents a visual redesign from accidentally deleting product capability.
 
 ## Acceptance checks for implementation
 
