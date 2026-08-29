@@ -92,39 +92,41 @@ export function QuizPageClient({
 
   if (displayQuestions.length === 0) {
     return (
-      <div>
+      <div className="mx-auto max-w-3xl">
         <PageHeader
           title="Quiz"
           subtitle={`${topic.name} · ${cert.shortName}`}
           backHref={`/cert/${certId}/lesson/${topicId}`}
         />
-        <p className="text-sm text-zinc-400">No quiz questions available for this topic.</p>
+        <p className="text-sm text-muted-foreground">No quiz questions available for this topic.</p>
       </div>
     );
   }
 
   return (
-    <div>
+    <div className="mx-auto max-w-3xl">
       <PageHeader
         title={title}
         subtitle={subtitle}
         backHref={`/cert/${certId}/lesson/${topicId}`}
       />
       {objectiveUnavailable && (
-        <p className="mb-4 rounded-lg border border-amber-500/30 bg-amber-500/10 p-3 text-sm text-amber-200">
+        <p className="mb-4 rounded-lg border border-primary/30 bg-primary/10 p-3 text-sm text-[#76551a]">
           No questions tagged for this objective — showing full quiz instead.
         </p>
       )}
-      <QuizEngine
-        certId={certId}
-        topic={topic}
-        questions={displayQuestions}
-        progressKey={isBank ? topicBankKey(certId, topicId) : undefined}
-        activityLabel={isBank ? `${topic.name} question bank` : undefined}
-        isRetryMissed={isRetryMissed}
-        sessionCapMinutes={sessionMinutes}
-        nextTopic={nextTopic}
-      />
+      <section className="relearn-card rounded-[var(--radius)] border border-border bg-surface p-5 sm:p-7">
+        <QuizEngine
+          certId={certId}
+          topic={topic}
+          questions={displayQuestions}
+          progressKey={isBank ? topicBankKey(certId, topicId) : undefined}
+          activityLabel={isBank ? `${topic.name} question bank` : undefined}
+          isRetryMissed={isRetryMissed}
+          sessionCapMinutes={sessionMinutes}
+          nextTopic={nextTopic}
+        />
+      </section>
     </div>
   );
 }

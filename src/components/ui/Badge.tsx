@@ -7,10 +7,10 @@ interface BadgeProps {
 }
 
 const variants = {
-  default: "bg-zinc-800 text-zinc-300",
-  success: "bg-emerald-500/20 text-emerald-400",
-  warning: "bg-amber-500/20 text-amber-400",
-  info: "bg-sky-500/20 text-sky-400",
+  default: "border border-border bg-muted text-muted-foreground",
+  success: "border border-accent/20 bg-accent/10 text-accent",
+  warning: "border border-primary/25 bg-primary/10 text-[#8a631c]",
+  info: "border border-fragile/20 bg-fragile/10 text-fragile",
 };
 
 export function Badge({ children, variant = "default", className = "" }: BadgeProps) {

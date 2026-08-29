@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ChevronDown, ChevronUp, ArrowRight } from "lucide-react";
+import { ChevronDown, ChevronUp, ArrowRight, Sun } from "lucide-react";
 import { StatCard } from "@/components/dashboard/StatCard";
 import { TrackCard } from "@/components/dashboard/TrackCard";
 import { ConceptHero } from "@/components/dashboard/ConceptHero";
@@ -111,88 +111,114 @@ export default function DashboardPage() {
 
   return (
     <div>
-      <header className="flex items-center justify-between pt-2">
-        <span className="font-serif text-lg font-medium tracking-tight text-foreground">
-          ReLearn
-        </span>
-        <span className="eyebrow">{today}</span>
+      <header className="mb-7 flex items-end justify-between gap-5 pt-2">
+        <div>
+          <span className="mb-2 flex items-center gap-2 text-primary lg:hidden">
+            <span className="font-serif text-lg font-medium tracking-tight text-foreground">
+              ReLearn
+            </span>
+          </span>
+          <h1 className="flex items-center gap-3 font-serif text-3xl font-medium tracking-[-0.025em] text-foreground sm:text-4xl">
+            <Sun className="h-7 w-7 text-primary" strokeWidth={1.4} />
+            Your focus
+          </h1>
+          <p className="mt-1.5 text-sm text-muted-foreground">
+            Your next move strengthens your network.
+          </p>
+        </div>
+        <span className="eyebrow hidden sm:block">{today}</span>
       </header>
 
-      {hydrated ? (
-        <ConceptHero hero={conceptHero} />
-      ) : (
-        <div className="mb-12 pt-4">
-          <div className="mb-4 h-3 w-24 rounded bg-muted" />
-          <div className="h-9 w-3/4 rounded bg-muted" />
-          <div className="mt-4 h-5 w-full rounded bg-muted" />
-        </div>
-      )}
-
-      <div className="mb-10">
-        <SessionLengthPicker />
-        {examPace && (
-          <div className="mt-4">
-            <ExamCountdownCard pace={examPace} />
+      <div className="grid items-start gap-5 xl:grid-cols-[minmax(0,1.65fr)_minmax(280px,.7fr)]">
+        {hydrated ? (
+          <ConceptHero hero={conceptHero} />
+        ) : (
+          <div className="relearn-card mb-6 rounded-[var(--radius)] border border-border bg-surface p-8">
+            <div className="mb-4 h-3 w-24 rounded bg-muted" />
+            <div className="h-9 w-3/4 rounded bg-muted" />
+            <div className="mt-4 h-5 w-full rounded bg-muted" />
           </div>
+        )}
+
+        <aside className="relearn-card mb-6 rounded-[var(--radius)] border border-border bg-surface p-5">
+          <div className="grid grid-cols-3 divide-x divide-hairline border-b border-hairline pb-5">
+            <StatCard label="Day streak" value={streak} />
+            <StatCard label="Accuracy" value={`${accuracy}%`} />
+            <StatCard label="Weak" value={weakTopics.length} />
+          </div>
+          <div className="pt-5">
+            <SessionLengthPicker />
+          </div>
+          {examPace && (
+            <div className="mt-5">
+              <ExamCountdownCard pace={examPace} />
+            </div>
+          )}
+        </aside>
+      </div>
+
+      <div
+        className={`grid items-start gap-5 ${
+          showObjectiveSection ? "xl:grid-cols-2" : ""
+        }`}
+      >
+        <section className="relearn-card mb-6 rounded-[var(--radius)] border border-border bg-surface p-5">
+          <StudyPlanSettings />
+          <button
+            type="button"
+            onClick={() => setPlanExpanded((v) => !v)}
+            className="flex w-full items-center justify-between"
+          >
+            <span className="font-serif text-xl font-medium">Today&apos;s path</span>
+            {planExpanded ? (
+              <ChevronUp className="h-4 w-4 text-faint" />
+            ) : (
+              <ChevronDown className="h-4 w-4 text-faint" />
+            )}
+          </button>
+          {!planExpanded && plan && plan.items.length > 0 && (
+            <p className="mt-2 text-sm text-muted-foreground">
+              {plan.items.length} item{plan.items.length === 1 ? "" : "s"} ·{" "}
+              {plan.usedMinutes}/{plan.dailyBudgetMinutes} min
+              {coachRec ? " — expand for the full plan" : ""}
+            </p>
+          )}
+          {planExpanded &&
+            (plan ? (
+              <div className="mt-4">
+                <DailyPlanCard plan={plan} highlightHref={coachRec?.href} />
+              </div>
+            ) : (
+              <p className="mt-3 text-sm text-faint">Loading plan…</p>
+            ))}
+          {!planExpanded && coachRec && planItemsBeyondCoach.length > 0 && (
+            <button
+              type="button"
+              onClick={() => setPlanExpanded(true)}
+              className="mt-3 text-xs font-medium text-accent hover:text-foreground"
+            >
+              +{planItemsBeyondCoach.length} more in today&apos;s path
+            </button>
+          )}
+        </section>
+
+        {showObjectiveSection && (
+          <section className="mb-6">
+            <WeakObjectivesCard
+              objectives={weakObjectives}
+              title={weakObjectivesTitle}
+              showEmptyState={showObjectiveEmpty}
+              emptyHref={objectiveEmptyHref}
+              certId={primaryCertId ?? (certSupportsObjectiveCoaching("ccna") ? "ccna" : undefined)}
+            />
+          </section>
         )}
       </div>
 
-      <section className="mb-10 border-t border-hairline pt-6">
-        <StudyPlanSettings />
-        <button
-          type="button"
-          onClick={() => setPlanExpanded((v) => !v)}
-          className="flex w-full items-center justify-between"
-        >
-          <span className="eyebrow">Today&apos;s study plan</span>
-          {planExpanded ? (
-            <ChevronUp className="h-4 w-4 text-faint" />
-          ) : (
-            <ChevronDown className="h-4 w-4 text-faint" />
-          )}
-        </button>
-        {!planExpanded && plan && plan.items.length > 0 && (
-          <p className="mt-2 text-xs text-faint">
-            {plan.items.length} item{plan.items.length === 1 ? "" : "s"} · {plan.usedMinutes}/
-            {plan.dailyBudgetMinutes} min
-            {coachRec ? " — expand for full plan" : ""}
-          </p>
-        )}
-        {planExpanded &&
-          (plan ? (
-            <div className="mt-3">
-              <DailyPlanCard plan={plan} highlightHref={coachRec?.href} />
-            </div>
-          ) : (
-            <p className="mt-3 text-sm text-faint">Loading plan…</p>
-          ))}
-        {!planExpanded && coachRec && planItemsBeyondCoach.length > 0 && (
-          <button
-            type="button"
-            onClick={() => setPlanExpanded(true)}
-            className="mt-2 text-xs text-primary hover:text-foreground"
-          >
-            +{planItemsBeyondCoach.length} more in today&apos;s plan
-          </button>
-        )}
-      </section>
-
-      {showObjectiveSection && (
-        <section className="mb-6">
-          <WeakObjectivesCard
-            objectives={weakObjectives}
-            title={weakObjectivesTitle}
-            showEmptyState={showObjectiveEmpty}
-            emptyHref={objectiveEmptyHref}
-            certId={primaryCertId ?? (certSupportsObjectiveCoaching("ccna") ? "ccna" : undefined)}
-          />
-        </section>
-      )}
-
       {dashboardTracks.length > 0 && (
-        <section className="mb-10 border-t border-hairline pt-6">
+        <section className="relearn-card mb-6 rounded-[var(--radius)] border border-border bg-surface p-5">
           <div className="mb-1 flex items-center justify-between">
-            <h2 className="eyebrow">Your courses</h2>
+            <h2 className="font-serif text-xl font-medium">Your courses</h2>
             <Link href="/certifications" className="text-xs text-primary hover:text-foreground">
               Library
             </Link>
@@ -235,13 +261,13 @@ export default function DashboardPage() {
         </Link>
       )}
 
-      <section className="mb-10 border-t border-hairline pt-6">
+      <section className="relearn-card mb-6 rounded-[var(--radius)] border border-border bg-surface p-5">
         <button
           type="button"
           onClick={() => setDetailsExpanded((v) => !v)}
           className="flex w-full items-center justify-between"
         >
-          <span className="eyebrow">Progress &amp; weak areas</span>
+          <span className="font-serif text-xl font-medium">Progress &amp; weak areas</span>
           {detailsExpanded ? (
             <ChevronUp className="h-4 w-4 text-faint" />
           ) : (
@@ -281,12 +307,6 @@ export default function DashboardPage() {
         )}
       </section>
 
-      {/* Stats demoted to a quiet editorial footer strip */}
-      <footer className="grid grid-cols-3 divide-x divide-hairline border-t border-hairline pt-6">
-        <StatCard label="Day streak" value={streak} />
-        <StatCard label="Accuracy" value={`${accuracy}%`} />
-        <StatCard label="Weak areas" value={weakTopics.length} />
-      </footer>
     </div>
   );
 }
