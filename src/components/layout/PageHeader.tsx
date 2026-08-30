@@ -10,18 +10,18 @@ interface PageHeaderProps {
 
 export function PageHeader({ title, subtitle, backHref, eyebrow }: PageHeaderProps) {
   return (
-    <header className="mb-8">
+    <header className="mb-8 max-w-4xl">
       {backHref && (
         <Link
           href={backHref}
-          className="mb-4 inline-flex min-h-11 items-center gap-1 rounded-md pr-3 text-sm text-muted-foreground transition-colors hover:text-foreground"
+          className="mb-5 inline-flex min-h-10 items-center gap-1 rounded-md pr-3 text-sm text-muted-foreground transition-colors hover:text-primary"
         >
           <ArrowLeft className="h-4 w-4" />
           Back
         </Link>
       )}
       {eyebrow && <p className="eyebrow mb-2">{eyebrow}</p>}
-      <h1 className="text-balance font-serif text-3xl font-medium tracking-tight text-foreground">
+      <h1 className="text-balance font-serif text-3xl font-medium tracking-[-0.025em] text-foreground sm:text-4xl">
         {title}
       </h1>
       {subtitle && (

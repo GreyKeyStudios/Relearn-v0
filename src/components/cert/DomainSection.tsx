@@ -42,16 +42,16 @@ function TopicRow({
 }) {
   const Icon = isComplete ? CheckCircle2 : isWeak ? AlertTriangle : Circle;
   const iconColor = isComplete
-    ? "text-emerald-400"
+      ? "text-accent"
     : isWeak
-      ? "text-amber-400"
-      : "text-zinc-600";
+      ? "text-primary"
+      : "text-faint";
 
   return (
     <Link href={`/cert/${certId}/lesson/${topic.id}`}>
-      <Card className="flex items-center gap-3 py-3">
+      <Card className="flex items-center gap-3 py-3.5 shadow-none transition-colors hover:border-primary/35 hover:bg-surface-raised">
         <Icon className={`h-5 w-5 shrink-0 ${iconColor}`} />
-        <span className="flex-1 text-sm text-zinc-200">{topic.name}</span>
+        <span className="flex-1 text-sm font-medium text-foreground">{topic.name}</span>
         {topic.pathwayBadge && (
           <Badge variant="default">{topic.pathwayBadge}</Badge>
         )}
@@ -87,14 +87,19 @@ export function DomainSection({ cert }: DomainSectionProps) {
   });
 
   return (
-    <div className="flex flex-col gap-4" data-testid="domain-section">
+    <section className="relearn-card rounded-[var(--radius)] border border-border bg-surface p-5 sm:p-6" data-testid="domain-section">
+      <div className="mb-6">
+        <p className="eyebrow mb-2">Curriculum</p>
+        <h2 className="font-serif text-2xl font-medium tracking-tight">Course structure</h2>
+      </div>
+      <div className="flex flex-col gap-5">
       {visibleCert.domains.map((domain) => {
         const bankCount = domainQuestionCount(domain);
         const avgScore = getDomainAverageScore(cert, domain.id, progressState);
         const proficientPct = getDomainMasteryPercent(cert, domain.id, progressState);
         return (
-        <div key={domain.id}>
-          <div className="mb-2 flex items-center justify-between gap-2">
+        <div key={domain.id} className="border-t border-hairline pt-4 first:border-t-0 first:pt-0">
+          <div className="mb-3 flex items-center justify-between gap-2">
             <button
               type="button"
               aria-expanded={!!expanded[domain.id]}
@@ -105,8 +110,8 @@ export function DomainSection({ cert }: DomainSectionProps) {
               className="flex min-w-0 flex-1 flex-col text-left"
             >
               <div className="flex items-center justify-between">
-                <h3 className="text-sm font-semibold text-zinc-300">{domain.name}</h3>
-                <span className="shrink-0 text-xs text-zinc-500">
+                <h3 className="font-serif text-lg font-medium text-foreground">{domain.name}</h3>
+                <span className="shrink-0 text-xs text-faint">
                   {expanded[domain.id] ? "▼" : "▶"} {domain.topics.length} topics
                 </span>
               </div>
@@ -148,6 +153,7 @@ export function DomainSection({ cert }: DomainSectionProps) {
         </div>
         );
       })}
-    </div>
+      </div>
+    </section>
   );
 }

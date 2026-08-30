@@ -73,7 +73,7 @@ export default function CertDetailPage({ params }: CertDetailPageProps) {
     : null;
 
   return (
-    <div>
+    <div className="mx-auto max-w-5xl">
       <PageHeader
         title={cert.shortName}
         subtitle={trackSubtitle(cert)}
@@ -95,18 +95,18 @@ export default function CertDetailPage({ params }: CertDetailPageProps) {
         />
       )}
 
-      <Card className="mb-6">
-        <p className="text-sm text-zinc-400">{cert.overview}</p>
+      <Card className="mb-6 p-5 sm:p-6">
+        <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground">{cert.overview}</p>
         {hasContent && (
           <div className="mt-4 space-y-2">
             <ProgressBar value={progress} showLabel />
-            <p className="text-xs text-zinc-500">
+            <p className="text-xs text-faint">
               Mastery: {masteryPercent}% topics at proficient or above
             </p>
           </div>
         )}
         {cert.examSummary.questionCount > 0 && (
-          <div className="mt-4 grid grid-cols-2 gap-2 text-xs text-zinc-500">
+          <div className="mt-5 grid grid-cols-2 gap-3 border-t border-hairline pt-4 text-xs text-faint sm:grid-cols-4">
             <span>{cert.examSummary.questionCount} questions</span>
             <span>{cert.examSummary.durationMinutes} minutes</span>
             <span>Pass: {cert.examSummary.passingScore}</span>
@@ -114,8 +114,8 @@ export default function CertDetailPage({ params }: CertDetailPageProps) {
           </div>
         )}
         {isSkillsTrack(cert) && (
-          <div className="mt-4 rounded-lg border border-emerald-500/20 bg-emerald-500/5 px-3 py-2 text-xs text-zinc-400">
-            <p className="font-medium text-emerald-400/90">Skills track — not a vendor exam</p>
+          <div className="mt-4 rounded-lg border border-accent/20 bg-accent/5 px-3 py-2 text-xs text-muted-foreground">
+            <p className="font-medium text-accent">Skills track — not a vendor exam</p>
             <p className="mt-1">
               Pass: {cert.examSummary.passingScore}. Format: {cert.examSummary.format}.
             </p>
@@ -125,13 +125,13 @@ export default function CertDetailPage({ params }: CertDetailPageProps) {
 
       {certId === "ccna" && (
         <Card className="mb-6 p-4">
-          <h2 className="text-sm font-semibold text-zinc-200">Study tools</h2>
-          <p className="mt-1 text-xs text-zinc-500">
+          <h2 className="font-serif text-lg font-medium text-foreground">Study tools</h2>
+          <p className="mt-1 text-xs text-muted-foreground">
             External labs use Cisco Packet Tracer — install once, reuse across subnetting, VLANs, and routing topics.
           </p>
           <Link
             href={`/cert/${certId}/tool/packet-tracer`}
-            className="mt-3 inline-block text-sm text-sky-400 hover:underline"
+            className="mt-3 inline-block text-sm font-medium text-accent hover:underline"
           >
             Packet Tracer getting-started guide →
           </Link>
@@ -144,7 +144,7 @@ export default function CertDetailPage({ params }: CertDetailPageProps) {
 
       {weakTopics.length > 0 && (
         <section className="mb-6">
-          <h2 className="mb-3 text-sm font-semibold text-amber-400">
+          <h2 className="mb-3 font-serif text-xl font-medium text-foreground">
             Weak Areas ({weakTopics.length})
           </h2>
           <div className="flex flex-col gap-2">
@@ -159,10 +159,10 @@ export default function CertDetailPage({ params }: CertDetailPageProps) {
               );
               return (
                 <Link key={w.topicKey} href={step.href}>
-                  <Card className="text-sm text-zinc-300">
+                  <Card className="text-sm text-foreground">
                     <p>{topic?.name ?? topicId}</p>
                     {step.stepType === "assignment" && step.assignmentTitle && (
-                      <p className="mt-1 text-xs text-sky-400">{step.assignmentTitle}</p>
+                      <p className="mt-1 text-xs text-accent">{step.assignmentTitle}</p>
                     )}
                   </Card>
                 </Link>
@@ -176,7 +176,7 @@ export default function CertDetailPage({ params }: CertDetailPageProps) {
         <DomainSection cert={cert} />
       ) : (
         <Card>
-          <p className="text-sm text-zinc-400">Content for this certification is coming soon.</p>
+          <p className="text-sm text-muted-foreground">Content for this certification is coming soon.</p>
         </Card>
       )}
     </div>

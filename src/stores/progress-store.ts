@@ -34,6 +34,7 @@ import type {
   QuizAttempt,
   QuizInProgress,
   WeakTopic,
+  CompetencyEvidence,
 } from "@/types/progress";
 import type { SimulatorAttempt } from "@/types/simulator";
 
@@ -62,6 +63,12 @@ interface ProgressActions {
   clearFlashcardProgress: () => void;
   getWeakTopics: () => WeakTopic[];
   resetProgress: () => void;
+  recordCompetencyEvidence: (evidence: {
+    competencyId: string;
+    success: boolean;
+    context: CompetencyEvidence["lastContext"];
+    responseMs?: number;
+  }) => void;
 }
 
 type ProgressStore = ProgressState & ProgressActions;
@@ -87,6 +94,7 @@ const initialState: ProgressState = {
     intendedExamDate: null,
     preferredObjectivesVersion: null,
   },
+  competencyEvidence: {},
 };
 
 function addActivity(
@@ -439,6 +447,40 @@ export const useProgressStore = create<ProgressStore>()(
         return Object.values(get().weakTopics).sort((a, b) => b.severity - a.severity);
       },
 
+      recordCompetencyEvidence: ({ competencyId, success, context, responseMs }) => {
+        set((state) => {
+          const previous = state.competencyEvidence[competencyId];
+          const attempts = (previous?.attempts ?? 0) + 1;
+          const successfulAttempts = (previous?.successfulAttempts ?? 0) + (success ? 1 : 0);
+          const observed = success ? 1 : 0;
+          const mastery = Math.round(((previous?.mastery ?? 0) * 0.7 + observed * 100 * 0.3) * 10) / 10;
+          const now = new Date().toISOString();
+          return {
+            ...state,
+            ...(success ? touchStreak(state) : {}),
+            competencyEvidence: {
+              ...state.competencyEvidence,
+              [competencyId]: {
+                competencyId,
+                attempts,
+                successfulAttempts,
+                mastery,
+                lastAttemptAt: now,
+                lastSuccessfulAt: success ? now : previous?.lastSuccessfulAt,
+                lastContext: context,
+                lastResponseMs: responseMs,
+              },
+            },
+            recentActivity: success ? addActivity(state.recentActivity, {
+              type: "practice",
+              certId: "piano-foundations",
+              topicKey: competencyId,
+              label: `Practice evidence: ${competencyId}`,
+            }) : state.recentActivity,
+          };
+        });
+      },
+
       resetProgress: () => {
         clearAllLearnerStorage();
         set(initialState);
@@ -474,6 +516,7 @@ export const useProgressStore = create<ProgressStore>()(
         questionStats: state.questionStats,
         caseStudyAttempts: state.caseStudyAttempts,
         ccnaPathwayPreference: state.ccnaPathwayPreference,
+        competencyEvidence: state.competencyEvidence,
       }),
       skipHydration: true,
       version: PROGRESS_STORAGE_VERSION,

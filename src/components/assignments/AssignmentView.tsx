@@ -33,7 +33,7 @@ const typeLabels: Record<Assignment["type"], string> = {
 
 function AssignmentInstructions({ text }: { text: string }) {
   return (
-    <div className="space-y-2 text-sm leading-relaxed text-zinc-300">
+    <div className="space-y-2 text-sm leading-relaxed text-muted-foreground">
       {text.split("\n").map((rawLine, index) => {
         const line = rawLine.trim();
         if (!line) return <div key={index} className="h-1" aria-hidden="true" />;
@@ -41,7 +41,7 @@ function AssignmentInstructions({ text }: { text: string }) {
         const heading = line.match(/^###\s+(.+)$/);
         if (heading) {
           return (
-            <h2 key={index} className="pt-2 text-base font-semibold text-zinc-100">
+            <h2 key={index} className="pt-2 font-serif text-lg font-medium text-foreground">
               {heading[1]}
             </h2>
           );
@@ -51,7 +51,7 @@ function AssignmentInstructions({ text }: { text: string }) {
         if (numbered) {
           return (
             <div key={index} className="grid grid-cols-[1.75rem_1fr] gap-2">
-              <span className="font-mono text-zinc-500">{numbered[1]}.</span>
+              <span className="font-mono text-faint">{numbered[1]}.</span>
               <span>{numbered[2]}</span>
             </div>
           );
@@ -61,7 +61,7 @@ function AssignmentInstructions({ text }: { text: string }) {
         if (bullet) {
           return (
             <div key={index} className="grid grid-cols-[1rem_1fr] gap-2">
-              <span className="text-zinc-500" aria-hidden="true">•</span>
+              <span className="text-primary" aria-hidden="true">•</span>
               <span>{bullet[1]}</span>
             </div>
           );
@@ -121,7 +121,7 @@ export function AssignmentView({
       </div>
 
       <Card className="p-4">
-        <p className="mb-1 text-xs text-zinc-500">
+        <p className="eyebrow mb-2">
           {certShortName} · {topicName}
         </p>
         {assignment.creativePrompt && (
@@ -137,10 +137,10 @@ export function AssignmentView({
 
       {!caseStudy && (assignment.audibleTraitRubric?.length ?? 0) > 0 && (
         <Card className="p-4">
-          <p className="mb-2 text-sm font-medium text-zinc-200">
+          <p className="mb-2 text-sm font-medium text-foreground">
             Audible traits to match
           </p>
-          <ul className="list-inside list-disc space-y-1.5 text-sm text-zinc-300">
+          <ul className="list-inside list-disc space-y-1.5 text-sm text-muted-foreground marker:text-primary">
             {assignment.audibleTraitRubric!.map((trait) => (
               <li key={trait}>{trait}</li>
             ))}
@@ -150,10 +150,10 @@ export function AssignmentView({
 
       {!caseStudy && (assignment.reflectionRubric?.length ?? 0) > 0 && (
         <Card className="p-4">
-          <p className="mb-2 text-sm font-medium text-zinc-200">
+          <p className="mb-2 text-sm font-medium text-foreground">
             Design reflection
           </p>
-          <ul className="list-inside list-disc space-y-1.5 text-sm text-zinc-300">
+          <ul className="list-inside list-disc space-y-1.5 text-sm text-muted-foreground marker:text-primary">
             {assignment.reflectionRubric!.map((item) => (
               <li key={item}>{item}</li>
             ))}
@@ -172,7 +172,7 @@ export function AssignmentView({
 
       {!caseStudy && externalResource && (
         <Card className="p-4">
-          <p className="mb-2 text-sm font-medium text-zinc-200">{externalResource.name}</p>
+          <p className="mb-2 text-sm font-medium text-foreground">{externalResource.name}</p>
           {externalToolGuide && (
             <Link
               href={`/cert/${certId}/tool/${externalToolGuide.id}`}
@@ -182,13 +182,13 @@ export function AssignmentView({
             </Link>
           )}
           {externalResource.installNotes && (
-            <p className="mb-3 text-sm text-zinc-400">{externalResource.installNotes}</p>
+            <p className="mb-3 text-sm text-muted-foreground">{externalResource.installNotes}</p>
           )}
           <a
             href={externalResource.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border border-zinc-700 bg-zinc-800 px-4 py-2 text-sm font-medium text-sky-400 hover:bg-zinc-700"
+            className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md border border-border bg-surface-raised px-4 py-2 text-sm font-medium text-accent hover:border-accent/50"
           >
             <ExternalLink className="h-4 w-4" />
             Open {externalResource.name}
@@ -204,21 +204,21 @@ export function AssignmentView({
 
       {!caseStudy && assignment.completionCriteria.length > 0 && (
         <Card className="p-4">
-          <div className="mb-3 flex items-center gap-2 text-zinc-200">
+          <div className="mb-3 flex items-center gap-2 text-foreground">
             <ListChecks className="h-4 w-4" />
             <span className="text-sm font-medium">Completion checklist</span>
           </div>
           <ul className="space-y-3">
             {assignment.completionCriteria.map((criterion, index) => (
               <li key={criterion}>
-                <label className="flex min-h-12 cursor-pointer items-start gap-3 rounded-lg border border-zinc-800 p-3 hover:bg-zinc-900">
+                <label className="flex min-h-12 cursor-pointer items-start gap-3 rounded-md border border-border bg-surface-raised p-3 hover:border-primary/40">
                   <input
                     type="checkbox"
                     checked={!!checked[index]}
                     onChange={() => toggleCheck(index)}
-                    className="mt-1 h-4 w-4 rounded border-zinc-600"
+                    className="mt-1 h-4 w-4 rounded border-border accent-[var(--primary)]"
                   />
-                  <span className="text-sm text-zinc-300">{criterion}</span>
+                  <span className="text-sm text-muted-foreground">{criterion}</span>
                 </label>
               </li>
             ))}

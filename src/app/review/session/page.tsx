@@ -32,7 +32,7 @@ export default function ReviewSessionPage() {
   }, [hydrated, maxQuestions]);
 
   if (!hydrated || session === null) {
-    return <p className="p-4 text-center text-sm text-zinc-500">Loading review…</p>;
+    return <p className="p-4 text-center text-sm text-faint">Loading review…</p>;
   }
 
   if (!session || session.questions.length === 0) {
@@ -40,7 +40,7 @@ export default function ReviewSessionPage() {
       <div>
         <PageHeader title="Adaptive Review" subtitle="Spaced repetition session" backHref="/review" />
         <Card className="p-4">
-          <p className="text-sm text-zinc-400">
+          <p className="text-sm leading-relaxed text-muted-foreground">
             No topics are due for review right now. Complete more quizzes and drills to build your
             review schedule.
           </p>

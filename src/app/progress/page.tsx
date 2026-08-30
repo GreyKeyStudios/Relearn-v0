@@ -61,21 +61,21 @@ export default function ProgressPage() {
 
       <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
         <StatCard label="Streak" value={`${streak} days`} icon={<Flame className="h-4 w-4 text-amber-400" />} />
-        <StatCard label="Accuracy" value={`${globalAccuracy}%`} icon={<Percent className="h-4 w-4 text-sky-400" />} />
+        <StatCard label="Accuracy" value={`${globalAccuracy}%`} icon={<Percent className="h-4 w-4 text-accent" />} />
         <StatCard label="Lessons" value={totalLessons} icon={<BookOpen className="h-4 w-4 text-emerald-400" />} />
-        <StatCard label="Assignments" value={totalAssignments} icon={<BookOpen className="h-4 w-4 text-sky-400" />} />
+        <StatCard label="Assignments" value={totalAssignments} icon={<BookOpen className="h-4 w-4 text-primary" />} />
       </div>
 
       {lastStudyDate && (
         <Card className="mb-6">
-          <p className="text-xs text-zinc-500">Last studied</p>
-          <p className="text-sm text-zinc-200">{lastStudyDate}</p>
+          <p className="eyebrow">Last studied</p>
+          <p className="mt-1 text-sm text-foreground">{lastStudyDate}</p>
         </Card>
       )}
 
       <section className="mb-6">
         <StudyPlanSettings />
-        <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-zinc-400">
+        <h2 className="eyebrow mb-3">
           Today&apos;s plan
         </h2>
         <DailyPlanCard plan={dailyPlan} />
@@ -88,7 +88,7 @@ export default function ProgressPage() {
       )}
 
       <section className="mb-6">
-        <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-zinc-400">
+        <h2 className="eyebrow mb-3">
           Per Course
         </h2>
         <div className="flex flex-col gap-3">
@@ -109,15 +109,15 @@ export default function ProgressPage() {
               return (
                 <Card key={cert.id}>
                   <div className="flex items-center justify-between">
-                    <span className="font-medium text-zinc-100">{cert.shortName}</span>
-                    <span className="text-sm text-zinc-400">{accuracy}% accuracy</span>
+                    <span className="font-medium text-foreground">{cert.shortName}</span>
+                    <span className="text-sm text-muted-foreground">{accuracy}% accuracy</span>
                   </div>
-                  <p className="mt-1 text-xs text-zinc-500">
+                  <p className="mt-1 text-xs text-faint">
                     {doneSteps} / {totalSteps} steps · Mastery {mastery}%
                   </p>
                   <ProgressBar value={progress} className="mt-2" showLabel />
                   {showDomains && (
-                    <div className="mt-3 space-y-2 border-t border-zinc-800 pt-3">
+                    <div className="mt-3 space-y-2 border-t border-hairline pt-3">
                       {cert.domains.map((domain) => (
                         <DomainMasteryBar
                           key={domain.id}
@@ -135,20 +135,20 @@ export default function ProgressPage() {
 
       {domainReviewsByCert.length > 0 && (
         <section className="mb-6">
-          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-zinc-400">
+          <h2 className="eyebrow mb-3">
             Domain Reviews
           </h2>
           <div className="flex flex-col gap-4">
             {domainReviewsByCert.map(({ cert, attempts }) => (
               <div key={cert.id}>
-                <p className="mb-2 text-xs font-medium text-zinc-500">{cert.shortName}</p>
+                <p className="eyebrow mb-2">{cert.shortName}</p>
                 <div className="flex flex-col gap-2">
                   {attempts.slice(0, 5).map((attempt) => (
                     <Card key={attempt.completedAt + attempt.topicKey} className="text-sm">
-                      <p className="text-zinc-200">
+                      <p className="text-foreground">
                         {attempt.topicKey.split(":domain-review:")[1]?.replace(/-/g, " ") ?? "Domain"}
                       </p>
-                      <p className="text-xs text-zinc-500">
+                      <p className="text-xs text-faint">
                         Score {attempt.score}/{attempt.total} ·{" "}
                         {new Date(attempt.completedAt).toLocaleDateString()}
                       </p>
@@ -162,7 +162,7 @@ export default function ProgressPage() {
       )}
 
       <section>
-        <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-zinc-400">
+        <h2 className="eyebrow mb-3">
           Quiz History
         </h2>
         <ActivityFeed

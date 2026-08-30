@@ -7,9 +7,9 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variants = {
   primary:
-    "bg-primary text-primary-foreground hover:opacity-90 active:opacity-80",
+    "border border-[#ae7f27] bg-primary text-primary-foreground shadow-[0_1px_1px_rgb(66_45_8_/_0.12)] hover:bg-[#b9872c] active:bg-[#a97927]",
   secondary:
-    "bg-surface-raised text-foreground hover:bg-muted border border-border",
+    "bg-surface-raised text-foreground hover:border-primary/40 hover:bg-muted border border-border",
   ghost: "bg-transparent text-muted-foreground hover:bg-surface-raised",
   danger: "bg-primary/90 text-primary-foreground hover:bg-primary",
 };
@@ -22,7 +22,7 @@ export function Button({
 }: ButtonProps) {
   return (
     <button
-      className={`inline-flex min-h-12 items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-all disabled:opacity-50 ${variants[variant]} ${className}`}
+      className={`inline-flex min-h-11 items-center justify-center rounded-md px-4 py-2 text-sm font-semibold transition-all disabled:opacity-50 ${variants[variant]} ${className}`}
       {...props}
     >
       {children}

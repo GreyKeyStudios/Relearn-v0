@@ -59,7 +59,7 @@ export default function EthicalHackingCareerPage() {
       <p className="mb-8 max-w-2xl text-sm leading-relaxed text-muted-foreground">
         Labs remain locked until prerequisites and the required appliance version are
         satisfied. The appliance is not released yet — use web walkthroughs for now.{" "}
-        <Link href="/labs/relearn-vm" className="text-sky-400 hover:text-sky-300">
+        <Link href="/labs/relearn-vm" className="text-accent hover:text-foreground">
           ReLearn Lab VM overview
         </Link>
       </p>
@@ -93,7 +93,7 @@ export default function EthicalHackingCareerPage() {
         </p>
         <Link
           href="/career/ethical-hacking/journey/foundations"
-          className="inline-flex min-h-12 items-center rounded-md border border-border px-4 py-2 text-sm text-sky-400 hover:text-sky-300"
+          className="inline-flex min-h-12 items-center rounded-md border border-border px-4 py-2 text-sm text-accent hover:border-accent/50 hover:text-foreground"
         >
           Open foundations journey
         </Link>

@@ -18,7 +18,7 @@ export function Card({
     <Component
       onClick={onClick}
       data-testid={dataTestId}
-      className={`rounded-lg border border-border bg-surface p-4 text-left ${onClick ? "cursor-pointer transition-colors hover:border-hairline hover:bg-surface-raised" : ""} ${className}`}
+      className={`relearn-card rounded-[var(--radius)] border border-border bg-surface p-4 text-left ${onClick ? "cursor-pointer transition-colors hover:border-primary/35 hover:bg-surface-raised" : ""} ${className}`}
     >
       {children}
     </Component>

@@ -135,13 +135,13 @@ export function LessonPageClient({
   // until the store finishes hydrating and unlocks the after-lesson hub.
   if (!hydrated) {
     return (
-      <div>
+      <div className="mx-auto max-w-5xl">
         <PageHeader
           title={topic.name}
           subtitle={`${cert.shortName} · ${domain.name}`}
           backHref={`/cert/${certId}`}
         />
-        <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-4 text-sm text-zinc-400">
+        <div className="relearn-card rounded-[var(--radius)] border border-border bg-surface p-4 text-sm text-muted-foreground">
           Loading your progress…
         </div>
       </div>
@@ -149,14 +149,14 @@ export function LessonPageClient({
   }
 
   return (
-    <div>
+    <div className="mx-auto max-w-5xl">
       <PageHeader
         title={topic.name}
         subtitle={`${cert.shortName} · ${domain.name}`}
         backHref={`/cert/${certId}`}
       />
 
-      <div className="mb-4 flex flex-wrap gap-2">
+      <div className="mb-5 flex flex-wrap gap-2 border-b border-hairline pb-5">
         <MasteryBadge level={mastery.level} score={mastery.score} showScore />
         {isComplete && (
           <Badge variant="success">
@@ -228,11 +228,11 @@ export function LessonPageClient({
             <LessonContent title={topic.lesson.title} content={topic.lesson.content} />
           </div>
         ) : (
-          <Card className="mb-4 border-emerald-900/40 bg-emerald-950/20 p-4">
+          <Card className="mb-4 border-accent/25 bg-accent/5 p-4">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
-                <p className="text-sm font-medium text-emerald-400">Lesson complete</p>
-                <p className="mt-1 text-sm text-zinc-400">
+                <p className="text-sm font-medium text-accent">Lesson complete</p>
+                <p className="mt-1 text-sm text-muted-foreground">
                   {topicId === "wireless-basics"
                     ? "Wave 1 network fundamentals done. Start with your lightbulb moment below."
                     : "Start with your lightbulb moment — one idea to take with you."}
@@ -308,7 +308,7 @@ export function LessonPageClient({
               >
                 Mark Lesson Complete
               </Button>
-              <p className="mt-2 text-center text-xs text-zinc-500">
+              <p className="mt-2 text-center text-xs text-faint">
                 Mark complete after reading to advance your study plan and curriculum.
               </p>
             </div>

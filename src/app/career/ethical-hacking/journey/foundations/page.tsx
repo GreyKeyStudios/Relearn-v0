@@ -21,7 +21,7 @@ export default function FoundationsJourneyPage() {
       <p className="mb-8 max-w-2xl text-sm text-muted-foreground">
         Complete each step in order when you can. Perspective blocks and Knowledge DNA on
         the lessons show why the next topic unlocks. Practical VM work stays in{" "}
-        <Link href="/cert/vm-lab" className="text-sky-400 hover:text-sky-300">
+        <Link href="/cert/vm-lab" className="text-accent hover:text-foreground">
           VM Lab Foundations
         </Link>
         ; this path is the conceptual + scenario chain.
@@ -39,7 +39,7 @@ export default function FoundationsJourneyPage() {
             <p className="mt-2 text-sm text-muted-foreground">{step.summary}</p>
             <Link
               href={step.href}
-              className="mt-3 inline-flex min-h-11 items-center text-sm text-sky-400 hover:text-sky-300"
+              className="mt-3 inline-flex min-h-11 items-center text-sm text-accent hover:text-foreground"
             >
               Open step {index + 1}
             </Link>
@@ -49,7 +49,7 @@ export default function FoundationsJourneyPage() {
 
       <p className="mt-8 text-sm text-muted-foreground">
         After Missing Patch, review{" "}
-        <Link href="/labs/relearn-vm" className="text-sky-400 hover:text-sky-300">
+        <Link href="/labs/relearn-vm" className="text-accent hover:text-foreground">
           ReLearn Lab VM
         </Link>{" "}
         plans — appliance packs stay planned until the OVA exists.
