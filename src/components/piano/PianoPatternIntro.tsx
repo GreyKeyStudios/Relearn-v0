@@ -15,13 +15,13 @@ const CONCERT_BLACK_KEYS = CONCERT_NOTES.filter((note) => isBlackKey(note));
 function ConcertPianoPreview() {
   return (
     <div className="mb-5">
-      <div className="relative h-24 overflow-hidden rounded-xl border-4 border-zinc-950 bg-zinc-950 shadow-[0_12px_24px_rgba(0,0,0,0.3)]" aria-label="Miniature 88-key concert piano">
-        <div className="flex h-full rounded-lg bg-white">
-          {CONCERT_WHITE_KEYS.map((note) => <span key={note} className="flex-1 border-r border-zinc-300 bg-gradient-to-b from-white to-zinc-100 last:border-r-0" />)}
+      <div className="relative h-24 overflow-hidden rounded-xl border-4 border-[#171614] bg-[#171614] shadow-[0_12px_24px_rgba(0,0,0,0.3)]" aria-label="Miniature 88-key concert piano">
+        <div className="flex h-full rounded-lg bg-[#fdfcf8]">
+          {CONCERT_WHITE_KEYS.map((note) => <span key={note} className="flex-1 border-r border-[#b8b1a7] bg-gradient-to-b from-[#fffefa] to-[#e7e1d7] last:border-r-0" />)}
         </div>
         {CONCERT_BLACK_KEYS.map((note) => {
           const whiteBefore = CONCERT_WHITE_KEYS.filter((whiteNote) => whiteNote < note).length;
-          return <span key={note} className="absolute top-0 h-[62%] w-[1.15%] -translate-x-1/2 rounded-b-sm bg-gradient-to-r from-zinc-950 via-zinc-800 to-zinc-950 shadow-[0_3px_3px_rgba(0,0,0,0.45)]" style={{ left: `${(whiteBefore / CONCERT_WHITE_KEYS.length) * 100}%` }} />;
+          return <span key={note} className="absolute top-0 h-[62%] w-[1.15%] -translate-x-1/2 rounded-b-sm bg-gradient-to-r from-[#11100f] via-[#34312d] to-[#11100f] shadow-[0_3px_3px_rgba(0,0,0,0.45)]" style={{ left: `${(whiteBefore / CONCERT_WHITE_KEYS.length) * 100}%` }} />;
         })}
       </div>
       <div className="mt-3 flex items-center justify-center gap-3 text-center text-xs text-faint"><span>88 keys</span><span aria-hidden>·</span><span>52 white</span><span aria-hidden>·</span><span>36 black</span><span aria-hidden>·</span><span>a little over 7 octaves</span></div>
@@ -48,7 +48,7 @@ export function PianoPatternIntro({ stage, onNext, onReplay }: { stage: number; 
       <div key={stage} className="experience-enter">
         <div className="mb-6 flex items-start justify-between gap-4"><div><p className="eyebrow mb-2">{current.eyebrow} · {stage + 1} of {STAGES.length}</p>{"subtitle" in current && <p className="mb-2 text-sm font-medium text-accent">{current.subtitle}</p>}<h2 className="font-serif text-3xl leading-tight">{current.title}</h2><p className="mt-3 max-w-2xl leading-relaxed text-muted-foreground">{current.body}</p></div><span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-hairline text-sm text-primary">{stage + 1}</span></div>
         {last && <ConcertPianoPreview />}
-        {stage === 0 ? <div className="mx-auto flex w-32 justify-center rounded-xl border-4 border-zinc-950 bg-zinc-950 p-0 shadow-[0_14px_28px_rgba(0,0,0,0.35)]"><div className="flex h-52 w-28 items-end justify-center rounded-b-lg border border-zinc-300 bg-gradient-to-b from-white to-zinc-100 pb-4 text-xs text-zinc-500">white key</div></div> : <VirtualKeyboard activeNotes={new Set()} startNote={current.start} endNote={current.end} visibleNotes={current.visible} emphasizedNotes={current.emphasized} labelNaturals={"labels" in current && current.labels} />}
+        {stage === 0 ? <div className="mx-auto flex w-32 justify-center rounded-xl border-4 border-[#171614] bg-[#171614] p-0 shadow-[0_14px_28px_rgba(0,0,0,0.35)]"><div className="flex h-52 w-28 items-end justify-center rounded-b-lg border border-[#b8b1a7] bg-gradient-to-b from-[#fffefa] to-[#e7e1d7] pb-4 text-xs text-[#69645d]">white key</div></div> : <VirtualKeyboard activeNotes={new Set()} startNote={current.start} endNote={current.end} visibleNotes={current.visible} emphasizedNotes={current.emphasized} labelNaturals={"labels" in current && current.labels} />}
         <div className="mt-5 flex flex-wrap items-center justify-between gap-3"><button type="button" onClick={onReplay} className="inline-flex items-center gap-2 text-sm text-faint hover:text-foreground"><RotateCcw className="h-4 w-4" /> Replay from one key</button><Button onClick={onNext}>{last ? "Now find the pattern yourself" : "Reveal the next idea"}<ArrowRight className="ml-2 h-4 w-4" /></Button></div>
       </div>
     </section>

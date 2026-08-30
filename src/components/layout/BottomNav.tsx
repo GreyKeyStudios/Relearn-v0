@@ -20,7 +20,11 @@ export function BottomNav() {
       <div className="mx-auto flex max-w-lg items-center justify-around px-2 pb-[env(safe-area-inset-bottom)] pt-2">
         {tabs.map(({ href, label, icon: Icon }) => {
           const active =
-            href === "/" ? pathname === "/" : pathname.startsWith(href);
+            href === "/"
+              ? pathname === "/"
+              : href === "/certifications"
+                ? pathname.startsWith("/certifications") || pathname.startsWith("/cert/") || pathname.startsWith("/learn/")
+                : pathname.startsWith(href);
           return (
             <Link
               key={href}
