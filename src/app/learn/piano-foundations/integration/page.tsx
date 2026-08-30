@@ -1,6 +1,10 @@
-import { FoundationsIntegration } from "@/components/piano/FoundationsIntegration";
+import { Suspense } from "react";
+import { FoundationsIntegrationRoute } from "@/components/piano/PianoFoundationsRoute";
 
-export default async function FoundationsIntegrationPage({ searchParams }: { searchParams: Promise<{ unit?: string; lesson?: string }> }) {
-  const { unit, lesson } = await searchParams;
-  return <FoundationsIntegration startUnitId={unit} startLessonId={lesson} />;
+export default function FoundationsIntegrationPage() {
+  return (
+    <Suspense fallback={<p className="p-4 text-center text-sm text-faint">Loading lesson…</p>}>
+      <FoundationsIntegrationRoute />
+    </Suspense>
+  );
 }
