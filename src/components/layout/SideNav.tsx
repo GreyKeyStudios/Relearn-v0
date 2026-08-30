@@ -25,7 +25,7 @@ const items = [
 function isActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
   if (href === "/certifications") {
-    return pathname.startsWith("/certifications") || pathname.startsWith("/cert/");
+    return pathname.startsWith("/certifications") || pathname.startsWith("/cert/") || pathname.startsWith("/learn/");
   }
   return pathname.startsWith(href);
 }
