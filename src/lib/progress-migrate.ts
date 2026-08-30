@@ -28,7 +28,7 @@ export function clearAllLearnerStorage(): void {
 }
 
 /** Bump when persisted shape changes; must match persist `version` in progress-store */
-export const PROGRESS_STORAGE_VERSION = 4;
+export const PROGRESS_STORAGE_VERSION = 5;
 
 function normalizeTopicMastery(
   topicMastery: Record<string, TopicMastery>
@@ -47,8 +47,9 @@ function normalizeTopicMastery(
 /** Zustand persist migrate — called when stored version !== PROGRESS_STORAGE_VERSION */
 export function migrateProgressState(
   persistedState: unknown,
-  _fromVersion: number
+  fromVersion: number
 ): Partial<ProgressState> {
+  void fromVersion;
   const state = (persistedState ?? {}) as Partial<ProgressState>;
 
   const hasPriorActivity =
@@ -82,6 +83,7 @@ export function migrateProgressState(
       intendedExamDate: null,
       preferredObjectivesVersion: null,
     },
+    competencyEvidence: state.competencyEvidence ?? {},
   };
 }
 

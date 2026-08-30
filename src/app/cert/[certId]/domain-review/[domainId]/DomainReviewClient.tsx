@@ -40,7 +40,7 @@ export function DomainReviewClient({
         subtitle={`${domainName} · ${certShortName}`}
         backHref={`/cert/${certId}`}
       />
-      <p className="mb-4 text-sm text-zinc-400">
+      <p className="mb-4 border-l-2 border-primary pl-3 text-sm text-muted-foreground">
         {questions.length} shuffled questions from the {domainName} question bank
       </p>
       <QuizEngine

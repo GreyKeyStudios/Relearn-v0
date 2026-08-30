@@ -119,22 +119,22 @@ export function FlashcardDeck({ certId, topic, cards, nextTopic = null }: Flashc
   };
 
   if (!hydrated || !restoredRef.current) {
-    return <p className="text-center text-sm text-zinc-500">Loading flashcards…</p>;
+    return <p className="text-center text-sm text-faint">Loading flashcards…</p>;
   }
 
   if (finished) {
     return (
       <div className="flex flex-col gap-6">
         <Card className="text-center">
-          <p className="text-sm text-zinc-400">Session Complete</p>
+          <p className="eyebrow">Session complete</p>
           <div className="mt-4 flex justify-center gap-8">
             <div>
               <p className="text-2xl font-bold text-emerald-400">{gotItCount}</p>
-              <p className="text-xs text-zinc-500">Got it</p>
+              <p className="text-xs text-faint">Got it</p>
             </div>
             <div>
               <p className="text-2xl font-bold text-amber-400">{missedCount}</p>
-              <p className="text-xs text-zinc-500">Missed</p>
+              <p className="text-xs text-faint">Missed</p>
             </div>
           </div>
         </Card>
@@ -151,12 +151,12 @@ export function FlashcardDeck({ certId, topic, cards, nextTopic = null }: Flashc
   }
 
   if (!current) {
-    return <p className="text-center text-sm text-zinc-500">No flashcards available.</p>;
+    return <p className="text-center text-sm text-faint">No flashcards available.</p>;
   }
 
   return (
     <div className="flex flex-col gap-6">
-      <p className="text-center text-sm text-zinc-400">
+      <p className="eyebrow text-center">
         {index + 1} / {deck.length}
       </p>
       <FlashcardCard
@@ -183,7 +183,7 @@ export function FlashcardDeck({ certId, topic, cards, nextTopic = null }: Flashc
         </Button>
       </div>
       {!flipped && (
-        <p className="text-center text-xs text-zinc-500">Flip the card before rating</p>
+        <p className="text-center text-xs text-faint">Flip the card before rating</p>
       )}
     </div>
   );

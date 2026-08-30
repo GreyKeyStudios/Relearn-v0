@@ -15,13 +15,13 @@ interface DisclosureSectionProps {
 export function DisclosureSection({
   title,
   children,
-  titleClassName = "text-zinc-300",
+  titleClassName = "text-foreground",
   className = "",
   defaultOpen = false,
 }: DisclosureSectionProps) {
   return (
     <details
-      className={`mb-4 rounded-2xl border border-zinc-800 bg-zinc-900/60 p-4 ${className}`}
+      className={`relearn-card mb-4 rounded-[var(--radius)] border border-border bg-surface p-4 ${className}`}
       {...(defaultOpen ? { open: true } : {})}
     >
       <summary
