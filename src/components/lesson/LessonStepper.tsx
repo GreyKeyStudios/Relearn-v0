@@ -119,8 +119,8 @@ export function LessonStepper({
 
       {phase === "reading" && (
         <>
-          <Card className="p-4">
-            <div className="flex flex-col gap-4 text-base leading-relaxed text-zinc-300">
+          <Card className="p-5 sm:p-7">
+            <div className="flex flex-col gap-4 text-base leading-8 text-foreground">
               {paragraphs.map((p, i) => (
                 <p key={i}>{p}</p>
               ))}

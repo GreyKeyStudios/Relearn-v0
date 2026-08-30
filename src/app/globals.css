@@ -2,34 +2,26 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/*
-  ReLearn editorial palette — warm graphite + ivory with a single restrained
-  gold accent and a quiet teal for "live/verified" states. Deliberately NOT
-  the cold zinc + emerald SaaS look.
-*/
 :root {
-  --background: oklch(0.16 0.008 60);
-  --foreground: oklch(0.93 0.012 80);
-
-  --surface: oklch(0.19 0.008 60);
-  --surface-raised: oklch(0.22 0.009 62);
-
-  --muted: oklch(0.24 0.008 60);
-  --muted-foreground: oklch(0.66 0.012 75);
-  --faint: oklch(0.55 0.01 70);
-
-  --border: oklch(0.3 0.008 65);
-  --hairline: oklch(0.34 0.008 65);
-
-  --primary: oklch(0.8 0.11 78);
-  --primary-foreground: oklch(0.18 0.02 70);
-
-  --accent: oklch(0.7 0.09 190);
-  --accent-foreground: oklch(0.16 0.008 60);
-
-  --ring: oklch(0.8 0.11 78);
-
-  --radius: 0.5rem;
+  color-scheme: light;
+  --background: #f7f4ee;
+  --foreground: #24221f;
+  --surface: #fbfaf7;
+  --surface-raised: #ffffff;
+  --muted: #eee9e0;
+  --muted-foreground: #69645d;
+  --faint: #8b857c;
+  --border: #ded7cc;
+  --hairline: #e8e2d9;
+  --primary: #c59432;
+  --primary-foreground: #221b0d;
+  --accent: #258a84;
+  --accent-foreground: #ffffff;
+  --ring: #9e721e;
+  --risk: #b65f50;
+  --fragile: #7569a8;
+  --shadow-card: 0 1px 2px rgb(58 48 35 / 0.05), 0 10px 30px rgb(58 48 35 / 0.045);
+  --radius: 0.625rem;
 }
 
 @theme inline {
@@ -51,11 +43,64 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-ring: var(--ring);
+  --color-risk: var(--risk);
+  --color-fragile: var(--fragile);
+
+  /*
+    Compatibility bridge for the existing learning components. These aliases
+    let the current lesson, quiz, simulator, and mastery UI inherit the warm
+    light system while route-level semantic classes are migrated gradually.
+  */
+  --color-zinc-50: #24221f;
+  --color-zinc-100: #2d2a26;
+  --color-zinc-200: #3d3934;
+  --color-zinc-300: #514c46;
+  --color-zinc-400: #69645d;
+  --color-zinc-500: #8b857c;
+  --color-zinc-600: #a59e94;
+  --color-zinc-700: #ded7cc;
+  --color-zinc-800: #eee9e0;
+  --color-zinc-900: #fbfaf7;
+  --color-zinc-950: #f7f4ee;
+  --color-emerald-400: #258a84;
+  --color-emerald-500: #258a84;
+  --color-emerald-900: #166964;
+  --color-emerald-950: #e8f3f1;
+  --color-amber-200: #76551a;
+  --color-amber-300: #8a631c;
+  --color-amber-400: #9e721e;
+  --color-amber-500: #c59432;
+  --color-sky-400: #258a84;
+  --color-sky-500: #258a84;
+  --color-red-500: #b65f50;
   --radius: var(--radius);
 }
 
 body {
   font-family: var(--font-sans), system-ui, sans-serif;
+  background-color: var(--background);
+  background-image:
+    radial-gradient(circle at 18% 12%, rgb(255 255 255 / 0.8), transparent 32rem),
+    radial-gradient(circle at 84% 74%, rgb(197 148 50 / 0.035), transparent 28rem);
+  color: var(--foreground);
+}
+
+::selection {
+  background: rgb(197 148 50 / 0.22);
+}
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+
+.relearn-card {
+  box-shadow: var(--shadow-card);
+}
+
+.draft-grid {
+  background-image: radial-gradient(circle, rgb(111 103 92 / 0.16) 0.7px, transparent 0.8px);
+  background-size: 12px 12px;
 }
 
 /* Editorial small-caps label used for section eyebrows */
@@ -64,7 +109,7 @@ body {
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--faint);
-  font-weight: 500;
+  font-weight: 650;
 }
 
 @keyframes experience-enter {

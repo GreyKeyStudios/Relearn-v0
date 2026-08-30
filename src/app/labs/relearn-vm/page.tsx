@@ -113,7 +113,7 @@ export default function RelearnLabVmPage() {
           <li>
             <Link
               href="/career/ethical-hacking"
-              className="text-sky-400 hover:text-sky-300"
+              className="text-accent hover:text-foreground"
             >
               Ethical Hacking career path
             </Link>
@@ -121,13 +121,13 @@ export default function RelearnLabVmPage() {
           <li>
             <Link
               href="/career/ethical-hacking/scenarios/missing-patch"
-              className="text-sky-400 hover:text-sky-300"
+              className="text-accent hover:text-foreground"
             >
               The Missing Patch walkthrough
             </Link>
           </li>
           <li>
-            <Link href="/cert/vm-lab" className="text-sky-400 hover:text-sky-300">
+            <Link href="/cert/vm-lab" className="text-accent hover:text-foreground">
               VM Lab Foundations (build-it-yourself)
             </Link>
           </li>

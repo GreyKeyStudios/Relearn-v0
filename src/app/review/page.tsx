@@ -30,15 +30,15 @@ export default function ReviewPage() {
       />
 
       <section className="mb-6">
-        <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-zinc-400">
+        <h2 className="eyebrow mb-3">
           Adaptive Review
         </h2>
         {dueCount > 0 ? (
           <Card className="p-4">
-            <p className="mb-1 font-medium text-zinc-100">
+            <p className="mb-1 font-serif text-xl font-medium text-foreground">
               {dueCount} topic{dueCount === 1 ? "" : "s"} due
             </p>
-            <p className="mb-4 text-sm text-zinc-400">
+            <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
               Question bank drill pulled by mastery level — spaced repetition based on your past
               performance.
             </p>
@@ -51,7 +51,7 @@ export default function ReviewPage() {
           </Card>
         ) : (
           <Card className="p-4">
-            <p className="text-sm text-zinc-400">
+            <p className="text-sm leading-relaxed text-muted-foreground">
               No topics due for review. Keep studying — your review schedule builds automatically
               after quizzes and flashcards.
             </p>
@@ -75,7 +75,7 @@ export default function ReviewPage() {
       </section>
 
       <section>
-        <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-zinc-400">
+        <h2 className="eyebrow mb-3">
           Weak Areas
         </h2>
         <WeakAreaList weakTopics={weakTopics} limit={50} />

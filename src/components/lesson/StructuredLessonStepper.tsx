@@ -129,9 +129,9 @@ export function StructuredLessonStepper({
               }
             />
           )}
-          <Card className="p-4">
-            <h3 className="mb-3 text-lg font-semibold text-zinc-100">{current.title}</h3>
-            <div className="flex flex-col gap-4 text-base leading-relaxed text-zinc-300">
+          <Card className="p-5 sm:p-7">
+            <h3 className="mb-4 font-serif text-2xl font-medium text-foreground">{current.title}</h3>
+            <div className="flex flex-col gap-4 text-base leading-8 text-foreground">
               {paragraphs.map((p, i) => (
                 <p key={i}>{p}</p>
               ))}

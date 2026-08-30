@@ -25,21 +25,21 @@ export function FlashcardCard({ card, flipped, onFlip }: FlashcardCardProps) {
         }}
       >
         <div
-          className="absolute inset-0 flex items-center justify-center overflow-hidden rounded-2xl border border-zinc-700 bg-zinc-900 p-6"
+          className="relearn-card draft-grid absolute inset-0 flex items-center justify-center overflow-hidden rounded-[var(--radius)] border border-border bg-surface p-6"
           style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
         >
-          <p className="text-center text-lg font-medium text-zinc-100">{card.front}</p>
-          <p className="absolute bottom-4 text-xs text-zinc-500">Tap to flip</p>
+          <p className="text-center font-serif text-xl font-medium text-foreground">{card.front}</p>
+          <p className="absolute bottom-4 text-xs text-faint">Tap to flip</p>
         </div>
         <div
-          className="absolute inset-0 flex items-center justify-center overflow-hidden rounded-2xl border border-emerald-700 bg-emerald-950/50 p-6"
+          className="absolute inset-0 flex items-center justify-center overflow-hidden rounded-[var(--radius)] border border-accent/45 bg-accent/10 p-6"
           style={{
             backfaceVisibility: "hidden",
             WebkitBackfaceVisibility: "hidden",
             transform: "rotateY(180deg)",
           }}
         >
-          <p className="text-center text-base text-zinc-200">{card.back}</p>
+          <p className="text-center text-base leading-relaxed text-foreground">{card.back}</p>
         </div>
       </div>
     </button>

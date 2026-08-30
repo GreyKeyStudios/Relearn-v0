@@ -31,20 +31,20 @@ export function QuestionCard({
 
   return (
     <div className="flex flex-col gap-4">
-      <p className="text-xs text-zinc-500">
+      <p className="eyebrow">
         Question {questionNumber} of {totalQuestions}
       </p>
-      <h2 className="text-lg font-medium text-zinc-100">{question.prompt}</h2>
+      <h2 className="text-balance font-serif text-2xl font-medium leading-snug text-foreground">{question.prompt}</h2>
       <div className="flex flex-col gap-2">
         {question.choices.map((choice) => {
           const isSelected = selectedChoiceId === choice.id;
           const isCorrect = choice.id === question.correctChoiceId;
-          let style = "border-zinc-700 bg-zinc-900 hover:border-zinc-600";
+          let style = "border-border bg-surface hover:border-primary/40 hover:bg-surface-raised";
           if (showResult) {
-            if (isCorrect) style = "border-emerald-500 bg-emerald-500/10";
-            else if (isSelected && !isCorrect) style = "border-red-500 bg-red-500/10";
+            if (isCorrect) style = "border-accent bg-accent/10";
+            else if (isSelected && !isCorrect) style = "border-risk bg-risk/10";
           } else if (isSelected) {
-            style = "border-emerald-500 bg-emerald-500/10";
+            style = "border-accent bg-accent/10";
           }
 
           return (
@@ -53,7 +53,7 @@ export function QuestionCard({
               type="button"
               disabled={showResult}
               onClick={() => onSelect(choice.id)}
-              className={`min-h-12 rounded-xl border p-4 text-left text-sm transition-colors ${style}`}
+              className={`relearn-card min-h-12 rounded-[var(--radius)] border p-4 text-left text-sm text-foreground transition-colors ${style}`}
             >
               {choice.text}
             </button>
@@ -61,19 +61,19 @@ export function QuestionCard({
         })}
       </div>
       {showResult && (
-        <div className="rounded-xl border border-zinc-700 bg-zinc-800/50 p-4">
-          <p className="text-xs font-medium text-sky-400">Explanation</p>
-          <p className="mt-1 text-sm text-zinc-300">{question.explanation}</p>
+        <div className="rounded-[var(--radius)] border border-accent/25 bg-accent/5 p-4">
+          <p className="text-xs font-semibold uppercase tracking-wider text-accent">Explanation</p>
+          <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{question.explanation}</p>
           {remediation && (
             <div
-              className="mt-3 rounded-lg border border-amber-500/30 bg-amber-500/10 p-3"
+              className="mt-3 rounded-lg border border-primary/30 bg-primary/10 p-3"
               data-testid="diagnostic-remediation"
               data-remediation-id={question.remediationActivityId}
             >
-              <p className="text-xs font-medium text-amber-300">
+              <p className="text-xs font-medium text-[#8a631c]">
                 Misconception remediation — {remediation.title}
               </p>
-              <p className="mt-1 text-sm text-zinc-300">{remediation.body}</p>
+              <p className="mt-1 text-sm text-muted-foreground">{remediation.body}</p>
             </div>
           )}
         </div>

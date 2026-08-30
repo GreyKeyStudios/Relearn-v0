@@ -42,7 +42,7 @@ export function TopicAssignments({ certId, assignments }: TopicAssignmentsProps)
 
   return (
     <section id="topic-assignments" className="mb-6 scroll-mt-6">
-      <DisclosureSection title="Practice Assignments" titleClassName="text-zinc-400">
+      <DisclosureSection title="Practice Assignments" titleClassName="text-foreground">
         <div className="flex flex-col gap-2">
           {ordered.map((assignment, index) => {
             const key = assignmentKey(certId, assignment.id);
@@ -53,15 +53,15 @@ export function TopicAssignments({ certId, assignments }: TopicAssignmentsProps)
             return (
               <Link key={assignment.id} href={href}>
                 <Card className="flex items-center gap-3 py-3">
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-zinc-800 text-xs font-medium text-zinc-400">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-primary/10 text-xs font-medium text-primary">
                     {index + 1}
                   </span>
-                  <Icon className="h-4 w-4 shrink-0 text-sky-400" />
+                  <Icon className="h-4 w-4 shrink-0 text-accent" />
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium text-zinc-200">{assignment.title}</p>
+                    <p className="text-sm font-medium text-foreground">{assignment.title}</p>
                     <div className="mt-1 flex flex-wrap items-center gap-2">
                       <Badge variant="default">{label}</Badge>
-                      <span className="flex items-center gap-1 text-xs text-zinc-500">
+                      <span className="flex items-center gap-1 text-xs text-faint">
                         <Clock className="h-3 w-3" />~{assignment.estimatedMinutes} min
                       </span>
                     </div>
@@ -69,7 +69,7 @@ export function TopicAssignments({ certId, assignments }: TopicAssignmentsProps)
                   {isComplete ? (
                     <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-400" />
                   ) : (
-                    <ChevronRight className="h-5 w-5 shrink-0 text-zinc-600" />
+                    <ChevronRight className="h-5 w-5 shrink-0 text-faint" />
                   )}
                 </Card>
               </Link>

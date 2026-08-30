@@ -1,7 +1,6 @@
 import type { SimulatorAttempt } from "@/types/simulator";
 import type { StudyPlanPreferences, TopicMastery } from "@/types/mastery";
 import type { LearnerConfidenceScore } from "@/types/readiness";
-import { DEFAULT_STUDY_PLAN } from "@/types/mastery";
 import type { CaseStudyAttempt } from "@/types/case-study";
 import type { QuestionStat } from "@/lib/question-stats";
 
@@ -47,7 +46,19 @@ export type ActivityType =
   | "quiz"
   | "flashcards"
   | "simulator"
-  | "assignment_complete";
+  | "assignment_complete"
+  | "practice";
+
+export interface CompetencyEvidence {
+  competencyId: string;
+  attempts: number;
+  successfulAttempts: number;
+  mastery: number;
+  lastAttemptAt: string;
+  lastSuccessfulAt?: string;
+  lastContext: "course" | "practice" | "review" | "game";
+  lastResponseMs?: number;
+}
 
 export interface Activity {
   id: string;
@@ -103,4 +114,5 @@ export interface ProgressState {
   confidenceScores?: Record<string, LearnerConfidenceScore>;
   /** CCNA exam-date / pathway override — switching never deletes other progress */
   ccnaPathwayPreference?: CcnaPathwayPreferenceState;
+  competencyEvidence: Record<string, CompetencyEvidence>;
 }
