@@ -1,6 +1,10 @@
-import { PianoFoundationsExperience } from "@/components/piano/PianoFoundationsExperience";
+import { Suspense } from "react";
+import { PianoFoundationsExperienceRoute } from "@/components/piano/PianoFoundationsRoute";
 
-export default async function PianoFoundationsPage({ searchParams }: { searchParams: Promise<{ unit?: string; lesson?: string }> }) {
-  const { unit, lesson } = await searchParams;
-  return <PianoFoundationsExperience startUnitId={unit} startLessonId={lesson} />;
+export default function PianoFoundationsPage() {
+  return (
+    <Suspense fallback={<p className="p-4 text-center text-sm text-faint">Loading piano lesson…</p>}>
+      <PianoFoundationsExperienceRoute />
+    </Suspense>
+  );
 }
