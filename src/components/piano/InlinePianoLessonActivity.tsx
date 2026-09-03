@@ -8,7 +8,7 @@ import { createAttemptState, evaluateNoteEvent } from "@/lib/interactive-learnin
 import { midiNoteToName, midiNoteToPitchClass } from "@/lib/interactive-learning/notes";
 import type { NoteEvent, PerformanceExercise } from "@/lib/interactive-learning/types";
 import { useProgressStore } from "@/stores/progress-store";
-import { VirtualKeyboard } from "./VirtualKeyboard";
+import { VirtualKeyboard, type KeyboardLabelMode } from "./VirtualKeyboard";
 
 type InlineActivity = {
   exercise?: PerformanceExercise;
@@ -18,6 +18,8 @@ type InlineActivity = {
   end?: number;
   visible?: number[];
   emphasized?: number[];
+  /** Omit to name every natural. Use "none" where finding the key IS the skill. */
+  labels?: KeyboardLabelMode;
   creativeCount?: number;
   allowedPitchClasses?: number[];
   velocityContrast?: number;
@@ -54,13 +56,13 @@ const ACTIVITIES: Record<string, InlineActivity> = {
   "one-white-key": { ...pc("one-white-key", "Play the single visible white key.", [2], "piano.keyboard.white-key"), start: 60, end: 72, visible: [62], emphasized: [62] },
   "white-key-field": { ...pc("white-key-field", "Play any white key.", naturals, "piano.keyboard.white-key"), start: 60, end: 72, visible: [60,62,64,65,67,69,71,72] },
   "black-key-groups": { ...pc("black-key-groups", "Play any black key, then notice whether it belongs to a group of two or three.", blacks, "piano.keyboard.black-key-groups"), start: 60, end: 72 },
-  "c-landmark": { ...pc("c-landmark", "Find and play C beside a group of two black keys.", [0], "piano.note-navigation.c", "Find two black keys; C is immediately to their left."), start: 48, end: 72, emphasized: [48,60,72] },
+  "c-landmark": { ...pc("c-landmark", "Find and play C beside a group of two black keys.", [0], "piano.note-navigation.c", "Find two black keys; C is immediately to their left."), start: 48, end: 72, emphasized: [48,60,72], labels: "none" },
   "natural-family": ex("natural-family", "play-scale", "Play C D E F G A B C.", [60,62,64,65,67,69,71,72], "piano.note-navigation.naturals", "Use the white keys from one C to the next."),
-  "octave-pattern": ex("octave-pattern", "play-sequence", "Play middle C, then the next C higher.", [60,72], "piano.keyboard.octave-pattern", "Find the same two-black-key landmark twice."),
-  "c-fluency": pc("c-fluency", "Find any C without using a note label.", [0], "piano.note-navigation.c", "Look immediately left of a group of two black keys."),
+  "octave-pattern": { ...ex("octave-pattern", "play-sequence", "Play middle C, then the next C higher.", [60,72], "piano.keyboard.octave-pattern", "Find the same two-black-key landmark twice."), labels: "none" },
+  "c-fluency": { ...pc("c-fluency", "Find any C without using a note label.", [0], "piano.note-navigation.c", "Look immediately left of a group of two black keys."), labels: "none" },
   "neighbors-of-c": ex("neighbors-of-c", "play-sequence", "Play B, C, D around middle C.", [59,60,62], "piano.note-navigation.b-d", "B is left of C; D is right."),
-  "f-landmark": pc("f-landmark", "Find F and play it.", [5], "piano.note-navigation.f", "F is immediately left of a group of three black keys."),
-  "natural-navigation": ex("natural-navigation", "play-sequence", "Play F A D B, using landmarks rather than counting from C.", [65,69,62,71], "piano.note-navigation.naturals"),
+  "f-landmark": { ...pc("f-landmark", "Find F and play it.", [5], "piano.note-navigation.f", "F is immediately left of a group of three black keys."), labels: "none" },
+  "natural-navigation": { ...ex("natural-navigation", "play-sequence", "Play F A D B, using landmarks rather than counting from C.", [65,69,62,71], "piano.note-navigation.naturals"), labels: "none", emphasized: [] },
   "higher-lower": ex("higher-lower", "play-sequence", "Play C E G, then E D C to rise and fall.", [60,64,67,64,62,60], "piano.pitch.direction"),
   "sharp-flat-neighbor": pc("sharp-flat-neighbor", "Play the black key between C and D.", [1], "piano.note-navigation.accidentals", "The same key may be called C sharp or D flat."),
   "one-finger-control": { prompt: "Press middle C, hold it briefly, then release.", hint: "Keep the movement small and notice whether your hand feels free.", exercise: { id: "course-one-finger-control", kind: "hold-notes", prompt: "Hold middle C.", targetNotes: [60], minimumHoldMs: 700, evaluationMode: "objective", competency: { id: "piano.control.note-release", label: "Controlled press and release" } } },
@@ -163,12 +165,12 @@ export function InlinePianoLessonActivity({ lessonId, onComplete }: { lessonId: 
     if (activity.exercise?.kind !== "hold-notes") window.setTimeout(() => handleNote({ note, noteName: midiNoteToName(note), pitchClass: midiNoteToPitchClass(note), velocity: 0, type: "note-off", timestamp: Date.now(), source: "virtual" }), 140);
   };
 
-  return <div className="mt-6 rounded-2xl border border-primary/30 bg-background/35 p-5">
-    <div className="flex flex-wrap items-start justify-between gap-4"><div><p className="eyebrow">Play it here</p><h3 className="mt-2 font-serif text-2xl">{activity.prompt}</h3>{registerGuidance && <p className="mt-2 text-sm font-medium text-foreground">{registerGuidance}</p>}<p className="mt-2 text-xs text-faint">{status === "connected" ? `${inputCount} MIDI input${inputCount === 1 ? "" : "s"} ready${keyboardSize ? ` · ${keyboardSize}-key profile` : ""}` : "On-screen keyboard ready · MIDI optional"}</p></div><Button variant="secondary" onClick={() => void connect()}><Usb className="h-4 w-4" /> {status === "connected" ? "MIDI connected" : "Connect MIDI"}</Button></div>
+  return <div className="rounded-2xl border border-primary/30 bg-background/35 p-3 md:p-4">
+    <div className="flex flex-wrap items-start justify-between gap-3"><div className="min-w-0 flex-1"><p className="eyebrow [@media(max-height:820px)]:hidden">Play it here</p><h3 className="mt-1 font-serif text-lg leading-snug md:text-xl">{activity.prompt}</h3>{registerGuidance && <p className="mt-1 text-xs font-medium text-foreground">{registerGuidance}</p>}<p className="mt-1 text-xs text-faint [@media(max-height:820px)]:hidden">{status === "connected" ? `${inputCount} MIDI input${inputCount === 1 ? "" : "s"} ready${keyboardSize ? ` · ${keyboardSize}-key profile` : ""}` : "On-screen keyboard ready · MIDI optional"}</p></div><Button variant="secondary" onClick={() => void connect()}><Usb className="h-4 w-4" /> {status === "connected" ? "MIDI connected" : "Connect MIDI"}</Button></div>
     {status === "connected" && !keyboardSize && <div className="mt-4 rounded-xl border border-primary/30 bg-primary/5 p-4"><p className="font-medium text-foreground">How many keys does your MIDI keyboard have?</p><p className="mt-1 text-sm text-muted-foreground">ReLearn will use this to keep scales, two-hand work, and arpeggios inside your instrument’s practical range.</p><div className="mt-3 flex flex-wrap gap-2">{keyboardSizes.map((size) => <button key={size} type="button" onClick={() => saveKeyboardSize(size)} className="rounded-lg border border-hairline bg-surface px-4 py-2 text-sm hover:border-primary">{size} keys</button>)}</div></div>}
     {keyboardSize && <div className="mt-3 rounded-lg bg-surface px-3 py-2 text-xs text-faint"><span>{keyboardPlan(keyboardSize)}</span> <button type="button" className="text-primary underline-offset-2 hover:underline" onClick={() => setKeyboardSize(null)}>Change size</button></div>}
-    <div className={`my-4 rounded-xl p-4 text-sm ${success ? "bg-accent/10 text-foreground" : "bg-surface text-muted-foreground"}`} aria-live="polite">{success && <Check className="mr-2 inline h-4 w-4 text-accent" />}{feedback}</div>
-    {activity.velocityContrast ? <div className="grid gap-3 sm:grid-cols-2"><button type="button" onClick={() => play(60, 32)} className="rounded-xl border border-hairline p-4 text-left">Play C softly</button><button type="button" onClick={() => play(60, 108)} className="rounded-xl border border-primary/40 bg-primary/10 p-4 text-left">Play C strongly</button></div> : <VirtualKeyboard activeNotes={active} onPlay={play} startNote={activity.start ?? 48} endNote={activity.end ?? 76} visibleNotes={activity.visible ? new Set(activity.visible) : undefined} emphasizedNotes={activity.emphasized ? new Set(activity.emphasized) : new Set(activity.exercise?.targetNotes ?? [])} labelNaturals />}
-    <div className="mt-4 flex flex-wrap items-center justify-between gap-3">{activity.hint ? <button type="button" onClick={() => setHint(true)} className="inline-flex items-center gap-2 text-sm text-primary"><Lightbulb className="h-4 w-4" />{hint ? activity.hint : "Show hint"}</button> : <span />}{success && <Button onClick={onComplete}>Continue to the next lesson</Button>}</div>
+    <div className="my-2 flex flex-wrap items-center gap-x-3 gap-y-1"><div className={`min-w-0 flex-1 rounded-xl px-3 py-1.5 text-sm ${success ? "bg-accent/10 text-foreground" : "bg-surface text-muted-foreground"}`} aria-live="polite">{success && <Check className="mr-2 inline h-4 w-4 text-accent" />}{feedback}</div>{activity.hint && <button type="button" onClick={() => setHint(true)} className="inline-flex shrink-0 items-center gap-2 text-sm text-primary"><Lightbulb className="h-4 w-4" />{hint ? activity.hint : "Show hint"}</button>}</div>
+    {activity.velocityContrast ? <div className="grid gap-3 sm:grid-cols-2"><button type="button" onClick={() => play(60, 32)} className="rounded-xl border border-hairline p-4 text-left">Play C softly</button><button type="button" onClick={() => play(60, 108)} className="rounded-xl border border-primary/40 bg-primary/10 p-4 text-left">Play C strongly</button></div> : <VirtualKeyboard activeNotes={active} onPlay={play} startNote={activity.start ?? 48} endNote={activity.end ?? 76} visibleNotes={activity.visible ? new Set(activity.visible) : undefined} emphasizedNotes={activity.emphasized ? new Set(activity.emphasized) : new Set(activity.exercise?.targetNotes ?? [])} labelMode={activity.labels ?? "naturals"} showCaption={false} />}
+    {success && <div className="mt-2.5 flex justify-end"><Button onClick={onComplete}>Continue to the next lesson</Button></div>}
   </div>;
 }
