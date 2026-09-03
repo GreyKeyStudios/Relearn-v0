@@ -1,6 +1,6 @@
 # ReLearn Knowledge Engine — Design Handoff
 
-Status: canonical art direction approved, representative route validation complete, implementation not started  
+Status: canonical art direction approved, representative route validation complete, implementation underway — the shared visual system shipped in #42, and the semantic state colors below match `src/app/globals.css` as of 2026-09-03. The neutrals (canvas, sheet, text tones) have drifted in implementation and are the known gap between this document and the code.  
 Target: ReLearn v0 / Bridge Study Companion  
 Prototype: `docs/design/relearn-app-system-prototype.html`
 
