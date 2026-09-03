@@ -10,7 +10,9 @@ import {
   FlaskConical,
   Network,
   RotateCcw,
+  Settings,
 } from "lucide-react";
+import { ThemeToggle } from "./ThemeToggle";
 
 const items = [
   { href: "/", label: "Focus", icon: Compass },
@@ -20,6 +22,7 @@ const items = [
   { href: "/labs/relearn-vm", label: "Labs", icon: FlaskConical },
   { href: "/progress", label: "Progress", icon: BarChart3 },
   { href: "/career/ethical-hacking", label: "Career paths", icon: Network },
+  { href: "/settings", label: "Settings", icon: Settings },
 ];
 
 function isActive(pathname: string, href: string) {
@@ -64,7 +67,9 @@ export function SideNav() {
       </nav>
 
       <div className="mt-auto border-t border-hairline px-2 pt-5">
-        <p className="eyebrow text-[10px]">Warm Knowledge Studio</p>
+        <p className="eyebrow mb-2 text-[10px]">Appearance</p>
+        <ThemeToggle />
+        <p className="eyebrow mt-5 text-[10px]">Warm Knowledge Studio</p>
         <p className="mt-2 text-xs leading-relaxed text-faint">
           Learn, practice, prove, retain.
         </p>

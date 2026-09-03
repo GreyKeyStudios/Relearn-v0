@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpen, Compass, BarChart3, RotateCcw, Dumbbell } from "lucide-react";
+import { BookOpen, Compass, BarChart3, RotateCcw, Dumbbell, Settings } from "lucide-react";
 
 const tabs = [
   { href: "/", label: "Focus", icon: Compass },
@@ -10,6 +10,7 @@ const tabs = [
   { href: "/practice", label: "Practice", icon: Dumbbell },
   { href: "/review", label: "Review", icon: RotateCcw },
   { href: "/progress", label: "Progress", icon: BarChart3 },
+  { href: "/settings", label: "Settings", icon: Settings },
 ];
 
 export function BottomNav() {
@@ -29,7 +30,9 @@ export function BottomNav() {
             <Link
               key={href}
               href={href}
-              className={`flex min-h-12 min-w-16 flex-col items-center justify-center gap-1 rounded-lg px-3 py-1 text-xs transition-colors ${
+              /* flex-1 rather than a fixed min width: six tabs must still fit a
+                 375px phone without overflowing the bar. */
+              className={`flex min-h-12 min-w-0 flex-1 flex-col items-center justify-center gap-1 rounded-lg px-1 py-1 text-[11px] transition-colors ${
                 active ? "bg-primary/10 text-primary" : "text-faint hover:text-foreground"
               }`}
             >
