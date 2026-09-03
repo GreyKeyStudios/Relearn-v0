@@ -77,26 +77,31 @@ export default function RelearnLabVmPage() {
         </div>
       </section>
 
-      <section className="mb-10 border-t border-hairline pt-6">
-        <h2 className="eyebrow mb-4">How it will work</h2>
-        <LabSetupSteps />
-      </section>
+      {/* Reference detail is collapsed by default: this page is a status summary
+          first, and every section below was pushing the page past seven screens. */}
+      <details className="mb-4 border-t border-hairline pt-4">
+        <summary className="eyebrow cursor-pointer list-none py-1 hover:text-foreground">How it will work ›</summary>
+        <div className="mt-4"><LabSetupSteps /></div>
+      </details>
 
-      <section className="mb-10 border-t border-hairline pt-6">
-        <LabArchitectureTree />
-      </section>
+      <details className="mb-4 border-t border-hairline pt-4">
+        <summary className="eyebrow cursor-pointer list-none py-1 hover:text-foreground">Architecture ›</summary>
+        <div className="mt-4"><LabArchitectureTree /></div>
+      </details>
 
-      <section className="mb-10 border-t border-hairline pt-6">
-        <LabContainmentNotice />
-      </section>
+      <details className="mb-4 border-t border-hairline pt-4">
+        <summary className="eyebrow cursor-pointer list-none py-1 hover:text-foreground">Containment ›</summary>
+        <div className="mt-4"><LabContainmentNotice /></div>
+      </details>
 
-      <section className="mb-10 border-t border-hairline pt-6">
-        <ApplianceCompatibilityCard info={RELEARN_APPLIANCE_INFO} />
-      </section>
+      <details className="mb-4 border-t border-hairline pt-4">
+        <summary className="eyebrow cursor-pointer list-none py-1 hover:text-foreground">Appliance compatibility ›</summary>
+        <div className="mt-4"><ApplianceCompatibilityCard info={RELEARN_APPLIANCE_INFO} /></div>
+      </details>
 
-      <section className="mb-10 border-t border-hairline pt-6">
-        <h2 className="eyebrow mb-2">Scenario catalog</h2>
-        <p className="mb-4 text-sm text-muted-foreground">
+      <details className="mb-4 border-t border-hairline pt-4" open>
+        <summary className="eyebrow cursor-pointer list-none py-1 hover:text-foreground">Scenario catalog ›</summary>
+        <p className="mb-4 mt-3 text-sm text-muted-foreground">
           Web walkthroughs can ship before the appliance. VM packs stay labeled{" "}
           <LabAvailabilityBadge availability="planned" /> until an OVA exists.
         </p>
@@ -105,7 +110,7 @@ export default function RelearnLabVmPage() {
             <LabEnvironmentCard key={entry.id} entry={entry} />
           ))}
         </div>
-      </section>
+      </details>
 
       <section className="mb-10 border-t border-hairline pt-6">
         <h2 className="eyebrow mb-3">Related</h2>
