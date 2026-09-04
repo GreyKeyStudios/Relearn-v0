@@ -40,7 +40,7 @@ import {
   VlanTrunkDrill,
   WirelessStandardDrill,
 } from "@/components/simulators/network";
-import { CfFileFolderManager } from "@/components/simulators/fundamentals";
+import { CfFileFolderManager, PcInteriorHotspot } from "@/components/simulators/fundamentals";
 import { RelearnSynth } from "@/components/simulators/synthesis";
 
 export interface SimulatorRegistryEntry {
@@ -276,6 +276,12 @@ export const securityRegistry: SimulatorRegistryEntry[] = [
 
 /** Pathway F — Computer Fundamentals simulators */
 export const fundamentalsRegistry: SimulatorRegistryEntry[] = [
+  {
+    id: "pc-interior-hotspot",
+    name: "Inside the Box — Find the Part",
+    component: PcInteriorHotspot,
+    topicIds: ["cf-inside-the-box", "cf-cpu-ram-storage", "cf-motherboard-power-cooling"],
+  },
   {
     id: "cf-file-folder-manager",
     name: "File & Folder Manager",

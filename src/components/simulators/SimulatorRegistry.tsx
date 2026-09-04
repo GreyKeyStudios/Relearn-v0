@@ -30,6 +30,41 @@ export interface OrderDrillItem {
   explanation?: string;
 }
 
+/**
+ * One clickable area of a hotspot diagram.
+ *
+ * `d` is SVG path data in the item's own viewBox space, so any shape works
+ * without the pool needing a bitmap. Diagrams are authored as data rather than
+ * sourced as photographs: no licensing, no asset pipeline, crisp at any size,
+ * and they inherit the theme.
+ */
+export interface HotspotRegion {
+  id: string;
+  /** The real name, revealed only after the learner answers. */
+  label: string;
+  /** SVG path data, e.g. "M40 40H300V240H40Z". */
+  d: string;
+  /**
+   * Neutral, position-based description for keyboard and screen-reader users
+   * — "large square socket near the top left", never "CPU". Naming the part
+   * here would hand over the answer.
+   */
+  ariaLabel?: string;
+}
+
+export interface HotspotDrillItem {
+  id: string;
+  prompt: string;
+  /** e.g. "0 0 400 300" — all region paths are in this coordinate space. */
+  viewBox: string;
+  /** Non-interactive shapes drawn beneath the regions, for context. */
+  backdrop?: { d: string }[];
+  regions: HotspotRegion[];
+  correctRegionId: string;
+  weakConcept: string;
+  explanation?: string;
+}
+
 interface DrillRunnerProps {
   onComplete: (result: SimulatorResult) => void;
   minItems?: number;
@@ -38,6 +73,10 @@ interface DrillRunnerProps {
 
 interface ChoiceDrillRunnerProps extends DrillRunnerProps {
   pool: ChoiceDrillItem[];
+}
+
+interface HotspotDrillRunnerProps extends DrillRunnerProps {
+  pool: HotspotDrillItem[];
 }
 
 interface OrderDrillRunnerProps extends DrillRunnerProps {
@@ -301,6 +340,130 @@ export function OrderDrillRunner({
           {current.explanation && (
             <p className="mt-2 text-sm text-zinc-400">{current.explanation}</p>
           )}
+        </div>
+      )}
+    </DrillFrame>
+  );
+}
+
+/**
+ * Spatial-identification drill — "click the part". The learner points at the
+ * thing before anything names it, which is the `experience` half of BLS-4
+ * (examples before definitions) applied to hardware.
+ *
+ * Serves ~14 A+/Computer Fundamentals topics on its own, and the settings-panel
+ * topics too: clicking a CPU socket and clicking a Windows setting are the same
+ * interaction over a different diagram.
+ */
+export function HotspotDrillRunner({
+  pool,
+  onComplete,
+  minItems = 5,
+  maxItems = 8,
+}: HotspotDrillRunnerProps) {
+  const sessionItems = useMemo(
+    () => pickDrillItems(pool, minItems, maxItems),
+    [pool, minItems, maxItems]
+  );
+
+  const [index, setIndex] = useState(0);
+  const [selected, setSelected] = useState<string | null>(null);
+  const [showResult, setShowResult] = useState(false);
+  const [score, setScore] = useState(0);
+  const [weakConcepts, setWeakConcepts] = useState<string[]>([]);
+
+  const current = sessionItems[index];
+  const progress = ((index + (showResult ? 1 : 0)) / sessionItems.length) * 100;
+  const correctRegion = current.regions.find((r) => r.id === current.correctRegionId);
+
+  function handleNext() {
+    if (!selected) return;
+
+    if (!showResult) {
+      const grade = gradeChoice(selected, current.correctRegionId, current.weakConcept);
+      if (grade.correct) setScore((s) => s + 1);
+      else if (grade.weakConcept) setWeakConcepts((w) => [...w, grade.weakConcept!]);
+      setShowResult(true);
+      return;
+    }
+
+    if (index < sessionItems.length - 1) {
+      setIndex((i) => i + 1);
+      setSelected(null);
+      setShowResult(false);
+    } else {
+      onComplete(buildSimulatorResult(score, sessionItems.length, weakConcepts));
+    }
+  }
+
+  return (
+    <DrillFrame
+      progress={progress}
+      label={`Diagram ${index + 1} of ${sessionItems.length}`}
+      prompt={current.prompt}
+      actionLabel={
+        showResult ? (index < sessionItems.length - 1 ? "Next" : "Finish") : "Check Answer"
+      }
+      actionDisabled={!selected}
+      onAction={handleNext}
+    >
+      <svg
+        viewBox={current.viewBox}
+        role="group"
+        aria-label="Diagram — select a region"
+        className="w-full rounded-xl border border-hairline bg-background/40"
+      >
+        {current.backdrop?.map((shape, i) => (
+          <path key={i} d={shape.d} className="fill-muted stroke-hairline" strokeWidth={2} />
+        ))}
+        {current.regions.map((region) => {
+          const isSelected = selected === region.id;
+          const isCorrect = region.id === current.correctRegionId;
+          let className = "fill-surface-raised stroke-faint hover:fill-muted";
+          if (showResult) {
+            if (isCorrect) className = "fill-accent/25 stroke-accent";
+            else if (isSelected) className = "fill-[var(--risk)]/25 stroke-[var(--risk)]";
+          } else if (isSelected) {
+            className = "fill-primary/25 stroke-primary";
+          }
+          return (
+            <path
+              key={region.id}
+              d={region.d}
+              role="button"
+              tabIndex={showResult ? -1 : 0}
+              aria-label={region.ariaLabel ?? `Region ${region.id}`}
+              aria-pressed={isSelected}
+              onClick={() => !showResult && setSelected(region.id)}
+              onKeyDown={(event) => {
+                if (showResult) return;
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  setSelected(region.id);
+                }
+              }}
+              strokeWidth={2}
+              className={`cursor-pointer outline-none transition-colors focus-visible:stroke-primary focus-visible:[stroke-width:4] ${className}`}
+            />
+          );
+        })}
+      </svg>
+
+      {showResult && (
+        <div
+          className={`rounded-xl p-3 text-sm ${
+            selected === current.correctRegionId
+              ? "bg-accent/10 text-foreground"
+              : "bg-muted text-muted-foreground"
+          }`}
+          aria-live="polite"
+        >
+          <p className="font-medium text-foreground">
+            {selected === current.correctRegionId
+              ? `Correct — that is the ${correctRegion?.label}.`
+              : `Not quite. The highlighted region is the ${correctRegion?.label}.`}
+          </p>
+          {current.explanation && <p className="mt-1">{current.explanation}</p>}
         </div>
       )}
     </DrillFrame>
