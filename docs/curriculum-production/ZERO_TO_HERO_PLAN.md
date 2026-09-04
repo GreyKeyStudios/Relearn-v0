@@ -72,6 +72,27 @@ This mapping keeps drill choice principled rather than arbitrary. Existing compo
 
 The bolded rows are the biggest wins for A+ specifically: it is a hardware certification currently taught entirely in prose. "Connect the dots" for cabling and "build it, then boot it" for assembly are the interactions that concept genuinely wants, and neither needs a VM.
 
+### Which runners to build
+
+Interaction variety does **not** come from new components. Two generic runners — [`ChoiceDrillRunner` and `OrderDrillRunner`](../../src/components/simulators/SimulatorRegistry.tsx) — already power all 36 drills in [`src/content/simulators/drills/`](../../src/content/simulators/drills/). Each named drill is a ~9-line wrapper over a runner plus a **data pool**. Adding a drill means adding a content file, not a component.
+
+Keep it that way. Runners are shared infrastructure and must stay few; pools are cheap and parallelise safely.
+
+A shape audit of all 72 A+ topics and 27 of Computer Fundamentals' topics gives this priority:
+
+| Priority | Runner | Serves | Note |
+|---|---|---|---|
+| 1 | **`HotspotRunner`** — click a region of an image | ~14 spatial-identification topics, likely +9 settings-panel topics | Biggest single gap. "Click the CPU socket" and "click where you'd disable startup apps" are one interaction with different images — build it generic and it covers both |
+| 2 | **`ConnectRunner`** — link node to node | ~7 physical-topology topics | Makes SOHO setup and "what is a network" teach rather than describe |
+| 3 | `TerminalRunner` | ~4 CLI topics | **Hold.** Lowest ROI, highest cost. Check how PowerShell's 15 LES already teach CLI before building anything |
+| — | Branching / wrong-turn steps | procedure topics | An option on `OrderDrillRunner`, not a new runner |
+
+Classification, triage, and procedure shapes — roughly a third of the audited topics — are already served by the existing two runners and need pools only.
+
+Note also that **~15 of A+'s 72 topics need no new interaction at all**: nine are domain reviews that compose other topics' drills, and six are genuinely propositional. The interactive gap is smaller than "72 topics, zero LES" implies.
+
+**Status of this audit:** provisional. Shapes were derived by keyword matching over topic names; 17 topics came back unclassified, and Computer Fundamentals module 1 was not parsed. Treat the runner priority as sound and the per-topic assignment as unverified — a human reads the topic before authoring its pool.
+
 ### Rules that keep this honest
 
 1. **A drill teaches only what it can observe.** A matcher demonstrates recall of pairs, not understanding of why the pairing holds. Do not report drill completion as conceptual mastery — the same discipline Piano uses when it verifies notes and order but explicitly refuses to judge fingering, posture, or tension.
