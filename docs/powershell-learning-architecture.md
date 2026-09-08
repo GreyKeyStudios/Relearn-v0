@@ -140,7 +140,7 @@ separate tracks.
 
 Bold = added in this pass. Curriculum steps: 17 topics + 10 practice labs = **27**.
 
-### PowerShell II — 6 modules, 15 topics, 14 labs/projects
+### PowerShell II — 6 modules, 15 topics, 15 labs/projects
 
 | Module | Topics | Labs / projects |
 |--------|--------|-----------------|
@@ -151,7 +151,7 @@ Bold = added in this pass. Curriculum steps: 17 topics + 10 practice labs = **27
 | M5 Microsoft Cloud Automation | Microsoft Graph · Entra ID & M365 Reporting · Azure PowerShell | `ps2-project-graph-report` · `ps2-lab-entra-change-plan` · `ps2-project-azure-inventory` |
 | M6 Production Automation & Capstone | Unattended Automation · Professional Patterns & Capstone | `ps2-lab-scheduled-automation` · `ps2-lab-whatif-safety` · `ps2-capstone-automation-toolkit` |
 
-Curriculum steps: 15 topics + 14 practice labs = **29**.
+Curriculum steps: 15 topics + 15 practice labs = **30**.
 
 Project families covered: **A** IT inventory reporter (`ps2-project-it-inventory`), **B** bulk user data
 cleanup (`ps2-project-bulk-user-cleanup`), **C** API automation with pagination and retry

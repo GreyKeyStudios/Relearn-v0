@@ -8,10 +8,9 @@ test.describe("PowerShell I and II learner paths", () => {
     await seedProfile(page, "new-learner");
     await gotoHydrated(page, "/cert/powershell");
 
+    await expect(page.getByRole("heading", { name: "PowerShell I" })).toBeVisible();
     await expect(
-      page.getByRole("heading", {
-        name: /PowerShell I: Foundations & Local Automation/i,
-      })
+      page.getByText(/Foundations & Local Automation/i).first()
     ).toBeVisible();
 
     await gotoHydrated(page, "/cert/powershell/assignment/ps-lab-first-commands");
@@ -28,10 +27,9 @@ test.describe("PowerShell I and II learner paths", () => {
     await seedProfile(page, "new-learner");
     await gotoHydrated(page, "/cert/powershell-ii");
 
+    await expect(page.getByRole("heading", { name: "PowerShell II" })).toBeVisible();
     await expect(
-      page.getByRole("heading", {
-        name: /PowerShell II: Enterprise & Cloud Automation/i,
-      })
+      page.getByText(/Enterprise & Cloud Automation/i).first()
     ).toBeVisible();
     await expect(
       page.getByText("Module 1 — Reusable Tool Design")
@@ -42,7 +40,12 @@ test.describe("PowerShell I and II learner paths", () => {
       "/cert/powershell-ii/lesson/ps2-advanced-functions"
     );
     await expect(
-      page.getByText(/script you can hand over|CmdletBinding|advanced function/i)
+      page.getByRole("heading", {
+        name: "Advanced Functions & Comment-Based Help",
+      })
+    ).toBeVisible();
+    await expect(
+      page.getByText(/script you can hand over/i).first()
     ).toBeVisible();
 
     await gotoHydrated(
@@ -58,7 +61,7 @@ test.describe("PowerShell I and II learner paths", () => {
       "/cert/powershell-ii/assignment/ps2-capstone-automation-toolkit"
     );
     await expect(
-      page.getByRole("heading", { name: /Enterprise Automation Toolkit|Capstone/i })
+      page.getByRole("heading", { name: /Enterprise Automation Toolkit/i })
     ).toBeVisible();
     await expect(page.getByRole("heading", { name: "Try It" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Reflect" })).toBeVisible();
