@@ -21,7 +21,12 @@ import type {
 } from "./types";
 
 function templateForLiveTrack(trackId: string, skills: boolean): CourseTemplate {
-  if (trackId === "git-github" || trackId === "powershell") return "B";
+  if (
+    trackId === "git-github" ||
+    trackId === "powershell" ||
+    trackId === "powershell-ii"
+  )
+    return "B";
   if (trackId === "vm-lab" || trackId === "sound-synthesis") return "C";
   if (skills) return "B";
   return "A";

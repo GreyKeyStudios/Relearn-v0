@@ -86,6 +86,11 @@ export function smokeTestPaths(): { path: string; ok: boolean; detail: string }[
   const gitLocalLab = getAssignment("git-github", "git-lab-local-basics");
   const gitCapstoneLab = getAssignment("git-github", "git-lab-capstone");
   const psLab = getAssignment("powershell", "ps-lab-first-commands");
+  const ps2Lab = getAssignment("powershell-ii", "ps2-lab-build-a-tool");
+  const ps2Capstone = getAssignment(
+    "powershell-ii",
+    "ps2-capstone-automation-toolkit"
+  );
 
   return [
     {
@@ -167,6 +172,21 @@ export function smokeTestPaths(): { path: string; ok: boolean; detail: string }[
       path: "/cert/powershell/assignment/ps-lab-first-commands",
       ok: !!psLab && psLab.assignment.type === "external-lab",
       detail: "PowerShell first commands lab",
+    },
+    {
+      path: "/cert/powershell-ii/lesson/ps2-advanced-functions",
+      ok: !!getAssignment("powershell-ii", "ps2-lab-build-a-tool"),
+      detail: "PowerShell II Module 1 lesson and lab resolve",
+    },
+    {
+      path: "/cert/powershell-ii/assignment/ps2-lab-build-a-tool",
+      ok: !!ps2Lab && ps2Lab.assignment.type === "external-lab",
+      detail: "PowerShell II build-a-tool lab",
+    },
+    {
+      path: "/cert/powershell-ii/assignment/ps2-capstone-automation-toolkit",
+      ok: !!ps2Capstone && ps2Capstone.assignment.type === "external-lab",
+      detail: "PowerShell II enterprise automation toolkit capstone",
     },
   ];
 }
