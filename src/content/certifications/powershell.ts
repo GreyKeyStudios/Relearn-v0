@@ -11,8 +11,10 @@ import { PS_SORTING_AND_MEASURE_EXPERIENCE } from "@/content/lessons/ps-sorting-
 import { PS_FORMATTING_AND_EXPORT_EXPERIENCE } from "@/content/lessons/ps-formatting-and-export-experience";
 import { PS_SERVICES_AND_PROCESSES_EXPERIENCE } from "@/content/lessons/ps-services-and-processes-experience";
 import { PS_VARIABLES_AND_QUOTING_EXPERIENCE } from "@/content/lessons/ps-variables-and-quoting-experience";
+import { PS_COLLECTIONS_AND_HASHTABLES_EXPERIENCE } from "@/content/lessons/ps-collections-and-hashtables-experience";
 import { PS_IF_AND_LOOPS_EXPERIENCE } from "@/content/lessons/ps-if-and-loops-experience";
 import { PS_FUNCTIONS_AND_PARAMETERS_EXPERIENCE } from "@/content/lessons/ps-functions-and-parameters-experience";
+import { PS_JSON_AND_REST_BASICS_EXPERIENCE } from "@/content/lessons/ps-json-and-rest-basics-experience";
 import { PS_ERRORS_AND_CAPSTONE_EXPERIENCE } from "@/content/lessons/ps-errors-and-capstone-experience";
 
 const WINDOWS_POWERSHELL_RESOURCE: ExternalResource = {
@@ -25,14 +27,20 @@ const WINDOWS_POWERSHELL_RESOURCE: ExternalResource = {
     "PowerShell 5.1 ships with Windows. Windows Terminal is recommended. See Microsoft docs for PowerShell 7+ install on other OSes.",
 };
 
-/** PowerShell Foundations — ReLearn skills track (Path A cert shell). */
+/**
+ * PowerShell I: Foundations & Local Automation — ReLearn skills track (Path A cert shell).
+ *
+ * Registry id stays `powershell` so existing learner progress ids keep resolving.
+ * Enterprise, remoting, Microsoft Graph, and Azure content lives in `powershell-ii`.
+ * Boundary rationale: docs/powershell-learning-architecture.md §3.
+ */
 export const powershell: Certification = {
   id: "powershell",
-  name: "PowerShell Foundations",
-  shortName: "PowerShell",
+  name: "PowerShell I: Foundations & Local Automation",
+  shortName: "PowerShell I",
   vendor: "ReLearn",
   overview:
-    "A hands-on job skill curriculum — not a vendor exam. Five procedural modules take you from why IT work needs a shell through cmdlets, pipelines, file navigation, object properties, filtering and shaping reports, formatting and export, services and processes, variables and quoting, then scripting with if/loops, functions, and a capstone admin task. Each topic includes guided examples, labs on your own Windows PC, and workplace-focused traps — built for help desk and junior admin roles.",
+    "A hands-on job skill curriculum — not a vendor exam. Five procedural modules take you from why IT work needs a shell through cmdlets and pipelines, file navigation, the object model, filtering and shaping reports, formatting and export, services and processes, variables and quoting, arrays and hash tables, then scripting with if/loops and functions, your first REST API call, error handling, and a local system audit capstone. Every module lab follows Try It → Break It → Fix It → Verify It → Reflect on your own Windows PC, so you practise recovering from realistic mistakes instead of only copying working commands. Finish here able to write useful local scripts and explain what they do; continue into PowerShell II for reusable tooling, APIs, remoting, Microsoft Graph, Entra, and Azure automation.",
   examSummary: {
     questionCount: 0,
     durationMinutes: 0,
@@ -819,21 +827,38 @@ The external Windows PowerShell resource documents install options for PowerShel
               id: "ps-lab-first-commands",
               title: "First PowerShell Commands",
               type: "external-lab",
-              instructions: `Open Windows Terminal or PowerShell on your PC.
+              instructions: `Goal: prove you can discover an unfamiliar command without searching the web. Open Windows Terminal or PowerShell — choose the ordinary, non-administrator window. Every command here is read-only.
 
-1. Run Get-Location — note your current folder path.
-2. Run Get-ChildItem — list files in that folder (alias: dir or ls).
-3. Run Get-Help Get-Process -Examples — read one example, then run Get-Process | Select-Object -First 3.
-4. Run Get-Help Get-ChildItem -Parameter WhatIf (read only — no need to delete anything).
+### Try It
+1. Run Get-Location — write down the folder path it prints.
+2. Run Get-ChildItem — list the files in that folder.
+3. Run Get-Command Get-Process — read the CommandType, Version, and Source columns.
+4. Run Get-Help Get-Process -Examples and read one example out loud.
+5. Run Get-Process | Select-Object -First 3 — a pipeline whose two halves you can now name.
 
-Write down one thing each command printed. If a command errors, run Get-Help on that cmdlet before retrying.`,
-              estimatedMinutes: 20,
+### Break It
+6. Run Get-Processes (plural, on purpose) — read the CommandNotFoundException and note that it names the whole command.
+7. Run Get-Process -Names explorer — read this error and note that it names a parameter, not a command.
+
+### Fix It
+8. Do not guess. Run Get-Command *Process* to find the real cmdlet name, then run that name on its own.
+9. Run Get-Help Get-Process -Parameter Name to learn the correct parameter spelling, then run Get-Process -Name explorer.
+
+### Verify It
+10. Run Get-Command Get-Process | Select-Object Name, CommandType — the command resolves cleanly.
+11. Run Get-Process -Name explorer | Select-Object Name, Id — one row, no parameter error.
+
+### Reflect
+12. In your notes, write one sentence: how did the two error messages in steps 6 and 7 differ, and which one told you the command existed but you had called it wrongly?`,
+              estimatedMinutes: 25,
               externalResourceId: "windows-powershell",
               completionCriteria: [
                 "Opened PowerShell or Windows Terminal",
                 "Ran Get-Location and Get-ChildItem successfully",
-                "Used Get-Help on at least one cmdlet",
+                "Used Get-Help and Get-Command to discover a cmdlet and a parameter",
                 "Ran a pipeline (command | command) at least once",
+                "Break It / Fix It: read both error messages and repaired each with a discovery command instead of a guess",
+                "Reflect: wrote down the difference between a missing-command and a missing-parameter error",
               ],
               relatedTopicIds: [
                 "ps-why-the-shell",
@@ -1092,8 +1117,60 @@ Run Get-Member on the first row and the tenth row of a large result set occasion
             { id: "ps-objects-and-properties-f5", front: "Count items?", back: "Measure-Object or (collection).Count" },
             { id: "ps-objects-and-properties-f6", front: "Custom report row?", back: "[PSCustomObject]@{ Column = 'value' }" },
           ],
-          practiceType: ["reading", "quiz", "flashcard"],
-          estimatedStudyMinutes: 30,
+          externalResources: [WINDOWS_POWERSHELL_RESOURCE],
+          assignments: [
+            {
+              id: "ps-lab-object-discovery",
+              title: "Object Discovery Lab",
+              type: "external-lab",
+              instructions: `Goal: prove for yourself that PowerShell output is objects, and that formatting throws the data away. Use an ordinary, non-administrator PowerShell window. Nothing here changes a service — you only read state and write two CSV files in the current folder.
+
+### Try It
+1. Run Get-Service | Get-Member -MemberType Property — write down three property names exactly as they are spelled.
+2. Run Get-Service | Select-Object -First 5 Name, Status, StartType — same objects, three chosen columns.
+3. Run (Get-Service -Name Spooler).Status — dot notation reads one property off one object.
+4. Run Get-Service | Where-Object { $_.Status -eq 'Running' } | Measure-Object — count the running services and keep the number.
+5. Run Get-ChildItem $env:TEMP -File | Select-Object -First 5 Name, @{N='SizeKB';E={[math]::Round($_.Length/1KB,1)}} — a calculated property built from a real number.
+
+### Break It
+6. Run Get-Service | Where-Object { $_.State -eq 'Running' } — State is not a property of a service object. You get zero rows and no error at all.
+7. Run Get-Service | Format-Table Name, Status | Where-Object { $_.Status -eq 'Running' } — you formatted before filtering, so Where-Object is now looking at format instructions instead of services.
+8. Run Get-Service | Format-Table Name, Status | Export-Csv .\\broken-services.csv -NoTypeInformation, then open broken-services.csv in Notepad.
+
+### Fix It
+9. Run Get-Service | Get-Member -MemberType Property | Select-Object Name and confirm the property is Status, not State. Rerun step 6 with the correct name.
+10. Put the filter before any formatting: Get-Service | Where-Object { $_.Status -eq 'Running' } | Format-Table Name, Status.
+11. Export objects, never formatted text: Get-Service | Where-Object { $_.Status -eq 'Running' } | Select-Object Name, Status, StartType | Export-Csv .\\good-services.csv -NoTypeInformation.
+
+### Verify It
+12. Open broken-services.csv and good-services.csv side by side. The broken file holds format-object rows such as ClassId and GroupingKey; the good file holds Name, Status, and StartType.
+13. Run Import-Csv .\\good-services.csv | Measure-Object — the count matches the number you kept from step 4, proving the data survived the round trip.
+14. Run Import-Csv .\\good-services.csv | Select-Object -First 3 — real values, not text art.
+
+### Reflect
+15. In your notes, answer in one or two sentences: the silent zero rows in step 6 and the garbage columns in step 8 share a single root cause. Name it, and name the one cmdlet that would have prevented both.
+
+Clean up when finished: Remove-Item .\\broken-services.csv, .\\good-services.csv — those two files only.`,
+              estimatedMinutes: 35,
+              externalResourceId: "windows-powershell",
+              completionCriteria: [
+                "Used Get-Member to list the real properties on a service object and a file object",
+                "Built a calculated property that turns bytes into readable units",
+                "Break It: reproduced both a wrong-property-name filter and a filter placed after Format-Table",
+                "Fix It: corrected the property name from Get-Member output and moved filtering ahead of formatting",
+                "Verify It: compared the broken and good CSV files and matched the good row count to the Where-Object count",
+                "Reflect: wrote down the shared root cause of both failures",
+              ],
+              relatedTopicIds: [
+                "ps-objects-and-properties",
+                "ps-filtering-with-where",
+                "ps-formatting-and-export",
+              ],
+              order: 2,
+            },
+          ],
+          practiceType: ["reading", "quiz", "flashcard", "external-lab"],
+          estimatedStudyMinutes: 40,
           difficulty: "medium",
         },
         {
@@ -1187,30 +1264,49 @@ The Files and Navigation lab is your Module 2 graduation gate — complete it be
               id: "ps-lab-files-navigation",
               title: "Files and Navigation Lab",
               type: "external-lab",
-              instructions: `Open PowerShell and complete these tasks:
+              instructions: `Goal: navigate without getting lost, inspect a file as an object, and translate the aliases you type by hand into the cmdlets you would put in a script. Everything here happens inside your own Documents folder.
 
-1. Run Get-Location, then Set-Location $env:USERPROFILE\\Documents (create the folder if missing).
-2. Run New-Item -ItemType File -Name lab-notes.txt -Force, then Get-ChildItem lab-notes.txt | Get-Member -MemberType Property.
-3. List three properties with Select-Object on that file object.
-4. Run Get-Alias dir and Get-Command cd — write down the real cmdlet names.
-5. Rewrite this alias line as cmdlets: cd .. ; dir *.txt
-6. Run Set-Location ~ when finished.
+### Try It
+1. Run Get-Location, then Set-Location "$env:USERPROFILE\\Documents".
+2. Run New-Item -ItemType File -Name lab-notes.txt -Force.
+3. Run Get-ChildItem lab-notes.txt | Get-Member -MemberType Property — find FullName, Length, and LastWriteTime.
+4. Run Get-ChildItem lab-notes.txt | Select-Object FullName, Length, LastWriteTime.
+5. Run Get-Alias dir, then Get-Alias ls, then Get-Command cd — write down the real cmdlet behind each one.
 
-Document cmdlet equivalents you discovered. Use Get-Help if any step errors.`,
-              estimatedMinutes: 25,
+### Break It
+6. Run Set-Location "$env:USERPROFILE\\Documnets" — a deliberate typo. Read the ObjectNotFound error and notice it quotes back the exact path it could not find.
+7. Run Get-ChildItem C:\\Program Files with no quotes. Read the error and work out which part of the path PowerShell treated as a second, unexpected argument.
+
+### Fix It
+8. Correct the spelling rather than guessing: Set-Location "$env:USERPROFILE\\Documents".
+9. Quote the path that contains a space: Get-ChildItem "C:\\Program Files" | Select-Object -First 3 Name.
+10. Rewrite this alias-only line using full cmdlet names, write your version in your notes, then run it: cd .. ; dir *.txt
+
+### Verify It
+11. Run Get-Location and say out loud which folder you are in and why your rewritten line from step 10 landed you there.
+12. Run Test-Path "$env:USERPROFILE\\Documents\\lab-notes.txt" — it prints True.
+13. Run Set-Location "$env:USERPROFILE" to finish somewhere predictable.
+
+### Reflect
+14. In your notes: a script full of dir and cd runs fine on your PC. Explain one reason it may fail or read confusingly on a colleague's machine, and name the two cmdlets you would use instead.
+
+Clean up: Remove-Item "$env:USERPROFILE\\Documents\\lab-notes.txt"`,
+              estimatedMinutes: 30,
               externalResourceId: "windows-powershell",
               completionCriteria: [
-                "Navigated with Set-Location and verified with Get-Location",
-                "Created a file and inspected properties with Get-Member",
-                "Identified alias mappings with Get-Alias or Get-Command",
-                "Rewrote alias commands using full cmdlet names",
+                "Navigated with Set-Location and verified position with Get-Location",
+                "Created a file and inspected its properties with Get-Member",
+                "Identified alias mappings with Get-Alias and Get-Command",
+                "Break It: reproduced both a mistyped path error and an unquoted path-with-space error",
+                "Fix It: rewrote an alias-only line using full cmdlet names and quoted the path with a space",
+                "Verify It: confirmed the file exists with Test-Path and finished in a known folder",
               ],
               relatedTopicIds: [
                 "ps-paths-and-navigation",
                 "ps-objects-and-properties",
                 "ps-aliases-vs-cmdlets",
               ],
-              order: 2,
+              order: 3,
             },
           ],
           practiceType: ["reading", "quiz", "flashcard", "external-lab"],
@@ -1502,29 +1598,48 @@ Measure-Object Line, Character, Word apply to text files via Get-Content piped i
               id: "ps-lab-pipeline-report",
               title: "Pipeline Report Lab",
               type: "external-lab",
-              instructions: `Build a service report in PowerShell:
+              instructions: `Goal: build a service and process report, and prove to yourself that pipeline order is not a style preference. All read-only, plus one CSV in the current folder.
 
-1. Run Get-Service | Group-Object Status | Select-Object Name, Count — note running vs stopped counts.
+### Try It
+1. Run Get-Service | Group-Object Status | Select-Object Name, Count — write down the Running count.
 2. Run Get-Service | Where-Object { $_.Status -eq 'Running' } | Sort-Object DisplayName | Select-Object Name, DisplayName, StartType.
-3. Export step 2 to .\\running-services.csv with Export-Csv -NoTypeInformation.
-4. Run Get-Process | Sort-Object CPU -Descending | Select-Object -First 5 Name, CPU.
+3. Pipe step 2 to Export-Csv .\\running-services.csv -NoTypeInformation.
+4. Run Get-Process | Sort-Object CPU -Descending | Select-Object -First 5 Name, CPU — keep this output on screen.
 5. Run Get-ChildItem $env:TEMP -File | Measure-Object -Property Length -Sum.
 
-Write one sentence explaining what each step produced. Fix errors with Get-Help.`,
-              estimatedMinutes: 30,
+### Break It
+6. Run Get-Service | Select-Object Name, DisplayName | Where-Object { $_.Status -eq 'Running' } — you dropped Status before filtering on it. Zero rows, no error.
+7. Run Get-Process | Select-Object -First 5 Name, CPU | Sort-Object CPU -Descending — you took five arbitrary rows and then sorted only those five. Compare against step 4.
+
+### Fix It
+8. Reorder step 6 so Where-Object runs before Select-Object, then rerun it.
+9. Reorder step 7 so Sort-Object runs before Select-Object -First 5, then rerun it.
+
+### Verify It
+10. Run Import-Csv .\\running-services.csv | Measure-Object — the row count matches the Running count you wrote down in step 1.
+11. Put your fixed step 9 output next to your step 4 output — the same five processes, in the same order.
+12. Write one sentence per Try It step saying what it produced and which cmdlet did the work.
+
+### Reflect
+13. In your notes: state the rule you just proved about where filtering and sorting belong in a pipeline, and explain why step 6 returned nothing instead of raising an error.
+
+Clean up: Remove-Item .\\running-services.csv`,
+              estimatedMinutes: 35,
               externalResourceId: "windows-powershell",
               completionCriteria: [
-                "Grouped services by status with counts",
+                "Grouped services by status with counts and recorded the Running total",
                 "Filtered, sorted, and exported running services to CSV",
-                "Produced top-five CPU process list",
-                "Measured total byte size of temp files",
+                "Produced a top-five CPU process list",
+                "Measured total byte size of temp files with Measure-Object -Sum",
+                "Break It: reproduced a filter on a dropped property and a sort applied after Select-Object -First",
+                "Fix It / Verify It: reordered both pipelines and matched the CSV row count to the grouped Running count",
               ],
               relatedTopicIds: [
                 "ps-filtering-with-where",
                 "ps-shaping-with-select",
                 "ps-sorting-and-measure",
               ],
-              order: 3,
+              order: 4,
             },
           ],
           practiceType: ["reading", "quiz", "flashcard", "external-lab"],
@@ -1721,28 +1836,50 @@ Process Owner column in Task Manager maps to different properties in Get-Process
               id: "ps-lab-services-export",
               title: "Services and Export Lab",
               type: "external-lab",
-              instructions: `Complete on your PC (admin optional but helpful):
+              instructions: `Goal: produce a service health CSV a colleague could act on, and learn what a silent success looks like. Every command is read-only; the only writes are CSV files under your own Documents folder. Do not start or stop services on a work machine.
 
+### Try It
 1. Run Get-Service | Group-Object Status | Select-Object Name, Count.
-2. Run Get-Service | Where-Object { $_.StartType -eq 'Automatic' -and $_.Status -eq 'Stopped' } | Select-Object Name, DisplayName, Status | Export-Csv .\\auto-stopped.csv -NoTypeInformation.
-3. Run Get-Process | Sort-Object WorkingSet64 -Descending | Select-Object -First 5 Name, Id, @{N='MemMB';E={[math]::Round($_.WorkingSet64/1MB,1)}}.
-4. If safe, run Get-Service Spooler and note Status. Do NOT stop critical services on a work PC without approval.
-5. Open auto-stopped.csv in Excel or Notepad — verify columns.
+2. Run $report = Get-Service | Where-Object { $_.StartType -eq 'Automatic' -and $_.Status -eq 'Stopped' } | Select-Object Name, DisplayName, Status, StartType
+3. Run $report.Count — how many services are set to start automatically but are not running?
+4. Run $report | Export-Csv "$env:USERPROFILE\\Documents\\auto-stopped.csv" -NoTypeInformation
+5. Run Get-Process | Sort-Object WorkingSet64 -Descending | Select-Object -First 5 Name, Id, @{N='MemMB';E={[math]::Round($_.WorkingSet64/1MB,1)}}
+6. Run Get-Service -Name Spooler | Select-Object Name, Status, StartType — read-only inspection only.
 
-Record one service you would investigate from the CSV and why.`,
-              estimatedMinutes: 25,
+### Break It
+7. Run $report | Export-Csv "$env:USERPROFILE\\Documents\\reports\\auto-stopped.csv" -NoTypeInformation — the reports folder does not exist yet. Read the DirectoryNotFound error.
+8. Run exactly the same command again with -ErrorAction SilentlyContinue added. There is now no error and no file — the command looks like it worked.
+9. Run Test-Path "$env:USERPROFILE\\Documents\\reports\\auto-stopped.csv" — False. Your green run produced nothing.
+
+### Fix It
+10. Create the folder first: New-Item -ItemType Directory -Path "$env:USERPROFILE\\Documents\\reports" -Force
+11. Rerun the export from step 7 without -ErrorAction SilentlyContinue.
+
+### Verify It
+12. Run Test-Path "$env:USERPROFILE\\Documents\\reports\\auto-stopped.csv" — True.
+13. Run Import-Csv "$env:USERPROFILE\\Documents\\reports\\auto-stopped.csv" | Select-Object -First 3 — the headers are Name, DisplayName, Status, StartType.
+14. Pick one service from the CSV and write down whether you would investigate it and why.
+
+### Reflect
+15. In your notes: step 8 gave you a clean-looking run and no report. Explain in one sentence what -ErrorAction SilentlyContinue actually suppressed, and name the check you would add before trusting any silent success.
+
+Clean up: Remove-Item "$env:USERPROFILE\\Documents\\auto-stopped.csv" and, if you want your folder back the way it was, Remove-Item "$env:USERPROFILE\\Documents\\reports" -Recurse — read that path carefully before pressing Enter.`,
+              estimatedMinutes: 30,
               externalResourceId: "windows-powershell",
               completionCriteria: [
-                "Grouped services by status",
-                "Exported automatic-but-stopped services to CSV",
-                "Listed top five processes by memory",
-                "Opened and verified CSV contents",
+                "Grouped services by status and counted automatic-but-stopped services",
+                "Exported automatic-but-stopped services to CSV and re-imported it",
+                "Listed top five processes by memory with a calculated MemMB property",
+                "Break It: reproduced a failed export to a missing folder, then hid the same failure with -ErrorAction SilentlyContinue",
+                "Fix It / Verify It: created the folder, re-exported without suppression, and confirmed the file with Test-Path",
+                "Reflect: wrote down what silent success costs and how to detect it",
               ],
               relatedTopicIds: [
                 "ps-formatting-and-export",
                 "ps-services-and-processes",
+                "ps-errors-and-capstone",
               ],
-              order: 4,
+              order: 5,
             },
           ],
           practiceType: ["reading", "quiz", "flashcard", "external-lab"],
@@ -1841,6 +1978,152 @@ Variables make scripts reusable — capstone parameters like $ReportFolder exist
           estimatedStudyMinutes: 30,
           difficulty: "medium",
         },
+        {
+          id: "ps-collections-and-hashtables",
+          name: "Arrays & Hash Tables",
+          prerequisites: ["ps-variables-and-quoting"],
+          objectives: ["PS-M04-O10", "PS-M04-O11", "PS-M04-O12"],
+          lesson: {
+            title: "Arrays and Hash Tables",
+            content: `A variable holding one value gets you through a demo. Real admin work is plural: five services to check, forty rows from a spreadsheet, a lookup table mapping each service to the team that owns it. PowerShell gives you two collection types for that, and almost every script you write from here uses one or both.
+
+An array is an ordered list. Build one with @('Spooler','W32Time','Dnscache') or let a cmdlet build it for you — Get-Service already returns an array. Read the whole list with $critical, one item by position with $critical[0], the last item with $critical[-1], a slice with $critical[0..1], and the size with $critical.Count. Indexes start at zero, so $critical[3] on a three-item list returns nothing rather than raising an error.
+
+Adding to an array with += works and is the right call for small lists, but understand what it does: PowerShell creates a brand new array with one more slot and copies everything across. For a handful of items that cost is invisible. For thousands of rows in a loop it becomes slow, and the usual fix is to let the pipeline collect the output instead: $rows = Get-Service | ForEach-Object { ... }.
+
+A hash table is a labelled lookup rather than an ordered list. Build one with @{ Spooler = 'Print team'; W32Time = 'Infrastructure' }. Read a value by key with $owners['Spooler'] or $owners.Spooler. Add or change with $owners['Dnscache'] = 'Networking'. Inspect both halves with $owners.Keys and $owners.Values. Keys are unique, and a normal PowerShell hash table matches them case-insensitively, so $owners['spooler'] finds the same entry.
+
+Order is the difference that trips people up. An array preserves the order you built it in. A plain hash table makes no promise about the order its keys come back in, so never rely on it for report column order — shape the output with Select-Object instead. If you genuinely need an ordered set of pairs, [ordered]@{ } keeps insertion order.
+
+Operators are how you ask questions about all of this. -eq, -ne, -gt, -lt, -ge, -le compare single values. -like matches wildcards ('Spool*'), -match matches a regular expression, and -replace substitutes. For collections, -contains asks whether a list holds an item and -in asks the same question with the operands the other way round: $critical -contains 'Spooler' and 'Spooler' -in $critical are the same test. Getting the operand order backwards returns False with no error, which is one of the quietest bugs in PowerShell.
+
+The other quiet failure is a missing hash-table key. $owners['Spoolr'] returns nothing — no exception, no warning, just an empty cell in your report. When a lookup matters, guard it with $owners.ContainsKey($name) so a typo shows up as UNOWNED rather than blank. Silence is not the same as success.
+
+Put the two together and you have a report. Loop over the array, look each item up in the hash table, and emit a real object per row: $critical | ForEach-Object { [PSCustomObject]@{ Service = $_ ; Owner = $owners[$_] ; Status = (Get-Service -Name $_ -ErrorAction SilentlyContinue).Status } }. That output sorts, filters, and exports exactly like anything else PowerShell produces, because it is exactly the same kind of object.
+
+Two habits worth building now. First, name collections in the plural — $services, $rows, $owners — so a later reader knows a loop is coming. Second, check .Count before you index. A cmdlet that matched nothing hands you an empty collection, and $rows[0] on an empty collection gives you $null that silently poisons everything downstream.`,
+            experience: PS_COLLECTIONS_AND_HASHTABLES_EXPERIENCE,
+          },
+          lightbulbMoment:
+            "Arrays give you order and position; hash tables give you labelled lookup — and both answer a wrong question with silence rather than an error.",
+          keyFacts: [
+            "@('a','b') builds an array; index from zero and read the size with .Count",
+            "@{ Key = 'Value' } builds a hash table; read it with $table['Key'] or $table.Key",
+            "Plain hash tables do not guarantee key order — use [ordered]@{ } when order matters",
+            "Collection -contains item and item -in collection are the same test with reversed operands",
+            "A missing hash-table key returns nothing at all, not an error — guard with .ContainsKey()",
+            "[PSCustomObject]@{ } turns a hash table into a report row with named properties",
+          ],
+          guidedExample: {
+            title: "Build a Service Owner Report",
+            steps: [
+              "Run $critical = @('Spooler','W32Time','Dnscache') then $critical.Count and $critical[-1].",
+              "Run $owners = @{ Spooler='Print team'; W32Time='Infrastructure'; Dnscache='Networking' } then $owners.Keys.",
+              "Run 'Spooler' -in $critical and $critical -contains 'Spooler' — both True, operands reversed.",
+              "Run $owners['Spoolr'] — nothing comes back, and no error is raised.",
+              "Run $critical | ForEach-Object { [PSCustomObject]@{ Service = $_ ; Owner = $owners[$_] } } | Format-Table.",
+              "Run $critical | ForEach-Object { if ($owners.ContainsKey($_)) { $owners[$_] } else { \"UNOWNED: $_\" } } — the guarded lookup.",
+            ],
+          },
+          commonMistakes: [
+            "Reversing -contains operands so the test silently returns False",
+            "Indexing an empty collection ($rows[0]) and passing the resulting $null downstream",
+            "Assuming a plain hash table keeps the order you typed the keys in",
+            "Reading a mistyped hash-table key and treating the blank result as a real answer",
+            "Growing an array with += inside a loop over thousands of rows instead of letting the pipeline collect output",
+          ],
+          examTraps: [
+            "A report where one column is blank for every row — the lookup key came from the wrong property, not from the data",
+            "A script that works on a machine with three matches and breaks on one with a single match because .Count was assumed to be an array",
+            "CSV columns arriving in a different order on a colleague's run because a hash table was exported directly instead of shaped with Select-Object",
+            "A membership check that never fires in production because the collection and the item were written the wrong way round",
+          ],
+          realWorldScenario:
+            "You inherit a nightly script that emails a service-owner report. Half the Owner column is empty. Nothing errors. You discover the loop pipes an array of strings but the lookup uses $_.Name, so every key is $null. Adding a ContainsKey guard turns the silent blanks into UNOWNED rows, and the next morning the report names the two services nobody has claimed.",
+          quiz: [
+            { id: "ps-collections-and-hashtables-q1", prompt: "$critical = @('Spooler','W32Time','Dnscache'). What does $critical[3] return?", choices: [{ id: "a", text: "Nothing — the index is past the end and no error is raised" }, { id: "b", text: "'Dnscache', because indexes start at one" }, { id: "c", text: "An IndexOutOfRange exception that stops the script" }, { id: "d", text: "The whole array" }], correctChoiceId: "a", explanation: "Indexes start at zero, so valid positions are 0-2. PowerShell returns $null for a position past the end rather than throwing — which is why you check .Count before indexing.", difficulty: "medium" },
+            { id: "ps-collections-and-hashtables-q2", prompt: "Which line correctly asks whether $critical holds the value 'Spooler'?", choices: [{ id: "a", text: "'Spooler' -contains $critical" }, { id: "b", text: "$critical -contains 'Spooler'" }, { id: "c", text: "$critical -eq -in 'Spooler'" }, { id: "d", text: "$critical -match -contains 'Spooler'" }], correctChoiceId: "b", explanation: "-contains reads collection -contains item. Option a reverses the operands and returns False with no error — use 'Spooler' -in $critical if you prefer that word order.", difficulty: "medium" },
+            { id: "ps-collections-and-hashtables-q3", prompt: "$owners = @{ Spooler = 'Print team' }. You run $owners['Spoolr']. What happens?", choices: [{ id: "a", text: "You get 'Print team' because keys are matched loosely" }, { id: "b", text: "PowerShell raises a KeyNotFound error" }, { id: "c", text: "Nothing is returned and no error is raised" }, { id: "d", text: "The key is created with an empty value" }], correctChoiceId: "c", explanation: "A missing key returns $null silently. Keys are matched case-insensitively but not fuzzily, so a typo produces a blank cell in your report — guard with $owners.ContainsKey($name).", difficulty: "medium" },
+            { id: "ps-collections-and-hashtables-q4", prompt: "You need a report whose columns always appear in the same order for every colleague who runs the script. What should you rely on?", choices: [{ id: "a", text: "Exporting a plain hash table, since it keeps insertion order" }, { id: "b", text: "Shaping the output with Select-Object, or building it with [ordered]@{ }" }, { id: "c", text: "Sorting the keys alphabetically at the end" }, { id: "d", text: "Formatting with Format-Table before exporting" }], correctChoiceId: "b", explanation: "Plain hash tables make no ordering promise. Select-Object fixes the property order explicitly, and [ordered]@{ } preserves the order you typed. Format-Table before export would destroy the data entirely.", difficulty: "medium" },
+            { id: "ps-collections-and-hashtables-q5", prompt: "A loop over 5,000 CSV rows uses $results += $row and takes minutes to finish. What is the most accurate explanation?", choices: [{ id: "a", text: "+= rebuilds the whole array on every iteration, so the work grows with the row count" }, { id: "b", text: "+= is invalid syntax on arrays and is silently skipped" }, { id: "c", text: "Arrays cannot hold more than 1,000 items" }, { id: "d", text: "Import-Csv is the slow part and the array is irrelevant" }], correctChoiceId: "a", explanation: "Arrays are fixed-size, so += allocates a new array and copies everything each time. It is fine for small lists; for thousands of rows let the pipeline collect the output instead: $results = $rows | ForEach-Object { ... }.", difficulty: "hard" },
+          ],
+          questionBank: [
+            { id: "ps-collections-and-hashtables-b1", prompt: "Which returns the last element of $names regardless of length?", choices: [{ id: "a", text: "$names[-1]" }, { id: "b", text: "$names[$names.Count]" }, { id: "c", text: "$names.Last" }, { id: "d", text: "$names[end]" }], correctChoiceId: "a", explanation: "Negative indexes count from the end. $names[$names.Count] is one past the last valid index and returns nothing." },
+            { id: "ps-collections-and-hashtables-b2", prompt: "$owners.Keys returns:", choices: [{ id: "a", text: "The collection of labels in the hash table" }, { id: "b", text: "The values, not the labels" }, { id: "c", text: "A single string of everything joined" }, { id: "d", text: "Only the first key" }], correctChoiceId: "a", explanation: ".Keys lists the labels and .Values lists what each label points at." },
+            { id: "ps-collections-and-hashtables-b3", prompt: "You want each row of a report to carry named columns you chose. What produces that?", choices: [{ id: "a", text: "[PSCustomObject]@{ Service = $_ ; Owner = $owner }" }, { id: "b", text: "Format-Table Service, Owner" }, { id: "c", text: "Write-Host \"$_ $owner\"" }, { id: "d", text: "$_ + $owner" }], correctChoiceId: "a", explanation: "[PSCustomObject] turns a hash table into a real object with properties. Format-Table only prints, and Write-Host produces text you cannot export." },
+            { id: "ps-collections-and-hashtables-b4", prompt: "Which comparison is case-sensitive?", choices: [{ id: "a", text: "-ceq" }, { id: "b", text: "-eq" }, { id: "c", text: "-like" }, { id: "d", text: "-contains" }], correctChoiceId: "a", explanation: "PowerShell operators are case-insensitive by default; the c-prefixed forms (-ceq, -clike, -cmatch) are the case-sensitive versions." },
+            { id: "ps-collections-and-hashtables-b5", prompt: "$rows = Import-Csv .\\empty.csv on a file with only headers. What does $rows[0] give you?", choices: [{ id: "a", text: "$null, which then flows silently into the rest of the script" }, { id: "b", text: "An error that stops the script" }, { id: "c", text: "The header row as an object" }, { id: "d", text: "An empty string" }], correctChoiceId: "a", explanation: "No data rows means an empty collection, and indexing it yields $null with no complaint. Check .Count first." },
+            { id: "ps-collections-and-hashtables-b6", prompt: "Which keeps hash-table entries in the order you typed them?", choices: [{ id: "a", text: "[ordered]@{ }" }, { id: "b", text: "@{ } always preserves order" }, { id: "c", text: "Sort-Object on the hash table" }, { id: "d", text: "Adding keys alphabetically" }], correctChoiceId: "a", explanation: "The [ordered] type accelerator creates an ordered dictionary. A plain hash table makes no ordering promise." },
+            { id: "ps-collections-and-hashtables-b7", prompt: "Safest way to read a hash-table value that may be missing:", choices: [{ id: "a", text: "if ($owners.ContainsKey($name)) { $owners[$name] } else { 'UNOWNED' }" }, { id: "b", text: "$owners[$name] and hope" }, { id: "c", text: "$owners[$name] -ErrorAction Stop" }, { id: "d", text: "Try a second hash table" }], correctChoiceId: "a", explanation: "ContainsKey turns a silent blank into a visible marker. Indexing a hash table is not a cmdlet, so -ErrorAction does not apply." },
+            { id: "ps-collections-and-hashtables-b8", prompt: "$critical | ForEach-Object { $owners[$_.Name] } returns blanks for every row. Why?", choices: [{ id: "a", text: "The array holds strings, and a string has no Name property, so the key is $null" }, { id: "b", text: "ForEach-Object cannot read hash tables" }, { id: "c", text: "The hash table needs -ErrorAction Continue" }, { id: "d", text: "Arrays must be sorted before lookup" }], correctChoiceId: "a", explanation: "$_ is already the string. Asking for .Name on it yields $null, and a $null key looks up nothing — silently." },
+          ],
+          flashcards: [
+            { id: "ps-collections-and-hashtables-f1", front: "Build an array?", back: "@('a','b','c') — index from zero, size with .Count" },
+            { id: "ps-collections-and-hashtables-f2", front: "Build a hash table?", back: "@{ Key = 'Value' } — read with $t['Key'] or $t.Key" },
+            { id: "ps-collections-and-hashtables-f3", front: "Membership test?", back: "collection -contains item, or item -in collection" },
+            { id: "ps-collections-and-hashtables-f4", front: "Missing hash-table key?", back: "Returns $null silently — guard with .ContainsKey()" },
+            { id: "ps-collections-and-hashtables-f5", front: "Keep key order?", back: "[ordered]@{ } — plain @{ } makes no promise" },
+            { id: "ps-collections-and-hashtables-f6", front: "Hash table to report row?", back: "[PSCustomObject]@{ Column = 'value' }" },
+          ],
+          externalResources: [WINDOWS_POWERSHELL_RESOURCE],
+          assignments: [
+            {
+              id: "ps-lab-collections-report",
+              title: "Collections Report Lab",
+              type: "external-lab",
+              instructions: `Goal: build a small lookup-driven report from an array and a hash table, and meet the two silent failures collections cause. Read-only inspection plus one CSV in your Documents folder.
+
+### Try It
+1. Run $critical = @('Spooler','W32Time','Dnscache')
+2. Run $critical.Count and $critical[0] and $critical[-1]
+3. Run $owners = @{ Spooler = 'Print team' ; W32Time = 'Infrastructure' ; Dnscache = 'Networking' }
+4. Run $owners['Spooler'] and $owners.Keys
+5. Run $critical | ForEach-Object { [PSCustomObject]@{ Service = $_ ; Status = (Get-Service -Name $_ -ErrorAction SilentlyContinue).Status ; Owner = $owners[$_] } } | Format-Table
+6. Confirm you get three rows and that every row has an owner.
+
+### Break It
+7. Run if ($critical -contains 'spooler') { 'found' } else { 'missing' } — this prints found, because -contains is case-insensitive.
+8. Now reverse the operands: if ('Spooler' -contains $critical) { 'found' } else { 'missing' }. It prints missing with no error, because -contains expects collection -contains item.
+9. Run $owners['Spoolr'] — a typo'd key returns nothing at all, not an error.
+10. Rerun the pipeline from step 5 but change $owners[$_] to $owners[$_.Name]. Every Owner cell is now empty and nothing complains — $_ is a string, and a string has no Name property.
+11. Run $critical[9] — an index past the end, also silent.
+
+### Fix It
+12. Rewrite step 8 with the operand order -contains expects, or use 'Spooler' -in $critical.
+13. Guard the lookup so a bad key is visible: $critical | ForEach-Object { if ($owners.ContainsKey($_)) { $owners[$_] } else { "UNOWNED: $_" } }
+14. Restore $owners[$_] in the step 5 pipeline and confirm the Owner column fills in again.
+
+### Verify It
+15. Pipe your fixed step 5 pipeline to Export-Csv "$env:USERPROFILE\\Documents\\service-owners.csv" -NoTypeInformation
+16. Run Import-Csv "$env:USERPROFILE\\Documents\\service-owners.csv" | Format-Table — three rows, and no Owner cell is blank.
+17. Add a fourth name that is not in $owners, rerun your guarded version from step 13, and confirm it reports UNOWNED instead of a blank.
+
+### Reflect
+18. In your notes: steps 8, 9, 10, and 11 all failed without raising an error. Write one sentence on why PowerShell treats a missing key or an out-of-range index as an answer rather than a fault, and one sentence on how you would detect it in a script nobody is watching.
+
+Clean up: Remove-Item "$env:USERPROFILE\\Documents\\service-owners.csv"`,
+              estimatedMinutes: 35,
+              externalResourceId: "windows-powershell",
+              completionCriteria: [
+                "Built an array and a hash table and read from both by index and by key",
+                "Produced a three-row report of custom objects joining live service state to an owner lookup",
+                "Break It: reproduced reversed -contains operands, a mistyped key, a $null lookup key, and an out-of-range index",
+                "Fix It: corrected the operand order and added a ContainsKey guard that surfaces unowned entries",
+                "Verify It: exported and re-imported the report with no blank Owner cells, then proved the guard fires on an unknown name",
+                "Reflect: wrote down why these failures are silent and how to detect them unattended",
+              ],
+              relatedTopicIds: [
+                "ps-collections-and-hashtables",
+                "ps-variables-and-quoting",
+                "ps-objects-and-properties",
+              ],
+              order: 6,
+            },
+          ],
+          practiceType: ["reading", "quiz", "flashcard", "external-lab"],
+          estimatedStudyMinutes: 40,
+          difficulty: "medium",
+        },
       ],
     },
     {
@@ -1850,7 +2133,7 @@ Variables make scripts reusable — capstone parameters like $ReportFolder exist
         {
           id: "ps-if-and-loops",
           name: "If & Loops",
-          prerequisites: ["ps-variables-and-quoting"],
+          prerequisites: ["ps-collections-and-hashtables"],
           objectives: ["PS-M05-O1", "PS-M05-O2", "PS-M05-O3"],
           lesson: {
             title: "If Statements and Loops",
@@ -1942,26 +2225,51 @@ Indentation inside braces is not vanity — mismatched braces cause parse errors
               id: "ps-lab-first-script",
               title: "First Script Lab",
               type: "external-lab",
-              instructions: `Create a script on your PC:
+              instructions: `Goal: write, run, and debug a real .ps1 file — including the three mistakes that stop most first scripts. Read-only: the script only reads your TEMP folder and prints a report.
 
-1. Open Notepad or VS Code; save as check-temp.ps1 in your Documents folder.
-2. Add: $files = Get-ChildItem $env:TEMP -File
-3. Add: if ($files.Count -eq 0) { Write-Output 'No temp files' } else { Write-Output "Found $($files.Count) files" }
-4. Add: $files | Sort-Object Length -Descending | Select-Object -First 3 Name, Length | Format-Table
-5. In PowerShell: Set-Location $env:USERPROFILE\\Documents; .\\check-temp.ps1
-6. Run Get-ExecutionPolicy — if script blocked, note the message (do not change policy without admin approval).
+### Try It
+1. Open Notepad or VS Code and save an empty file as check-temp.ps1 in your Documents folder.
+2. Add this line: $files = Get-ChildItem $env:TEMP -File -ErrorAction SilentlyContinue
+3. Add this line: if ($files.Count -eq 0) { Write-Output 'No temp files found' } else { Write-Output "Found $($files.Count) temp files" }
+4. Add this line: $files | Sort-Object Length -Descending | Select-Object -First 3 Name, Length
+5. In PowerShell run: Set-Location "$env:USERPROFILE\\Documents" ; .\\check-temp.ps1
+6. Run Get-ExecutionPolicy. If the script is blocked, read the message and write it down — do not change policy machine-wide without approval.
 
-Save the script — you will reuse script patterns in the capstone.`,
-              estimatedMinutes: 30,
+### Break It
+7. Change the condition on line 3 from -eq to a single = so it reads if ($files.Count = 0). Save and run. Read the parse error and notice that nothing at all ran, not even line 2.
+8. Put -eq back. Now wrap lines 2 to 4 inside a function — function Show-TempReport { ...your three lines... } — save, and run the script. There is no error and no output whatsoever.
+9. Add Show-TempReport as the last line so it actually runs. Then, inside the function, add $total = ($files | Measure-Object).Count and, after the function call, add Write-Output "Total: $total". Run it — Total: prints with nothing after it.
+
+### Fix It
+10. Fix step 7 by keeping -eq for comparison and reserving = for assignment.
+11. Fix step 8 by calling the function on its own line after defining it. A definition on its own runs nothing.
+12. Fix step 9 by making the function hand its answer back instead of leaving it in its own scope. Change it to: function Get-TempFileCount { param([object[]]$Files) ($Files | Measure-Object).Count } and call it with $total = Get-TempFileCount -Files $files
+
+### Verify It
+13. Run .\\check-temp.ps1 twice. Both runs print the same count line, the same three-file table, and a Total: line with a number after it.
+14. Run Get-Content .\\check-temp.ps1 | Select-String 'function|param|if' — your script now contains a function, a parameter, and a working conditional.
+15. Delete a variable to prove scope: run Remove-Variable total -ErrorAction SilentlyContinue then rerun the script — it still works, because the value now comes from the function's return, not a leftover shell variable.
+
+### Reflect
+16. In your notes: steps 8 and 9 both produced no useful output, for two different reasons. Name each cause in one sentence, and say which of the three failures a parse error could never have caught.
+
+Keep the script — you will reuse these patterns in the capstone.`,
+              estimatedMinutes: 40,
               externalResourceId: "windows-powershell",
               completionCriteria: [
-                "Created a .ps1 script with if and pipeline commands",
-                "Ran the script from PowerShell",
-                "Used variable for file collection count",
-                "Checked execution policy status",
+                "Created a .ps1 script that uses a variable, a conditional, and a pipeline",
+                "Ran the script from PowerShell and checked execution policy",
+                "Break It: reproduced an = for -eq parse error, an uncalled function, and a variable trapped in function scope",
+                "Fix It: corrected the comparison operator, called the function, and returned the value through a parameterised function",
+                "Verify It: ran the script twice with identical output and proved the total no longer depends on a shell variable",
+                "Reflect: named which failure a parse error could never catch",
               ],
-              relatedTopicIds: ["ps-variables-and-quoting", "ps-if-and-loops"],
-              order: 5,
+              relatedTopicIds: [
+                "ps-variables-and-quoting",
+                "ps-if-and-loops",
+                "ps-functions-and-parameters",
+              ],
+              order: 7,
             },
           ],
           practiceType: ["reading", "quiz", "flashcard", "external-lab"],
@@ -2060,9 +2368,154 @@ Functions should do one job — Get-StoppedAutoServices, Export-ServiceCsv, Writ
           difficulty: "hard",
         },
         {
+          id: "ps-json-and-rest-basics",
+          name: "JSON & Your First API Call",
+          prerequisites: ["ps-functions-and-parameters"],
+          objectives: ["PS-M05-O10", "PS-M05-O11", "PS-M05-O12"],
+          lesson: {
+            title: "JSON and Your First API Call",
+            content: `Everything so far has stayed on your own machine. That is the right place to learn, but it is not where most of the data you will be asked about lives. Ticketing systems, monitoring tools, asset inventories, and identity platforms all expose a web API, and almost all of them speak JSON. One cmdlet turns that into objects you already know how to handle.
+
+JSON — JavaScript Object Notation — is just a plain-text way of writing objects and lists. Braces wrap an object, brackets wrap a list, and inside an object you get "key": value pairs. It is not a wall of text to be pulled apart with string operations; it is structured data waiting to be converted.
+
+ConvertFrom-Json does that conversion when you already hold the text: Get-Content .\\data.json -Raw | ConvertFrom-Json. Note the -Raw — without it, Get-Content hands you an array of lines and the conversion usually fails on multi-line files. ConvertTo-Json goes the other way when you need to write JSON out, and its -Depth parameter matters because deeply nested objects get truncated silently at the default depth.
+
+Invoke-RestMethod does the whole job in one step: it makes the HTTP request and converts the JSON response into objects for you. $repo = Invoke-RestMethod -Uri 'https://api.github.com/repos/PowerShell/PowerShell' leaves you holding an object, not a string. Invoke-WebRequest is the lower-level cousin — it returns the raw response with StatusCode, Headers, and a Content string, which you then have to pipe through ConvertFrom-Json yourself. If you find yourself doing string surgery on API output, you almost certainly reached for the wrong cmdlet.
+
+After that, nothing new happens. The same pipeline you built in Module 3 works unchanged: $repo | Get-Member -MemberType NoteProperty to discover the property names, then Select-Object to pick the ones you care about, then Sort-Object, then Export-Csv. Keep the Get-Member habit especially here, because API field names are chosen by someone else and are often snake_case — stargazers_count, not StarCount.
+
+Two failures look completely different, and the difference matters. A wrong URL or a deleted resource gives you a loud HTTP error you cannot miss — 404 Not Found, 401 Unauthorized, 403 Forbidden. A wrong property name gives you a blank column and no error whatsoever. The quiet one is the dangerous one, because a scheduled script will cheerfully email an empty report every morning and nobody will notice for a month.
+
+Because a network call can fail in ways a local command cannot, wrap it deliberately: try { $data = Invoke-RestMethod -Uri $url -ErrorAction Stop } catch { Write-Warning "API call failed: $($_.Exception.Message)" ; return }. Note the -ErrorAction Stop — the same rule you learned for local cmdlets applies here.
+
+Be a polite client while you learn. Use public, read-only endpoints. Do not hammer an API in a loop to see what happens. Never paste an API key into a script you might share or commit — credential handling is a serious topic and it belongs in PowerShell II, along with headers, POST requests, pagination, and rate limits. For now the goal is narrower and worth having on its own: you can reach a system beyond your PC, turn its answer into objects, and select what matters.`,
+            experience: PS_JSON_AND_REST_BASICS_EXPERIENCE,
+          },
+          lightbulbMoment:
+            "An API is just another source of objects — Invoke-RestMethod converts the JSON, and every pipeline skill you already have works unchanged.",
+          keyFacts: [
+            "Invoke-RestMethod makes the request and converts JSON to objects in one step",
+            "Invoke-WebRequest returns the raw response — pipe .Content through ConvertFrom-Json yourself",
+            "Get-Content -Raw before ConvertFrom-Json, or the multi-line file arrives as an array of lines",
+            "API property names are chosen by someone else — confirm them with Get-Member -MemberType NoteProperty",
+            "A wrong URL raises a loud HTTP error; a wrong property name is completely silent",
+            "Wrap network calls in try/catch with -ErrorAction Stop so a failure is reported, not assumed",
+          ],
+          guidedExample: {
+            title: "Read a Public API and Export the Useful Fields",
+            steps: [
+              "Run $repo = Invoke-RestMethod -Uri 'https://api.github.com/repos/PowerShell/PowerShell'.",
+              "Run $repo | Get-Member -MemberType NoteProperty | Select-Object -First 15 Name — the JSON is now an object.",
+              "Run $repo | Select-Object full_name, stargazers_count, open_issues_count, default_branch.",
+              "Run $releases = Invoke-RestMethod -Uri 'https://api.github.com/repos/PowerShell/PowerShell/releases?per_page=5'.",
+              "Run $releases | Select-Object tag_name, published_at, prerelease | Format-Table.",
+              "Run try { Invoke-RestMethod -Uri 'https://api.github.com/repos/PowerShell/NoSuchRepo123' -ErrorAction Stop } catch { Write-Warning $_.Exception.Message }.",
+            ],
+          },
+          commonMistakes: [
+            "Using Invoke-WebRequest and then doing string operations on .Content instead of converting it",
+            "Forgetting -Raw on Get-Content before ConvertFrom-Json",
+            "Guessing API property names in PascalCase when the API returns snake_case",
+            "Leaving a network call outside try/catch so one 404 kills a whole report script",
+            "Putting an API key directly in the script file",
+          ],
+          examTraps: [
+            "A nightly API report arrives with the right number of rows and one empty column — a renamed field, not an outage",
+            "A script works interactively and fails on a schedule because the failing call had no -ErrorAction Stop and no catch",
+            "ConvertTo-Json quietly truncating nested data because -Depth was left at the default",
+            "Treating a 401 as a code bug when it is an authentication problem, or a 403 as authentication when it is permission or rate limiting",
+          ],
+          realWorldScenario:
+            "Your team wants a weekly note on which version of a tool they are running versus the latest release. You call the vendor's public releases endpoint with Invoke-RestMethod, select tag_name and published_at from the first five results, compare against the installed version you already collect locally, and export one CSV. The whole thing is a dozen lines and replaces someone checking a web page every Monday.",
+          quiz: [
+            { id: "ps-json-and-rest-basics-q1", prompt: "You run $r = Invoke-WebRequest -Uri $url then $r.Content.name and get nothing. Why?", choices: [{ id: "a", text: "Invoke-WebRequest returns the raw response, so .Content is a string with no properties — convert it with ConvertFrom-Json first" }, { id: "b", text: "The API is down" }, { id: "c", text: "Invoke-WebRequest cannot reach HTTPS endpoints" }, { id: "d", text: "You must run PowerShell as administrator for web requests" }], correctChoiceId: "a", explanation: "Invoke-WebRequest gives you StatusCode, Headers, and a Content string. Asking a string for .name returns $null silently. Either pipe .Content through ConvertFrom-Json, or use Invoke-RestMethod which converts for you.", difficulty: "medium" },
+            { id: "ps-json-and-rest-basics-q2", prompt: "A scheduled API report has run every night for a month with the correct number of rows but one column is always blank. What is the most likely cause?", choices: [{ id: "a", text: "The API is rate-limiting the script" }, { id: "b", text: "A property name in Select-Object no longer matches a field the API returns" }, { id: "c", text: "Export-Csv needs -Force" }, { id: "d", text: "The script is missing -ErrorAction Stop" }], correctChoiceId: "b", explanation: "Rows still arrive, so the call itself is fine. Selecting a property that does not exist produces an empty column with no error — which is exactly why a wrong field name is more dangerous than a wrong URL.", difficulty: "medium" },
+            { id: "ps-json-and-rest-basics-q3", prompt: "Which line reads a multi-line JSON file from disk into objects correctly?", choices: [{ id: "a", text: "Get-Content .\\data.json | ConvertFrom-Json" }, { id: "b", text: "Get-Content .\\data.json -Raw | ConvertFrom-Json" }, { id: "c", text: "Import-Csv .\\data.json" }, { id: "d", text: "Get-Content .\\data.json | ConvertTo-Json" }], correctChoiceId: "b", explanation: "-Raw reads the file as one string. Without it Get-Content emits an array of lines, which usually fails to convert. Import-Csv is for CSV, and ConvertTo-Json goes the wrong direction.", difficulty: "easy" },
+            { id: "ps-json-and-rest-basics-q4", prompt: "An API call inside a reporting script returns 404 for one of five URLs and the whole script stops with a red error. What is the smallest fix that keeps the other four reports?", choices: [{ id: "a", text: "Add -ErrorAction SilentlyContinue to the call" }, { id: "b", text: "Wrap the call in try/catch with -ErrorAction Stop and log the failed URL" }, { id: "c", text: "Remove the failing URL from the list permanently" }, { id: "d", text: "Run the script as administrator" }], correctChoiceId: "b", explanation: "try/catch with -ErrorAction Stop lets you record the failure and continue. SilentlyContinue would also continue but would hide which URL failed, which is how a missing report goes unnoticed.", difficulty: "medium" },
+            { id: "ps-json-and-rest-basics-q5", prompt: "You must find the property that holds a repository's star count on an object returned by Invoke-RestMethod. What is the reliable first move?", choices: [{ id: "a", text: "Guess StarCount, then Stars, then TotalStars" }, { id: "b", text: "Pipe the object to Get-Member -MemberType NoteProperty and look at the real names" }, { id: "c", text: "Pipe the object to Format-List and copy the screen output into your script" }, { id: "d", text: "Convert the object back to JSON and search it as text" }], correctChoiceId: "b", explanation: "Get-Member reports the actual property names, which for many APIs are snake_case such as stargazers_count. Format-List shows values but is a display view; guessing produces the silent blank-column failure.", difficulty: "easy" },
+          ],
+          questionBank: [
+            { id: "ps-json-and-rest-basics-b1", prompt: "Invoke-RestMethod differs from Invoke-WebRequest because it:", choices: [{ id: "a", text: "Parses the JSON or XML response into objects for you" }, { id: "b", text: "Is the only one that supports HTTPS" }, { id: "c", text: "Requires administrator rights" }, { id: "d", text: "Returns the HTTP status code and nothing else" }], correctChoiceId: "a", explanation: "Invoke-RestMethod is built for API payloads and converts them. Invoke-WebRequest is for the whole HTTP response including headers and raw content." },
+            { id: "ps-json-and-rest-basics-b2", prompt: "ConvertTo-Json truncates nested data unless you:", choices: [{ id: "a", text: "Raise -Depth above the default" }, { id: "b", text: "Add -Force" }, { id: "c", text: "Pipe through Format-List first" }, { id: "d", text: "Use -NoTypeInformation" }], correctChoiceId: "a", explanation: "The default depth is shallow and deeper levels are dropped silently, so nested objects need an explicit -Depth." },
+            { id: "ps-json-and-rest-basics-b3", prompt: "An HTTP 401 from an API most directly means:", choices: [{ id: "a", text: "The request was not authenticated" }, { id: "b", text: "The URL does not exist" }, { id: "c", text: "You exceeded a rate limit" }, { id: "d", text: "The JSON was malformed" }], correctChoiceId: "a", explanation: "401 is unauthenticated, 403 is authenticated but not permitted (or throttled), 404 is not found, and malformed JSON fails at conversion rather than over HTTP." },
+            { id: "ps-json-and-rest-basics-b4", prompt: "'{ \"name\": \"broken\", }' | ConvertFrom-Json fails because:", choices: [{ id: "a", text: "The trailing comma is not valid JSON" }, { id: "b", text: "JSON cannot contain the word broken" }, { id: "c", text: "Single quotes are not allowed in PowerShell" }, { id: "d", text: "ConvertFrom-Json only reads files" }], correctChoiceId: "a", explanation: "JSON does not permit a trailing comma before a closing brace. The conversion error names the position, which is how you find it in a large payload." },
+            { id: "ps-json-and-rest-basics-b5", prompt: "Best practice for an API key in a learning script:", choices: [{ id: "a", text: "Do not put one in the script at all — use public read-only endpoints until you learn credential handling" }, { id: "b", text: "Paste it at the top of the file with a comment saying not to share" }, { id: "c", text: "Base64 encode it in the script" }, { id: "d", text: "Store it in the script filename" }], correctChoiceId: "a", explanation: "Encoding is not protection and a comment is not a control. PowerShell II covers PSCredential, environment variables, and secret stores properly." },
+            { id: "ps-json-and-rest-basics-b6", prompt: "After Invoke-RestMethod returns a list, which pipeline shapes it for export?", choices: [{ id: "a", text: "Select-Object the fields you need, then Export-Csv" }, { id: "b", text: "Format-Table, then Export-Csv" }, { id: "c", text: "Write-Host each row" }, { id: "d", text: "ConvertTo-Json, then Import-Csv" }], correctChoiceId: "a", explanation: "The same object discipline as everywhere else: shape with Select-Object and export objects. Formatting before export destroys the data." },
+            { id: "ps-json-and-rest-basics-b7", prompt: "Which failure is silent and therefore most dangerous in an unattended script?", choices: [{ id: "a", text: "Selecting a property the API does not return" }, { id: "b", text: "A 404 from a mistyped URL" }, { id: "c", text: "Malformed JSON in the response" }, { id: "d", text: "A DNS failure resolving the host" }], correctChoiceId: "a", explanation: "The other three raise errors you can catch and log. A wrong property name yields an empty column and a report that still looks delivered." },
+            { id: "ps-json-and-rest-basics-b8", prompt: "You hold JSON text in $text. Which gives you an object you can filter?", choices: [{ id: "a", text: "$obj = $text | ConvertFrom-Json" }, { id: "b", text: "$obj = $text | ConvertTo-Json" }, { id: "c", text: "$obj = [string]$text" }, { id: "d", text: "$obj = $text | Import-Csv" }], correctChoiceId: "a", explanation: "ConvertFrom-Json turns text into objects; ConvertTo-Json does the reverse. Casting to string leaves you doing text surgery." },
+          ],
+          flashcards: [
+            { id: "ps-json-and-rest-basics-f1", front: "Call a JSON API in one step?", back: "Invoke-RestMethod -Uri $url — returns objects, not text" },
+            { id: "ps-json-and-rest-basics-f2", front: "Have the JSON text already?", back: "ConvertFrom-Json (use Get-Content -Raw for files)" },
+            { id: "ps-json-and-rest-basics-f3", front: "Find API property names?", back: "Pipe to Get-Member -MemberType NoteProperty — often snake_case" },
+            { id: "ps-json-and-rest-basics-f4", front: "Which API failure is silent?", back: "A wrong property name — blank column, no error" },
+            { id: "ps-json-and-rest-basics-f5", front: "Protect a script from one bad call?", back: "try { ... -ErrorAction Stop } catch { Write-Warning $_.Exception.Message }" },
+            { id: "ps-json-and-rest-basics-f6", front: "401 vs 403 vs 404?", back: "Not authenticated · not permitted or throttled · not found" },
+          ],
+          externalResources: [WINDOWS_POWERSHELL_RESOURCE],
+          assignments: [
+            {
+              id: "ps-lab-json-api",
+              title: "JSON and First API Lab",
+              type: "external-lab",
+              instructions: `Goal: call one public read-only API, treat its JSON as objects, and meet the two failures every API script hits. Needs internet; an offline fallback is in the Fix It section. The endpoint used here is GitHub's public repository API — read-only, no account, no key.
+
+### Try It
+1. Run $repo = Invoke-RestMethod -Uri 'https://api.github.com/repos/PowerShell/PowerShell'
+2. Run $repo | Get-Member -MemberType NoteProperty | Select-Object -First 15 Name — the JSON is now an object with real properties.
+3. Run $repo | Select-Object full_name, stargazers_count, open_issues_count, default_branch
+4. Run $releases = Invoke-RestMethod -Uri 'https://api.github.com/repos/PowerShell/PowerShell/releases?per_page=5'
+5. Run $releases | Select-Object tag_name, published_at, prerelease | Format-Table
+6. Run $releases | Select-Object tag_name, published_at | Export-Csv "$env:USERPROFILE\\Documents\\ps-releases.csv" -NoTypeInformation
+
+### Break It
+7. Run $repo | Select-Object full_name, star_count — star_count is not a field this API returns. Note the empty column and the complete absence of an error.
+8. Run Invoke-RestMethod -Uri 'https://api.github.com/repos/PowerShell/NoSuchRepo123' — read the 404 error text and note how loud it is compared with step 7.
+9. Run '{ "name": "broken", }' | ConvertFrom-Json — a trailing comma. Read the conversion error and note that it tells you where.
+10. Run $raw = Invoke-WebRequest -Uri 'https://api.github.com/repos/PowerShell/PowerShell' ; $raw.Content.stargazers_count — nothing prints, because .Content is a string.
+
+### Fix It
+11. Find the real field name instead of guessing: $repo | Get-Member -MemberType NoteProperty | Where-Object Name -like '*star*'. Rerun step 7 with the correct name.
+12. Make the failing call survivable: try { Invoke-RestMethod -Uri 'https://api.github.com/repos/PowerShell/NoSuchRepo123' -ErrorAction Stop } catch { Write-Warning "API call failed: $($_.Exception.Message)" }
+13. Fix the JSON by removing the trailing comma: '{ "name": "broken" }' | ConvertFrom-Json
+14. Convert before you access properties: $raw.Content | ConvertFrom-Json | Select-Object stargazers_count — or just use Invoke-RestMethod, which does it for you.
+15. Offline fallback: if you have no internet, save any small JSON object into repo.json and run Get-Content .\\repo.json -Raw | ConvertFrom-Json. Every step from 2 onward behaves identically on the converted object — note that -Raw is required.
+
+### Verify It
+16. Run Import-Csv "$env:USERPROFILE\\Documents\\ps-releases.csv" | Measure-Object — five rows.
+17. Rerun your step 12 command — it prints your warning and the shell keeps going instead of stopping.
+18. Run $repo.stargazers_count -gt 0 — True, which proves you read a live number rather than a piece of text.
+
+### Reflect
+19. In your notes: step 7 gave a blank column and step 8 gave a loud error. Explain why a wrong property name is silent while a wrong URL is not, and say which of the two you would rather inherit in a script that runs unattended every night.
+
+Clean up: Remove-Item "$env:USERPROFILE\\Documents\\ps-releases.csv"`,
+              estimatedMinutes: 40,
+              externalResourceId: "windows-powershell",
+              completionCriteria: [
+                "Called a public read-only API with Invoke-RestMethod and inspected the result with Get-Member",
+                "Selected specific API fields and exported five release rows to CSV",
+                "Break It: reproduced a wrong property name, a 404 URL, malformed JSON, and property access on a raw string",
+                "Fix It: found the real field name with Get-Member, wrapped the failing call in try/catch, and converted before accessing properties",
+                "Verify It: re-imported the CSV, confirmed the handled failure only warned, and read a live numeric value",
+                "Reflect: wrote down why a wrong field name is more dangerous than a wrong URL",
+              ],
+              relatedTopicIds: [
+                "ps-json-and-rest-basics",
+                "ps-objects-and-properties",
+                "ps-errors-and-capstone",
+              ],
+              order: 8,
+            },
+          ],
+          practiceType: ["reading", "quiz", "flashcard", "external-lab"],
+          estimatedStudyMinutes: 40,
+          difficulty: "medium",
+        },
+        {
           id: "ps-errors-and-capstone",
           name: "Errors & Capstone",
-          prerequisites: ["ps-functions-and-parameters"],
+          prerequisites: ["ps-json-and-rest-basics"],
           objectives: ["PS-M05-O7", "PS-M05-O8", "PS-M05-O9"],
           lesson: {
             title: "Errors and Capstone Admin Task",
@@ -2152,35 +2605,110 @@ Error handling is not optional decoration — capstone try/catch proves you read
           externalResources: [WINDOWS_POWERSHELL_RESOURCE],
           assignments: [
             {
-              id: "ps-lab-capstone-admin",
-              title: "Capstone Admin Health Check",
+              id: "ps-lab-error-handling",
+              title: "Error Handling Lab",
               type: "external-lab",
-              instructions: `Build Admin-HealthCheck.ps1 combining the full track:
+              instructions: `Goal: prove the difference between a terminating and a non-terminating error, and write a catch block that actually catches. Everything here is read-only — the paths are deliberately fake.
 
-1. param([string]$ReportFolder = $env:USERPROFILE\\Documents)
-2. function Write-HealthLog { param([string]$Message) "$((Get-Date).ToString('s')) $Message" }
-3. Start-Transcript "$ReportFolder\\health-transcript.log"
-4. Auto-stopped services: Get-Service | Where-Object { $_.StartType -eq 'Automatic' -and $_.Status -eq 'Stopped' } | Export-Csv "$ReportFolder\\auto-stopped.csv" -NoTypeInformation
-5. Top 5 CPU: Get-Process | Sort-Object CPU -Descending | Select-Object -First 5 Name, CPU | Export-Csv "$ReportFolder\\top-cpu.csv" -NoTypeInformation
-6. Temp file count: $n = (Get-ChildItem $env:TEMP -File -ErrorAction SilentlyContinue | Measure-Object).Count; Write-HealthLog "Temp files: $n"
-7. try { Write-HealthLog 'Export complete' } catch { Write-Error $_ }; Stop-Transcript
+### Try It
+1. Run Get-ChildItem 'C:\\ThisPathDoesNotExist_123' — read the error, then run $Error[0].Exception.GetType().FullName to see what type it was.
+2. Run Get-ChildItem 'C:\\ThisPathDoesNotExist_123' ; Write-Output 'Still running' — the second command still runs. That is a non-terminating error.
+3. Run try { Get-ChildItem 'C:\\ThisPathDoesNotExist_123' -ErrorAction Stop } catch { Write-Warning "Caught: $($_.Exception.Message)" }
+4. Run try { 1/0 } catch { Write-Warning "Caught: $($_.Exception.Message)" } — a genuinely terminating error needs no -ErrorAction.
+5. Run try { Get-Content 'C:\\nope.txt' -ErrorAction Stop } catch { Write-Warning 'Missing file' } finally { Write-Output 'Cleanup always runs' }
 
-Run the script. Attach CSVs and transcript to your lab notes. Use Get-Help on any cmdlet you forgot.`,
-              estimatedMinutes: 45,
+### Break It
+6. Run try { Get-ChildItem 'C:\\ThisPathDoesNotExist_123' } catch { Write-Warning 'Caught it' } — your catch block never runs and PowerShell prints its own raw error instead.
+7. Run try { Get-ChildItem 'C:\\ThisPathDoesNotExist_123' -ErrorAction SilentlyContinue } catch { Write-Warning 'Caught it' } ; Write-Output 'Done' — nothing is reported at all and the run claims success.
+8. Run try { Get-ChildItem 'C:\\ThisPathDoesNotExist_123' -ErrorAction Stop } catch { } ; Write-Output 'Done' — an empty catch is the same silent success with extra typing.
+
+### Fix It
+9. Add -ErrorAction Stop so the non-terminating error becomes catchable, and rerun step 6.
+10. Replace the empty catch with one that reports and records: catch { Write-Warning "Failed: $($_.Exception.Message)" ; $failed = $true }
+11. Decide the outcome on purpose. If a missing path should abort the run, keep -ErrorAction Stop and rethrow. If it is genuinely optional, keep going but log the skip. Write down which you chose for this path and why.
+
+### Verify It
+12. Rerun your fixed step 9 — you now see your own warning text, not PowerShell's raw red block.
+13. Run $Error.Clear() ; try { Get-ChildItem 'C:\\ThisPathDoesNotExist_123' -ErrorAction Stop } catch { 'handled' } ; $Error.Count — the error was recorded and handled, and the shell kept running.
+14. Run your step 10 version, then run $failed — it is True, so a later step in a script could react to the failure instead of pretending it never happened.
+
+### Reflect
+15. In your notes: explain in one or two sentences why try/catch alone caught nothing in step 6, and what an empty catch block costs the next person who has to debug your script at 3 a.m.`,
+              estimatedMinutes: 30,
               externalResourceId: "windows-powershell",
               completionCriteria: [
-                "Script uses function with parameter and param block",
-                "Exported auto-stopped services and top CPU CSV files",
-                "Logged temp file count with timestamp function",
-                "Produced transcript log of the session",
-                "Used try/catch or sensible -ErrorAction on at least one step",
+                "Demonstrated a non-terminating error that let the next command run",
+                "Caught a terminating error with try/catch and used a finally block",
+                "Break It: reproduced a catch that never fires, a suppressed error, and an empty catch",
+                "Fix It: made the error catchable with -ErrorAction Stop and reported it with a useful message",
+                "Verify It: confirmed the handled error was recorded and set a flag a later step could read",
+                "Reflect: wrote down why try/catch alone did not catch the non-terminating error",
+              ],
+              relatedTopicIds: [
+                "ps-errors-and-capstone",
+                "ps-functions-and-parameters",
+                "ps-json-and-rest-basics",
+              ],
+              order: 9,
+            },
+            {
+              id: "ps-lab-capstone-admin",
+              title: "Capstone — Local System Audit & Report",
+              type: "external-lab",
+              instructions: `Goal: build Get-LocalSystemAudit.ps1 — one script that gathers system facts, reads a structured input file, joins it to live state, survives a realistic failure, and exports a report a colleague could read. Runs as an ordinary user. Everything it touches is read-only except the report files it writes under your own Documents folder.
+
+### Try It
+1. Create the input file. Save these three lines as audit-input.csv in your Documents folder:
+- ServiceName,Owner,Critical
+- Spooler,Print team,No
+- W32Time,Infrastructure,Yes
+2. Create Get-LocalSystemAudit.ps1 in the same folder, starting with: param([string]$ReportFolder = "$env:USERPROFILE\\Documents\\audit", [string]$InputCsv = "$env:USERPROFILE\\Documents\\audit-input.csv")
+3. Add a logging function: function Write-AuditLog { param([Parameter(Mandatory)][string]$Message) "{0} {1}" -f (Get-Date).ToString('s'), $Message }
+4. Prepare output and start logging: New-Item -ItemType Directory -Path $ReportFolder -Force | Out-Null ; Start-Transcript (Join-Path $ReportFolder 'audit-transcript.log')
+5. Gather system facts into one custom object and export it to system-summary.csv: computer name from $env:COMPUTERNAME, OS caption from (Get-CimInstance Win32_OperatingSystem).Caption, shell version from $PSVersionTable.PSVersion.ToString(), and free space in GB from Get-CimInstance Win32_LogicalDisk with a calculated property.
+6. Report the ten hungriest processes: Get-Process | Sort-Object WorkingSet64 -Descending | Select-Object -First 10 Name, Id, @{N='MemMB';E={[math]::Round($_.WorkingSet64/1MB,1)}} | Export-Csv (Join-Path $ReportFolder 'top-memory.csv') -NoTypeInformation
+7. Join your input file to live service state and export service-audit.csv: Import-Csv $InputCsv | ForEach-Object { $svc = Get-Service -Name $_.ServiceName -ErrorAction SilentlyContinue ; [PSCustomObject]@{ ServiceName = $_.ServiceName ; Owner = $_.Owner ; Critical = $_.Critical ; Status = if ($svc) { $svc.Status } else { 'NOT FOUND' } } }
+8. Finish with Write-AuditLog 'Audit complete' and Stop-Transcript, then run the script.
+
+### Break It
+9. Add a row for a service that does not exist — NotARealService,Nobody,No — and rerun. Confirm the row reports NOT FOUND instead of stopping the whole audit. That is the failure you designed for.
+10. Now break the input path: run .\\Get-LocalSystemAudit.ps1 -InputCsv "$env:USERPROFILE\\Documents\\missing-input.csv". Read the error, then note which report files were written before the failure and which were not.
+11. Break a property name: change $_.ServiceName in step 7 to $_.Service and rerun with the real input file. Every Status now reads NOT FOUND, and no error appears anywhere.
+
+### Fix It
+12. Make the input read fail loudly and stop before writing a misleading report: try { $rows = Import-Csv $InputCsv -ErrorAction Stop } catch { Write-Warning (Write-AuditLog "Input file unreadable: $InputCsv") ; Stop-Transcript ; return }
+13. Validate the columns before trusting them: if (-not ($rows | Get-Member -Name ServiceName -MemberType NoteProperty)) { Write-Warning (Write-AuditLog 'Input CSV is missing the ServiceName column') ; Stop-Transcript ; return }
+14. Restore $_.ServiceName, and change the service loop to read from $rows instead of calling Import-Csv a second time.
+
+### Verify It
+15. Run the script twice with no arguments. Both runs complete, and Get-ChildItem $ReportFolder lists system-summary.csv, top-memory.csv, service-audit.csv, and audit-transcript.log.
+16. Run Import-Csv (Join-Path "$env:USERPROFILE\\Documents\\audit" 'service-audit.csv') | Format-Table — every input row has a Status, and the fake service reads NOT FOUND.
+17. Run .\\Get-LocalSystemAudit.ps1 -InputCsv "$env:USERPROFILE\\Documents\\missing-input.csv" once more — you now get your own warning and a clean stop instead of a partial report.
+18. Open audit-transcript.log and confirm your timestamped log lines are in it.
+
+### Reflect
+19. In your notes, answer three questions. (a) Which of your three failures was silent, and how would you have noticed it in a scheduled run nobody was watching? (b) Why does validating the input columns protect you more than validating the file path alone? (c) Name one thing you would add before letting a colleague run this script on their own machine.`,
+              estimatedMinutes: 75,
+              externalResourceId: "windows-powershell",
+              completionCriteria: [
+                "Script uses a param block with defaults and a mandatory-parameter logging function",
+                "Gathered system facts into a custom object and exported system-summary.csv",
+                "Exported a top-memory process report with a calculated property",
+                "Read a structured CSV input file and joined it to live service state",
+                "Break It: reproduced a missing service row, a missing input file, and a wrong property name",
+                "Fix It: added try/catch on the input read and validated the required input column",
+                "Verify It: ran the script twice, confirmed all four output files, and re-ran the failing path to see the clean stop",
+                "Produced a transcript log containing timestamped log lines",
+                "Reflect: answered all three questions in writing",
               ],
               relatedTopicIds: [
                 "ps-if-and-loops",
                 "ps-functions-and-parameters",
+                "ps-collections-and-hashtables",
+                "ps-json-and-rest-basics",
                 "ps-errors-and-capstone",
               ],
-              order: 6,
+              order: 10,
             },
           ],
           practiceType: ["reading", "quiz", "flashcard", "external-lab"],
