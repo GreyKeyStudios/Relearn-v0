@@ -43,7 +43,7 @@ PowerShell I stays deliberately small. It is not a container for everything Powe
 |---|---|
 | **Audience** | Junior sysadmins, IT support moving into automation, cloud/identity administrators-in-training |
 | **Prerequisites** | **PowerShell I or equivalent fundamentals** — objects, pipeline, variables, collections, conditionals, loops, functions, basic error handling, and one prior `Invoke-RestMethod` call |
-| **Environment** | Learner's own machine plus **repository fixtures**. Microsoft Graph and Azure topics grade against safe local fixture data; a live tenant/subscription is an explicitly optional stretch path, never required. |
+| **Environment** | Learner's own machine. Microsoft Graph and Azure topics grade against **locally generated fixture data** — the lab's first step builds the mock payload with `ConvertTo-Json`, so no tenant, subscription, or download is required. A live tenant/subscription is an explicitly optional stretch path. |
 
 PowerShell II never describes its graduate as an expert. The honest claim is:
 *"can design, document, and safely operate small production automation, and can read and debug
@@ -140,18 +140,25 @@ separate tracks.
 
 Bold = added in this pass. Curriculum steps: 17 topics + 10 practice labs = **27**.
 
-### PowerShell II — 6 modules, 15 topics, 13 labs/projects
+### PowerShell II — 6 modules, 15 topics, 14 labs/projects
 
 | Module | Topics | Labs / projects |
 |--------|--------|-----------------|
-| M1 Reusable Tool Design | Advanced Functions & Help · Parameters, Types & Validation | `ps2-lab-build-a-tool` |
+| M1 Reusable Tool Design | Advanced Functions & Comment-Based Help · Parameters, Types & Validation | `ps2-lab-build-a-tool` |
 | M2 Reliability & Diagnostics | Errors in Depth · Debugging & Logging | `ps2-lab-error-contract` · `ps2-lab-broken-automation` |
 | M3 Data & API Automation | Data Shaping & Reporting · REST APIs · Credentials & Secrets | `ps2-project-bulk-user-cleanup` · `ps2-project-api-automation` · `ps2-lab-secrets-hygiene` |
 | M4 Enterprise Windows Automation | Modules & the Gallery · Windows Admin at Scale · PowerShell Remoting | `ps2-lab-build-a-module` · `ps2-project-it-inventory` · `ps2-lab-remoting-reasoning` |
 | M5 Microsoft Cloud Automation | Microsoft Graph · Entra ID & M365 Reporting · Azure PowerShell | `ps2-project-graph-report` · `ps2-lab-entra-change-plan` · `ps2-project-azure-inventory` |
-| M6 Production Automation & Capstone | Unattended Automation · Professional Patterns & Capstone | `ps2-lab-scheduled-automation` · `ps2-capstone-automation-toolkit` |
+| M6 Production Automation & Capstone | Unattended Automation · Professional Patterns & Capstone | `ps2-lab-scheduled-automation` · `ps2-lab-whatif-safety` · `ps2-capstone-automation-toolkit` |
 
-Curriculum steps: 15 topics + 13 practice labs = **28**.
+Curriculum steps: 15 topics + 14 practice labs = **29**.
+
+Project families covered: **A** IT inventory reporter (`ps2-project-it-inventory`), **B** bulk user data
+cleanup (`ps2-project-bulk-user-cleanup`), **C** API automation with pagination and retry
+(`ps2-project-api-automation`), **E** Microsoft 365 / Graph report (`ps2-project-graph-report`), and
+**F** Azure resource report (`ps2-project-azure-inventory`). Family **D** (help-desk diagnostic tool)
+is deliberately folded into the capstone rather than shipped as a fifth standalone project, to keep
+the track from padding.
 
 ---
 
@@ -173,8 +180,9 @@ Rules:
 - The Break It failure must reinforce the topic objective. No arbitrary syntax vandalism.
 - Every lab is completable on a stock Windows PC with no admin rights unless the lab says otherwise.
 - Nothing recursive-deletes, disables security controls, or mass-modifies accounts.
-- Cloud labs grade against fixtures in `src/content/fixtures/powershell-ii/`; a live tenant is an
-  optional extra section, and the lab says so in the instructions.
+- Cloud labs generate their own fixture payload in step 1 using `ConvertTo-Json`, so they run with no
+  tenant, no subscription, and no download. A live path is an optional extra section, and the lab
+  instructions say which is which.
 - Reflect answers are written in the learner's own notes — ReLearn does not yet auto-grade prose.
 
 Fixture-graded labs are listed in §8.
@@ -207,9 +215,9 @@ These topics therefore ship with an honest split:
 | Topic | Graded path | Optional live path |
 |-------|-------------|--------------------|
 | PowerShell Remoting | Static code-reasoning lab over provided transcripts and scripts — the learner predicts and explains behaviour. No simulated "success" output is presented as real. | Loopback `Enter-PSSession localhost` after `Enable-PSRemoting` on a personal machine, or a second VM from the VM Lab track. Requires admin; clearly labelled. |
-| Microsoft Graph | Fixture JSON in `src/content/fixtures/powershell-ii/graph-*.json` piped through the same `ConvertFrom-Json` → filter → report pipeline as live Graph output. | `Connect-MgGraph -Scopes User.Read.All` in a Microsoft 365 Developer tenant, read-only scopes only. |
-| Entra / M365 | Change-plan authoring plus read-only/state-changing classification of a provided command list. | Same developer tenant, `-WhatIf` only. |
-| Azure PowerShell | Fixture JSON in `src/content/fixtures/powershell-ii/az-*.json` for inventory and cost-shape reporting. | Azure free account, `Get-Az*` read-only commands. |
+| Microsoft Graph | Learner-generated fixture JSON shaped like a Graph `/users` response, piped through the same `ConvertFrom-Json` → `Get-Member` → filter → report pipeline as live Graph output. | `Connect-MgGraph -Scopes User.Read.All` in a Microsoft 365 Developer tenant, read-only scopes only. |
+| Entra / M365 | Change-plan authoring plus read-only/state-changing classification of a provided command list, with `ShouldProcess` dry runs against local objects. | Same developer tenant, `-WhatIf` only. |
+| Azure PowerShell | Learner-generated fixture JSON shaped like `Get-AzResource` output, used for inventory, grouping, and tag-compliance reporting. | Azure free account, `Get-Az*` read-only commands. |
 | Scheduled automation | `Register-ScheduledTask` on the learner's own machine under their own user context, running a read-only report script. | — |
 
 The lab instructions state the limitation explicitly. We do not fake remote or cloud execution.
