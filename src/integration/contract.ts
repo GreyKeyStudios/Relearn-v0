@@ -13,9 +13,22 @@
  *   always resolves against a manifest without a mapping table.
  * - No learner PII. A learner record is exported by the learner from their own
  *   device; ReLearn has no accounts, sync, or server-side learner storage.
+ * - Trust: every v1 learner record is LEARNER-CONTROLLED. It is not verified,
+ *   signed, or institutionally issued, and the learner can edit it. Consumers
+ *   must show LEARNER_RECORD_TRUST_NOTICE (or equivalent wording) wherever a
+ *   record is displayed and must never call it a transcript, grade report, or
+ *   verified evidence. A verified record would be a new schema version.
  */
 
 export const RELEARN_INTERCHANGE_VERSION = 1 as const;
+
+/** The only trust level v1 learner records can have. */
+export const LEARNER_RECORD_TRUST = "learner-controlled" as const;
+export type LearnerRecordTrust = typeof LEARNER_RECORD_TRUST;
+
+/** Plain-language notice consumers display alongside any learner record. */
+export const LEARNER_RECORD_TRUST_NOTICE =
+  "This record was exported by the learner from their own device. It is not verified, not issued by any institution, and can be edited. Treat it as a self-reported account of practice, not as a transcript or proof of achievement.";
 
 export const SCHEMA_IDS = {
   catalog: "relearn.course-catalog",
@@ -200,20 +213,25 @@ export interface AssessmentResult {
   weakConcepts: string[];
 }
 
-export type EvidenceType =
-  | "lesson-completion"
-  | "activity-completion"
-  | "assessment"
-  | "competency-practice";
+/**
+ * v1 evidence types. Every evidence item references a manifest id, so it can
+ * be resolved against a course. Evidence that has no course anchor (e.g.
+ * competency practice outside a course) is not representable in v1 — see
+ * docs/integration/relearn-interchange-v1.md "Known v1 limitations".
+ */
+export type EvidenceType = "lesson-completion" | "activity-completion" | "assessment";
 
 /**
- * One observed fact about a learner's work. Evidence is append-only from the
- * engine's perspective; the consumer decides how to interpret it.
+ * One observed fact about a learner's work, as recorded on the learner's
+ * device. Evidence is append-only from the engine's perspective; the consumer
+ * decides how to interpret it. `evidenceMode` describes how the activity is
+ * checked inside ReLearn — "auto-graded" means ReLearn scored it, not that the
+ * exported result is verified.
  */
 export interface EvidenceItem {
   id: string;
   type: EvidenceType;
-  /** The manifest id (lesson/activity) or competency id this evidence is about. */
+  /** The manifest id (lesson or activity) this evidence is about. */
   ref: string;
   evidenceMode: EvidenceMode;
   observedAt?: string;
@@ -231,6 +249,10 @@ export interface CourseProgressRecord {
   evidence: EvidenceItem[];
 }
 
+/**
+ * A learner-controlled export of progress and evidence. NOT a transcript and
+ * NOT verified — see LEARNER_RECORD_TRUST_NOTICE.
+ */
 export interface LearnerRecord {
   schema: typeof SCHEMA_IDS.learnerRecord;
   schemaVersion: typeof RELEARN_INTERCHANGE_VERSION;
@@ -238,10 +260,15 @@ export interface LearnerRecord {
   exportedAt: string;
   /**
    * Where the data came from. "device" = exported by the learner from browser
-   * storage; unverified and editable by them. Consumers must not treat it as
-   * an institutional transcript.
+   * storage; "demo" = generated from fixed sample data, not a real learner.
    */
   provenance: "device" | "demo";
+  /**
+   * Always "learner-controlled" in v1. Optional only so records exported
+   * before this field existed still validate; consumers must treat a missing
+   * value as "learner-controlled". No other value is valid in v1.
+   */
+  trust?: LearnerRecordTrust;
   courses: CourseProgressRecord[];
 }
 
@@ -374,6 +401,9 @@ export function validateLearnerRecord(doc: unknown): ValidationResult {
   if (!header(errors, doc, SCHEMA_IDS.learnerRecord)) return { ok: false, errors };
   req(errors, doc, "record", "exportedAt", "string");
   if (doc.provenance !== "device" && doc.provenance !== "demo") errors.push("provenance must be \"device\" or \"demo\"");
+  if (doc.trust !== undefined && doc.trust !== LEARNER_RECORD_TRUST) {
+    errors.push(`trust must be "${LEARNER_RECORD_TRUST}" in v1 (verified records require a new schema version)`);
+  }
   arr(errors, doc, "record", "courses").forEach((c, ci) => {
     const cp = `courses[${ci}]`;
     if (!isObj(c)) return void errors.push(`${cp} must be an object`);
@@ -434,7 +464,7 @@ export function resolveProgressAgainstManifest(
     if (a.kind !== "domain-review" && !known.has(a.activityId)) unknownRefs.add(a.activityId);
   }
   for (const e of course.evidence) {
-    if (e.type !== "competency-practice" && !known.has(e.ref)) unknownRefs.add(e.ref);
+    if (!known.has(e.ref)) unknownRefs.add(e.ref);
   }
   const lessonCount = Object.keys(lessonStatus).length;
   const completedLessonCount = Object.values(lessonStatus).filter((l) => l?.completed).length;

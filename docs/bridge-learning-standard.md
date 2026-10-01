@@ -1,4 +1,10 @@
-# Bridge Learning Standard (BLS)
+# ReLearn Lesson Design Standard (BLS)
+
+> **Name change (2026-10):** formerly titled "Bridge Learning Standard". Renamed because Bridge Academy uses
+> "Bridge Learning Standard" publicly for its proposed competency and evidence framework, which is a different
+> thing. This document is ReLearn's lesson-authoring rule set. The `BLS-1`…`BLS-13` rule IDs, this file path, and
+> `--strict-pedagogy` are unchanged so existing audits and links keep working. Read "BLS" as the historical rule
+> prefix (from the app's former name, Bridge Study Companion), not as Bridge Academy's standard.
 
 **Version:** 1.0 (Phase 4.8)  
 **Owner:** M0  

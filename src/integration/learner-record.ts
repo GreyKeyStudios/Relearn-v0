@@ -3,6 +3,11 @@
  *
  * Pure function over the existing store shape. Nothing is written back; the
  * learner record is a snapshot the learner chooses to export from their device.
+ *
+ * Not exported in v1 (see docs/integration/relearn-interchange-v1.md):
+ * - `competencyEvidence` (piano practice) — not anchored to any course manifest.
+ * - adaptive-review attempts — span topics and have no single manifest
+ *   activity id. Their effect still appears in each lesson's masteryScore.
  */
 
 import type { Certification, Topic } from "@/content/types";
@@ -12,6 +17,7 @@ import { assignmentKey, topicKey } from "@/lib/ids";
 import { getCertMasteryPercent } from "@/lib/mastery";
 import type { ProgressState } from "@/types/progress";
 import {
+  LEARNER_RECORD_TRUST,
   RELEARN_INTERCHANGE_VERSION,
   SCHEMA_IDS,
   lessonActivityIdFor,
@@ -172,6 +178,7 @@ export function buildLearnerRecord(
     engine: ENGINE_INFO,
     exportedAt: options.exportedAt ?? new Date().toISOString(),
     provenance: options.provenance ?? "device",
+    trust: LEARNER_RECORD_TRUST,
     courses: certs
       .map((c) => buildCourseProgressRecord(c, state))
       .filter((c): c is CourseProgressRecord => c !== null),

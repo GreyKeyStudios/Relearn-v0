@@ -38,6 +38,7 @@ test.describe("ReLearn interchange v1", () => {
 
     expect(validateLearnerRecord(record).errors).toEqual([]);
     expect(record.provenance).toBe("device");
+    expect(record.trust).toBe("learner-controlled");
     const ccna = record.courses.find((c) => c.courseId === "ccna");
     expect(ccna?.assessments.some((a) => a.activityId === "ccna:osi-model#quiz")).toBe(true);
 

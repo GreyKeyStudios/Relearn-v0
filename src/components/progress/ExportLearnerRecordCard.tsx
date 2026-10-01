@@ -38,6 +38,11 @@ export function ExportLearnerRecordCard() {
         Download your lesson completions, quiz and practice results, and mastery as a
         ReLearn interchange file. It stays on your device until you choose to share it.
       </p>
+      <p className="mb-4 text-xs text-muted-foreground">
+        This is your own copy of your study history, not a transcript or certificate.
+        It isn&apos;t verified by ReLearn or any school, and anyone who has the file can
+        edit it.
+      </p>
       <Button variant="secondary" onClick={handleExport} data-testid="export-learner-record">
         Download record (.json)
       </Button>

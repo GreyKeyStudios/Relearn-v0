@@ -123,6 +123,11 @@ export function verifyIntegration(): IntegrationIssue[] {
   const state = sampleCcnaProgressState();
   const record = buildLearnerRecord(state, { exportedAt: "2026-10-01T12:00:00.000Z", provenance: "demo" });
   for (const e of validateLearnerRecord(record).errors) err("learner-record", e);
+  if (record.trust !== "learner-controlled") err("learner-record", "exported records must declare trust \"learner-controlled\"");
+  if (validateLearnerRecord({ ...record, trust: "verified" }).ok) err("contract", "validator accepted a non-v1 trust level");
+  const { trust: _omitted, ...legacy } = record;
+  void _omitted;
+  if (!validateLearnerRecord(legacy).ok) err("contract", "validator rejected a record without the optional trust field");
   const empty = buildLearnerRecord(emptyProgressState(), { exportedAt: "x" });
   if (empty.courses.length !== 0) err("learner-record", "empty progress must export no course records");
 
