@@ -27,6 +27,7 @@ npm run verify:curriculum -- --strict-pedagogy   # Phase 4.8 BLS warnings
 npm run verify:curriculum -- --strict-experience # LES storyboard checks
 npm run verify:production                        # curriculum production architecture QC
 npm run curriculum:gap-report                    # per-track coverage / blueprint gaps
+npm run verify:integration                       # interchange v1 contract (Bridge Academy boundary)
 npx tsc --noEmit
 ```
 

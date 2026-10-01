@@ -141,6 +141,7 @@ npm run verify:curriculum -- --strict-ccna   # CES warnings for CCNA
 npm run verify:curriculum -- --strict-all     # CES warnings for all certs
 npm run verify:production                    # production schemas / QC / mastery contract
 npm run curriculum:gap-report                # per-track gap report (+ docs write)
+npm run verify:integration                   # interchange v1 contract (Bridge Academy boundary)
 npx tsc --noEmit
 ```
 
@@ -425,7 +426,9 @@ Do not implement Code Lab UI, code runner, or Python content until the learner-r
 | `/cert/[certId]/domain-review/[domainId]` | Shuffled domain question bank |
 | `/review` | Weak areas + adaptive review CTA |
 | `/review/session` | Spaced repetition question bank session |
-| `/progress` | Stats + domain review history |
+| `/progress` | Stats + domain review history + learner-record export |
+| `/integration/v1/catalog.json` | Interchange v1 course catalog (static JSON) — see `docs/integration/relearn-interchange-v1.md` |
+| `/integration/v1/courses/[courseId]/manifest.json` | Interchange v1 course manifest (static JSON) |
 
 ---
 
