@@ -26,5 +26,8 @@ jobs:
       - name: Curriculum verify (CCNA strict)
         run: npm run verify:curriculum -- --strict-ccna --strict-ccna-objectives
 
+      - name: Integration contract verify (interchange v1)
+        run: npm run verify:integration
+
       - name: Typecheck
         run: npx tsc --noEmit

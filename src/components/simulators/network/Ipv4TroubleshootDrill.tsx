@@ -65,17 +65,17 @@ export function Ipv4TroubleshootDrill({ onComplete }: SimulatorComponentProps) {
   return (
     <div className="flex flex-col gap-4" data-testid="ipv4-troubleshoot-drill">
       <ProgressBar value={progress} />
-      <p className="text-xs text-zinc-500">
+      <p className="text-xs text-faint">
         Scenario {index + 1} of {session.length} · Open ≥2 evidence panels before diagnosing
       </p>
 
       <Card className="space-y-2 p-4">
-        <p className="text-xs font-medium text-sky-400">{current.ticket}</p>
-        <p className="text-sm text-zinc-200">{current.symptom}</p>
+        <p className="text-xs font-medium text-primary">{current.ticket}</p>
+        <p className="text-sm text-foreground">{current.symptom}</p>
       </Card>
 
       <div className="space-y-2" data-testid="evidence-panels">
-        <p className="text-xs font-medium text-zinc-400">Observable evidence</p>
+        <p className="text-xs font-medium text-muted-foreground">Observable evidence</p>
         {current.evidence.map((panel) => {
           const open = !!openedEvidence[panel.id];
           return (
@@ -84,15 +84,15 @@ export function Ipv4TroubleshootDrill({ onComplete }: SimulatorComponentProps) {
               type="button"
               data-testid={`evidence-${panel.id}`}
               onClick={() => toggleEvidence(panel.id)}
-              className="w-full rounded-xl border border-zinc-700 bg-zinc-900/80 p-3 text-left"
+              className="w-full rounded-xl border border-hairline bg-surface/80 p-3 text-left"
             >
-              <p className="text-xs font-medium text-zinc-300">{panel.title}</p>
+              <p className="text-xs font-medium text-muted-foreground">{panel.title}</p>
               {open ? (
-                <pre className="mt-2 whitespace-pre-wrap font-mono text-xs text-zinc-400">
+                <pre className="mt-2 whitespace-pre-wrap font-mono text-xs text-muted-foreground">
                   {panel.body}
                 </pre>
               ) : (
-                <p className="mt-1 text-xs text-sky-400">Click to reveal evidence</p>
+                <p className="mt-1 text-xs text-primary">Click to reveal evidence</p>
               )}
             </button>
           );
@@ -100,7 +100,7 @@ export function Ipv4TroubleshootDrill({ onComplete }: SimulatorComponentProps) {
       </div>
 
       {!canDiagnose && (
-        <p className="text-xs text-amber-400" data-testid="evidence-gate">
+        <p className="text-xs text-primary" data-testid="evidence-gate">
           Reveal at least two evidence panels before selecting a root cause.
         </p>
       )}
@@ -109,12 +109,12 @@ export function Ipv4TroubleshootDrill({ onComplete }: SimulatorComponentProps) {
         {current.choices.map((choice) => {
           const isSelected = selected === choice.id;
           const isCorrect = choice.id === current.correctChoiceId;
-          let style = "border-zinc-700 bg-zinc-900";
+          let style = "border-hairline bg-surface";
           if (showResult) {
-            if (isCorrect) style = "border-emerald-500 bg-emerald-500/10";
-            else if (isSelected) style = "border-red-500 bg-red-500/10";
+            if (isCorrect) style = "border-accent bg-accent/10";
+            else if (isSelected) style = "border-risk bg-risk/10";
           } else if (isSelected) {
-            style = "border-emerald-500 bg-emerald-500/10";
+            style = "border-accent bg-accent/10";
           }
           return (
             <button
@@ -123,7 +123,7 @@ export function Ipv4TroubleshootDrill({ onComplete }: SimulatorComponentProps) {
               disabled={!canDiagnose || showResult}
               data-testid={`choice-${choice.id}`}
               onClick={() => setSelected(choice.id)}
-              className={`min-h-12 rounded-xl border p-3 text-left text-sm text-zinc-200 ${style}`}
+              className={`min-h-12 rounded-xl border p-3 text-left text-sm text-foreground ${style}`}
             >
               {choice.text}
             </button>
@@ -133,20 +133,20 @@ export function Ipv4TroubleshootDrill({ onComplete }: SimulatorComponentProps) {
 
       {showResult && (
         <Card
-          className="space-y-2 border-zinc-700 bg-zinc-800/50 p-4"
+          className="space-y-2 border-hairline bg-muted p-4"
           data-testid="scenario-result"
         >
-          <p className="text-xs font-medium text-sky-400">Explanation</p>
-          <p className="text-sm text-zinc-300">{current.explanation}</p>
+          <p className="text-xs font-medium text-primary">Explanation</p>
+          <p className="text-sm text-muted-foreground">{current.explanation}</p>
           {isMisconception && (
             <div
-              className="rounded-lg border border-amber-500/30 bg-amber-500/10 p-3"
+              className="rounded-lg border border-primary/30 bg-primary/10 p-3"
               data-testid="misconception-remediation"
             >
-              <p className="text-xs font-medium text-amber-300">
+              <p className="text-xs font-medium text-primary">
                 Misconception remediation
               </p>
-              <p className="mt-1 text-sm text-zinc-300">
+              <p className="mt-1 text-sm text-muted-foreground">
                 {current.remediationHint ??
                   "Private IPv4 ranges are valid on internal networks — troubleshoot assignment/subnetting, not 'private = broken.'"}
               </p>

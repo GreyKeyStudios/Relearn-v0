@@ -24,6 +24,7 @@ import { ExamCountdownCard } from "@/components/planner/ExamCountdownCard";
 import { StudyPlanSettings } from "@/components/planner/StudyPlanSettings";
 import { DailyPlanCard } from "@/components/planner/DailyPlanCard";
 import { ResetProgressCard } from "@/components/progress/ResetProgressCard";
+import { ExportLearnerRecordCard } from "@/components/progress/ExportLearnerRecordCard";
 import { useProgressStore } from "@/stores/progress-store";
 import { Flame, Percent, BookOpen } from "lucide-react";
 
@@ -169,6 +170,10 @@ export default function ProgressPage() {
           activities={recentActivity.filter((a) => a.type === "quiz")}
           limit={10}
         />
+      </section>
+
+      <section className="mt-8">
+        <ExportLearnerRecordCard />
       </section>
 
       <section className="mt-8">

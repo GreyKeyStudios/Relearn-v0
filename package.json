@@ -11,6 +11,8 @@
     "lint": "eslint",
     "verify:curriculum": "tsx scripts/verify-curriculum.ts",
     "verify:production": "tsx scripts/verify-production.ts",
+    "verify:integration": "tsx scripts/verify-integration.ts",
+    "integration:export": "tsx scripts/export-integration.ts",
     "curriculum:gap-report": "tsx scripts/curriculum-gap-report.ts",
     "curriculum:ccna-v11-report": "tsx scripts/ccna-v11-mapping-report.ts",
     "curriculum:ccna-transition-report": "tsx scripts/ccna-transition-report.ts",

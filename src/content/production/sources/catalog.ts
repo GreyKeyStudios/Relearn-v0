@@ -349,7 +349,7 @@ export const PRODUCTION_SOURCES: SourceRecord[] = [
   },
   {
     id: "src-relearn-bls",
-    title: "Bridge Learning Standard",
+    title: "ReLearn Lesson Design Standard (BLS rules)",
     kind: "internal-architecture",
     publisher: "ReLearn",
     url: "docs/bridge-learning-standard.md",

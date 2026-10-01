@@ -56,14 +56,14 @@ export function AiPromptsNetopsDrill({ onComplete }: SimulatorComponentProps) {
   return (
     <div className="flex flex-col gap-4" data-testid="ai-prompts-netops-drill">
       <ProgressBar value={progress} />
-      <p className="text-xs text-zinc-500">
+      <p className="text-xs text-faint">
         Scenario {index + 1} of {session.length} · Select the prompt that fits official v2.0 5.2
       </p>
 
       <Card className="space-y-2 p-4">
-        <p className="text-xs font-medium text-sky-400">{current.task}</p>
-        <p className="text-sm text-zinc-200">{current.context}</p>
-        <p className="text-xs text-zinc-500">
+        <p className="text-xs font-medium text-primary">{current.task}</p>
+        <p className="text-sm text-foreground">{current.context}</p>
+        <p className="text-xs text-faint">
           Required components: data classification · output format · persona · instructions
         </p>
       </Card>
@@ -72,12 +72,12 @@ export function AiPromptsNetopsDrill({ onComplete }: SimulatorComponentProps) {
         {current.prompts.map((prompt) => {
           const isSelected = selected === prompt.id;
           const isCorrect = prompt.id === current.correctChoiceId;
-          let style = "border-zinc-700 bg-zinc-900";
+          let style = "border-hairline bg-surface";
           if (showResult) {
-            if (isCorrect) style = "border-emerald-500 bg-emerald-500/10";
-            else if (isSelected) style = "border-red-500 bg-red-500/10";
+            if (isCorrect) style = "border-accent bg-accent/10";
+            else if (isSelected) style = "border-risk bg-risk/10";
           } else if (isSelected) {
-            style = "border-emerald-500 bg-emerald-500/10";
+            style = "border-accent bg-accent/10";
           }
           return (
             <button
@@ -86,9 +86,9 @@ export function AiPromptsNetopsDrill({ onComplete }: SimulatorComponentProps) {
               disabled={showResult}
               data-testid={`prompt-${prompt.id}`}
               onClick={() => setSelected(prompt.id)}
-              className={`rounded-xl border p-3 text-left text-sm text-zinc-200 ${style}`}
+              className={`rounded-xl border p-3 text-left text-sm text-foreground ${style}`}
             >
-              <span className="text-xs font-medium text-zinc-400">Prompt {prompt.label}</span>
+              <span className="text-xs font-medium text-muted-foreground">Prompt {prompt.label}</span>
               <p className="mt-1">{prompt.text}</p>
             </button>
           );
@@ -96,28 +96,28 @@ export function AiPromptsNetopsDrill({ onComplete }: SimulatorComponentProps) {
       </div>
 
       {showResult && (
-        <Card className="space-y-2 border-zinc-700 bg-zinc-800/50 p-4" data-testid="prompt-result">
-          <p className="text-xs font-medium text-sky-400">Explanation</p>
-          <p className="text-sm text-zinc-300">{current.explanation}</p>
+        <Card className="space-y-2 border-hairline bg-muted p-4" data-testid="prompt-result">
+          <p className="text-xs font-medium text-primary">Explanation</p>
+          <p className="text-sm text-muted-foreground">{current.explanation}</p>
           {picked?.leaksSecrets && (
-            <p className="text-sm text-red-300" data-testid="secret-fail">
+            <p className="text-sm text-risk" data-testid="secret-fail">
               Failed: prompt mishandles sensitive network data classification.
             </p>
           )}
           {picked?.genericLlmTuning && (
-            <p className="text-sm text-amber-300" data-testid="generic-llm-fail">
+            <p className="text-sm text-primary" data-testid="generic-llm-fail">
               Failed: generic LLM-tuning advice is outside official 5.2 network-ops scope.
             </p>
           )}
           {isMisconception && (
             <div
-              className="rounded-lg border border-amber-500/30 bg-amber-500/10 p-3"
+              className="rounded-lg border border-primary/30 bg-primary/10 p-3"
               data-testid="misconception-remediation"
             >
-              <p className="text-xs font-medium text-amber-300">
+              <p className="text-xs font-medium text-primary">
                 Misconception remediation
               </p>
-              <p className="mt-1 text-sm text-zinc-300">
+              <p className="mt-1 text-sm text-muted-foreground">
                 Rewrite the ops question so it states data classification, output format,
                 persona, and instructions. Reject unstructured chat and secret leaks.
               </p>

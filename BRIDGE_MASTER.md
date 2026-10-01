@@ -56,7 +56,7 @@ Plan → Architecture → Standards → Completion criteria → Delegate → Int
 | **Phase 4** | Complete | Mastery, adaptive review, study planner — see `.cursor/plans/phase_4_learning_intelligence.plan.md` |
 | **Phase 4.5** | Complete | Objective/domain mastery, difficulty tags, interactive case studies (CCNA pilot) |
 | **Phase 4.75** | Complete | Coach UX polish — Study Now card, weak objectives UX, planner tuning |
-| **Phase 4.8** | Complete | Bridge Learning Standard, CCNA pedagogy sprint — see `docs/bridge-learning-standard.md` |
+| **Phase 4.8** | Complete | ReLearn Lesson Design Standard (BLS rules; formerly "Bridge Learning Standard"), CCNA pedagogy sprint — see `docs/bridge-learning-standard.md` |
 | **Phase 4.9** | In progress | Learning Experience Standard (B+), ExperiencePlayer, **Git/GitHub Type B reference track (Modules 1–7)**, PowerShell Type B v1 — see `docs/COURSE_ARCHITECTURE.md`, `docs/TYPE_B_MASTER.md`, `docs/learning-experience-standard.md`, `docs/git-github-learning-architecture.md` |
 | **Pathway F** | In progress | Computer Fundamentals + CompTIA A+ (220-1201/1202) — architecture approved; CF first-pass live; A+ shell planned — see [`docs/computer-fundamentals-aplus-architecture.md`](docs/computer-fundamentals-aplus-architecture.md) |
 | **Pathway V** | Planned | **VM Lab Foundations** — learner installs **VirtualBox**; Linux/Windows guests for CMD & Bash; ReLearn does not host VMs — see [`docs/vm-lab-learning-architecture.md`](docs/vm-lab-learning-architecture.md) |
@@ -141,6 +141,7 @@ npm run verify:curriculum -- --strict-ccna   # CES warnings for CCNA
 npm run verify:curriculum -- --strict-all     # CES warnings for all certs
 npm run verify:production                    # production schemas / QC / mastery contract
 npm run curriculum:gap-report                # per-track gap report (+ docs write)
+npm run verify:integration                   # interchange v1 contract (Bridge Academy boundary)
 npx tsc --noEmit
 ```
 
@@ -425,7 +426,9 @@ Do not implement Code Lab UI, code runner, or Python content until the learner-r
 | `/cert/[certId]/domain-review/[domainId]` | Shuffled domain question bank |
 | `/review` | Weak areas + adaptive review CTA |
 | `/review/session` | Spaced repetition question bank session |
-| `/progress` | Stats + domain review history |
+| `/progress` | Stats + domain review history + learner-record export |
+| `/integration/v1/catalog.json` | Interchange v1 course catalog (static JSON) — see `docs/integration/relearn-interchange-v1.md` |
+| `/integration/v1/courses/[courseId]/manifest.json` | Interchange v1 course manifest (static JSON) |
 
 ---
 

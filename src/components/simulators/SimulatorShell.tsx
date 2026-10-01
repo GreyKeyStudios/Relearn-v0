@@ -76,7 +76,7 @@ export function SimulatorShell({
             <ProgressBar value={scorePercent} className="mb-4" />
             {result.weakConcepts.length > 0 && (
               <div>
-                <p className="mb-2 text-sm font-medium text-amber-400">Review these concepts:</p>
+                <p className="mb-2 text-sm font-medium text-primary">Review these concepts:</p>
                 <ul className="list-inside list-disc space-y-1 text-sm text-muted-foreground marker:text-primary">
                   {result.weakConcepts.map((concept) => (
                     <li key={concept}>{concept}</li>

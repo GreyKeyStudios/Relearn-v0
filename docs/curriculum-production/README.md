@@ -37,6 +37,7 @@ Adapters derive skeleton hierarchies and graphs from live tracks so gap analysis
 | [`src/lib/production/gap-report.ts`](../../src/lib/production/gap-report.ts) | Track gap report |
 | [`AGENT_RESEARCH_GUIDE.md`](AGENT_RESEARCH_GUIDE.md) | Rules for research agents |
 | [`CONTENT_BATCH_SEQUENCE.md`](CONTENT_BATCH_SEQUENCE.md) | Recommended production batches |
+| [`ZERO_TO_HERO_PLAN.md`](ZERO_TO_HERO_PLAN.md) | Spine order, depth-first sequencing, and deferrals |
 | [`templates/`](templates/) | Authoring templates |
 
 ## Commands

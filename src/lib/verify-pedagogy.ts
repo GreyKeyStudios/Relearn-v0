@@ -18,7 +18,7 @@ function topicIdSet(cert: Certification): Set<string> {
   return ids;
 }
 
-/** Warnings for Bridge Learning Standard — CCNA strict by default when flag set */
+/** Warnings for the ReLearn Lesson Design Standard (BLS rules) — CCNA strict by default when flag set */
 export function verifyPedagogyWarnings(certFilter?: string): PedagogyWarning[] {
   const warnings: PedagogyWarning[] = [];
 

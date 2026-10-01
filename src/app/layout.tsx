@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Fraunces } from "next/font/google";
 import { AppShell } from "@/components/layout/AppShell";
+import { THEME_INIT_SCRIPT } from "@/components/layout/theme";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -42,8 +43,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} h-full bg-background antialiased`}
     >
+      <head>
+        {/* Must run before paint, so the theme never flashes on load. */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
       <body className="min-h-full bg-background text-foreground font-sans">
         <AppShell>{children}</AppShell>
       </body>

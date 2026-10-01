@@ -25,23 +25,27 @@ This sequence is a **recommendation for future tickets**, not work included in t
 3. ~~Ingest complete CCNA v1.1 PDF lines + pilot alias mapping~~ — **done** (`docs/curriculum-production/ccna-v1.1/`). Live `CCNA-*` tags remain operational aliases; content remap is a later progress-safe batch. v2.0 cutover stays future-review (**2027-02-03**).
 4. ~~CCNA dual-version transition architecture (v1.1 + v2.0)~~ — **done**.
 5. ~~CCNA v2.0 bounded production batch-1 (specs)~~ — **done** (`docs/curriculum-production/ccna-v20-batch1/`) for parents 2.4, 1.3, 1.4, 1.7, 2.5, 3.2, 3.3, 5.2. Specs only; no live lesson mass-authoring.
-6. **Next:** Download full objective PDFs and populate `objectives[]` for SY0-701, N10-009, CS0-003 (before **2026-12-22** English retirement), XK0-005, CLF-C02, AZ-900, ITIL 4.
-5. Reconcile uncovered objectives — map or explicitly defer (deferral manifest style).
+6. **Next:** Download full objective PDFs and populate `objectives[]` for N10-009 first (Network+ is Stage 1c of the zero-to-hero spine), then SY0-701, XK0-005, CLF-C02, AZ-900, ITIL 4. **CS0-003 is dropped from this list** — the English exam retires **2026-12-22** and CySA+ is deferred to its successor (see [`ZERO_TO_HERO_PLAN.md`](ZERO_TO_HERO_PLAN.md) § Deferred).
+7. Reconcile uncovered objectives — map or explicitly defer (deferral manifest style). 21 remain as of 2026-09-03.
 
 ---
 
-## Phase P2 — Atomic objective pass (reference tracks)
+## Phase P2 — Atomic objective pass
 
-Work **reference tracks first** (COURSE_ARCHITECTURE discipline):
+**Ordering principle changed 2026-09-03** — see [`ZERO_TO_HERO_PLAN.md`](ZERO_TO_HERO_PLAN.md).
+
+The original order below worked by **reference quality**, and it succeeded: Git & GitHub and PowerShell are now fully taught (18/18 and 15/15 CES with complete LES). From here the order is **learner sequence**, so a beginner meets fully-taught material in the order they would actually study it.
 
 | Order | Track | Template | Focus |
 |------:|-------|----------|-------|
-| 1 | CCNA | A | Atomic objectives for Domain 1–2; misconceptions for subnetting/OSI/VLANs |
-| 2 | Git & GitHub | B | Skill atomics + Break/Fix remediation links |
-| 3 | Computer Fundamentals | A/skills | Foundation atomics feeding A+ |
-| 4 | A+ | A | Blueprint coverage completeness for 220-1201/1202 |
-| 5 | VM Lab | C | Tool workflow atomics |
-| 6 | Sound Synthesis | C | Creative + measurable atomics (no false universal taste scores) |
+| 1 | Computer Fundamentals | A/skills | Teaching layer — 43 of 49 topics lack LES; content already full CES |
+| 2 | A+ | A | Teaching layer — 72 topics, 0 LES, 0 misconception screens; LES by BLS triage, not all 72 |
+| 3 | Network+ | A | Objectives (N10-009) → CES elevation on 11 thin topics → LES triage |
+| 4 | Piano Foundations | interactive | Units 6–12, extending the units 1–5 phase model |
+| 5 | CCNA | A | CES elevation on 16 topics + progress-safe remap onto official v1.1 IDs |
+| — | VM Lab, Sound Synthesis | C | Unscheduled — see plan § Deferred |
+
+Superseded order (kept for provenance): CCNA → Git & GitHub → Computer Fundamentals → A+ → VM Lab → Sound Synthesis.
 
 Do **not** expand every quiz bank in this phase — wire hierarchy + sources + prereqs.
 

@@ -24,8 +24,18 @@ Open [http://localhost:3000](http://localhost:3000).
 ```bash
 npm run build
 npm run verify:curriculum -- --strict-ccna --strict-ccna-objectives
+npm run verify:integration
 npx tsc --noEmit
 ```
+
+## Integration boundary (Bridge Academy)
+
+ReLearn is the learning engine behind Bridge Academy. The versioned boundary is the **interchange v1** contract — course catalog, course manifests, and a learner-exported progress/evidence record:
+
+- Contract: [`src/integration/contract.ts`](src/integration/contract.ts) (dependency-free; consumers vendor it)
+- Static endpoints: `/integration/v1/catalog.json`, `/integration/v1/courses/{courseId}/manifest.json`
+- Learner export: **Progress → Export learning record**
+- Docs + layer boundaries: [`docs/integration/relearn-interchange-v1.md`](docs/integration/relearn-interchange-v1.md)
 
 ## Branch model
 

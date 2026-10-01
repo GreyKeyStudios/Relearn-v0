@@ -24,6 +24,37 @@
   --radius: 0.625rem;
 }
 
+/*
+  Dark theme — the warm graphite palette ReLearn shipped before the Warm
+  Knowledge Studio redesign, restored as a derived theme rather than a second
+  product identity (see docs/design/relearn-knowledge-engine-handoff.md).
+
+  Semantic roles are preserved from :root: gold stays active/current, teal
+  stays proven/durable, lavender stays review/fragile, terracotta stays
+  misconception/risk. Only the lightness is re-tuned for a dark canvas.
+*/
+.dark {
+  color-scheme: dark;
+  --background: oklch(0.16 0.008 60);
+  --foreground: oklch(0.93 0.012 80);
+  --surface: oklch(0.19 0.008 60);
+  --surface-raised: oklch(0.22 0.009 62);
+  --muted: oklch(0.24 0.008 60);
+  --muted-foreground: oklch(0.66 0.012 75);
+  --faint: oklch(0.55 0.01 70);
+  --border: oklch(0.3 0.008 65);
+  --hairline: oklch(0.34 0.008 65);
+  --primary: oklch(0.8 0.11 78);
+  --primary-foreground: oklch(0.18 0.02 70);
+  --accent: oklch(0.7 0.09 190);
+  --accent-foreground: oklch(0.16 0.008 60);
+  --ring: oklch(0.8 0.11 78);
+  /* Lifted from the light values so they stay legible on a dark canvas. */
+  --risk: oklch(0.68 0.11 32);
+  --fragile: oklch(0.72 0.08 295);
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 10px 30px rgb(0 0 0 / 0.35);
+}
+
 @theme inline {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
