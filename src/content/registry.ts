@@ -8,6 +8,7 @@ import { cysaPlus } from "./certifications/cysa-plus";
 import { cloudflareHosting } from "./certifications/cloudflare-hosting";
 import { gitGithub } from "./certifications/git-github";
 import { powershell } from "./certifications/powershell";
+import { powershellII } from "./certifications/powershell-ii";
 import { itilFoundation } from "./certifications/itil-foundation";
 import { linuxPlus } from "./certifications/linux-plus";
 import { networkPlus } from "./certifications/network-plus";
@@ -20,6 +21,7 @@ export const CERTIFICATIONS: Certification[] = [
   computerFundamentals,
   gitGithub,
   powershell,
+  powershellII,
   soundSynthesis,
   vmLab,
   cloudflareHosting,

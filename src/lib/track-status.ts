@@ -40,6 +40,7 @@ export interface TrackStatusMeta {
 const STATUS_BY_ID: Record<string, TrackStatus> = {
   ccna: "flagship",
   powershell: "reference",
+  "powershell-ii": "skill",
   "git-github": "skill",
   /** Pathway F — full Module 1-8 track wired; bump again once learner QA completes */
   "computer-fundamentals": "first-pass",
