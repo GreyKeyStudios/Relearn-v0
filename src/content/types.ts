@@ -214,6 +214,8 @@ export interface ExperienceScreen {
   gitWorkflowStep?: 1 | 2 | 3 | 4;
   /** PowerShell shell workflow anchor highlight (skills track) */
   powershellShellStep?: 1 | 2 | 3 | 4;
+  /** PowerShell II automation lifecycle anchor: 1=Design … 5=Report */
+  powershellAutomationStage?: 1 | 2 | 3 | 4 | 5;
   /** Computer stack layer 1=Hardware (bottom) through 4=You/User (top) */
   computerStackLayer?: 1 | 2 | 3 | 4;
   /** Sound synthesis signal path 1=Source … 5=Hear */
@@ -225,6 +227,8 @@ export type ExperienceAnchorType =
   | "tcp-ip-stack"
   | "git-workflow"
   | "powershell-shell"
+  /** PowerShell II — Design → Input → Execute → Verify → Report */
+  | "powershell-automation"
   /** Computer Fundamentals — User → Apps → OS → Hardware */
   | "computer-stack"
   /** Sound Synthesis — Source → Shape → Filter → Amp → Hear */

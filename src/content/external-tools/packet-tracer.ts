@@ -167,12 +167,60 @@ const UBUNTU_GUIDE: ExternalToolGuide = {
   ],
 };
 
+const POWERSHELL_GALLERY_GUIDE: ExternalToolGuide = {
+  id: "powershell-gallery",
+  name: "PowerShell Gallery",
+  downloadUrl: "https://www.powershellgallery.com",
+  cost: "free",
+  platform: "Any machine running PowerShell 5.1 or PowerShell 7",
+  summary:
+    "Microsoft's public repository for PowerShell modules and scripts — the source Find-Module and Install-Module talk to.",
+  sections: [
+    { title: "Check before you install", body: "The Gallery is public, so anyone can publish. Treat a module like any other third-party code.", bullets: ["Run Find-Module <name> and read Author, Owners, PublishedDate, and DownloadCount before installing.", "Open the module's Gallery page and check the project or source-code link exists and looks maintained.", "Prefer modules published by Microsoft or a vendor you already trust for anything that touches identity or production.", "Never install a module on a work machine because a forum post told you to."] },
+    { title: "Install without needing administrator", body: "Scope decides who the module is installed for and whether elevation is required.", bullets: ["Use Install-Module <name> -Scope CurrentUser for course labs — no admin rights needed.", "-Scope AllUsers writes to a shared location and does need elevation.", "Run Get-InstalledModule to see what you already have, and Get-Module -ListAvailable to see everything importable.", "Use Save-Module instead of Install-Module when you want to inspect the files before they are importable."] },
+    { title: "When you get stuck", body: "Most Gallery problems are transport, trust prompts, or two versions side by side.", bullets: ["'Unable to resolve package source': the machine cannot reach the Gallery — check proxy or network before reinstalling anything.", "Untrusted-repository prompt: that prompt is the point. Read it, then answer deliberately rather than suppressing it permanently.", "Old TLS on PowerShell 5.1 can block the Gallery; follow Microsoft's documented TLS 1.2 guidance rather than disabling checks.", "Two versions installed: pass -RequiredVersion to Import-Module so a script is not silently upgraded under you."] },
+  ],
+};
+
+const GRAPH_POWERSHELL_GUIDE: ExternalToolGuide = {
+  id: "microsoft-graph-powershell",
+  name: "Microsoft Graph PowerShell SDK",
+  downloadUrl: "https://learn.microsoft.com/powershell/microsoftgraph/installation",
+  cost: "free",
+  platform: "Windows, macOS, Linux (PowerShell 7 recommended)",
+  summary:
+    "The current, supported PowerShell surface for Microsoft 365 and Entra ID data — the replacement for the retired AzureAD and MSOnline modules.",
+  sections: [
+    { title: "You do not need a tenant for this course", body: "Every graded Graph step in PowerShell II runs against fixture data you generate locally. A live tenant is optional.", bullets: ["The fixture path teaches the same pipeline: convert JSON, inspect with Get-Member, filter, report.", "If you want a live tenant, use a free Microsoft 365 Developer tenant — never a production tenant you do not own.", "Install with Install-Module Microsoft.Graph -Scope CurrentUser when you are ready to connect.", "Do not install this on a work machine without your administrator's agreement."] },
+    { title: "Least privilege from the first connect", body: "Connect-MgGraph asks for the permission scopes you name, so name the smallest set that answers your question.", bullets: ["Connect-MgGraph -Scopes 'User.Read.All' is enough to read a user report; do not ask for .ReadWrite to run a Get- command.", "Run Get-MgContext after connecting to confirm which account and scopes you actually hold.", "Disconnect-MgGraph when you finish a session.", "Consent prompts are a control, not an obstacle — read what is being requested."] },
+    { title: "When you get stuck", body: "Graph errors usually name the scope, the resource, or the query that was rejected.", bullets: ["'Insufficient privileges': reconnect with the specific scope the cmdlet documents, not a broader one.", "Empty result with no error: you probably selected a property Graph did not return — check with Get-Member.", "Throttling (HTTP 429): back off and retry rather than looping harder.", "Old blog posts reference AzureAD or MSOnline cmdlets. Those modules are retired — use the Microsoft.Graph equivalents."] },
+  ],
+};
+
+const AZURE_POWERSHELL_GUIDE: ExternalToolGuide = {
+  id: "azure-powershell-az",
+  name: "Azure PowerShell (Az module)",
+  downloadUrl: "https://learn.microsoft.com/powershell/azure/install-azure-powershell",
+  cost: "free",
+  platform: "Windows, macOS, Linux (PowerShell 7 recommended)",
+  summary:
+    "The supported PowerShell module for discovering, querying, and automating Azure resources. Replaces the retired AzureRM module.",
+  sections: [
+    { title: "You do not need a subscription for this course", body: "The graded Azure work in PowerShell II runs against fixture data you generate locally, so nobody has to hand over a card.", bullets: ["The fixture path exercises the same objects, grouping, and reporting you would do live.", "If you want live practice, an Azure free account with read-only Get-Az* commands is enough.", "Install with Install-Module Az -Scope CurrentUser -Repository PSGallery when you are ready.", "Az replaced AzureRM; ignore tutorials that still use AzureRM cmdlets."] },
+    { title: "Context is the thing people get wrong", body: "Every Az command runs against the subscription in your current context, which is not always the one you meant.", bullets: ["Connect-AzAccount signs you in; Get-AzContext shows which account, tenant, and subscription you are pointed at.", "Get-AzSubscription lists what you can reach; Set-AzContext -SubscriptionId switches deliberately.", "Print the context at the top of any reporting script so the output says which subscription it describes.", "Reading in the wrong subscription wastes time; writing in the wrong subscription causes incidents."] },
+    { title: "When you get stuck", body: "Az failures are usually authentication, context, or permission — in that order.", bullets: ["'Run Connect-AzAccount to login': your token expired or you are in a new session.", "Empty resource list: check Get-AzContext before assuming the resources are gone.", "Authorization failed: your role does not grant the action; ask for the specific read role rather than Owner.", "Stick to Get-Az* while learning. Any New-, Set-, or Remove- command deserves -WhatIf and a change plan first."] },
+  ],
+};
+
 const GUIDES: Record<string, ExternalToolGuide> = {
   "packet-tracer": PACKET_TRACER_GUIDE,
   wireshark: WIRESHARK_GUIDE,
   "local-git": LOCAL_GIT_GUIDE,
   "github-free": GITHUB_GUIDE,
   "windows-powershell": POWERSHELL_GUIDE,
+  "powershell-gallery": POWERSHELL_GALLERY_GUIDE,
+  "microsoft-graph-powershell": GRAPH_POWERSHELL_GUIDE,
+  "azure-powershell-az": AZURE_POWERSHELL_GUIDE,
   "fl-studio-stock": FL_STUDIO_GUIDE,
   "oracle-virtualbox": VIRTUALBOX_GUIDE,
   "ubuntu-desktop-iso": UBUNTU_GUIDE,
